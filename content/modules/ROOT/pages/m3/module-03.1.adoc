@@ -7,17 +7,18 @@ include::../style.adoc[]
 
 The {rhcl} operator has been already setup amongst a few other components. 
 
-
-== Explore the workshop setup
-
 . Access the {ocp_cluster_openshift_cluster_console_url}[OpenShift console^, window="console"].
-. Select *Connectivity Link* from the bottom of the left-hand navigation menu.
+. Navigate to *Connectivity Link > Overview* menu found at the bottom of the left-hand navigation menu.
 +
 image:m3/rhcl-console-view.png[] 
-. In the *Overview* section, you will notice that a *Gateway*, a *TLSPolicy*, a *DNSPolicy*, and an *HTTPRoute* have been pre-configured.
+. In the *Overview* section, you will notice that a *Gateway*, a *TLSPolicy*, a *DNSPolicy*, and a sample *HTTPRoute* have been pre-configured. This helps ensure the workshop can be completed in the allotted time.
 +
-image:m3/gateway-tls-view.png[]
-. This Gateway (based on Istio Gateway) has been created with a wildcard hostname `*.travels.{ocp_cluster_openshift_cluster_ingress_domain}`, and a TLS Policy has already been created. 
+image:m3/rhcl-inital-overview.png[]
+
+.. A Gateway (based on Istio Gateway) has been created with a wildcard hostname `*.travels.{ocp_cluster_openshift_cluster_ingress_domain}`. A DNS Policy and a TLS Policy have also been created upfront. 
+
+=== Review the Gateway
+
 . If you access the `prod-web` Gateway by clicking on it, the *YAML* tab will display the Gateway details
 +
 [source,sh,subs=attributes+]
@@ -41,38 +42,37 @@ spec:
 ----
 +
 <1> This is the wildcarded hostname which will handle all traffic routed through the `travels.{ocp_cluster_workshop_main_domain}` domain
-<2> The TLS Policy that has been pre-created leverages the a TLS-issuer set up TLS certificates for the listeners defined within the Gateway.
+<2> A TLS Policy has been pre-created; it leverages the a TLS-issuer set up TLS certificates for the listeners defined within the Gateway.
 
 
-== Setup policies for the Gateway
+=== Review the DNSPolicy
 
-=== Create a DNSPolicy
-
-. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
-. In the YAML editor, copy the following *DNSPolicy* CR
+. A  *DNSPolicy* Custom Resource has been created. Review a snippet below.
 +
-[source,sh,role="execute",subs=attributes+]
+[source,sh, subs=attributes+]
 ----
-apiVersion: kuadrant.io/v1
-kind: DNSPolicy
-metadata:
-  name: prod-web-dnspolicy
-  namespace: ingress-gateway
 spec:
   targetRef:
-    name: prod-web
+    name: prod-web  <1>
     group: gateway.networking.k8s.io
     kind: Gateway
   providerRefs:
-  - name: prod-web-aws-credentials
+  - name: prod-web-aws-credentials  <2>
 ----
-. Scroll to the bottom of the page to note that the DNSPolicy has been accepted and enforced
++
+<1> `prod-web` Gateway resource this policy is applied to
+<2> DNS Provider credential as a secret, so that DNS records can be created
+
+. Click on the DNS Policy `prod-web-dnspolicy` and scroll to the bottom of the page to note that the DNSPolicy has been accepted and enforced
 +
 image:m3/gw-dns-policy-created.png[]
 +
-NOTE: The Message displayed against the `Enforced` is to notfy that there are no HTTPRroutes attached yet. This will change once a developer creates a HTTPRroute
-
-
+[NOTE]
+====
+* The Message displayed against the `Enforced` is to notfy that there are no HTTPRroutes attached yet. This will change once a developer creates a HTTPRroute
+* This DNS Policy has been pre-created because DNS resolution for new DBS records may take a few minutes.
+====
++
 .[.underline]#*Click to learn more about DNSPolicy in Hybrid Cloud Scenarios*#
 [%collapsible]
 ====
@@ -92,11 +92,16 @@ NOTE: The Message displayed against the `Enforced` is to notfy that there are no
 
 ====
 
-=== Create a zero-trust AuthPolicy
+=== Review the `echo-api` HTTPRoute
 
-As a Platform Engineer, you will now setup an AuthPolicy for tailor-made Zero Trust API security.
+. This `echo-api` HTTPRoute has been setup as a way for Platform Engineers to test their setup before opening this up for the developers.
 
-. In the YAML editor, copy the following AuthPolicy CR
+== Create a zero-trust AuthPolicy
+
+As a Platform Engineer, you will now setup an *AuthPolicy* for tailor-made Zero Trust API security.
+
+. Click the (+) button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
+. In the YAML editor, copy the following *AuthPolicy* CR
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -129,18 +134,15 @@ spec:
 
 ----
 . This policy denies all incoming requests, and sends a custom error message as part of the response.
-. Click the Create button at the bottom of the YAML editor
+. Click the *Create* button at the bottom of the YAML editor
+. Scroll to the bottom of the *AuthPolicy details* page to note that the policy has been accepted and enforced
 +
-image:m3/gw-auth-create-yaml.png[] 
-. Scroll to the bottom of the DNSPolicy details page to note that the DNSPolicy has been accepted but not enforced
-+
-image:m3/gw-rlp-created.png[] 
-. The AuthPolicy is not enforced because there are not HTTPRoutes (yet) on which to enforce this policy. This will change once a Developer creates a `HTTPRoute`
+image:m3/gw-ap-created.png[] 
 
 
 === Create a default low-limit RateLimitPolicy
 
-. In the YAML editor, copy the following AuthPolicy CR and save
+. In the YAML editor, copy the following RateLimitPolicy CR and save
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -163,41 +165,27 @@ spec:
 . Click the Create button at the bottom of the YAML editor
 +
 image:m3/gw-rlp-yaml.png[] 
-. Scroll to the bottom of the RateLimitPolicy details page to note that the RateLimitPolicy has been accepted but not enforced
+. Scroll to the bottom of the RateLimitPolicy details page to note that the RateLimitPolicy has been accepted and enforced
 +
 image:m3/gw-rlp-created.png[]
-. The RateLimitPolicy is not enforced because there are not HTTPRoutes (yet) on which to enforce this policy. This will change once a Developer creates a `HTTPRoute`
-
 
 == Test the setup so far
 
-Let us create a simple HTTPRoute to test the setup so far, to ensure all requests are denied due to the zero trust policy we have setup
+Let us now test the `echo-api` HTTPRoute to test the setup so far, to ensure all requests are denied due to the zero trust policy we have setup
 
-. In the YAML editor, copy the following HTTPRoute CR and save
+. In the right-upper terminal, running the following command should display `admin`
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  name: echo-api
-  namespace: echo-api
-  labels:
-    deployment: echo-api
-    service: echo-api
-spec:
-  parentRefs:
-    - name: prod-web
-      namespace: ingress-gateway
-  hostnames:
-    - echo.travels.{ocp_cluster_workshop_main_domain}
-  rules:
-    - backendRefs:
-        - name: echo-api
-          port: 8080
-          namespace: echo-api
+oc whoami
 ----
-. In the terminal run the following command
+. If this is not the case, run the following command to login to OpenShift
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.30.0.1:443
+----
+. Execute the following `curl` command to access the `echo-api`
 +
 [source,sh,role="execute",subs=attributes+]
 ----

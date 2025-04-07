@@ -5,11 +5,9 @@ include::../style.adoc[]
 
 == Module 3: Simplify and secure traffic management with {rhcl}
 
-== Business context
+With their growing popularity, {corp} would like to add new channels to their existing portals. They plan to launch a mobile app, and also onboard  partner portals which require secure access to their core services.
 
-With their growing popularity, {corp} would like to add new channels to their existing, store-based e-commerce application. They are working towards launching their own web app which requires access to from the app to their core services.
-
-All inward traffic from mobile app or external systems need to be secured and managed. {corp} also wants to protect the endpoints by easily applying rate limiting and specific levels of access based on accessing users.
+All inward traffic from mobile app or external systems need to be secured and managed. {corp} also wants to protect the endpoints by easily applying rate limiting and specific levels of access based on systems and users.
 
 
 == Technical considerations
@@ -22,9 +20,9 @@ To expose core functionalities to mobile apps and external partners, {corp} need
 
 {corp} decides to embrace a policy-as-code approach. As Gartner points out https://www.gartner.com/document/3992070[Policy as code (PaC)^, window="content"] provides repeatable and automated policy-based management through which one can define security through code.
 
-{rhcl} provides Kubernetes-native traffic management in multi-cluster environments. It leverages the power of the Kubernetes Gateway API and Envoy proxy to provide a unified, efficient approach to managing ingress traffic and related policies in multi-cluster Kubernetes environments. With {rhcl}, platform engineers and application developers can collaborate to connect, secure, and protect distributed services and applications. 
+{rhcl} provides Kubernetes-native traffic management in multi-cluster environments. It leverages the power of the Kubernetes https://gateway-api.sigs.k8s.io/[Gateway API^, window="content"] and https://www.envoyproxy.io/[Envoy proxy^, window="content"] to provide a unified, efficient approach to managing ingress traffic and related policies in multi-cluster Kubernetes environments. With {rhcl}, platform engineers and application developers can collaborate to connect, secure, and protect distributed services and applications. 
 
-{rhcl} builds on the Gateway API, offering DNS management, TLS certificate lifecycle management, authentication, and rate limiting across all gateway instances in multi-cluster environments. These policies, along with included observability metrics, standardize ingress traffic management in both single- and multi-cluster setups.
+{rhcl} builds on the Gateway API, offering DNS management, TLS certificate lifecycle management, authentication, and rate limiting across all gateway instances in multi-cluster environments. These policies, along with included observability metrics, standardize ingress traffic management in both single and multi-cluster setups.
 
 image:m3/rhcl-overview.png[width=70%] 
 
@@ -40,12 +38,12 @@ There are two specific Custom Resources (CR) we are interested in
 
 === {rhcl} policies
 
-Here is a view on how {rhcl}'s Policy APIs are applied on the Request flow on Gateway API. Typically Platform engineers apply policies to the Gateway, and Developers apply policies to the HttpRoute.
+{rhcl}'s policies are applied on the Gateway API resources (Gateway and HTTPRoute) as shown below. Typically Platform engineers apply policies to the Gateway, and Developers apply policies to the HttpRoute.
 
 image:m3/rhcl-policies.png[] 
 
-. *DNS Policy* provides DNS management by managing the lifecycle of DNS records (in the DNS provider) to setup ingress connectivity using DNS to bring traffic to the Gateway.
-. *TLS Policy* configures HTTPS listeners on a Gateway with certificates 
+. *DNS Policy* based on the Gateway configuration, creates dns records in external dns providers for enabling DNS based load balancing across hybrid cloud. It also hellps to manage DNS weighting and geo-based routing of requests.
+. *TLS Policy* targets Gateways by managing the lifecycle of tls certificates using using https://cert-manager.io/[CertManager^, window="content"].
 . *Rate Limit Policy* is applied to Gateways and HTTPRoutes to provide rate limiting of requests.
 . *Auth Policy* is applied to Gateways and HTTPRoutes to enforce authentication & authorization rules.
 
@@ -56,7 +54,7 @@ With this approach
 
 == Solution 
 
-. The access to core services (Travels) service endpoint needs to be secured and protected for connectivity from the Web App that is being built.
+. The access to core services (Travels) service endpoint needs to be secured and protected for connectivity from the mobile app and partner portals that is being built.
 . The team adopts a Kubernetes native approach to application connectivity through {rhcl}.
 . Platform Engineers setup a Gateway which will allow for secure connection to the backend service endpoints. 
 . Developers the onboarding their service endpoints by creating a HTTPRoute representing the endpoint. 
@@ -66,11 +64,11 @@ With this approach
 
 As part of this workshop, certain components have been preconfigured in advance to ensure the module can be completed within a short timeframe.
 
-. The Mobile Gateway service has been predeployed on your OpenShift cluster
+. The core services and the sample partner app has been predeployed on your OpenShift cluster.
 . A hosted zone has been added as a subdomain, travels.{ocp_cluster_workshop_main_domain}, on AWS Route 53 for the applications that you want to manage and secure with {rhcl}. 
 +
 NOTE: In this case, the applications and services are running on AWS on an OpenShift cluster. And we leverage AWS Route 53 for DNS purposes. {rhcl} supports other DNS providers such as Azure, Google Cloud, and support for Core DNS is coming soon.
-. As part of the activities, you will configure the necessary DNS policy to manage this subdomain with a Gateway (from Gateway API), ensuring the traffic can properly secured and managed. You will also setup {rhcl} CRs (custom resources) needed to connect, secure and manage the Mobile Gateway service.
+. As part of the activities, you will also setup {rhcl} CRs (custom resources) needed to connect, secure and manage the `travel-agency` service.
 
 == Next steps
 

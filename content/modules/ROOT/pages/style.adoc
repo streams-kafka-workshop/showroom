@@ -17,7 +17,9 @@ summary  {
     cursor: pointer;
 }
 
-
+.toc {
+    display: none !important;
+}
 </style>
 
 ++++

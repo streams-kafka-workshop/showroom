@@ -37,7 +37,7 @@ Microservice architectures split the work of enterprise applications into modula
 [%collapsible]
 ====
 
-==== Common Use Cases for Service Mesh
+*Common Use Cases for Service Mesh*
 
 A service mesh helps solve several common challenges in modern, cloud-native applications. Here are a few key things you can do with this architecture:
 
@@ -54,7 +54,7 @@ Set rules for how services interact—like who's allowed to talk to what, and ho
 See how your services depend on each other and track the traffic between them. This makes it easier to spot problems when something goes wrong.
 
 
-==== Common Challenges addressed
+*Common Challenges addressed*
 
 In today's world of containers and Kubernetes, developers want to focus on writing the actual business logic of their services. But to meet company requirements—like security, monitoring, and reliable networking—they often have to deal with a lot of extra tasks.
 
