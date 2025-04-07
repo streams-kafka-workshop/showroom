@@ -162,7 +162,7 @@ image:m3/webapp-see-details.png[]
 
 == Cleanup the Echo HTTPRoute
 
-. Navigate to {ocp_cluster_openshift_cluster_console_url}/kuadrant/overview[Connectivity Link Menu^, window="console"].  
+. Navigate to {ocp_cluster_openshift_cluster_console_url}/kuadrant/overview[Connectivity Link Menu^, window="console"].
 . Click on the kebab menu of the `echo-api` route, and click `Delete`
 +
 image:m3/delete-echo.png[] 

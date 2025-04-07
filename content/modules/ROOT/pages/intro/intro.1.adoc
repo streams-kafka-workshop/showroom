@@ -9,15 +9,9 @@ A number of components are preconfigured to enable the execution of this entire 
 
 == Login to terminals
 
-You will need to access the web terminals and Dev Spaces to apply configuration
-
-. Login to both the terminals on the right side using the following command.
-
+. Throughout the workshop, you'll use the web terminals displayed on the right-hand side to apply configurations as you move forward.
+. You'll access both Red Hat OpenShift and Red Hat Enterprise Linux (RHEL) through the command line. Use the *top-right terminal* for OpenShift and the *bottom-right terminal* for RHEL.
 +
-[source,sh,role="execute",subs=attributes+]
-----
-oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.30.0.1:443
-----
-. Type `y` when your are prompted with *Use insecure connections? (y/n):*
-. You should see a `Login successful.` message
+image:intro/stacked-terminals.png[width=60%] 
+. The next sections will provide step-by-step guided instructions on logging into OpenShift or RHEL as needed.
 

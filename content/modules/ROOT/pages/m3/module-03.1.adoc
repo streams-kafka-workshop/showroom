@@ -10,14 +10,15 @@ The {rhcl} operator has been already setup amongst a few other components.
 
 == Explore the workshop setup
 
-. Navigate to the {rhcl} plugin link from the bottom of the left-hand navigation
+. Access the {ocp_cluster_openshift_cluster_console_url}[OpenShift console^, window="console"].
+. Select *Connectivity Link* from the bottom of the left-hand navigation menu.
 +
 image:m3/rhcl-console-view.png[] 
-. In the Overview section of {ocp_cluster_openshift_cluster_console_url}/kuadrant/overview[Connectivity Link^, window="console"] plugin menu, you can view the  `prod-web` Gateway and the preconfigured TLS Policy.
+. In the *Overview* section, you will notice that a *Gateway*, a *TLSPolicy*, a *DNSPolicy*, and an *HTTPRoute* have been pre-configured.
 +
 image:m3/gateway-tls-view.png[]
 . This Gateway (based on Istio Gateway) has been created with a wildcard hostname `*.travels.{ocp_cluster_openshift_cluster_ingress_domain}`, and a TLS Policy has already been created. 
-. If you access the `prod-web` Gateway by clicking on it, the  *YAML* tab will display the Gateway details
+. If you access the `prod-web` Gateway by clicking on it, the *YAML* tab will display the Gateway details
 +
 [source,sh,subs=attributes+]
 ----
