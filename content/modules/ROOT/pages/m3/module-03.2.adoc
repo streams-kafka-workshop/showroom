@@ -7,9 +7,7 @@ Now that the Platform Engineer has made the Gateway available, Developers/App ow
 
 == Activity: Developer workflow
 
-In this section, you will perform the role of a developer. As  self service create policies based on your application's need to protect the core services' endpoints.
-
-The
+In this section, you will perform the role of a developer. As self service, create policies based on your application's need to protect the core services' endpoints.
 
 == Test access to the Travelz Web Application
 
@@ -113,16 +111,13 @@ type: Opaque
 ----
 . Click *Create* to create these resources
 image:m3/auth-apikey-created.png[width=80%] 
-.  Access {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"].} once more. 
++
+NOTE: For the sake of the workshop, we have chosen to authentication using a simplistic API Key. In real world, you may consider using a JWT/OAuth access token to authenticate the requests.
+.  Access {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"] once more. 
 .. You will notice that the `travel-agency` HTTPRoute now is impacted by it's own AuthPolicy.
-.. You may have noticed that the `prod-web` Gateway's RateLimitPolicy still affects the `travel-agency` HTTPRoute.
+.. You will also notice (in your browser) that the `prod-web` Gateway's RateLimitPolicy still affects the `travel-agency` HTTPRoute.
 +
 image:m3/travel-ap-topology.png[width=80%] 
-
-[NOTE]
-====
-For the sake of the workshop, we have chosen to authentication using a simplistic API Key. In real world, you may consider using a JWT/OAuth access token to authenticate the requests.
-====
 
 == Test Web App again (after HTTPRoute and AuthPolicy are setup)
 

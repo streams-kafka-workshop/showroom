@@ -92,13 +92,13 @@ image:m3/gw-dns-policy-created.png[]
 
 ====
 
-=== Review the `echo-api` HTTPRoute
+=== `echo-api` HTTPRoute
 
 . This `echo-api` HTTPRoute has been setup as a way for Platform Engineers to test their setup before opening this up for the developers.
 
 == Create a zero-trust AuthPolicy
 
-As a Platform Engineer, you will now setup an *AuthPolicy* for tailor-made Zero Trust API security.
+As a Platform Engineer, you will now setup a zero-trust *AuthPolicy* to secure your services.
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 . In the YAML editor, copy the following *AuthPolicy* CR
@@ -162,9 +162,9 @@ spec:
       - limit: 5
         window: 10s
 ----
-. Click the Create button at the bottom of the YAML editor
+. Click the *Create* button at the bottom of the YAML editor
 +
-image:m3/gw-rlp-yaml.png[] 
+image:m3/gw-rlp-yaml.png[width=70%] 
 . Scroll to the bottom of the RateLimitPolicy details page to note that the RateLimitPolicy has been accepted and enforced
 +
 image:m3/gw-rlp-created.png[]
