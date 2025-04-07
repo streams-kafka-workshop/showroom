@@ -89,8 +89,8 @@ Feel free to explore *Outbound Metrics*, *Envoy*, *Services*, *Istio Config*, an
 
 === Summary:
 
-Congratulations! You’ve enabled automatic sidecar injection, onboarded an application into the mesh, and used Kiali to visualize and analyze service traffic.
+Congratulations! You've enabled automatic sidecar injection, onboarded an application into the mesh, and used Kiali to visualize and analyze service traffic.
 
 == Next steps
 
-In the next section, you’ll implement an `AuthorizationPolicy` Custom Resource Definition (CRD) in {rhossm} to explicitly control which services can talk to each other. This enforces a least-privilege model for east-west service communication.
+In the next section, you'll implement an `AuthorizationPolicy` Custom Resource Definition (CRD) in {rhossm} to explicitly control which services can talk to each other. This enforces a least-privilege model for east-west service communication.

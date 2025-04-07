@@ -45,10 +45,10 @@ A service mesh helps solve several common challenges in modern, cloud-native app
 Manage how traffic moves between your services. This helps keep things running smoothly, even when there are problems on the network.
 
 * *Built-in Security*:  
-Each service gets its own identity, so you can be sure who’s talking to who. You can also encrypt traffic between services—even if they’re running in different environments.
+Each service gets its own identity, so you can be sure who's talking to who. You can also encrypt traffic between services—even if they're running in different environments.
 
 * *Easy Policy Management*:  
-Set rules for how services interact—like who’s allowed to talk to what, and how much traffic they can handle. You make these changes in the mesh, not in your app code.
+Set rules for how services interact—like who's allowed to talk to what, and how much traffic they can handle. You make these changes in the mesh, not in your app code.
 
 * *Better Visibility*:  
 See how your services depend on each other and track the traffic between them. This makes it easier to spot problems when something goes wrong.
@@ -56,9 +56,9 @@ See how your services depend on each other and track the traffic between them. T
 
 ==== Common Challenges addressed
 
-In today’s world of containers and Kubernetes, developers want to focus on writing the actual business logic of their services. But to meet company requirements—like security, monitoring, and reliable networking—they often have to deal with a lot of extra tasks.
+In today's world of containers and Kubernetes, developers want to focus on writing the actual business logic of their services. But to meet company requirements—like security, monitoring, and reliable networking—they often have to deal with a lot of extra tasks.
 
-Things like setting up secure connections, managing traffic between services, and tracking service behavior are important, but they aren’t part of the busness logic of the service itself.
+Things like setting up secure connections, managing traffic between services, and tracking service behavior are important, but they aren't part of the busness logic of the service itself.
 
 As a result, each microservice ends up handling more than just its main job. It also has to include things like authentication, error handling, and monitoring—making the system more complex and slowing down development.
 
@@ -89,7 +89,7 @@ OpenShift Service Mesh addresses these challenges by providing a platform-native
 
 - *Enhance Reliability and Resilience*: Features like automatic retries, circuit breakers, and failover mechanisms ensure high availability even under challenging network conditions.
 
-- *Support Kubernetes-Native Standards*: OpenShift Service Mesh 3’s support for the Kubernetes Gateway API allows for modern, scalable management of ingress and egress traffic across clusters.
+- *Support Kubernetes-Native Standards*: OpenShift Service Mesh 3's support for the Kubernetes Gateway API allows for modern, scalable management of ingress and egress traffic across clusters.
 
 With few or no service code changes.
 
@@ -123,11 +123,11 @@ As part of this workshop, certain components (such as {rhossm} and Kiali operato
 
 === Activities Overview:
 
-In this module, you'll get hands-on experience with OpenShift Service Mesh. We’ll walk through the following key activities together:
+In this module, you'll get hands-on experience with OpenShift Service Mesh. We'll walk through the following key activities together:
 
 * *Get to Know the Service Mesh Components*  
 
-** Learn how OpenShift Service Mesh works by exploring its main parts. You’ll see how it gives you visibility and control over how services talk to each other.
+** Learn how OpenShift Service Mesh works by exploring its main parts. You'll see how it gives you visibility and control over how services talk to each other.
 
 * *Secure Service Access with Zero Trust*  
 
@@ -139,4 +139,4 @@ In this module, you'll get hands-on experience with OpenShift Service Mesh. We�
 
 == Next Steps
 
-Next, we’ll take a closer look at the core parts of {rhossm}—including the control plane, sidecar proxies, and tools for observability. Then we’ll set up namespaces and bring workloads into the mesh using automatic sidecar injection.
+Next, we'll take a closer look at the core parts of {rhossm}—including the control plane, sidecar proxies, and tools for observability. Then we'll set up namespaces and bring workloads into the mesh using automatic sidecar injection.

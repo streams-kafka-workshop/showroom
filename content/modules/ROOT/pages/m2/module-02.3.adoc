@@ -9,7 +9,7 @@ In the previous section, you secured service-to-service communication using `Aut
 
 Now that your services are locked down and secured, it's time to focus on how traffic flows between them.
 
-In this next section, we’ll leverage {rhossm} to **shape and manage traffic flows** using advanced techniques like:
+In this next section, we'll leverage {rhossm} to **shape and manage traffic flows** using advanced techniques like:
 
 * **Canary rollouts** – gradually introducing new versions of a service
 * **Mirroring** – sending a copy of live traffic to a new version without impacting users
@@ -17,11 +17,11 @@ In this next section, we’ll leverage {rhossm} to **shape and manage traffic fl
 
 These patterns allow teams to roll out changes safely and with confidence—minimizing risk while gaining real-time observability and control.
 
-Let’s dive in!
+Let's dive in!
 
 == Why Progressive Delivery Matters
 
-As a growing travel platform, the `travel-agency` team is continuously rolling out new features and improvements to core services like `discounts`, which directly impact pricing and promotions. Because these changes affect customer experience and revenue, it’s crucial that updates are rolled out in a way that is safe, observable, and reversible.
+As a growing travel platform, the `travel-agency` team is continuously rolling out new features and improvements to core services like `discounts`, which directly impact pricing and promotions. Because these changes affect customer experience and revenue, it's crucial that updates are rolled out in a way that is safe, observable, and reversible.
 
 === Business Value
 
@@ -47,9 +47,9 @@ In this activity, you'll implement these patterns using OpenShift Service Mesh.
 
 image:m2/canary.png[width=600]
 
-Now that you’ve secured your services, it’s time to explore how {rhossm} can help you **safely roll out new versions** of a service without taking down your entire application or impacting every user.
+Now that you've secured your services, it's time to explore how {rhossm} can help you **safely roll out new versions** of a service without taking down your entire application or impacting every user.
 
-In this activity, you’ll simulate a real-world **canary deployment** strategy by introducing a new version of the `discounts` service (`v2`) and gradually shifting traffic to it.
+In this activity, you'll simulate a real-world **canary deployment** strategy by introducing a new version of the `discounts` service (`v2`) and gradually shifting traffic to it.
 
 This technique allows teams to:
 
@@ -69,7 +69,7 @@ In the next steps, you will define the `DestinationRule` and `VirtualService` re
 
 === Step 1: Define Traffic Routing Rules
 
-You’ll define both a `DestinationRule` and a `VirtualService`:
+You'll define both a `DestinationRule` and a `VirtualService`:
 
 * The `DestinationRule` defines two subsets: `v1` and `v2`
 * The `VirtualService` initially sends 100% of traffic to `v1`, 0% to `v2`
@@ -161,7 +161,7 @@ Once the `v2` version is deployed to the `travel-agancy` namespace in OpenShift,
 
 === Step 2: Deploy the `discounts-v2` Service
 
-You’ll deploy a second version of the `discounts` service (`v2`) into the mesh. It will run alongside the existing `v1` version but won’t receive traffic until we configure routing.
+You'll deploy a second version of the `discounts` service (`v2`) into the mesh. It will run alongside the existing `v1` version but won't receive traffic until we configure routing.
 
 
 . To deploy `discounts-v2` click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[Openshift Console^, window="console"] to create a new resource.

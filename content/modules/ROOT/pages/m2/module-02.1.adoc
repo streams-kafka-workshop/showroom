@@ -115,7 +115,7 @@ mysqldb-v1-f578f78f9-98lw7       1/1     Running   0          112m
 travels-v1-647d788486-wf4nm      1/1     Running   0          112m
 
 ----
-Each pod shows `1/1` under `READY`, meaning each one has a single container and it’s running.  
+Each pod shows `1/1` under `READY`, meaning each one has a single container and it's running.  
 
 Check the namespace `travel-agency` configuration:
 
@@ -144,7 +144,7 @@ Status:       Active
 ----
 Look for the label: `istio-injection=disabled`
 
-Even though the mesh is managing the namespace, sidecars are not yet deployed. Let’s change that by updating the label to `istio-injection=enabled`.
+Even though the mesh is managing the namespace, sidecars are not yet deployed. Let's change that by updating the label to `istio-injection=enabled`.
 
 [NOTE]
 ====
