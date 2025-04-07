@@ -5,14 +5,14 @@ include::../style.adoc[]
 
 == Module 3: Simplify and secure traffic management with {rhcl}
 
-With their growing popularity, {corp} would like to add new channels to their existing portals. They plan to launch a mobile app, and also onboard  partner portals which require secure access to their core services.
+With their growing popularity, {corp} would like to add new channels to their existing portals. They plan to launch onboard  partner portals which require secure access to their core services.
 
-All inward traffic from mobile app or external systems need to be secured and managed. {corp} also wants to protect the endpoints by easily applying rate limiting and specific levels of access based on systems and users.
+All incoming traffic from the external partner portal need to be secured and managed. {corp} also wants to protect the endpoints by easily applying rate limiting and specific levels of access based on systems and users.
 
 
 == Technical considerations
 
-To expose core functionalities to mobile apps and external partners, {corp} needs to 
+To expose core functionalities to external partners, {corp} needs to 
 
 * Allow controlled access to connect to the services
 * Secure traffic with automatic TLS integration
@@ -54,7 +54,7 @@ With this approach
 
 == Solution 
 
-. The access to core services (Travels) service endpoint needs to be secured and protected for connectivity from the mobile app and partner portals that is being built.
+. The access to core services (Travels) service endpoint needs to be secured and protected for connectivity from the partner portals that are being onboarded.
 . The team adopts a Kubernetes native approach to application connectivity through {rhcl}.
 . Platform Engineers setup a Gateway which will allow for secure connection to the backend service endpoints. 
 . Developers the onboarding their service endpoints by creating a HTTPRoute representing the endpoint. 

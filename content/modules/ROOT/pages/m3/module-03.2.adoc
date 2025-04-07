@@ -3,17 +3,21 @@ include::../style.adoc[]
 
 == Module 3: Simplify and secure traffic management with {rhcl}
 
+Now that the Platform Engineer has made the Gateway available, Developers/App owners can now onboard their application/service endpoints to be available for secure access. 
+
 == Activity: Developer workflow
 
-In this section, you will perform the role of a developer and create a HTTPRoute, and apply the right policies.
+In this section, you will perform the role of a developer. As  self service create policies based on your application's need to protect the core services' endpoints.
 
-== Test access to the Web Application
+The
 
-. The Web App has been deployed in OpenShift as part of the workshop setup.
-. Access the Web App by clicking https://travels-blue-ui-travel-web.{ocp_cluster_openshift_cluster_ingress_domain}/[here^, console="access Web app"]
-. You should see a 404. This is because the Travels core services endpoint hasn't been exposed using a HTTPRoute
+== Test access to the Travelz Web Application
+
+. The sample Travelz web-app has been deployed in OpenShift as part of the workshop setup.
+. Access this  by clicking https://travels-blue-ui-travel-web.{ocp_cluster_openshift_cluster_ingress_domain}/[here^, console="access Web app"]
+. You should see a 404 error status code. This is because the Travels core services endpoint hasn't been exposed using a HTTPRoute to make it available to other applications/systems.
 +
-image:m3/partner-blue-403.png[] 
+image:m3/partner-blue-404.png[] 
 
 == Set up HTTPRoute for Travels service endpoint
 
@@ -59,9 +63,13 @@ spec:
 image:m3/partner-blue-403.png[] 
 
 . This is because while you have the HTTPRoute now, the original deny-all default policy kicks in and doesn't allow any requests to made. We have a zero-trust auth in place!!
+. You can validate this by accessing {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"].}. You will notice that the `travel-agency` HTTPRoute also inherits the Gateway's policies (just like the `echo-api` HTTRoute)
++
+image:m3/travel-404-policy-topology.png[] 
 
-=== Setup Authpolicy
+== Setup Authpolicy
 
+. Next, create a AuthPolicy targetting the HTTPRoute based on your application's need.
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new Authpolicy for the HTTPRoute.
 . In the YAML editor, copy the following CRs which creates AuthPolicy along with the API Keys needed 
 +
@@ -104,19 +112,29 @@ stringData:
 type: Opaque
 ----
 . Click *Create* to create these resources
-image:m3/auth-apikey-created.png[] 
+image:m3/auth-apikey-created.png[width=80%] 
+.  Access {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"].} once more. 
+.. You will notice that the `travel-agency` HTTPRoute now is impacted by it's own AuthPolicy.
+.. You may have noticed that the `prod-web` Gateway's RateLimitPolicy still affects the `travel-agency` HTTPRoute.
++
+image:m3/travel-ap-topology.png[width=80%] 
+
+[NOTE]
+====
+For the sake of the workshop, we have chosen to authentication using a simplistic API Key. In real world, you may consider using a JWT/OAuth access token to authenticate the requests.
+====
 
 == Test Web App again (after HTTPRoute and AuthPolicy are setup)
 
-. Refresh the web application one more time. You should now see a API Call successful message
+. Refresh the partner portal one more time. You should now see a `API Call is successful` message.
 +
 image:m3/webapp-success.png[] 
 . Choose a City, a From and a To date, and click *Find details* button
 +
 image:m3/webapp-see-details.png[] 
 
-===  Test the default RateLimit Policy
-. Try clicking on the  *Find details* button the details more than 5 times.
+==  Test the default RateLimit Policy
+. Clicking the  *Find details* button the details more than 5 times.
 . Expect to see a 429 error:
 +
 image:m3/partner-blue-429.png[]
@@ -124,7 +142,7 @@ image:m3/partner-blue-429.png[]
 . Since there is no RateLimit Policy for the Travels HTTPRoute, the Gateway's RateLimit Policy is applied to HTTPRoute as well.
 
 
-=== Create a new RateLimit Policy which overrides default gateway policy
+== Create a new RateLimit Policy which overrides default gateway policy
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new Authpolicy for the HTTPRoute.
 . In the YAML editor, copy the following CRs which creates AuthPolicy along with the API Keys needed 
@@ -159,30 +177,11 @@ image:m3/httproute-rlp-created.png[]
 +
 image:m3/webapp-see-details.png[] 
 . You should now be able retrieve details without a `429 - Too Many Requests` error for up to 20 requests in a duration of 10 seconds.
-
-== Cleanup the Echo HTTPRoute
-
-. Navigate to {ocp_cluster_openshift_cluster_console_url}/kuadrant/overview[Connectivity Link Menu^, window="console"].
-. Click on the kebab menu of the `echo-api` route, and click `Delete`
+.  You will notice in the  {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"].} that  the `travel-agency` HTTPRoute has its own Auth and RateLimit policies which effectively override the zero-trust and super low-limits setup on the Gateway.
 +
-image:m3/delete-echo.png[] 
-. Click on *Delete* button to confirm the deletion.
-+
-image:m3/delete-echo-confirm.png[] 
-
-== A final note on Policies Override
-
-. You would now notice that the `ingress-gateway-rlp-lowlimits` and `prod-web-deny-all` are showing up as `Accepted (Not Enforced)`
-+
-image:m3/gw-final-policies.png[] 
-. This is because, while these policies are Accepted, they are not enforced because they are overridden by the policies applied to the HTTPRoute.
-+
-NOTE: You were asked to delete the `echo-api` HTTPRoute to demonstrate how policy overriding works. Unless removed, the RateLimit and Auth policies of the Gateway will remain `Enforced` because `echo-api` continues to inherit them, as no specific policies have been applied to override the Gateway's policies.
-. Click on the *Connectivity Link > Policy Topology* link and explore. Thi view visualizes the relationships and interactions between different resources within your cluster related to {rhcl} (Kuadrant), allowing you to explore connections between Gateways, HTTPRoutes and the Policies
-+
-image:m3/rhcl-topology.png[] 
+image:m3/travel-final-topo.png[width=80%] 
 
 == Summary
 
-. In this section, you played the role of a Developer and created a HTTPRoute for the Web Application to access the Travels core services. You applied the right Auth and Rate Limit policies to the HTTPRoute there by customising this to your application needs in a self-service manner
-. In the next section, you will be introduced the the observability and monitoring 
+. In this section, you played the role of a Developer and created a `travel-agency` HTTPRoute for the core servcices so that this can be accessed by the partner portal securely. You applied the right Auth and Rate Limit policies to the HTTPRoute there by customising this to your specific needs in a self-service manner
+. In the next section, you will be introduced the the observability and monitoring.

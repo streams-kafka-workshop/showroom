@@ -100,7 +100,7 @@ image:m3/gw-dns-policy-created.png[]
 
 As a Platform Engineer, you will now setup an *AuthPolicy* for tailor-made Zero Trust API security.
 
-. Click the (+) button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
+. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 . In the YAML editor, copy the following *AuthPolicy* CR
 +
 [source,sh,role="execute",subs=attributes+]
@@ -203,6 +203,19 @@ curl -k -w "%{http_code}" https://echo.travels.{ocp_cluster_workshop_main_domain
 [WARNING] 
 ====
 * There is a possibility that you might face such an error `curl: (6) Could not resolve host: echo.travels.sandbo123.opentlc.com`
-* This is because the DNS resolution may take a few minutes. 
-* You can retry in a minute or two.
+* This is because the DNS resolution may take a few minutes. Please retry in a minute or two.
 ====
+
+. This error message is because of the zero-trust AuthPolicy that was applied to the Gateway to which the `echo-api` HTTPRoute is attached to. Since there is no other AuthPolicy attached to `echo-api`, the Gateway's AuthPolicy is  enforced on it.
+
+. Navigate to {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"].
+. Note that the Auth, DNS, Rate Limit and TLS policies are all attached to the `prod-web` Gateway, and are inherited by the `echo-api` HTTRoute.
++
+image:m3/echoapi-topology.png[] 
+
+
+== Conclusion
+
+. In this activity, you explored a Platform Engineer's workflow. With the Gateway, TLS Policy, DNS Policy, and Auth Policy you have setup the right guardrails to build upon.
+. You have validated with the `echo-api` HTTPRoute, and confirmed that access was denied as expected.
+. In the next steps, you will perform an App Developer's workflow to expose a Travels Service route, and apply specific policies on the HTTPRoute resource so as to override the Gateway's default policies.
