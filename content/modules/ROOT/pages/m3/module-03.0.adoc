@@ -45,9 +45,9 @@ Here is a view on how {rhcl}'s Policy APIs are applied on the Request flow on Ga
 image:m3/rhcl-policies.png[] 
 
 . *DNS Policy* provides DNS management by managing the lifecycle of DNS records (in the DNS provider) to setup ingress connectivity using DNS to bring traffic to the Gateway.
-. *TLS Policy* This policy can be attached to a Gateway which configures all HTTPS listeners in the Gateway with a certificate
-. *Rate Limit Policy* is attached to Gateways and HTTPRoutes to provide rate limiting of requests
-. *Auth Policy* is attached to Gateways and HTTPRoutes and enforces authentication & authorization rules.
+. *TLS Policy* configures HTTPS listeners on a Gateway with certificates 
+. *Rate Limit Policy* is applied to Gateways and HTTPRoutes to provide rate limiting of requests.
+. *Auth Policy* is applied to Gateways and HTTPRoutes to enforce authentication & authorization rules.
 
 With this approach 
 

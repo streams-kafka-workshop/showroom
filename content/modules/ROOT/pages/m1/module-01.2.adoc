@@ -1,15 +1,10 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-
-
-
-
-
 == Activity: Setting up the site on RHEL
-Similar to our OpenShift site, we will setup the site and routers on RHEL. We will using the Red Hat Service Interconnect command line interface to setup the site. 
+Similar to the OpenShift site, you will setup the site and routers on RHEL using the {rhsi} command line interface.
 
-We'll ssh into our on-prem RHEL machine using the in built Terminal to the right. 
+. You need  to ssh into the on-prem RHEL machine using the in-built Terminal to the right. 
 
 . Click on the lower terminal on the bottom. 
 +
@@ -33,9 +28,9 @@ ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=60 lab-user@{rhel_hostname}
 +
 image::m1/rhel_user.png[]
 
-. Your terminal setup should look like the below.
-+
-image::m1/terminal_upper_lower.png[]
+// . Your terminal setup should look like the below.
+// +
+// image::m1/terminal_upper_lower.png[]
 
 . Enter the following command to clear the *RHEL terminal window (lower terminal)*
 +
@@ -44,7 +39,7 @@ image::m1/terminal_upper_lower.png[]
 clear
 ----
 
-. First let's verify if the database is running on the RHEL machine. From the *RHEL terminal window (lower terminal)*, run the following command.
+. To verify if the database is running on the RHEL machine, run the following command from the *RHEL terminal window (lower terminal)*, .
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -59,9 +54,17 @@ CONTAINER ID   IMAGE        COMMAND   CREATED   STATUS    PORTS    NAMES
 3d12164dd54b  quay.io/kiali/demo_travels_mysqldb:v1  --default-authent...  4 hours ago  Up 4 hours  0.0.0.0:3306->3306/tcp, 3306/tcp, 33060/tcp  travels-mysqldb
 ----
 +
-Note: In case the output returns an empty list, it means that the database is not running on the RHEL machine. Run 'podman restart travels-mysqldb' to restart the database. 
+[CAUTION]
+====
+In case the output returns an empty list, it means that the database is not running on the RHEL machine. Run  the following command to restart the database. 
 
-. In the *RHEL terminal window (lower terminal)*, run the following command to create a site. Similar to our OpenShift site, this will setup the routers in the namespace.
+[source,sh,role="execute",subs=attributes+]
+----
+podman restart travels-mysqldb
+----
+====
+
+. In the *RHEL terminal window (lower terminal)*, run the following command to create a site. Similar to the OpenShift site, this will setup the routers in the namespace.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -104,13 +107,13 @@ File written to /home/lab-user/.local/share/skupper/namespaces/default/input/res
 
 . Before the final step of creating the Virtual Application Network, let's go the https://skupper-network-observer-travel-db.{ocp_cluster_openshift_cluster_ingress_domain}/[Service Interconnect Network Console, window="network-console"] to visualize the the Virtual Application Network.
 
-. Enter the username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` if prompted.
+. Click on *Login with OpenShift*, and enter the username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` if prompted.
 
-. *Allow permissions* when this screen shows up.
+. Click *Allow selected permissions*.
 +
 image::m1/allow_permission.png[]
 
-. You should only be able to see the Openshift cluster (travel-db namespace). This is because the RHEL on-prem machine is not yet part of the Virtual Application Network.
+. You should only be able to see the OpenShift cluster (travel-db namespace). This is because the RHEL on-prem machine is not yet part of the Virtual Application Network.
 +
 image::m1/network-console-ocp.png[]
 

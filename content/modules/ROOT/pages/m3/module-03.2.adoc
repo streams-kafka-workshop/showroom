@@ -17,7 +17,7 @@ image:m3/partner-blue-403.png[]
 
 == Set up HTTPRoute for Travels service endpoint
 
-. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[Openshift Console^, window="console"] to create a new HTTPRoute.
+. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new HTTPRoute.
 . In the YAML editor, copy the following *HTTPRoute* CR
 +
 [source,sh,role="execute",subs=attributes+]
@@ -62,7 +62,7 @@ image:m3/partner-blue-403.png[]
 
 === Setup Authpolicy
 
-. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[Openshift Console^, window="console"] to create a new Authpolicy for the HTTPRoute.
+. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new Authpolicy for the HTTPRoute.
 . In the YAML editor, copy the following CRs which creates AuthPolicy along with the API Keys needed 
 +
 [source,sh,role="execute",subs=attributes+]
@@ -126,7 +126,7 @@ image:m3/partner-blue-429.png[]
 
 === Create a new RateLimit Policy which overrides default gateway policy
 
-. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[Openshift Console^, window="console"] to create a new Authpolicy for the HTTPRoute.
+. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new Authpolicy for the HTTPRoute.
 . In the YAML editor, copy the following CRs which creates AuthPolicy along with the API Keys needed 
 +
 [source,sh,role="execute",subs=attributes+]

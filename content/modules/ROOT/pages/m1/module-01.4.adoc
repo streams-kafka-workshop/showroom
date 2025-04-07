@@ -1,8 +1,5 @@
+:imagesdir: ../../assets/images
 include::../style.adoc[]
-
-
-
-
 
 == Activity: Update the environment variables to access the database
 After the Virtual Application Network and respective Listeners and Connectors are setup on the OpenShift cluster and RHEL machine, let's update the environment variables of our services to access the database. The environment variable MYSQL_SERVICE stores the value of the listener on the OpenShift cluster, which acts as a proxy/virtual-endpoint for the actual database on-premises.
@@ -17,7 +14,7 @@ oc set env deployment/hotels-v1 MYSQL_SERVICE=mysqldb.travel-db:3306 -n travel-a
 oc set env deployment/insurances-v1 MYSQL_SERVICE=mysqldb.travel-db:3306 -n travel-agency
 ----
 
-. Wait for a few seconds to a minute for the new environment variable to take effect, then from the *OpenShift terminal (upper terminal)*, to get a travel quote for the city Prague. Run the following to check if the travels services and all other services are able to access the on-prem database.
+. Wait for a few seconds to a minute for the new environment variable to take effect, then from the *OpenShift terminal (upper terminal)*, to get a travel quote for the city Prague. Run the following to check if the travels services and all other services are able to access the on-prem database. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -25,7 +22,8 @@ curl travels.travel-agency.svc.cluster.local:8000/travels/Prague | jq
 ----
 
 . You should see a response with cars, hotels, flights, and insurances returned from the database indicating that the services are able to access the database.
-
++
+image:m1/travel-agency-response.png[] 
 . Return to the https://skupper-network-observer-travel-db.{ocp_cluster_openshift_cluster_ingress_domain}/[Service Interconnect Network Console, window="network-console"] and refresh the browser tab. Check if the RHEL machine is now part of the Virtual Application Network.
 +
 image::m1/complete_console.png[]

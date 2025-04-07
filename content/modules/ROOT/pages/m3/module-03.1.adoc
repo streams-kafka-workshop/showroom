@@ -48,7 +48,7 @@ spec:
 
 === Create a DNSPolicy
 
-. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[Openshift Console^, window="console"] to create a new resource.
+. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 . In the YAML editor, copy the following *DNSPolicy* CR
 +
 [source,sh,role="execute",subs=attributes+]

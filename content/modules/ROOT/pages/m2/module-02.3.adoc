@@ -88,7 +88,7 @@ In our example, we define a `DestinationRule` for the `discounts` service with t
 
 == Apply the *DestinationRule* 
 
-. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[Openshift Console^, window="console"] to create a new resource.
+. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 . In the YAML editor, copy the following *DestinationRule* CR
 
 +
@@ -123,7 +123,7 @@ A `VirtualService` defines how requests are routed to a service. It lets us cont
 
 == Apply the *VirtualService* 
 
-. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[Openshift Console^, window="console"] to create a new resource.
+. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 . In the YAML editor, copy the following *VirtualService* CR
 
 +
@@ -164,7 +164,7 @@ Once the `v2` version is deployed to the `travel-agancy` namespace in OpenShift,
 You'll deploy a second version of the `discounts` service (`v2`) into the mesh. It will run alongside the existing `v1` version but won't receive traffic until we configure routing.
 
 
-. To deploy `discounts-v2` click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[Openshift Console^, window="console"] to create a new resource.
+. To deploy `discounts-v2` click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 . In the YAML editor, copy the following *Deployment* CR
 
 +
