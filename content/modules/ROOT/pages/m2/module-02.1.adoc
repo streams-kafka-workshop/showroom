@@ -9,29 +9,29 @@ The {rhossm} and Kiali operators have been installed and configured in your clus
 
 In this section, we'll make changes to the *travel-agency* namespace so the travel portal can take full advantage of {rhossm}. We'll do this by enabling Istio sidecar proxy injection.
 
-By default, {rhossm} has visibility into all namespaces in the cluster. However, to actively manage Istio policies between services, we need to explicitly inject the service mesh sidecar proxies by setting annotations on the namespace resource. This can be done manually by editing/patching labels the `travel-agency` namespace, or by using the Kiali console, which is the method we will use in the lab module.
+By default, {rhossm} has visibility into all namespaces in the cluster. However, to actively manage Istio policies between services, we need to explicitly inject the service mesh sidecar proxies by setting annotations on the namespace resource. This can be done manually by editing/patching labels in the `travel-agency` namespace, or by using the Kiali console, which is the method we will use in the lab module.
 
 Once the application is part of the service mesh, you can also use the Red Hat-provided Kiali Operator to visualize service traffic and gain observability into your application.
 
 == Presetup
 
-== Login to terminals
+== Log in to the terminals
 
-You will need to access the web console and command line terminals to apply configurations
+You will need to access the web console and command line terminals to apply configurations.
 
-. Before starting this module, make sure you have exited from the RHEL server from the previous module. In the lower terminal, type `exit` to exit out of the RHEL system.
+Before starting this module, please make sure you have exited the RHEL server from the previous module. In the lower terminal, type `exit` to exit out of the RHEL system.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 exit
 ----
-. Clear the output in both terminals
+. Clear the output in both terminals.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 clear
 ----
-. Login to both the terminals on the right side using the following command.
+. Log in to both the terminals on the right side using the following command.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -39,7 +39,7 @@ oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.
 ----
 . Type `y` if your are prompted with *Use insecure connections? (y/n):*
 . You should see a `Login successful.` message
-. We will be working primarily in the `travel-agency` namespace/project, so run the following command to ensure the next steps are applied to it
+. We will be working primarily in the `travel-agency` namespace/project, so run the following command to ensure the next steps are applied to it.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -53,7 +53,7 @@ Expected output:
 Now using project "travel-agency" on server "https://172.30.0.1:443".
 ```
 
-== Login to the OpenShift Web Console (GUI)
+== Log into the OpenShift Web Console (GUI)
 You will need to access the OpenShift Web Console for some of the exercises. 
 
 . Navigate to the {ocp_cluster_openshift_cluster_console_url}[OpenShift Console, window="console"] and Login as *admin/{ocp_cluster_openshift_cluster_admin_password}* if prompted.
@@ -74,13 +74,13 @@ https://console-openshift-console.apps.[domain].opentlc.com
 
 ```
 
-== Login to the Kiali Web Console (GUI)
+== Log into the Kiali Web Console (GUI)
 
 . Navigate to the Kiali console in a new tab:
 
 * http://kiali-istio-system.{ocp_cluster_openshift_cluster_ingress_domain}[Link to Kiali console, window="kiali"] 
 
-. You can click the link above to access the Kiali consoile, but if needed, to get the URL to the Kiali consol via the command line, run the following command in either terminal window on the right:
+. You can click the link above to access the Kiali console, but if needed, to get the URL to the Kiali console via the command line, run the following command in either terminal window on the right:
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -144,11 +144,11 @@ Status:       Active
 ----
 Look for the label: `istio-injection=disabled`
 
-Even though the mesh is managing the namespace, sidecars are not yet deployed. Let's change that by updating the label to `istio-injection=enabled`.
+Even though the mesh manages the namespace, sidecars have not yet been deployed. Let's change that by updating the label to `istio-injection=enabled`.
 
 [NOTE]
 ====
-The label: `istio-injection=disabled` might not be present in the deployment. If this label is missing `istio-injection=disabled` is the implicit default value, and we can still proceed to the next step.
+The label `istio-injection=disabled` might not be present in the deployment. If this label is missing, `istio-injection=disabled` is the implicit default value, and we can still proceed to the next step.
 ====
 
 *Enabling Auto-Injection Using Kiali*
@@ -216,7 +216,7 @@ oc get deployments -n travel-agency -o name \
   | xargs -I{} oc rollout -n travel-agency restart {}
 ----
 
-Expected output on lower terminal:
+Expected output on the lower terminal:
 
 ```
 deployment.apps/cars-v1 restarted
