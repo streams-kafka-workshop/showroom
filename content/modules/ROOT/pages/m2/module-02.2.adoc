@@ -223,7 +223,7 @@ This confirms that unauthorized services are blocked from reaching `discounts`, 
 
 In this section, you applied your first `AuthorizationPolicy` in {rhossm} to secure service-to-service communication within the `travel-agency` namespace.
 
-You learned that by default, services within the same namespace can communicate freely—this includes services like `travels`, which should not have access to the sensitive `discounts` service.
+You learned that services within the same namespace can communicate freely by default—this includes services like `travels`, which should not have access to the sensitive `discounts` service.
 
 To align with the principle of *least privilege*, you:
 
