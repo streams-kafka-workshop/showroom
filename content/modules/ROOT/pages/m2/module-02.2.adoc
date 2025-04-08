@@ -5,15 +5,15 @@ include::../style.adoc[]
 
 == Activity: Implementing Least Privilege with Authorization Policies
 
-In a typical microservices environment, especially within a service mesh like {rhossm}, it's common for services in the same namespace to be able to communicate freely. While this simplifies development early on, it doesn't align with security best practices—especially when some services handle sensitive logic or customer data.
+In a typical microservices environment, especially within a service mesh like {rhossm}, it's common for services in the same namespace to communicate freely. While this simplifies development early on, it doesn't align with security best practices, especially when some services handle sensitive logic or customer data.
 
-In this activity, you'll work with the `travel-agency` application, a demo travel booking platform made up of several interconnected microservices. One of these services—`discounts`—is responsible for calculating and applying pricing discounts based on proprietary business rules. It's critical that access to this service is tightly controlled.
+In this activity, you'll work with the `travel-agency` application, a demo travel booking platform comprising several interconnected microservices. One of these services—`discounts`—is responsible for calculating and applying pricing discounts based on proprietary business rules. Access to this service must be tightly controlled.
 
 image:m2/travels-discounts.png[]
 
-Currently, any service in the `travel-agency` namespace, including the frontend aggregators like `travels`, can communicate with the `discounts` service. However, only specific backend services—`cars`, `flights`, `hotels`, and `insurances`—should be allowed to call `discounts`.
+Currently, any service in the `travel-agency` namespace, including frontend aggregators like `travels`, can communicate with the `discounts` service. However, only specific backend services—`cars`, `flights`, `hotels`, and `insurances`- should be allowed to call `discounts`.
 
-In this lab, you'll apply an `AuthorizationPolicy` to restrict access to the `discounts` service, enforcing a least privilege model. This will help you gain hands-on experience with Istio authorization policies in {rhossm}, and reinforce important concepts around microservice security and service-to-service communication control.
+In this lab, you'll apply an `AuthorizationPolicy` to restrict access to the `discounts` service, enforcing a least privilege model. This will help you gain hands-on experience with Istio authorization policies in {rhossm} and reinforce important concepts around microservice security and service-to-service communication control.
 
 +
 [.concept]
@@ -41,15 +41,15 @@ Output
 {"user":"hello-from-travels","discount":0.05}
 ```
 
-This command calls the `discounts` services directy from the `travels` pod. 
+This command calls the `discounts` services directly from the `travels` pod. 
 
-Once you've run this command, you can visualize it in the Kiali Traffic 
+Once you've run this command, you can visualize it in the Kiali Traffic. 
 
 image:m2/discounts-direct.png[]
 
 [NOTE]
 ====
-You may need to adjust the time in the Kiali graph from *Last 1m* to a larger window of time so see the traffic from the above command to replay and view the direct call from `travels` to `discounts` or wait a few minutes for the above `curl` command to show up in the Traffic Graph
+You may need to adjust the time in the Kiali graph from *Last 1m* to a larger window of time so see the traffic from the above command to replay and view the direct call from `travels` to `discounts` or wait a few minutes for the above `curl` command to show up in the Traffic Graph.
 ====
 
 We can see traffic from the other services, but you can test connectivity directly from them as well by running the commands from the terminal:
@@ -79,17 +79,17 @@ Output:
 
 What we want to accomplish is to continue to allow these services to access `discounts` while preventing `travels` from accessing `discounts`. We can do this with the {rhossm} Custom Resource (CR) `AuthorizationPolicy`
 
-== Istio Authorization Concepts and Architecure
+== Istio Authorization Concepts and Architecture
 
 Istio's authorization features provide mesh-, namespace-, and workload-wide access control for your workloads in the mesh. This level of control provides the following benefits:
 
 - Workload-to-workload and end-user-to-workload authorization.
 - A simple API: it includes a single `AuthorizationPolicy` *CRD*, which is easy to use and maintain.
-- Flexible semantics: operators can define custom conditions on Istio attributes, and use *CUSTOM*, *DENY* and *ALLOW* actions.
+Flexible semantics: Operators can define custom conditions on Istio attributes and use the *CUSTOM*, *DENY*, and *ALLOW* actions.
 - High performance: Istio authorization (*ALLOW* and *DENY*) is enforced natively on Envoy.
-- High compatibility: supports gRPC, HTTP, HTTPS and HTTP/2 natively, as well as any plain TCP protocols.
+- High compatibility: supports gRPC, HTTP, HTTPS, and HTTP/2 natively, as well as any plain TCP protocols.
 
-The authorization policy enforces access control to the inbound traffic in the server side Envoy proxy. Each Envoy proxy runs an authorization engine that authorizes requests at runtime. When a request comes to the proxy, the authorization engine evaluates the request context against the current authorization policies, and returns the authorization result, either ALLOW or DENY. Operators specify Istio authorization policies using .yaml files.
+The authorization policy enforces access control to the inbound traffic in the server-side Envoy proxy. Each Envoy proxy runs an authorization engine that authorizes requests at runtime. When a request comes to the proxy, the authorization engine evaluates the request context against the current authorization policies and returns the authorization result, either ALLOW or DENY. Operators specify Istio authorization policies using .yaml files.
 
 image:m2/authz.svg[]
 
@@ -112,7 +112,7 @@ To configure an authorization policy, you create an `AuthorizationPolicy` custom
 == Apply the *AuthorizationPolicy* 
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
-. In the YAML editor, copy the following *AuthorizationPolicy* CR
+. In the YAML editor, copy the following *AuthorizationPolicy* CR.
 
 +
 [source,sh,role="execute",subs=attributes+]
@@ -137,17 +137,17 @@ spec:
 
 . Click the *Create* button to enforce the `AuthorizationPolicy` `allow-only-trusted-services`
 
-Lets break down the above AuthorizationPolicy` `allow-only-trusted-services`
+Let's break down the above AuthorizationPolicy` `allow-only-trusted-services`
 
 * `selector`: This targets the specific workload the policy applies to. In this case, it applies to any pod with `app=discounts` and `version=v1`.
 
-* `action`: This tells Istio what to do when the rule matches. Since the default behavior of Istio is to deny if no policy allows it, this rule allows specific traffic while denying everything else.
+* `action`: This tells Istio what to do when the rule matches. Since Istio's default behavior is to deny if no policy allows it, this rule allows specific traffic while denying everything else.
 
-* `rules.from.source.principals`: This defines who is allowed to access the service. In this case, only workloads running in the `travel-agency` namespace using the service account named `discount-access-sa` are permitted to make requests to the discounts service.
+* `rules.from.source.principals`: This defines who can access the service. In this case, only workloads running in the `travel-agency` namespace using the service account named `discount-access-sa` are permitted to make requests to the discounts service.
 
 [NOTE]
 ====
-The `discount-access-sa` service account has already been created for you and has been added to the backend services (`cars`, `flights`, `hotels`, `insurances`), for this hands-on-lab.
+For this hands-on lab, the `discount-access-sa` service account has already been created for you and added to the backend services (`cars`, `flights`, `hotels`, `insurances`).
 ====
 
 == Test the *AuthorizationPolicy*  `allow-only-trusted-services`
@@ -184,7 +184,7 @@ Output:
 RBAC: access denied
 ```
 
-After applying the `AuthorizationPolicy` that only allows requests to the `discounts` service from workloads using the `discount-access-sa` service account, we can verify that it's working as expected by testing access from a service that should not be allowed—like `travels`.
+After applying the `AuthorizationPolicy` that only allows requests to the `discounts` service from workloads using the `discount-access-sa` service account, we can verify that it's working as expected by testing access from a service that should not be allowed, like `travels`.
 
 Run the following command:
 +
@@ -204,7 +204,7 @@ RBAC: access denied
 
 [NOTE]
 ====
-You can view the above `RBAC: access denied` call in the Kiali Traffic Graph as well. It will show up in red as a status `403` HTTP return code.
+You can view the above `RBAC: access denied` call in the Kiali Traffic Graph as well. It will appear in red as a status `403` HTTP return code.
 ====
 
 *What's Happening?*
@@ -214,7 +214,7 @@ It is only allowing traffic from workloads using the `discount-access-sa` servic
 
 * The `travels` service is not using that service account, so Istio denies the request.
 
-* The message `RBAC: access denied` is generated by Istio's Envoy proxy, enforcing the policy at the network layer.
+* Istio's Envoy proxy generates the message `RBAC: access denied`, enforcing the policy at the network layer.
 
 This confirms that unauthorized services are blocked from reaching `discounts`, enforcing the least privilege model we set out to implement. It's a strong validation that the service mesh is securing traffic as expected.
 
@@ -233,7 +233,7 @@ To align with the principle of *least privilege*, you:
 ** ✅ Allowed access for trusted services
 ** ❌ Denied access from unauthorized services like `travels`
 
-This hands-on activity demonstrated how Istio and OpenShift Service Mesh allow you to enforce fine-grained access control using a simple, declarative policy model—helping you improve security posture and reduce the blast radius of potential service compromise.
+This hands-on activity demonstrated how Istio and OpenShift Service Mesh allow you to enforce fine-grained access control using a simple, declarative policy model. This helps you improve security posture and reduce the blast radius of potential service compromise.
 
 == Next steps
 
