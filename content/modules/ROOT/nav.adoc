@@ -20,4 +20,7 @@
 ** xref:m3/module-03.2.adoc[Developer workflow]
 ** xref:m3/module-03.3.adoc[Observability]
 
+
+* xref:conclusion/summary.adoc[Workshop Summary]
+
 * xref:myenv.adoc[My Env Details]
