@@ -1,7 +1,7 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-== Activity: Transferring secure token to RHEL
+== Activity: Transferring a secure token to RHEL
 
 . In the *OpenShift terminal (upper terminal)*, run the following script to convert the grant to a token and transfer the token. 
 +
@@ -17,18 +17,18 @@ image:m1/execute-script.png[]
 
 .. Enter the RHEL password `{rhel_ssh_password}` when prompted.
  
-. Since the token has now been transferred to the RHEL machine, let's start the Virtual Application Network by running the below command from the *RHEL terminal(lower terminal)*. 
+. Since the token has now been transferred to the RHEL machine, let's start the Virtual Application Network by running the command below from the *RHEL terminal(lower terminal)*. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 skupper system setup
 ----
 
-. Wait for a few seconds and you should see the following output.
+. Wait for a few seconds, and you should see the following output.
 +
 [source,sh]
 ----
-Sources will be consumed from namespace "default"
+Sources will be consumed from the namespace "default"
 Site "rhel" has been created on namespace "default"
 Platform: podman
 Definition is available at: /home/lab-user/.local/share/skupper/namespaces/default/input/resources
