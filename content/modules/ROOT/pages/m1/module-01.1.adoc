@@ -80,11 +80,12 @@ A listener binds a local connection endpoint to connectors in remote sites. List
 +
 image::m1/listener_button.png[]
 
-. Input the following details and Submit. Leave the *TLS secret* field blank for now as you will instead create a token at a later step:
+. Input the following details and *Submit*
 ** *Name*: `mysqldb`
 ** *Port*: `3306`
 ** *Routing key*: `appconn`
 ** *Host*: `mysqldb`
+** *TLS secret*: leave this blank for now as you will instead create a token at a later step.
 +
 image::m1/listener_form.png[]
 
