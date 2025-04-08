@@ -84,7 +84,7 @@ In OpenShift Service Mesh, the `DestinationRule` and `VirtualService` resources 
 A `DestinationRule` defines policies applied to traffic intended for a service after routing has occurred. One of the primary use cases for a DestinationRule is to define *subsets* — logical versions of a service that can be targeted individually. These subsets are typically defined using labels corresponding to different service versions (for example, v1, v2, v3).
 ****
 
-In our example, we define a `DestinationRule` for the `discounts` service with two subsets: `v1` and `v2
+In our example, we define a `DestinationRule` for the `discounts` service with two subsets: `v1` and `v2`
 
 == Apply the *DestinationRule* 
 
