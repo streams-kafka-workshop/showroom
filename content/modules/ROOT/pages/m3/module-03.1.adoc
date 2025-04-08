@@ -19,7 +19,7 @@ image:m3/rhcl-inital-overview.png[]
 
 === Review the Gateway
 
-. If you access the `prod-web` Gateway by clicking on it, the *YAML* tab will display the Gateway details
+. You can view the the `prod-web` Gateway by clicking on it. Here is a snippet of the Gateway details
 +
 [source,sh,subs=attributes+]
 ----
@@ -42,7 +42,7 @@ spec:
 ----
 +
 <1> This is the wildcarded hostname which will handle all traffic routed through the `travels.{ocp_cluster_workshop_main_domain}` domain
-<2> A TLS Policy has been pre-created; it leverages the a TLS-issuer set up TLS certificates for the listeners defined within the Gateway.
+<2> A TLS Policy has been pre-created; it leverages a TLS-issuer to manage TLS certificates for the listeners defined within the Gateway.
 
 
 === Review the DNSPolicy
@@ -70,8 +70,9 @@ image:m3/gw-dns-policy-created.png[]
 [NOTE]
 ====
 * The Message displayed against the `Enforced` is to notfy that there are no HTTPRroutes attached yet. This will change once a developer creates a HTTPRroute
-* This DNS Policy has been pre-created because DNS resolution for new DBS records may take a few minutes.
+* This DNS Policy has been pre-created because DNS resolution for new DNS records may take a few minutes.
 ====
+// TODO: Add a command to show DNS records created on DNS provider based on the DNS Policy
 +
 .[.underline]#*Click to learn more about DNSPolicy in Hybrid Cloud Scenarios*#
 [%collapsible]
@@ -92,9 +93,42 @@ image:m3/gw-dns-policy-created.png[]
 
 ====
 
-=== `echo-api` HTTPRoute
+=== Access the `echo-api` HTTPRoute
 
-. This `echo-api` HTTPRoute has been setup as a way for Platform Engineers to test their setup before opening this up for the developers.
+. The `echo-api` HTTPRoute has been setup as a way for Platform Engineers to test their configuration before opening this up to developers.
+. Execute the following `curl` command to access the `echo-api`
++
+[source,sh,role="execute",subs=attributes+]
+----
+curl -k -w "%{http_code}" https://echo.travels.{ocp_cluster_workshop_main_domain}
+----
+. You will observe that this endpoint is accessible without any authentication parameters.
+
++
+```yaml
+{
+  "method": "GET",
+  "path": "/",
+  "query_string": null,
+  "body": "",
+  "headers": {
+    "HTTP_HOST": "echo.travels.sandbox4962.opentlc.com",
+    "HTTP_USER_AGENT": "curl/7.76.1",
+    "HTTP_ACCEPT": "*/*",
+    "HTTP_X_FORWARDED_FOR": "100.64.0.2",
+    "HTTP_X_FORWARDED_PROTO": "https",
+    "HTTP_X_ENVOY_EXTERNAL_ADDRESS": "100.64.0.2",
+    "HTTP_X_REQUEST_ID": "592d2f86-16a4-4191-bd4f-403d60b9d99f",
+    "HTTP_X_ENVOY_DECORATOR_OPERATION": "echo-api.echo-api.svc.cluster.local:8080/*",
+    "HTTP_X_ENVOY_PEER_METADATA_ID": "router~10.128.0.209~prod-web-istio-75575555b6-48kmm.ingress-gateway~ingress-gateway.svc.cluster.local",
+    "HTTP_X_ENVOY_PEER_METADATA": "ChoKCkNMVVNURVJfSUQSDBoKS3ViZ..",
+    "HTTP_X_ENVOY_ATTEMPT_COUNT": "1",
+    "HTTP_VERSION": "HTTP/1.1"
+  },
+  "uuid": "5dc42712-53c3-4f3d-94ec-9d96a501b213"
+}200
+```
+. This is not the intended outcome and needs to be fixed. In the next step, you will create an AuthPolicy to secure this endpoint.
 
 == Create a zero-trust AuthPolicy
 
