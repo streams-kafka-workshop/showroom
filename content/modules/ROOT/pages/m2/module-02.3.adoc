@@ -3,7 +3,7 @@ include::../style.adoc[]
 
 == Module 2: Secure microservices access control with {rhossm}
 
-== Shaping Traffic with OpenShift Service Mesh
+== Activity: Shaping Traffic with OpenShift Service Mesh
 
 In the previous section, you secured service-to-service communication using `AuthorizationPolicy` to enforce least privilege access.
 
