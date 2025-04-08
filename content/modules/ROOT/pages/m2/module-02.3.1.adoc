@@ -31,7 +31,7 @@ image:m2/kiali-display-options-pre-rollout.png[]
 
 === Step 3: Run a Canary Rollout Script
 
-Now you'll run a simple Bash script to gradually shift traffic from `v1` to `v2` in stages: 10%, 25%, 50%, 75%, and finally 100%. The script patches the `VirtualService` on the fly, and you'll observe the results in real time via Kiali, as well as from logs in the terminal window.
+Now, you'll run a simple Bash script to gradually shift traffic from `v1` to `v2` in stages: 10%, 25%, 50%, 75%, and finally 100%. The script patches the `VirtualService` on the fly, and you'll observe the results in real time via Kiali and from logs in the terminal window.
 
 [NOTE]
 ====
@@ -49,7 +49,7 @@ In a real-world production environment, organizations typically use a progressiv
 sh <(curl -s https://raw.githubusercontent.com/app-connectivity-workshop/workshop-devspaces/main/workshop/m2/canary-monitoring.sh)
 ----
 
-You should immediatly start seeing log output from discounts-v1 `[discounts/v1]`.
+You should immediately start seeing log output from discounts-v1 `[discounts/v1]`.
 
 image:m2/log-output-pre-rollout.png[]
 
@@ -88,11 +88,11 @@ virtualservice.networking.istio.io/discounts patched
 
 As the script progresses, switch to the *Kiali console* and open the *Traffic Graph* for the `travel-agency` namespace.
 
-TIP: Set the refresh rate to *10s* and the time window to *Last 1m* to clearly observe traffic shifting between service versions.
+TIP: Set the refresh rate to *10s* and the time window to *Last 1m* to observe traffic shifting between service versions.
 
 image:m2/canary-k-0.png[]
 
-Although Kiali will lag behind by 1 minute, you'll begin to see more and more requests routed to the `discounts-v2` pod as the script progresses.
+Although Kiali will lag by 1 minute, you'll begin to see more and more requests routed to the `discounts-v2` pod as the script progresses.
 
 image:m2/canary-k-1.png[]
 
@@ -119,7 +119,7 @@ Press `Ctrl+C` to stop the log output in the upper terminal window.
 === Summary:
 
 You've just performed a progressive rollout of a new version of a microservice using weighted routing in OpenShift Service Mesh. This powerful technique enables you to test updates incrementally, observe behavior, and reduce the risk of pushing changes to production.
-Congradulations on completing "Secure microservices access control with {rhossm}" !!!
+Congratulations on completing "Secure microservices access control with {rhossm}" !!!
 
 === End of Module Summary
 
@@ -129,7 +129,7 @@ Through hands-on activities, we:
 
 * Configured core components of {rhossm} to gain visibility and control over service communication.
 
-* Implemented a zero trust security model by applying an AuthorizationPolicy to restrict service access based on need.
+* Implemented a zero-trust security model by applying an AuthorizationPolicy to restrict service access based on need.
 
 * Used advanced traffic management techniques, such as canary rollouts, to safely deploy new service versions.
 
