@@ -3,7 +3,7 @@ include::../style.adoc[]
 
 == Module 2: Secure microservices access control with {rhossm}
 
-== Canary Rollout
+== Activity: Canary Rollout
 
 === Set Kiali Display Options
 
