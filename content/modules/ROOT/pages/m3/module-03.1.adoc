@@ -3,6 +3,21 @@ include::../style.adoc[]
 
 == Module 3: Simplify and secure traffic management with {rhcl}
 
+To perform the section of the workshop, ensure you are logged into OpenShift within the terminal.
+
+. In the *right-upper terminal*, running the following command should display `admin`
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc whoami
+----
+. If this is not the case, run the following command to login to OpenShift
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.30.0.1:443
+----
+
 == Activity: Platform Engineer workflow
 
 The {rhcl} operator has been already setup amongst a few other components. 
@@ -15,7 +30,6 @@ image:m3/rhcl-console-view.png[]
 +
 image:m3/rhcl-inital-overview.png[]
 
-.. A Gateway (based on Istio Gateway) has been created with a wildcard hostname `*.travels.{ocp_cluster_openshift_cluster_ingress_domain}`. A DNS Policy and a TLS Policy have also been created upfront. 
 
 === Review the Gateway
 
@@ -80,8 +94,8 @@ oc get dnsrecord.kuadrant.io/prod-web-api -n ingress-gateway  -o jsonpath='{.spe
 ----
 
 . You will see an output like this `a49e9cf51674b4f93854c55ed5d33484-1568847220.us-east-2.elb.amazonaws.com` which is the last endpoint that was successfully published by the provider (AWS Route53).
-+
-.[.underline]#*Click to learn more about DNSPolicy in Hybrid Cloud Scenarios*#
++ 
+.[.underline]#*Click to learn more about DNSPolicy loadbalancing options*#
 [%collapsible]
 ====
 
@@ -216,18 +230,6 @@ image:m3/gw-rlp-created.png[]
 
 Let us now test the `echo-api` HTTPRoute to test the setup so far, to ensure all requests are denied due to the zero trust policy we have setup
 
-. In the right-upper terminal, running the following command should display `admin`
-+
-[source,sh,role="execute",subs=attributes+]
-----
-oc whoami
-----
-. If this is not the case, run the following command to login to OpenShift
-+
-[source,sh,role="execute",subs=attributes+]
-----
-oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.30.0.1:443
-----
 . Execute the following `curl` command to access the `echo-api`
 +
 [source,sh,role="execute",subs=attributes+]
