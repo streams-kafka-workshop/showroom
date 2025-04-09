@@ -111,7 +111,7 @@ image::m1/token_button.png[]
 +
 image:m1/create-access-token.png[] 
 . You will be presented with the *Create token - How to* step. 
-.. You can ignore the rest of the steps since you will use a script to directly convert and transfer it to the on-premises RHEL machine.
+.. You can ignore the rest of the steps since as you will use a script to directly convert and transfer it to the on-premises RHEL machine.
 .. If you would like to inspect how the token looks like, you can download and open the file. 
 .. Click on *Done*. 
 +

@@ -14,7 +14,29 @@ oc set env deployment/hotels-v1 MYSQL_SERVICE=mysqldb.travel-db:3306 -n travel-a
 oc set env deployment/insurances-v1 MYSQL_SERVICE=mysqldb.travel-db:3306 -n travel-agency
 ----
 
-. Wait for a few seconds to a minute for the new environment variable to take effect, then from the *OpenShift terminal (upper terminal)*, to get a travel quote for the city Prague. Run the following to check if the travels services and all other services are able to access the on-prem database. 
+. Wait for a few seconds for the new environment variable to take effect. Double check all the pods are running by running the following command in the *OpenShift terminal (upper terminal)*.
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc get pods -n travel-agency -w
+----
+. You should see all the pods are running ina few seconds.
++
+[source,sh]
+----
+NAME                             READY   STATUS    RESTARTS   AGE
+NAME                             READY   STATUS    RESTARTS   AGE
+cars-v1-9888f46d9-chpkf          1/1     Running   0          35m
+discounts-v1-68b7454679-5tkq5    1/1     Running   0          5h37m
+flights-v1-648889f849-tdw89      1/1     Running   0          35m
+hotels-v1-76bf864cb9-ltlct       1/1     Running   0          35m
+insurances-v1-66cb568ccd-nvjjn   1/1     Running   0          35m
+travels-v1-7cf6ff7697-564cg      1/1     Running   0          5h37m
+----
+
+. Press `Ctrl+C` to stop the log output in the **OpenShift terminal** (upper terminal).
+
+. In the *OpenShift terminal (upper terminal)*, to get a travel quote for the city Prague. Run the following to check if the travels services and all other services are able to access the on-prem database. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
