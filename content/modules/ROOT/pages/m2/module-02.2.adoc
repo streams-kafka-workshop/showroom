@@ -79,25 +79,6 @@ Output:
 
 What we want to accomplish is to continue to allow these services to access `discounts` while preventing `travels` from accessing `discounts`. We can do this with the {rhossm} Custom Resource (CR) `AuthorizationPolicy`
 
-== Istio Authorization Concepts and Architecture
-
-Istio's authorization features provide mesh-, namespace-, and workload-wide access control for your workloads in the mesh. This level of control provides the following benefits:
-
-- Workload-to-workload and end-user-to-workload authorization.
-- A simple API: it includes a single `AuthorizationPolicy` *CRD*, which is easy to use and maintain.
-Flexible semantics: Operators can define custom conditions on Istio attributes and use the *CUSTOM*, *DENY*, and *ALLOW* actions.
-- High performance: Istio authorization (*ALLOW* and *DENY*) is enforced natively on Envoy.
-- High compatibility: supports gRPC, HTTP, HTTPS, and HTTP/2 natively, as well as any plain TCP protocols.
-
-The authorization policy enforces access control to the inbound traffic in the server-side Envoy proxy. Each Envoy proxy runs an authorization engine that authorizes requests at runtime. When a request comes to the proxy, the authorization engine evaluates the request context against the current authorization policies and returns the authorization result, either ALLOW or DENY. Operators specify Istio authorization policies using .yaml files.
-
-image:m2/authz.svg[]
-
-To enforce access control to your workloads, you apply an authorization policy.
-
-For workloads without authorization policies applied, Istio allows all requests.
-
-
 == Configure and Apply an *AuthorizationPolicy* 
 
 To configure an authorization policy, you create an `AuthorizationPolicy` custom resource. An authorization policy includes a selector, an action, and a list of rules:

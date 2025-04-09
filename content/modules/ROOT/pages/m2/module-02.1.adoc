@@ -111,7 +111,6 @@ discounts-v1-7cfd444876-wrxtc    1/1     Running   0          113m
 flights-v1-77bbc76cbd-kfghl      1/1     Running   0          112m
 hotels-v1-55556b6574-kcxv7       1/1     Running   0          112m
 insurances-v1-656cdb54f6-gcc2m   1/1     Running   0          112m
-mysqldb-v1-f578f78f9-98lw7       1/1     Running   0          112m
 travels-v1-647d788486-wf4nm      1/1     Running   0          112m
 
 ----
@@ -224,7 +223,6 @@ deployment.apps/discounts-v1 restarted
 deployment.apps/flights-v1 restarted
 deployment.apps/hotels-v1 restarted
 deployment.apps/insurances-v1 restarted
-deployment.apps/mysqldb-v1 restarted
 deployment.apps/travels-v1 restarted
 ```
 
