@@ -7,7 +7,7 @@ Let us delve into the world of {corp}, a travel company offering a comprehensive
 
 In response, {corp} has made a strategic decision to revamp their application, transitioning it into a microservices architecture. These microservices will be distributed across different environments, enhancing scalability and overall performance. They've chosen Red Hat OpenShift as the platform of their choice for deploying their microservices. 
 
-They were successful in breaking down all there components into microservices and migrated all there components to containers and deployed them on Red Hat OpenShift. However, their core database remained in the data center, mainly because there are regulatory requirements that require data processing or storage to happen on-prem or in specifically certified data centres. The company didn't want to move their database to the cloud yet and want to keep it on-premises on their Red Hat Enterprise Linux clusters.
+They were successful in breaking down all their components into microservices and migrated all their components to containers and deployed them on Red Hat OpenShift. However, their core database remained in the data center, mainly because there are regulatory requirements that require data processing or storage to happen on-prem or in specifically certified data centers. The company didn't want to move their database to the cloud yet and want to keep it on-premises on their Red Hat Enterprise Linux clusters.
 
 {corp} have chosen Red Hat Service Interconnect as the networking solution because of the ease and simplicity of building a secure Layer 7 network between different environments. Let us see how {rhsi} can help setup the communication between the microservices on OpenShift and the database on-premises RHEL.
 
@@ -19,7 +19,7 @@ They were successful in breaking down all there components into microservices an
 * VANs are created in a matter of minutes, avoiding extensive networking planning, and overhead and complexity of creating complex network topologies using VPNs. 
 * All interconnections between environments use mutual TLS (mTLS) to keep an organization's infrastructure and data protected. 
 
-Red Hat Service Interconnect is based on the open source Skupper project.
+Red Hat Service Interconnect is based on the open-source Skupper project.
 
 === Activities overview:
 
