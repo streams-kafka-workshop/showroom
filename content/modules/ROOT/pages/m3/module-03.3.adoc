@@ -8,10 +8,10 @@ include::../style.adoc[]
 {rhcl} provides a variety of starting points for monitoring your installation in the Kuadrant upstream project https://github.com/Kuadrant/kuadrant-operator/tree/main/examples[(examples from kuadrant.io)^] folder. These dashboards and alerts are ready-to-use and easily customizable to fit your environment.
 
 == Login to Grafana
-. These dashboards can be accessed https://grafana-route-monitoring.{ocp_cluster_openshift_cluster_ingress_domain}/login[via Grafana from here^]
+. These dashboards can be accessed at https://grafana-route-monitoring.{ocp_cluster_openshift_cluster_ingress_domain}/login[via Grafana from here^]
 +
 image:m3/grafana-openshift-login.png[width=60%]
-. Click on the *Log in with OpenShift* button, and login as `admin/{ocp_cluster_openshift_cluster_admin_password}` when prompted.
+. Click on the *Log in with OpenShift* button, and log in as `admin/{ocp_cluster_openshift_cluster_admin_password}` when prompted.
 +
 image:m3/grafana-openshift-login-cred.png[width=60%]
 . Click *Allow selected permissions* button 
@@ -20,53 +20,53 @@ image:m3/grafana-allow-permissions.png[]
 
 == Access the dashboards
 
-* From the left-hand navigation, access *Dashboards* menu. 
+* From the left-hand navigation, access the *Dashboards* menu. 
 +
 image::m3/grafana-dashboards-list.png[] 
 * Click on the *monitoring* folder to view the preloaded dashboards.
 +
 image::m3/grafana-monitoring-dashboards.png[] 
 
-== Explore persona based Dashboards
+== Explore persona-based Dashboards
 
-. Click on the *App Developer Dashboard* link to view  the data. You are presented with the data for both `echo-api` and `travel-agency` APIs. 
+. Click on the *App Developer Dashboard* link to view  the data. You will be presented with the data for both `echo-api` and `travel-agency` APIs. 
 +
 image::m3/app-dashboard-no-data.png[] 
-. For the sake of this workshop, let us create some traffic to th `echo-api`. Run the following command on the top-right terminal. You will see a combination of 403 and 429 errors in the terminal
+. For the sake of this workshop, let us create some traffic to the `echo-api`. Run the following command on the top-right terminal. You will see a combination of 403 and 429 errors in the terminal.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 for i in {1..1000}; do curl -k -w "%{http_code}" https://echo.travels.{ocp_cluster_workshop_main_domain}; done
 ----
-. Access the Grafana dashboard tab again, and click refresh button as shown in the below screenshot. 
-.. You may need to refresh a couple of times to allow for the metrics to be available in the Grafana dashboard
-.. Notice that 429 and 403 requests, and total requests available in the different sections of the dashhabord.
+. Access the Grafana dashboard tab again, and click the refresh button as shown in the screenshot below. 
+... You may need to refresh a couple of times for the metrics to appear in the Grafana dashboard.
+Notice that 429 and 403 requests, as well as the total requests, are available in the different sections of the dashboard.
 +
 image::m3/app-dashboard-with-data.png[] 
 
-. Next, click on the *Platform Engineer Dashboard* link on the top-left of the page. 
-.. View Gateway, HTTPRoute and its policies
+. Next, click the *Platform Engineer Dashboard* link on the top left of the page. 
+.. View Gateway, HTTPRoute, and its policies
 +
 image::m3/pe-dashboard-gw.png[]
 +
 [CAUTION]
 ====
-Don't see the policies? You just might need to restart the kube-state-metrics pod. 
+Don't see the policies? You might need to restart the kube-state-metrics pod. 
 
-* Run this command in the top-right terminal, to nudge the metrics a bit.
+* Run this command in the top-right terminal to nudge the metrics a bit.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 oc rollout restart deployment/kube-state-metrics-kuadrant -n monitoring
 ----
-* Refresh the dashboard and voila everything is alright in our dashboard world.
+* Refresh the dashboard, and voila, everything is alright in our dashboard world.
 
 ====
-.. View details of Total requests, latency, and CPU, Memory usage
+.. View details of Total requests, latency, and CPU and memory usage
 +
 image::m3/pe-dashboard-requests.png[]
 
-. Finally, click on the *Business User Dashboard* link on the top-left of the page. This dashboard shows data such as traffic summary, Historical request comparison - which are more relevant to a business user
+. Finally, click the Business User Dashboard link at the top left of the page. This dashboard shows data such as traffic summary and historical request comparison, which are more relevant to business users.
 +
 image::m3/biz-dashboard-with-data.png[]
 
@@ -75,7 +75,7 @@ image::m3/biz-dashboard-with-data.png[]
 
 == Conclusion
 
-With this setup, {corp} is all set to onboard further service enpoints to be accessed securely. This solution can be further extended to span across a multi-cluster setup too.
+With this setup, {corp} is all set to onboard further service endpoints to be accessed securely. This solution can be further extended to span across a multi-cluster setup, too.
 
-We will also extend this pattern to include the all important Observability aspects as well.
+We will also extend this pattern to include all the important aspects of observability.
 
