@@ -3,7 +3,9 @@ include::../style.adoc[]
 
 == Module 3: Simplify and secure traffic management with {rhcl}
 
-To perform the workshop section, please make sure you are logged into OpenShift within the terminal.
+== Activity: Platform Engineer Workflow
+
+To perform the section of the workshop, ensure you are logged into OpenShift within the terminal.
 
 . In the *right-upper terminal*, running the following command should display `admin`
 +
