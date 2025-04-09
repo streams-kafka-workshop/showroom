@@ -2,9 +2,9 @@
 include::../style.adoc[]
 
 == Activity: Update the environment variables to access the database
-After the Virtual Application Network and respective Listeners and Connectors are setup on the OpenShift cluster and RHEL machine, let's update the environment variables of our services to access the database. The environment variable MYSQL_SERVICE stores the value of the listener on the OpenShift cluster, which acts as a proxy/virtual-endpoint for the actual database on-premises.
+After setting up the Virtual Application Network with Listeners and Connectors on both the OpenShift cluster and RHEL machine, update your service's environment variables to access the database. The MYSQL_SERVICE variable should store the value of the listener on OpenShift, which serves as a virtual endpoint for the actual on-premises database.
 
-. In *OpenShift terminal (upper terminal)*, run the following command to update the environment variable to the to local listener service on the OpenShift cluster.
+. In *OpenShift terminal (upper terminal)*, run the following command to update the environment variable to point to the local listener service on the OpenShift cluster.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -28,9 +28,28 @@ image:m1/travel-agency-response.png[]
 +
 image::m1/complete_console.png[]
 
-. Feel free to check the different options in the Service Interconnect Network Console to learn more about the Virtual Application Network.
+. Feel free to check the different options in the Service Interconnect Network Console such as service, Sites, components, and Processes to get a better understanding of the Virtual Application Network and some traffic related analytics. 
+
+=== Future outlook for travels and how it works with Red Hat Service Interconnect
+If and when {corp} decides to add a database replica to a different environment or cluster, they can simply add it to the existing Virtual Application Network and link it to the same listener on OpenShift. Red Hat Service Interconnect will automatically handle failover and load balancing between the database instances.
 
 
 === Summary:
 
 Congratulations! You have successfully learnt how to use {rhsi} to securely bridge on-prem and cloud workloads with minimal time and complexity.Proceed to the next module to learn how to secure the communication between your microservices with {rhossm}.
+
+=== Cleanup for next module
+. Log out of the **RHEL machine** (lower terminal) using the following command.
++
+[source,sh,role="execute",subs=attributes+]
+----
+exit
+----
+
+. Output:
++
+[source,sh]
+----
+logout
+Connection to rhel.l64pg-1.sandbox3928.opentlc.com closed.
+----

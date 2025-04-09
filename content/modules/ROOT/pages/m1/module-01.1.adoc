@@ -5,7 +5,7 @@ include::../style.adoc[]
 
 
 == Activity: Setting up the site on OpenShift
-You can set up Virtual Application Networks with Red Hat Service Interconnect by either using the command line interface or the OpenShift operator. In this exercise, we'll use the operator on the OpenShift cluster and the command line interface on the RHEL side to explore both options. 
+You can set up Virtual Application Networks with Red Hat Service Interconnect by either using the command line interface or the OpenShift operator. In this exercise, we'll use the operator on the OpenShift cluster and the command line interface on the RHEL side just to explore both options. You could also use automation tools such as Ansible to automate the creation of the Virtual Application Network on both sides.
 
 . First lets try to access our travels service and see if all our microservices have access to the database. We'll use the built-in terminal to the right of your screen. 
 
@@ -28,7 +28,7 @@ oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.
 curl travels.travel-agency.svc.cluster.local:8000/travels/Prague
 ----
 
-. You will get a *{"error":"Travel Quote for Prague not found"}* message indicating that the database is not accessible. Let's set up the Virtual Application Network using Red Hat Service Interconnect in the subsequent steps to help our services access the database on-premises.
+. You will get a *{"error":"Travel Quote for Prague not found"}* message indicating that the database is not accessible and service is unable to get a travel quote for Prague. Let's set up the Virtual Application Network using Red Hat Service Interconnect in the subsequent steps to help our services access the database on-premises.
 
 . Navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[OpenShift Console, window="console"] and log in as username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}`
 
@@ -43,7 +43,7 @@ image::m1/site_button.png[]
 [.concept]
 .What is a site?
 ****
-A site represents a particular location and a particular platform. It's a place where you have real running workloads. Each site contains an application service router to communicate with local workloads and forward to peers in remote sites.
+A site represents a particular location and a particular platform. It's a place where you have real running workloads. Each site contains an application service router to communicate with local workloads and forward to peers in remote sites. Ex: A namespace is a site
 ****
 . Keep the default values. The *Enable link access* is checked, indicating that this site will allow ingress connections from other sites.  Click on *Submit* to set up the VAN routers in the `travel-db` namespace. 
 +
@@ -73,7 +73,7 @@ image::m1/deploy_console_rhsi.png[]
 [.concept]
 .What is a Listener?
 ****
-A listener binds a local connection endpoint to connectors in remote sites. Listeners and connectors are matched using routing keys. Each listener has an associated connection endpoint and routing key. The connection endpoint exposes a host and port for accepting connections from local clients. The routing key is a string identifier that binds the listener to connectors in remote sites. On Kubernetes, a listener is implemented as a Service. On Docker, Podman, and Linux, it is a listening socket bound to a local network interface.
+A listener creates a local connection point that links to connectors in remote sites using routing keys. On Kubernetes, it's implemented as a Service; on Docker, Podman, and Linux, it's a listening socket on a local network interface. The listener exposes a host/port for local clients while using the routing key to connect with remote sites.
 ****
 
 . Click on *Create listener*. This sets up the listeners in the namespace.
@@ -94,8 +94,7 @@ image::m1/listener_form.png[]
 [.concept]
 .What is a token?
 ****
-An access token is a short-lived credential used to create the link. An access token contains the URL and secret code of a corresponding access grant. Access tokens are issued from access grants. A grant issues zero or more tokens. Tokens are redeemed for links.
-Access tokens have limited redemptions and limited lifespans. By default, they can be redeemed only once, and they expire 15 minutes after being issued. You can set custom limits by configuring the access grant.
+An access token is a short-lived credential for creating a link between sites. It contains a URL and secret code from an access grant. Tokens have limited validity - by default, they can be used only once and expire after 15 minutes. A single grant can issue multiple tokens, and you can customize these limitations by configuring the access grant.
 ****
 +
 image::m1/token_redemption_box.png[]

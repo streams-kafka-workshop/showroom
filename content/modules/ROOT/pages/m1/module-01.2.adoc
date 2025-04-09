@@ -64,7 +64,7 @@ podman restart travels-mysqldb
 ----
 ====
 
-. In the *RHEL terminal window (lower terminal)*, run the following command to create a site. Similar to the OpenShift site, this will set up the routers in the namespace.
+. In the *RHEL terminal window (lower terminal)*, run the following command to create a site. Similar to the OpenShift site, this will set up the VAN routers.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -84,9 +84,7 @@ File written to /home/lab-user/.local/share/skupper/namespaces/default/input/res
 [.concept]
 .What is a connector?
 ****
-A connector binds a local workload to listeners in remote sites. Listeners and connectors are matched using routing keys. Each connector has an associated workload and routing key. The workload can be specified as a Kubernetes pod selector or as the host and port of a local network service. The routing key is a string identifier that binds the connector to listeners in remote sites.
-
-On Kubernetes, the workload is usually specified using a pod selector. On Docker, Podman, and Linux, it is specified using a host and port.
+A connector links a local workload to listeners in remote sites using routing keys. On Kubernetes, it typically uses a pod selector; on Docker, Podman, and Linux, it uses host and port specifications. The routing key is a string identifier that binds the connector to matching listeners in remote sites.
 ****
 +
 image::m1/connector_arch.png[]
