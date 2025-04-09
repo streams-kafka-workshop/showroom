@@ -5,32 +5,32 @@ include::../style.adoc[]
 
 
 == Activity: Setting up the site on OpenShift
-You can setup Virtual Application Networks with Red Hat Service Interconnect by either using the command line interface or the OpenShift operator. In this exercise we'll use the operator on the OpenShift cluster and the command line interface on the RHEL side to explore both options. 
+You can set up Virtual Application Networks with Red Hat Service Interconnect by either using the command line interface or the OpenShift operator. In this exercise, we'll use the operator on the OpenShift cluster and the command line interface on the RHEL side to explore both options. 
 
-. First lets try to access our travels service and see if all our microservices have access to the database. We'll use the inbuilt terminal to the right of your screen. 
+. First lets try to access our travels service and see if all our microservices have access to the database. We'll use the built-in terminal to the right of your screen. 
 
 
-. In the *first terminal (upper terminal)*, login into the OpenShift cluster using the below command.
+. In the *first terminal (upper terminal)*, log in to the OpenShift cluster using the command below.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.30.0.1:443
 ----
 
-. Type `y` when your are prompted with *Use insecure connections? (y/n):*
+. Type `y` when you are prompted with *Use insecure connections? (y/n):*
 
 . You should see a `Login successful.` message
 
-. From the *OpenShift Terminal (upper terminal)*, Run the following to check if the travels services and all other services are able to access the on-prem database.
+. From the *OpenShift Terminal (upper terminal)*, run the following to check if the travels service and all other services are able to access the on-prem database.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 curl travels.travel-agency.svc.cluster.local:8000/travels/Prague
 ----
 
-. You will get a *{"error":"Travel Quote for Prague not found"}* message indicating that the database is not accessible. Let's set up the Virtual Application Network using Red Hat Service Interconnect in the subsequent steps that help our services access the database on-premises.
+. You will get a *{"error":"Travel Quote for Prague not found"}* message indicating that the database is not accessible. Let's set up the Virtual Application Network using Red Hat Service Interconnect in the subsequent steps to help our services access the database on-premises.
 
-. Navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[OpenShift Console, window="console"] and Login as username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}`
+. Navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[OpenShift Console, window="console"] and log in as username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}`
 
 . Navigate to Home -> Projects -> travel-db
 +
@@ -56,7 +56,7 @@ Layer 7 application routers form the backbone of a VAN in the same way that conv
 ****
 
 
-. You will see a message similar to the one shown below indicating that the *Service Interconnect routers* are being created. In a few seconds the warning message will disappear and the site will be created.
+. You will see a message similar to the one shown below, indicating that the *Service Interconnect routers* are being created. In a few seconds, the warning message will disappear, and the site will be created.
 +
 image::m1/site_create_warning.png[]
 
@@ -68,7 +68,7 @@ image::m1/site_created.png[]
 +
 image::m1/deploy_console_rhsi.png[]
 
-. In the next step you will create a *listener*. 
+. In the next step, you will create a *listener*. 
 +
 [.concept]
 .What is a Listener?
@@ -85,11 +85,11 @@ image::m1/listener_button.png[]
 ** *Port*: `3306`
 ** *Routing key*: `appconn`
 ** *Host*: `mysqldb`
-** *TLS secret*: leave this blank for now as you will instead create a token at a later step.
+** *TLS secret*: leave this blank for now, as you will instead create a token at a later step.
 +
 image::m1/listener_form.png[]
 
-. Next, let us learn what a Access Token is and create one.
+. Next, let us learn what an Access Token is and create one.
 +
 [.concept]
 .What is a token?
@@ -104,7 +104,7 @@ image::m1/token_redemption_box.png[]
 +
 image::m1/token_button.png[]
 
-. In the *Configuration* step enter the following values, and click the *Create* button.
+. In the *Configuration* step, enter the following values, and click the *Create* button.
 ** *FileName*: `my-grant`
 ** *Redemptions*: `1`
 ** *Code*: leave this blank
