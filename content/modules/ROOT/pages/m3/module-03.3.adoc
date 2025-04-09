@@ -3,7 +3,7 @@ include::../style.adoc[]
 
 == Module 3: Simplify and secure traffic management with {rhcl}
 
-== Observability
+== Activity: Observability
 
 {rhcl} provides a variety of starting points for monitoring your installation in the Kuadrant upstream project https://github.com/Kuadrant/kuadrant-operator/tree/main/examples[(examples from kuadrant.io)^] folder. These dashboards and alerts are ready-to-use and easily customizable to fit your environment.
 
