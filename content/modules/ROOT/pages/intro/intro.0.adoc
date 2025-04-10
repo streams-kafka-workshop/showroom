@@ -9,7 +9,7 @@ In this workshop we will follow the story of *{corp}*, a global travel services 
 
 . Connect cloud-based services to an on-premises database securely during the transition phase
 . Enable fine-grained access control over service-to-service traffic within the distributed applications
-. Secure external access to core services from third-party partner portals
+. Secure external access to their core services from third-party partner portals
 
 Throughout this workshop, you will play the role of a platform engineer at {corp} and work through these challenges using Red Hat's connectivity solutions.
 
@@ -26,6 +26,6 @@ This workshop is divided into 3 logical sections which provide a guided walkthro
 
 == Workshop environment
 
-This is a fully guided workshop All necessary links, credentials, access details, and configurations are provided exactly when and where they are needed. No prior setup is required, as everything needed to complete the exercises is fully documented (ツ)
+This is a fully guided workshop. All necessary links, credentials, access details, and configurations are provided exactly when and where they are needed. No prior setup is required (ツ)
 
-A number of components are preconfigured to enable the execution of this entire workshop within a short timeframe. We will discuss each of this throughout the course of this workshop.
+A number of components are preconfigured to enable the execution of this workshop within a short timeframe. We will discuss each of this throughout the course of this workshop.

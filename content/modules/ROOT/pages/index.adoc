@@ -7,7 +7,7 @@ include::style.adoc[]
 
 Hybrid cloud environments offer enterprises with flexibility, scalability, and agility, but they also introduce significant connectivity and security challenges. Organizations must ensure systems and services can communicate effectively, securely and seamlessly - across on-premises, private, and public clouds
 
-A few of the challenges include
+Some of the key challenges include:
 
 * Fragmented app connectivity
 * Drift in configuration across multiple environment

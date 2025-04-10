@@ -30,7 +30,7 @@ image:m3/rhcl-console-view.png[]
 +
 image:m3/rhcl-inital-overview.png[]
 
-
++
 [CAUTION]
 ====
 The *Status* columns for all the resources should display as `Enforced` in green. If any `Status` shows an error, similar to the screenshot below, please notify the lab assistant immediately to address and rectify any issues.
