@@ -3,17 +3,16 @@ include::../style.adoc[]
 
 == Module 3: Simplify and secure traffic management with {rhcl}
 
-Now that the Platform Engineer has made the Gateway available, Developers/App owners can now onboard their application/service endpoints to be available for secure access. 
+Now that the Platform Engineer has made the Gateway available, Developers/App Owners can now onboard their application/service endpoints for secure access.
 
 == Activity: Developer workflow
 
-In this section, you will perform the role of a developer. As self-service, create policies based on your application's needs to protect the core services' endpoints.
+In this section, you will perform the role of a developer. As self-service, you will create policies based on your application's needs to protect the core services' endpoints.
 
-== Test access to the Travelz Web Application
+== Test access to the Travelz Partner Portal Application
 
-. The sample Travelz web app has been deployed in OpenShift as part of the workshop setup.
-. Access this  by clicking https://travels-blue-ui-travel-web.{ocp_cluster_openshift_cluster_ingress_domain}/[here^, console="access Web app"]
-. You should see a 404 error status code. This is because the Travels core services endpoint hasn't been exposed using an HTTPRoute to make it available to other applications/systems.
+. Access the Travelz partner portal by clicking https://travels-blue-ui-travel-web.{ocp_cluster_openshift_cluster_ingress_domain}/[here^, console="partner"]
+. You should see a 404 error status code because the Travels core services endpoint hasn't been exposed using an HTTPRoute to make it available to other applications/systems.
 +
 image:m3/partner-blue-404.png[] 
 
@@ -56,20 +55,21 @@ spec:
 
 == Test Web App again after HTTPRoute is set up
 
-. Refresh the Web application or access it from https://travels-blue-ui-travel-web.{ocp_cluster_openshift_cluster_ingress_domain}/[here^, console="access Web app"]. You should see a *403 - Forbidden* error
+. Refresh the Web application or access it from https://travels-blue-ui-travel-web.{ocp_cluster_openshift_cluster_ingress_domain}/[here^, console="access Web app"]. 
+. You should see a *403 - Forbidden* error because while you have the HTTPRoute now, the original deny-all default policy kicks in and doesn't allow any requests to made. We have a zero-trust auth in place!!
 +
 image:m3/partner-blue-403.png[] 
 
-. This is because while you have the HTTPRoute now, the original deny-all default policy kicks in and doesn't allow any requests to made. We have a zero-trust auth in place!!
-. You can validate this by accessing {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"].}. You will notice that the `travel-agency` HTTPRoute also inherits the Gateway's policies (just like the `echo-api` HTTRoute)
+. You can validate this by accessing {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"].}. You will notice that the `travel-agency` HTTPRoute also inherits the Gateway's policies (just like the `echo-api` HTTPRoute)
 +
 image:m3/travel-404-policy-topology.png[] 
 
 == Setup Authpolicy
 
-. Next, create an AuthPolicy targeting the HTTPRoute based on your application's needs.
+Next, create an AuthPolicy targeting the HTTPRoute based on your application's needs.
+
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new AuthPolicy for the HTTPRoute.
-. In the YAML editor, copy the following CRs, which creates an AuthPolicy along with the API Keys needed 
+. In the YAML editor, copy the following CRs, which creates an AuthPolicy along with the API Key secret needed. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -112,7 +112,7 @@ type: Opaque
 . Click *Create* to create these resources
 image:m3/auth-apikey-created.png[width=80%] 
 +
-NOTE: For the sake of the workshop, we have chosen to authenticate using a simplistic API Key. In the real world, consider using a JWT/OAuth access token to authenticate the requests.
+NOTE: For the sake of the workshop, we have chosen to authenticate using an API Key. In the real world, consider using a JWT/OAuth access token to authenticate the requests.
 .  Access {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"] once more. 
 .. You will notice that the `travel-agency` HTTPRoute is now impacted by its own AuthPolicy.
 .. You will also notice (in your browser) that the `prod-web` Gateway's RateLimitPolicy still affects the `travel-agency` HTTPRoute.

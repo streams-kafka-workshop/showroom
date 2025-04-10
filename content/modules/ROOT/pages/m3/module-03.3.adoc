@@ -32,7 +32,7 @@ image::m3/grafana-monitoring-dashboards.png[]
 . Click on the *App Developer Dashboard* link to view  the data. You will be presented with the data for both `echo-api` and `travel-agency` APIs. 
 +
 image::m3/app-dashboard-no-data.png[] 
-. For the sake of this workshop, let us create some traffic to the `echo-api`. Run the following command on the top-right terminal. You will see a combination of 403 and 429 errors in the terminal.
+. For the sake of this workshop, let us create some traffic to the `echo-api`. Run the following command on the *upper* terminal. You will see a combination of 403 and 429 errors in the terminal.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -69,9 +69,6 @@ image::m3/pe-dashboard-requests.png[]
 . Finally, click the Business User Dashboard link at the top left of the page. This dashboard shows data such as traffic summary and historical request comparison, which are more relevant to business users.
 +
 image::m3/biz-dashboard-with-data.png[]
-
-
-
 
 == Conclusion
 
