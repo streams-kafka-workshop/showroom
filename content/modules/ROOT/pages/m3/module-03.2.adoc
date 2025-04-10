@@ -60,7 +60,8 @@ spec:
 +
 image:m3/partner-blue-403.png[] 
 
-. You can validate this by accessing {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"].}. You will notice that the `travel-agency` HTTPRoute also inherits the Gateway's policies (just like the `echo-api` HTTPRoute)
+. This is because while you have the HTTPRoute now, the original deny-all default policy kicks in and doesn't allow any requests to made. We have a zero-trust auth in place!!
+. You can validate this by accessing {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"]. You will notice that the `travel-agency` HTTPRoute also inherits the Gateway's policies (just like the `echo-api` HTTRoute)
 +
 image:m3/travel-404-policy-topology.png[] 
 
@@ -140,7 +141,7 @@ image:m3/partner-blue-429.png[]
 == Create a new RateLimit Policy which overrides the default gateway policy
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new AuthPolicy for the HTTPRoute.
-. In the YAML editor, copy the following CRs, which creates AuthPolicy along with the API Keys neede.d 
+. In the YAML editor, copy the following CRs, which creates AuthPolicy along with the API Keys needed 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
