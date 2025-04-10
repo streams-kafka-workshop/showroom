@@ -74,7 +74,10 @@ spec:
 image:m3/gw-dns-policy-created.png[]
 . The message displayed against the `Enforced` is to notify you that there are no HTTPRoute custom resources (CRs) attached yet. This will change once a developer creates an HTTPRoute.
 +
-[TIP] DNS Policies can be created with more complex configurations especially for hybrid cloud architectures, including default Geo Code and load balancing options
+[TIP] 
+====
+DNS Policies can be created with more complex configurations especially for hybrid cloud architectures, including default Geo Code and load balancing options
+====
 
 === Access the `echo-api` HTTPRoute
 
