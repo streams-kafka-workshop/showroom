@@ -5,7 +5,7 @@ include::../style.adoc[]
 
 == Module 3: Simplify and secure traffic management with {rhcl}
 
-With their growing popularity, {corp} would like to add new channels to their existing portals. They plan to launch onboard  partner portals, which require secure access to their core services.
+With their growing popularity, {corp} would like to add new channels to their existing portals. They plan to onboard  partner portals, which require secure access to their core services.
 
 All incoming traffic from the external partner portal needs to be secured and managed. {corp} also wants to protect the endpoints by easily applying rate limiting and specific levels of access based on systems and users.
 
