@@ -19,6 +19,8 @@ To expose core services to external travel partners, {corp} decides to embrace a
 . Platform Engineers configure a `Gateway` resource to securely expose core services, and set up default `AuthPolicy` and `RateLimitPolicy` to enforce a zero-trust policy and apply low rate limits based on non-functional requirements.
 . Developers onboard services by creating `HTTPRoute` resources representing the endpoints, and apply specific auth policies (e.g., API keys or OAuth) for controlled access.
 
+image:m3/m3-soln.png[] 
+
 == Technical considerations
 
 {rhcl} provides Kubernetes-native traffic management in multi-cluster environments.
