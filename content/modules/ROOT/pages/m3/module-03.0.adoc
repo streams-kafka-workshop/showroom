@@ -10,35 +10,38 @@ With their growing popularity, {corp} would like to add new channels to their ex
 All incoming traffic from the external partner portal needs to be secured and managed. {corp} also wants to protect the endpoints by easily applying rate limiting and specific levels of access based on systems and users.
 
 
+== Solution 
+
+To expose core services to external partners, {corp} decides to embrace a policy-as-code approach. As Gartner points out https://www.gartner.com/document/3992070[Policy as code (PaC)^, window="content"] provides repeatable and automated policy-based management through which one can define security through code.
+
+. Secure access to the core (Travels) services is required for connectivity from the partner portals being onboarded.
+. The team adopts a Kubernetes-native approach to application connectivity through {rhcl}.
+. Platform Engineers configure a `Gateway` resource to securely expose core services, and set up default `AuthPolicy` and `RateLimitPolicy` to enforce a zero-trust policy and apply low rate limits based on non-functional requirements.
+. Developers onboard services by creating `HTTPRoute` resources representing the endpoints, and apply specific auth policies (e.g., API keys or OAuth) for controlled access.
+
 == Technical considerations
 
-To expose core functionalities to external partners, {corp} needs to 
+{rhcl} provides Kubernetes-native traffic management in multi-cluster environments.
 
-* Allow controlled access to connect to the services
-* Secure traffic with automatic TLS integration
-* Protect the services with uniform, flexible, and powerful policies
+* It builds on the *Gateway API*, offering DNS management, TLS certificate lifecycle management, authentication, and rate limiting across all gateway instances in multi-cluster environments. 
+* Platform engineers and application developers can collaborate to connect, secure, and protect distributed services and applications. 
 
-{corp} decides to embrace a policy-as-code approach. As Gartner points out https://www.gartner.com/document/3992070[Policy as code (PaC)^, window="content"] provides repeatable and automated policy-based management through which one can define security through code.
-
-{rhcl} provides Kubernetes-native traffic management in multi-cluster environments. It leverages the power of the Kubernetes https://gateway-api.sigs.k8s.io/[Gateway API^, window="content"] and https://www.envoyproxy.io/[Envoy proxy^, window="content"] to provide a unified, efficient approach to managing ingress traffic and related policies in multi-cluster Kubernetes environments. With {rhcl}, platform engineers and application developers can collaborate to connect, secure, and protect distributed services and applications. 
-
-{rhcl} builds on the Gateway API, offering DNS management, TLS certificate lifecycle management, authentication, and rate limiting across all gateway instances in multi-cluster environments. These policies, along with included observability metrics, standardize ingress traffic management in both single and multi-cluster setups.
 
 image:m3/rhcl-overview.png[width=70%] 
 
 === Gateway API
 
-Gateway API is the new standard for Ingress from the Kubernetes community. It represents L4/L7 routing and traffic management through generic common core API resources, which reflects the separation of responsibilities such as Platform Engineers or App Developers
+Gateway API is the new standard for Ingress from the Kubernetes community. It reflects the separation of responsibilities such as Platform Engineers or App Developers
 
-There are two specific Custom Resources (CR) we are interested in
+There are two specific Custom Resources (CRs) we are interested in
 
-* A *Gateway* CR describes how traffic can be translated to Services within the cluster
-* A *HTTPRoute* CR enables advanced routing capabilities for Ingress, and specifies routing behavior of HTTP requests from a Gateway listener to an API object, i.e., Service
+* A *Gateway* that describes how traffic is translated to Services within the cluster
+* A *HTTPRoute* that enables advanced routing capabilities for incoming requests.
 
 
 === {rhcl} policies
 
-{rhcl}'s policies are applied on the Gateway API resources (Gateway and HTTPRoute) as shown below. Typically, Platform engineers apply policies to the Gateway, and Developers apply policies to the HttpRoute.
+{rhcl}'s policies are applied on the Gateway and HTTPRoute CRs as shown below. 
 
 image:m3/rhcl-policies.png[] 
 
@@ -52,23 +55,19 @@ With this approach
 * *Platform Engineers* have the right level of control, and  can deploy, manage, observe, and protect services exposed via their gateways. They can confidently allow application developers to use self-service, knowing that endpoints are secured
 * *Application developers*, through self-service, can refine policies to their specific needs to protect exposed endpoints, and focus on what is important to them - their applications and code.
 
-== Solution 
-
-. Access to the core services (Travels) service endpoint needs to be secured and protected for connectivity from the partner portals being onboarded.
-. The team adopts a Kubernetes native approach to application connectivity through {rhcl}.
-. Platform Engineers set up a Gateway that will allow for a secure connection to the backend service endpoints. 
-. Developers onboard their service endpoints by creating an HTTPRoute representing the endpoint. 
-. Platform Engineers set up Auth and RateLimit policies defaults to ensure a zero-trust policy to suit their specific authz/authn needs and non-functional requirements for rate limiting. Of course, these will need to be overridden by the developers to allow controlled access to the services.
 
 === Environment Setup
 
-Specific components have been preconfigured ahead of time as part of this workshop to ensure the module can be completed within a short timeframe.
+To ensure the module can be completed within a short timeframe, specific components have been preconfigured in advance for this workshop:
 
-. The core services and the sample partner app have been predeployed on your OpenShift cluster.
-. A hosted zone has been added as a subdomain, travels.{ocp_cluster_workshop_main_domain}, on AWS Route 53 for the applications you want to manage and secure with {rhcl}. 
-+
-NOTE: In this case, the applications and services are running on AWS on an OpenShift cluster. We also leverage AWS Route 53 for DNS purposes. {rhcl} supports other DNS providers such as Azure, Google Cloud, and support for Core DNS is coming soon.
-. As part of the activities, you will also set up {rhcl} CRs (custom resources) needed to connect, secure, and manage the `travel-agency` service.
+- The core services and the partner portal have already been deployed on your OpenShift cluster.
+- A hosted zone has been created as a subdomain, `travels.{ocp_cluster_workshop_main_domain}`, on AWS Route53 for the applications you wish to manage and secure with `{rhcl}`.
+
+NOTE: 
+In this scenario, the applications and services are running on AWS on an OpenShift cluster, and AWS Route 53 is used for DNS purposes. `{rhcl}` also supports other DNS providers, including Azure and Google Cloud, with Core DNS support coming soon.
+
+As part of the workshop, you will also configure the necessary `{rhcl}` Custom Resources (CRs) to connect, secure, and manage the `travel-agency` service.
+
 
 == Next steps
 

@@ -22,20 +22,25 @@ oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.
 
 == Activity: Platform Engineer workflow
 
-The {rhcl} operator has already been set up amongst several other components. 
-
 . Access the {ocp_cluster_openshift_cluster_console_url}[OpenShift console^, window="console"]. Login as *admin/{ocp_cluster_openshift_cluster_admin_password}* if prompted.
 . Navigate to *Connectivity Link > Overview* menu found at the bottom of the left-hand navigation menu.
 +
 image:m3/rhcl-console-view.png[] 
-. In the *Overview* section, you will notice that a *Gateway*, a *TLSPolicy*, a *DNSPolicy*, and a sample *HTTPRoute* have been pre-configured. This helps ensure the workshop can be completed in the allotted time.
+. In the *Overview* section, you will notice that a *Gateway*, a *TLSPolicy*, a *DNSPolicy*, and an `echo-api` *HTTPRoute* have been pre-configured. 
 +
 image:m3/rhcl-inital-overview.png[]
 
 
+[CAUTION]
+====
+The *Status* columns for all the resources should display as `Enforced` in green. If any `Status` shows an error, similar to the screenshot below, please notify the lab assistant immediately to address and rectify any issues.
+
+image:m3/rhcl-error.png[] 
+====
+
 === Review the Gateway
 
-. You can view the `prod-web` Gateway by clicking on it. Here is a snippet of the Gateway details
+. Click on the `prod-web` Gateway to review it. Here is a snippet of the Gateway details
 +
 [source,sh,subs=attributes+]
 ----
@@ -63,97 +68,40 @@ spec:
 
 === Review the DNSPolicy
 
-. A  *DNSPolicy* Custom Resource has been created. Review a snippet below.
-+
-[source,sh, subs=attributes+]
-----
-spec:
-  targetRef:
-    name: prod-web  <1>
-    group: gateway.networking.k8s.io
-    kind: Gateway
-  providerRefs:
-  - name: prod-web-aws-credentials  <2>
-----
-+
-<1> `prod-web` Gateway resource to which this policy is applied
-<2> DNS Provider credentials as a secret, so that DNS records can be created
+. A  *DNSPolicy* has been applied to the `prod-web` Gateway resource.  This DNS Policy has been pre-created because DNS resolution for new DNS records may take a few minutes.
 . Click on the DNS Policy `prod-web-dnspolicy` and scroll to the bottom of the page to note that the DNSPolicy has been accepted and enforced.
 +
 image:m3/gw-dns-policy-created.png[]
+. The message displayed against the `Enforced` is to notify you that there are no HTTPRoute custom resources (CRs) attached yet. This will change once a developer creates an HTTPRoute.
 +
-[NOTE]
-====
-* The message displayed against the `Enforced` is to notify you that there are no HTTPRoute custom resources (CRs) attached yet. This will change once a developer creates an HTTPRoute
-* This DNS Policy has been pre-created because DNS resolution for new DNS records may take a few minutes.
-====
-. A DNSPolicy creates an appropriate DNSRecord created on the DNS provider, AWS Route53, in this case. +
-Run the following command on the *top-right terminal*, to view the endpoint of the DNSRecord.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-oc get dnsrecord.kuadrant.io/prod-web-api -n ingress-gateway  -o jsonpath='{.spec.endpoints[*].targets[*]}' && echo
-----
-
-. You will see an output like this `a49e9cf51674b4f93854c55ed5d33484-1568847220.us-east-2.elb.amazonaws.com`, which is the last endpoint that was successfully published by the provider (AWS Route53).
-+ 
-.[.underline]#*Click to learn more about DNSPolicy loadbalancing options*#
-[%collapsible]
-====
-
-* DNS Policies can be created with more complex configurations as well, including default Geo Code, load balancing options - especially in a hybrid cloud setup.
-* "load-balanced" means we configure the DNS provider to return different gateway/load balancer addresses to DNS clients' queries based on specific weighting and geolocation configuration. 
-* E.g., you can define a default `GEO-EU` 
-+
-```yaml
-  loadBalancing:
-    weight: 120 
-    geo: GEO-EU 
-    defaultGeo: true
-```
-* This allows for location-aware routing of requests. With the proper configuration, requests from the US can be routed to a Gateway (CR) setup in a US cluster, and all other requests can be routed to a default `GEO-EU` cluster
-* Learn more https://docs.kuadrant.io/1.0.x/kuadrant-operator/doc/user-guides/dns/load-balanced-dns/[here, window="content"]
-
-====
-
-
+[TIP] DNS Policies can be created with more complex configurations especially for hybrid cloud architectures, including default Geo Code and load balancing options
 
 === Access the `echo-api` HTTPRoute
 
-. The `echo-api` HTTPRoute has been set up as a way for Platform Engineers to test their configuration before opening this up to developers.
+. The `echo-api` HTTPRoute has been deployed as a way for Platform Engineers to verify their setup before opening this up to developers.
 . Execute the following `curl` command to access the `echo-api`
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 curl -k -w "%{http_code}" https://echo.travels.{ocp_cluster_workshop_main_domain} && echo
 ----
-. You will observe that this endpoint is accessible without any authentication parameters.
-
+. You will observe that this endpoint is accessible without any authentication parameters, and returns an HTTP `200` successful response status code.
 +
 ```yaml
 {
   "method": "GET",
-  "path": "/",
-  "query_string": null,
+  ....
   "body": "",
   "headers": {
     "HTTP_HOST": "echo.travels.sandbox4962.opentlc.com",
     "HTTP_USER_AGENT": "curl/7.76.1",
-    "HTTP_ACCEPT": "*/*",
-    "HTTP_X_FORWARDED_FOR": "100.64.0.2",
-    "HTTP_X_FORWARDED_PROTO": "https",
-    "HTTP_X_ENVOY_EXTERNAL_ADDRESS": "100.64.0.2",
-    "HTTP_X_REQUEST_ID": "592d2f86-16a4-4191-bd4f-403d60b9d99f",
-    "HTTP_X_ENVOY_DECORATOR_OPERATION": "echo-api.echo-api.svc.cluster.local:8080/*",
-    "HTTP_X_ENVOY_PEER_METADATA_ID": "router~10.128.0.209~prod-web-istio-75575555b6-48kmm.ingress-gateway~ingress-gateway.svc.cluster.local",
-    "HTTP_X_ENVOY_PEER_METADATA": "ChoKCkNMVVNURVJfSUQSDBoKS3ViZ..",
-    "HTTP_X_ENVOY_ATTEMPT_COUNT": "1",
+    ....
     "HTTP_VERSION": "HTTP/1.1"
   },
   "uuid": "5dc42712-53c3-4f3d-94ec-9d96a501b213"
 }200
 ```
-. This is not the intended outcome and needs to be fixed. In the next step, you will create an AuthPolicy to secure this endpoint.
+. This is not the intended behavior and needs to be addressed. In the next step, you will create an *AuthPolicy* to secure this endpoint.
 
 == Create a zero-trust AuthPolicy
 
@@ -201,6 +149,7 @@ image:m3/gw-ap-created.png[]
 
 === Create a default low-limit RateLimitPolicy
 
+. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 . In the YAML editor, copy the following RateLimitPolicy CR and save it
 +
 [source,sh,role="execute",subs=attributes+]
@@ -230,15 +179,15 @@ image:m3/gw-rlp-created.png[]
 
 == Test the setup so far
 
-Let us now test the `echo-api` HTTPRoute to test the setup so far, to ensure all requests are denied due to the zero trust policy we have set up
+Test the `echo-api` HTTPRoute to test the setup so far, to ensure all requests are denied due to the zero trust policy you have set up
 
-. Execute the following `curl` command to access the `echo-api`
+. Execute the following `curl` command on the *upper* Terminal to access the `echo-api`
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 curl -k -w "%{http_code}" https://echo.travels.{ocp_cluster_workshop_main_domain} && echo
 ----
-. This should display an error message. You may note this is the same response as the one configured in the Gateway.
+. This should display an error message. Note that this is the same response as configured in the Gateway.
 +
 ```yaml
 {
@@ -263,6 +212,6 @@ image:m3/echoapi-topology.png[]
 
 == Conclusion
 
-. In this activity, you explored a Platform Engineer's workflow. With the Gateway, TLS Policy, DNS Policy, and Auth Policy, you have set up the proper guardrails to build upon.
-. You have validated with the `echo-api` HTTPRoute and confirmed that access was denied as expected.
-. In the next steps, you will perform an App Developer's workflow to expose a Travels Service route and apply specific policies on the HTTPRoute resource so as to override the Gateway's default policies.
+. You explored the Platform Engineer's workflow, setting up the Gateway, TLS Policy, DNS Policy, and Auth Policy.
+. You validated the `echo-api` HTTPRoute and confirmed access was denied as expected.
+. Next, you'll follow the App Developer's workflow to expose a Travels Service route and apply specific policies to allow secure access to the core services endpoints
