@@ -30,4 +30,4 @@ This workshop is divided into 3 logical sections which provide a guided walkthro
 
 This is a fully guided workshop. All necessary links, credentials, access details, and configurations are provided exactly when and where they are needed. No prior setup is required (ツ)
 
-A number of components are preconfigured to enable the execution of this workshop within a short timeframe. We will discuss each of this throughout the course of this workshop.
+Several components have been preconfigured to ensure this workshop can be completed within a short timeframe. Each of these components will be explained as you progress through the workshop.
