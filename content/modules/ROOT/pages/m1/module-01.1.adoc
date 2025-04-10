@@ -28,9 +28,9 @@ oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.
 curl travels.travel-agency.svc.cluster.local:8000/travels/Prague
 ----
 
-. You will get a *{"error":"Travel Quote for Prague not found"}* message indicating that the database is not accessible and service is unable to get a travel quote for Prague. Let's set up the Virtual Application Network using Red Hat Service Interconnect in the subsequent steps to help our services access the database on-premises.
+. You will get a `{"error":"Travel Quote for Prague not found"}` message indicating that the database is not accessible and the service is unable to get a travel quote for Prague. Let's set up the Virtual Application Network using Red Hat Service Interconnect in the subsequent steps to help our services access the database on-premises.
 
-. Navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[OpenShift Console, window="console"] and log in as username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}`
+. Navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[OpenShift Console, window="console"], and log in as username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}`
 
 . Navigate to Home -> Projects -> travel-db
 +

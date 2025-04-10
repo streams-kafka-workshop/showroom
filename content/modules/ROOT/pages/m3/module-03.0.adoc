@@ -26,7 +26,7 @@ To expose core services to external partners, {corp} decides to embrace a policy
 * It builds on the *Gateway API* (the new Kubernetes standard for Ingress), offering DNS management, TLS certificate lifecycle management, authentication, and rate limiting across all gateway instances in multi-cluster environments. 
 * Platform engineers and application developers can collaborate to connect, secure, and protect distributed services and applications. 
 
-// image:m3/rhcl-overview.png[width=70%] 
+image:m3/rhcl-overview.png[width=70%] 
 
 {rhcl}'s policies are applied on the Gateway and HTTPRoute CRs as shown below. 
 

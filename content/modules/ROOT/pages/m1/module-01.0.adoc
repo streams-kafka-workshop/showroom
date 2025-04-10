@@ -5,7 +5,7 @@ include::../style.adoc[]
 
 {corp} is transitioning from a monolithic application to microservices using Red Hat OpenShift, while keeping their core database on-premises due to regulatory requirements. 
 
-With OpenShift(microservices) and RHEL(database) running on different physical networks, they chose Red Hat Service Interconnect to create a secure Virtual Application Network (VAN) between environments instead of implementing traditional VPNs which would require complex planning and management. Red Hat Service Interconnect enables connectivity through layer 7 addressing and routing by creating VANs between distributed services in minutes and securing all interconnections with mutual TLS (mTLS).
+With OpenShift (microservices) and RHEL (database) running on different physical networks, they chose Red Hat Service Interconnect to create a secure Virtual Application Network (VAN) between these environments instead of implementing traditional VPNs which would require complex planning and management. Red Hat Service Interconnect enables connectivity through layer 7 addressing and routing by creating VANs between distributed services in minutes and securing all interconnections with mutual TLS (mTLS).
 
 image:m1/rhsi_architecture_image.png[]
 
