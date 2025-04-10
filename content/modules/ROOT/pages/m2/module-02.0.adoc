@@ -34,7 +34,7 @@ Red Hat OpenShift Service Mesh adds a transparent layer on existing distributed 
 
 == What is Kiali?
 
-Kiali is part of {rssom} and is an observability console for Istio that helps you monitor the structure and health of your service mesh. It displays traffic flow, service relationships, and errors. Kiali also provides metrics, integrates with Grafana, and offers configuration validation.
+Kiali is part of {rhossm} and is an observability console for Istio that helps you monitor the structure and health of your service mesh. It displays traffic flow, service relationships, and errors. Kiali also provides metrics, integrates with Grafana, and offers configuration validation.
 
 image:m2/kiali-intro.png[]
 
