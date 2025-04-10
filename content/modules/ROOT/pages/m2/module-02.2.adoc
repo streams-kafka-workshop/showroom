@@ -93,6 +93,8 @@ To configure an authorization policy, you create an `AuthorizationPolicy` custom
 == Apply the *AuthorizationPolicy* 
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
++
+image:common/create-yaml.png[]
 . In the YAML editor, copy the following *AuthorizationPolicy* CR.
 
 +

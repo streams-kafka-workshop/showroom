@@ -3,15 +3,15 @@ include::../style.adoc[]
 
 == Module 3: Simplify and secure traffic management with {rhcl}
 
-Now that the Platform Engineer has made the Gateway available, Developers/App Owners can now onboard their application/service endpoints for secure access.
+Now that the Platform Engineer has made the Gateway available, Developers/App Owners can now configure secure access to their service endpoints.
 
 == Activity: Developer workflow
 
-In this section, you will perform the role of a developer. As self-service, you will create policies based on your application's needs to protect the core services' endpoints.
+In this section, you will perform the role of a developer and create policies to securely expose the core service endpoints. This will allow partner portals to securely access {corp}'s flights, hotels, and car offerings.
 
 == Test access to the Travelz Partner Portal Application
 
-. Access the Travelz partner portal by clicking https://travels-blue-ui-travel-web.{ocp_cluster_openshift_cluster_ingress_domain}/[here^, console="partner"]
+. Access the *Travels Blue* partner portal by clicking https://travels-blue-ui-travel-web.{ocp_cluster_openshift_cluster_ingress_domain}/[here^, console="partner"]
 . You should see a 404 error status code because the Travels core services endpoint hasn't been exposed using an HTTPRoute to make it available to other applications/systems.
 +
 image:m3/partner-blue-404.png[] 
@@ -67,7 +67,7 @@ image:m3/travel-404-policy-topology.png[]
 
 == Setup Authpolicy
 
-Next, create an AuthPolicy targeting the HTTPRoute based on your application's needs.
+Next, create an AuthPolicy targetting the HTTPRoute to allow the partner portal to access the core services securely.
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new AuthPolicy for the HTTPRoute.
 . In the YAML editor, copy the following CRs, which creates an AuthPolicy along with the API Key secret needed. 

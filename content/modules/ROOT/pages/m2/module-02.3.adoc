@@ -11,9 +11,9 @@ Now that your services are locked down and secured, it's time to focus on how tr
 
 In this next section, we'll leverage {rhossm} to **shape and manage traffic flows** using advanced techniques like:
 
-* **Canary rollouts** – gradually introducing new versions of a service
-* **Mirroring** – sending a copy of live traffic to a new version without impacting users
-* **Weighted routing** – splitting traffic between service versions based on percentage
+* **Canary rollouts**  gradually introducing new versions of a service
+* **Mirroring** - sending a copy of live traffic to a new version without impacting users
+* **Weighted routing** - splitting traffic between service versions based on percentage
 
 These patterns allow teams to roll out changes safely and confidently, minimizing risk while gaining real-time observability and control.
 
@@ -83,6 +83,8 @@ In our example, we define a `DestinationRule` for the `discounts` service with t
 == Apply the *DestinationRule* 
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
++
+image:common/create-yaml.png[]
 . In the YAML editor, copy the following *DestinationRule* CR.
 
 +
