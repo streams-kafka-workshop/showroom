@@ -56,9 +56,9 @@ image::m1/complete_console.png[]
 If and when {corp} decides to add a database replica to a different environment or cluster, they can simply add it to the existing Virtual Application Network and link it to the same listener on OpenShift. Red Hat Service Interconnect will automatically handle failover and load balancing between the database instances.
 
 
-=== Summary:
+=== Summary
 
-Congratulations! You have successfully learnt how to use {rhsi} to securely bridge on-prem and cloud workloads with minimal time and complexity.Proceed to the next module to learn how to secure the communication between your microservices with {rhossm}.
+Congratulations! You have successfully learnt how to use {rhsi} to securely bridge on-prem and cloud workloads with minimal time and complexity. Proceed to the next module to learn how to secure the communication between your microservices with {rhossm}.
 
 === Cleanup for next module
 . Log out of the **RHEL machine** (lower terminal) using the following command.

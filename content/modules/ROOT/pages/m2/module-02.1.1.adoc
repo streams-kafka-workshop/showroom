@@ -87,7 +87,7 @@ image:m2/kiali-workloads-inbound.png[Inbound Metrics]
 
 Feel free to explore *Outbound Metrics*, *Envoy*, *Services*, *Istio Config*, and *Mesh* tabs as well.
 
-=== Summary:
+=== Summary
 
 Congratulations! You've enabled automatic sidecar injection, onboarded an application into the mesh, and used Kiali to visualize and analyze service traffic.
 

@@ -116,7 +116,7 @@ oc -n travel-agency patch virtualservice discounts --type=json -p='[
 Press `Ctrl+C` to stop the log output in the upper terminal.
 
 
-=== Summary:
+=== Summary
 
 You've just performed a progressive rollout of a new version of a microservice using weighted routing in OpenShift Service Mesh. This powerful technique enables you to test updates incrementally, observe behavior, and reduce the risk of pushing changes to production.
 Congratulations on completing "Secure microservices access control with {rhossm}" !!!
