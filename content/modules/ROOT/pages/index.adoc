@@ -3,8 +3,6 @@ include::style.adoc[]
 
 == Safeguarding Application Connectivity for the Hybrid Cloud
 
-== Overview
-
 Hybrid cloud environments offer enterprises with flexibility, scalability, and agility, but they also introduce significant connectivity and security challenges. Organizations must ensure systems and services can communicate effectively, securely and seamlessly - across on-premises, private, and public clouds
 
 Some of the key challenges include:
@@ -15,7 +13,7 @@ Some of the key challenges include:
 * Mismanagement of resources
 * Lack of visibility across hybrid  infrastructures
 
-== Enabling secure app connectivity 
+== Workshop objectives 
 
 In this workshop, we will guide you through Red Hat's connectivity solutions that can help enterprises secure and manage hybrid cloud application connectivity. Through a real-world enterprise scenario, you will learn how to:
 

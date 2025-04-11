@@ -17,9 +17,8 @@ You can set up Virtual Application Networks with Red Hat Service Interconnect by
 oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.30.0.1:443
 ----
 
-. Type `y` when you are prompted with *Use insecure connections? (y/n):*
-
-. You should see a `Login successful.` message
+. Type `y` when you are prompted with `Use insecure connections? (y/n):`. +
+You should see a `Login successful` message
 
 . From the *OpenShift Terminal (upper terminal)*, run the following to check if the travels service and all other services are able to access the on-prem database.
 +
@@ -28,11 +27,13 @@ oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.
 curl travels.travel-agency.svc.cluster.local:8000/travels/Prague
 ----
 
-. You will get a `{"error":"Travel Quote for Prague not found"}` message indicating that the database is not accessible and the service is unable to get a travel quote for Prague. Let's set up the Virtual Application Network using Red Hat Service Interconnect in the subsequent steps to help our services access the database on-premises.
+. You will get a `{"error":"Travel Quote for Prague not found"}` message indicating that the database is not accessible and the service is unable to get a travel quote for Prague. 
++
+Let's set up the Virtual Application Network using Red Hat Service Interconnect in the subsequent steps to help the core services (on ) access the database on-premises.
 
 . Navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[OpenShift Console, window="console"], and log in as username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}`
 
-. Navigate to Home -> Projects -> travel-db
+. Navigate to Home -> Projects -> travel-db, if you are not in the `travel-db` project now.
 +
 image::m1/projects_tab.png[]
 . From the `travel-db` project, click on the *Service Interconnect tab* or click on this  {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[link, window="console"] to navigate directly.
@@ -43,9 +44,10 @@ image::m1/site_button.png[]
 [.concept]
 .What is a site?
 ****
-A site represents a particular location and a particular platform. It's a place where you have real running workloads. Each site contains an application service router to communicate with local workloads and forward to peers in remote sites. Ex: A namespace is a site
+A site represents a place where you have real running workloads. Each site contains an application service router which helps its workloads connect with workloads in remote sites. Ex: A namespace is a site
 ****
-. Keep the default values. The *Enable link access* is checked, indicating that this site will allow ingress connections from other sites.  Click on *Submit* to set up the VAN routers in the `travel-db` namespace. 
+. In the *Create site* wizard, keep the default values. Note that the *Enable link access* is checked, indicating that this site will allow ingress connections from other sites.  +
+Click on *Submit* to set up the VAN routers in the `travel-db` namespace. 
 +
 image::m1/create_site.png[]
 +

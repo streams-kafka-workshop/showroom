@@ -20,7 +20,7 @@ oc set env deployment/insurances-v1 MYSQL_SERVICE=mysqldb.travel-db:3306 -n trav
 ----
 oc get pods -n travel-agency -w
 ----
-. You should see all the pods are running ina few seconds.
+. You should see all the pods are running in a few seconds.
 +
 [source,sh]
 ----
