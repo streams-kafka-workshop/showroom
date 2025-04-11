@@ -101,7 +101,7 @@ File written to /home/lab-user/.local/share/skupper/namespaces/default/input/res
 
 . Before the final step of creating the Virtual Application Network, let's go the https://skupper-network-observer-travel-db.{ocp_cluster_openshift_cluster_ingress_domain}/[Service Interconnect Network Console, window="network-console"] to visualize the the Virtual Application Network.
 
-. Click on *Log in with OpenShift*, and enter the username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` if prompted.
+. Click on *Log in with OpenShift*, and log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` if prompted.
 
 . Click *Allow selected permissions*.
 +

@@ -31,7 +31,7 @@ curl travels.travel-agency.svc.cluster.local:8000/travels/Prague
 +
 Let's set up the Virtual Application Network using Red Hat Service Interconnect in the subsequent steps to help the core services (on ) access the database on-premises.
 
-. Navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[OpenShift Console, window="console"], and log in as username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}`
+. Navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[OpenShift Console, window="console"], and log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}`
 
 . Navigate to Home -> Projects -> travel-db, if you are not in the `travel-db` project now.
 +

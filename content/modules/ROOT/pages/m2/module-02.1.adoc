@@ -57,7 +57,7 @@ Now using project "travel-agency" on server "https://172.30.0.1:443".
 == Log into the OpenShift Web Console (GUI)
 You will need to access the OpenShift Web Console for some of the exercises. 
 
-. Navigate to the {ocp_cluster_openshift_cluster_console_url}[OpenShift Console, window="console"] and log in as *admin/{ocp_cluster_openshift_cluster_admin_password}* if prompted.
+. Navigate to the {ocp_cluster_openshift_cluster_console_url}[OpenShift Console, window="console"], and log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}`if prompted.
 
 . You can also run the following command from the terminal to get the URL in either terminal.
 

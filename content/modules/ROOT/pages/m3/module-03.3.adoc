@@ -11,7 +11,7 @@ include::../style.adoc[]
 . These dashboards can be accessed at https://grafana-route-monitoring.{ocp_cluster_openshift_cluster_ingress_domain}/login[via Grafana from here^]
 +
 image:m3/grafana-openshift-login.png[width=60%]
-. Click on the *Log in with OpenShift* button, and log in as `admin/{ocp_cluster_openshift_cluster_admin_password}` when prompted.
+. Click on the *Log in with OpenShift* button, and log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` when prompted.
 +
 image:m3/grafana-openshift-login-cred.png[width=60%]
 . Click *Allow selected permissions* button 
