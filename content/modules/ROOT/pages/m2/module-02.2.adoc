@@ -27,7 +27,7 @@ An Istio Authorization Policy enables access control on workloads in the mesh.
 
 At this point in the module, you are able to call the `discounts` service directly from `travels`. 
 
-To test this, run the following command in a terminal window:
+To test this, run the following command in a terminal:
 
 +
 [source,sh,role="execute",subs=attributes+]

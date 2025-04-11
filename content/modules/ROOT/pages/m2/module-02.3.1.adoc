@@ -31,7 +31,7 @@ image:m2/kiali-display-options-pre-rollout.png[]
 
 === Step 3: Run a Canary Rollout Script
 
-Now, you'll run a simple Bash script to gradually shift traffic from `v1` to `v2` in stages: 10%, 25%, 50%, 75%, and finally 100%. The script patches the `VirtualService` on the fly, and you'll observe the results in real time via Kiali and from logs in the terminal window.
+Now, you'll run a simple Bash script to gradually shift traffic from `v1` to `v2` in stages: 10%, 25%, 50%, 75%, and finally 100%. The script patches the `VirtualService` on the fly, and you'll observe the results in real time via Kiali and from logs in the terminal.
 
 [NOTE]
 ====
@@ -102,7 +102,7 @@ image:m2/canary-k-2.png[]
 
 === Cleanup/Reset (Optional)
 
-If you'd like to reset traffic routing back to 100% to `v1`, you can reapply the above `VirtualService` manifest or run a patch manually in the bottom terminal window.
+If you'd like to reset traffic routing back to 100% to `v1`, you can reapply the above `VirtualService` manifest or run a patch manually in the bottom terminal.
 
 
 [source,sh,role="execute",subs=attributes+]
@@ -113,7 +113,7 @@ oc -n travel-agency patch virtualservice discounts --type=json -p='[
 ]'
 ----
 
-Press `Ctrl+C` to stop the log output in the upper terminal window.
+Press `Ctrl+C` to stop the log output in the upper terminal.
 
 
 === Summary:
