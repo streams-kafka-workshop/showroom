@@ -5,15 +5,22 @@ include::../style.adoc[]
 
 image:intro/travelzcorp.png[width=50%] 
 
-In this workshop we will follow the story of *{corp}*, a global travel services company that is modernizing its application infrastructure. As part of this transformation, {corp} has  begun migrating applications to the cloud. 
+In this workshop we will follow the story of *{corp}*, a global travel services company that is modernizing its application infrastructure. As part of this transformation, {corp} has begun migrating applications to the cloud. 
 
-However, the company is encountering several challenges typical of a hybrid cloud environment:
+
+Here is a high level architecure of the {corp} application. The {corp}'s web portal and the core services have been migrated and deployed on OpenShift. The database still remains on Red Hat Enterprise Linux (RHEL), The team is working towards setting up the necessary connectivity between the applications
+
+image::intro/hl-arch.png[] 
+
+However, the company faces several challenges typical of a hybrid cloud environment:
 
 * *Secure connectivity between cloud and on-premises systems*: During the transition, some critical databases remain on-premises. {corp} needs to securely connect its new cloud-based services to these legacy systems without exposing sensitive data.
 * *Granular access control in a distributed environment*: With services now spread across multiple environments, controlling who can access what—and under which conditions—is increasingly complex. The company requires fine-grained, policy-driven service-to-service access controls.
 * *Secure external access for users and partners*: Core services must be accessible to trusted third-party partners. {corp} needs to expose these services securely, while protecting them from unauthorized access or misuse.
 
 Throughout this workshop, you will play the role of a platform engineer at {corp} and work through these challenges using Red Hat's connectivity solutions.
+
+The *{corp}* application used in this workshop is based on the https://kiali.io/docs/tutorials/travels/[Kiali Travel Demo Tutorial^]
 
 == Workshop Modules
 
@@ -29,5 +36,7 @@ This workshop is divided into 3 logical sections which provide a guided walkthro
 == Workshop environment
 
 This is a fully guided workshop. All necessary links, credentials, access details, and configurations are provided exactly when and where they are needed. No prior setup is required (ツ)
+
+You will be working on a Single Node OpenShift (SNO) cluster deployed on AWS. You will use the OpenShift console and the integrated terminals on the right-hand side to perform the activities required for this workshop. You can adjust the widths of instructions and terminals windows using the scrollbar as needed.
 
 Several components have been preconfigured to ensure this workshop can be completed within a short timeframe. Each of these components will be explained as you progress through the workshop.
