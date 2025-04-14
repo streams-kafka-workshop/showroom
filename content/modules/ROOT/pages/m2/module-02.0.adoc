@@ -2,18 +2,30 @@
 include::../style.adoc[]
 
 == Module 2: Secure microservices access control with {rhossm}
+{m2}
 
-== Business context
+{corp}'s move to a microservices-based architecture brings greater agility, but also results in increased complexity in managing how the microservices communicate with each other and stay secure. 
 
-* As {corp} expands its digital services, the move to a microservices-based architecture brings greater agility—but also increased complexity in managing how services communicate, scale, and stay secure. Without a consistent approach, deploying updates or ensuring service reliability becomes risky and resource-intensive.
+{corp} wants apply access policies to the interaction between microservices, enable complex deployment strategies, and  monitor the microservices applications.
 
-* {rhossm} provides {corp} with a unified solution to manage, observe, and secure its microservices environment. It enables consistent traffic control, real-time visibility, and zero-trust security policies—all without requiring changes to the application code. With capabilities like canary deployments, {corp} can introduce new features more safely and confidently, accelerating delivery while minimizing disruption.
+=== Solution overview
+
+{corp} leverage {rhossm} as an easy way to set up service-to-service authentication, complex operational functions such canary releases and telemetry to understand traffic between services. 
+
+{rhossm} uses https://istio.io/[Istio^] as its core service mesh implementation and includes https://kiali.io/[Kiali^] to help you to configure, visualize, validate and troubleshoot your mesh! 
+
+image:m2/m2-arch.png[] 
+
+In this module, you will onboard *travel-agency* namespace to the mesh. The service mesh adds a transparent layer to the microservices within this namespace without requiring any application code changes. 
+
+Once the namespace is part of the service mesh, you will  use the Kiali to visualize service traffic and gain observability into your application.
+
 
 == Technical considerations
 
 To successfully implement {rhossm}, there are a few key technical factors to consider:
 
-* *Namespace and Workload Configuration*: Ensure workloads are deployed in namespaces configured for mesh participation, with sidecar injection enabled (either automatic or manual).
+* *Namespace and Workload Configuration*: Ensure workloads are deployed in namespaces configured for mesh participation, with sidecar injection enabled.
 
 * *mTLS and Identity*: {rhossm} uses mutual TLS (mTLS) to authenticate and encrypt service-to-service traffic. Proper certificate management and identity policies are essential.
 
@@ -25,46 +37,14 @@ To successfully implement {rhossm}, there are a few key technical factors to con
 
 These technical foundations will ensure {corp} can fully realize the benefits of {rhossm} in a production-ready environment.
 
-=== Solution: Red Hat OpenShift Service Mesh
-
-image:m2/mesh-diagram-01.png[]
-
-Red Hat OpenShift Service Mesh adds a transparent layer on existing distributed applications without requiring any changes to the application code. The mesh introduces an easy way to create a network of deployed services that provides discovery, load balancing, service-to-service authentication, failure recovery, metrics, and monitoring. A service mesh also provides more complex operational functionality, including A/B testing, canary releases, access control, and end-to-end authentication.
-
-
-== What is Kiali?
-
-Kiali is part of {rhossm} and is an observability console for Istio that helps you monitor the structure and health of your service mesh. It displays traffic flow, service relationships, and errors. Kiali also provides metrics, integrates with Grafana, and offers configuration validation.
-
-image:m2/kiali-intro.png[]
-
-You can use the Kiali Operator (provided by Red Hat) to install and run Kiali within your OpenShift cluster.
-
-https://kiali.io/[More information about Kiali]  
-  
-https://docs.redhat.com/en/documentation/red_hat_openshift_service_mesh/3.0/html/observability/kiali-operator-provided-by-red-hat[Kiali Operator provided by Red Hat]
-  
-=== Environment Setup
-
-As part of this workshop, certain components (such as {rhossm} and Kiali operators) have been preconfigured in advance to ensure the module can be completed within a short timeframe.
-
 
 === Activities Overview:
 
-In this module, you'll get hands-on experience with OpenShift Service Mesh. We'll walk through the following key activities together:
+In this module, you'll get hands-on experience with OpenShift Service Mesh. 
 
-* *Get to Know the Service Mesh Components*  
+* Learn how OpenShift Service Mesh works by exploring its main parts. You'll see how it gives you visibility and control over how services talk to each other.
 
-** Learn how OpenShift Service Mesh works by exploring its main parts. You'll see how it gives you visibility and control over how services talk to each other.
+* Use zero trust security principles to make sure only the right services can access sensitive backends—helping protect your applications from unwanted access.
 
-* *Secure Service Access with Zero Trust*  
+* Control how traffic flows between service versions so you can gradually roll out changes, reduce deployment risks, and test updates safely in production.
 
-** Use zero trust security principles to make sure only the right services can access sensitive backends—helping protect your applications from unwanted access.
-
-* *Manage Traffic for Safer Deployments*  
-
-** Control how traffic flows between service versions so you can gradually roll out changes, reduce deployment risks, and test updates safely in production.
-
-== Next Steps
-
-Next, we'll take a closer look at the core parts of {rhossm}—including the control plane, sidecar proxies, and tools for observability. Then we'll set up namespaces and bring workloads into the mesh using automatic sidecar injection.

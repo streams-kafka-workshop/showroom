@@ -1,13 +1,10 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-== Module 3: Simplify and secure traffic management with {rhcl}
-
-Now that the Platform Engineer has made the Gateway available, Developers/App Owners can now configure secure access to their service endpoints.
-
 == Activity: Developer workflow
+{m3}
 
-In this section, you will perform the role of a developer and create policies to securely expose the core service endpoints. This will allow partner portals to securely access {corp}'s flights, hotels, and car offerings.
+In this section, you will perform the role of a developer and create policies to securely expose the `travel-agency` service endpoints. This will allow partner portals to securely access {corp}'s flights, hotels, and car offerings.
 
 == Test access to the Travelz Partner Portal Application
 
@@ -56,12 +53,12 @@ spec:
 == Test Web App again after HTTPRoute is set up
 
 . Refresh the Web application or access it from https://travels-blue-ui-travel-web.{ocp_cluster_openshift_cluster_ingress_domain}/[here^, console="access Web app"]. 
-. You should see a *403 - Forbidden* error because while you have the HTTPRoute now, the original deny-all default policy kicks in and doesn't allow any requests to made. We have a zero-trust auth in place!!
+. You should see a *403 - Forbidden* error because while you have the HTTPRoute now, the `preod-web` Gateway's `deny-all` default policy kicks in and doesn't allow any requests to be made. We have a zero-trust auth in place!!
 +
 image:m3/partner-blue-403.png[] 
 
 . This is because while you have the HTTPRoute now, the original deny-all default policy kicks in and doesn't allow any requests to made. We have a zero-trust auth in place!!
-. You can validate this by accessing {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"]. You will notice that the `travel-agency` HTTPRoute also inherits the Gateway's policies (just like the `echo-api` HTTRoute)
+. *[Optional]* You can validate this by accessing {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"]. You will notice that the `travel-agency` HTTPRoute also inherits the Gateway's policies (just like the `echo-api` HTTRoute)
 +
 image:m3/travel-404-policy-topology.png[] 
 
@@ -111,14 +108,16 @@ stringData:
 type: Opaque
 ----
 . Click *Create* to create these resources
+. The resources are create successfully.
++
 image:m3/auth-apikey-created.png[width=80%] 
 +
 NOTE: For the sake of the workshop, we have chosen to authenticate using an API Key. In the real world, consider using a JWT/OAuth access token to authenticate the requests.
 .  Access {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"] once more. 
 .. You will notice that the `travel-agency` HTTPRoute is now impacted by its own AuthPolicy.
-.. You will also notice (in your browser) that the `prod-web` Gateway's RateLimitPolicy still affects the `travel-agency` HTTPRoute.
+.. You will also notice that the `prod-web` Gateway's RateLimitPolicy still affects the `travel-agency` HTTPRoute.
 +
-image:m3/travel-ap-topology.png[width=80%] 
+image:m3/travel-ap-topology.png[] 
 
 == Test Web App again (after HTTPRoute and AuthPolicy are set up)
 
@@ -164,8 +163,6 @@ spec:
         - expression: auth.identity.userid
 ----
 . Click *Create*.
-image:m3/httproute-rlp-created.png[] 
-
 
 == Test again (after HTTPRoute, AuthPolicy, and RateLimitPolicy are set up)
 
@@ -173,7 +170,7 @@ image:m3/httproute-rlp-created.png[]
 +
 image:m3/webapp-see-details.png[] 
 . You should now be able to retrieve details without a `429 - Too Many Requests` error for up to 20 requests in a duration of 10 seconds.
-.  You will notice in the  {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"].} that  the `travel-agency` HTTPRoute has its own Auth and RateLimit policies which effectively override the zero-trust and super low-limits setup on the Gateway.
+.  You will notice in the  {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"], that  the `travel-agency` HTTPRoute has its own Auth and RateLimit policies which effectively override the zero-trust and super low-limits setup on the Gateway.
 +
 image:m3/travel-final-topo.png[width=80%] 
 

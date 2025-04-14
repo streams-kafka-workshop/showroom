@@ -1,66 +1,27 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-== Module 2: Secure microservices access control with {rhossm}
 
-== Activity: Implementing Least Privilege with Authorization Policies
+== Activity: Implement Least Privilege with Authorization Policies
 
-In a typical microservices environment, especially within a service mesh like {rhossm}, it's common for services in the same namespace to communicate freely. While this simplifies development early on, it doesn't align with security best practices, especially when some services handle sensitive logic or customer data.
+{m2}
 
-In this activity, you'll work with the `travel-agency` application, a demo travel booking platform comprising several interconnected microservices. One of these services—`discounts`—is responsible for calculating and applying pricing discounts based on proprietary business rules. Access to this service must be tightly controlled.
+As it stands, the microservices in the `travel-agency` namespace can currently communicate freely. While this makes development cycle easier, it poses security risks especially for services like `discounts` which applies proprietary pricing logic and handles sensitive data.
 
-image:m2/travels-discounts.png[]
+image:m2/travel-agency-namespace-initial.png[width=70%] 
 
-Currently, any service in the `travel-agency` namespace, including frontend aggregators like `travels`, can communicate with the `discounts` service. However, only specific backend services—`cars`, `flights`, `hotels`, and `insurances`- should be allowed to call `discounts`.
-
-In this lab, you'll apply an `AuthorizationPolicy` to restrict access to the `discounts` service, enforcing a least privilege model. This will help you gain hands-on experience with Istio authorization policies in {rhossm} and reinforce important concepts around microservice security and service-to-service communication control.
-
-+
-[.concept]
-.What is an `AuthorizationPolicy`?
-****
-An Istio Authorization Policy enables access control on workloads in the mesh. 
-****
+In this section, you'll apply an Istio `AuthorizationPolicy` to enforce a least privilege model, allowing access to `discounts` only from the allowed backend services (such as `cars`, `flights`), and not from the `travels` REST API.
 
 
-== Calling the *discounts* service directly from the *travels* service
+== Review current access of *discounts* service
 
-At this point in the module, you are able to call the `discounts` service directly from `travels`. 
-
-To test this, run the following command in a terminal:
-
+. Run the following command in the *upper teminal* to verify that you are indeed able to access the `discounts` service directly from the other services in the `travel-agency` name space. +
+This command calls the `discounts` services directly from the  pods of the services. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 oc rsh -n travel-agency $(oc get pod -l app=travels -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
   curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-travels
-----
-
-Output
-```
-{"user":"hello-from-travels","discount":0.05}
-```
-
-This command calls the `discounts` services directly from the `travels` pod. 
-
-Once you've run this command, you can visualize it in the Kiali Traffic. 
-
-image:m2/discounts-direct.png[]
-
-[NOTE]
-====
-You may need to adjust the time in the Kiali graph from *Last 1m* to a larger window of time so see the traffic from the above command to replay and view the direct call from `travels` to `discounts` or wait a few minutes for the above `curl` command to show up in the Traffic Graph.
-====
-
-We can see traffic from the other services, but you can test connectivity directly from them as well by running the commands from the terminal:
-
-[source,sh,role="execute",subs=attributes+]
-----
-oc rsh -n travel-agency $(oc get pod -l app=flights -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
-  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-flights
-
-oc rsh -n travel-agency $(oc get pod -l app=insurances -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
-  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-insurances
 
 oc rsh -n travel-agency $(oc get pod -l app=cars -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
   curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-cars
@@ -68,35 +29,23 @@ oc rsh -n travel-agency $(oc get pod -l app=cars -n travel-agency -o jsonpath='{
 oc rsh -n travel-agency $(oc get pod -l app=hotels -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
   curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-hotels
 ----
-
-Output:
+. The output verifies access of `discounts` service directly from `travels`, `cars` and `hotels`.
++
 ```
-{"user":"hello-from-flights","discount":0.05}
-{"user":"hello-from-insurances","discount":0.05}
+{"user":"hello-from-travels","discount":0.05}
 {"user":"hello-from-cars","discount":0.05}
 {"user":"hello-from-hotels","discount":0.05}
 ```
 
-What we want to accomplish is to continue to allow these services to access `discounts` while preventing `travels` from accessing `discounts`. We can do this with the {rhossm} Custom Resource (CR) `AuthorizationPolicy`
+== Restrict access to `discounts` service 
 
-== Configure and Apply an *AuthorizationPolicy* 
+Your goal is to restrict access to the `discounts` service so that only specific backend services can access it it, while preventing access from the `travels` REST API. This is achieved using an Istio Custom Resource (CR) `AuthorizationPolicy`.
 
-To configure an authorization policy, you create an `AuthorizationPolicy` custom resource. An authorization policy includes a selector, an action, and a list of rules:
-
-* The `selector` field specifies the target of the policy
-* The `action` field specifies whether to allow or deny the request
-* The `rules` specify when to trigger the action
-** The `from` field in the `rules` specifies the sources of the request
-** The `to` field in the `rules` specifies the operations of the request
-** The `when` field specifies the conditions needed to apply the rule
-
-== Apply the *AuthorizationPolicy* 
-
-. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
+. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource. Log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}`if prompted.
 +
 image:common/create-yaml.png[]
-. In the YAML editor, copy the following *AuthorizationPolicy* CR.
 
+. In the YAML editor, copy the following *AuthorizationPolicy* CR, and click *Create*.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -117,106 +66,53 @@ spec:
         principals:
         - cluster.local/ns/travel-agency/sa/discount-access-sa
 ----
-
-. Click the *Create* button to enforce the `AuthorizationPolicy` `allow-only-trusted-services`
-
-Let's break down the above AuthorizationPolicy` `allow-only-trusted-services`
-
-* `selector`: This targets the specific workload the policy applies to. In this case, it applies to any pod with `app=discounts` and `version=v1`.
-
-* `action`: This tells Istio what to do when the rule matches. Since Istio's default behavior is to deny if no policy allows it, this rule allows specific traffic while denying everything else.
-
-* `rules.from.source.principals`: This defines who can access the service. In this case, only workloads running in the `travel-agency` namespace using the service account named `discount-access-sa` are permitted to make requests to the discounts service.
-
++
 [NOTE]
 ====
-For this hands-on lab, the `discount-access-sa` service account has already been created for you and added to the backend services (`cars`, `flights`, `hotels`, `insurances`).
+A brief description of the above `AuthorizationPolicy`
+
+* the *selector* specifies the workload which is `discounts` in this case
+* the *action* ALLOWs traffic based on the rules set
+* the *rules* allows requests from workloads using the service account named `discount-access-sa`
+
+The `discount-access-sa` service account has already created and added to the allowed backend services 
 ====
 
-== Test the *AuthorizationPolicy*  `allow-only-trusted-services`
 
-Now that you have applied the AuthorizationPolicy `allow-only-trusted-services`, let's test to make sure the right services within the `travel-agency` namespace have the correct access to the `discounts` service by running the following commands in the terminal:
+== Test the *AuthorizationPolicy* 
 
-[source,sh,role="execute",subs=attributes+]
-----
-oc rsh -n travel-agency $(oc get pod -l app=flights -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
-  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-flights
-
-oc rsh -n travel-agency $(oc get pod -l app=insurances -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
-  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-insurances
-
-oc rsh -n travel-agency $(oc get pod -l app=cars -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
-  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-cars
-
-oc rsh -n travel-agency $(oc get pod -l app=hotels -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
-  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-hotels
-
-oc rsh -n travel-agency $(oc get pod -l app=travels -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
-  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-travels
-
-echo 
-----
-
-
-Output:
-```
-{"user":"hello-from-flights","discount":0.05}
-{"user":"hello-from-insurances","discount":0.05}
-{"user":"hello-from-cars","discount":0.05}
-{"user":"hello-from-hotels","discount":0.05}
-RBAC: access denied
-```
-
-After applying the `AuthorizationPolicy` that only allows requests to the `discounts` service from workloads using the `discount-access-sa` service account, we can verify that it's working as expected by testing access from a service that should not be allowed, like `travels`.
-
-Run the following command:
+. Run the following command in the *upper terminal* to ensure the `travels` REST API _cannnot_ access the `discounts` service.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 oc rsh -n travel-agency $(oc get pod -l app=travels -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
-  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-travels
-
-echo
+  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-travels && echo
 ----
-
-You can no longer access `discounts` and instead get the response:
-
+. You should no longer be able to access `discounts` service and instead get an `access denied` response.
++
 ```
 RBAC: access denied
 ```
++
+WARNING: It maybe take a few seconds for the AuthorizationPolicy to take effect. Please retry if you still see an allowed response. 
 
-[NOTE]
-====
-You can view the above `RBAC: access denied` call in the Kiali Traffic Graph as well. It will appear in red as a status `403` HTTP return code.
-====
+. Verify that the allowed services (`cars` and `hotels`) can still access the `discounts` service by running the following command in the *upper terminal*.
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc rsh -n travel-agency $(oc get pod -l app=flights -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
+  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-flights  && echo
+----
++
+Output:
++
+```
+{"user":"hello-from-flights","discount":0.05}
+```
 
-*What's Happening?*
+== Summary: 
 
-* The `AuthorizationPolicy` applied to the `discounts` service is doing its job:
-It is only allowing traffic from workloads using the `discount-access-sa` service account.
-
-* The `travels` service is not using that service account, so Istio denies the request.
-
-* Istio's Envoy proxy generates the message `RBAC: access denied`, enforcing the policy at the network layer.
-
-This confirms that unauthorized services are blocked from reaching `discounts`, enforcing the least privilege model we set out to implement. It's a strong validation that the service mesh is securing traffic as expected.
-
-
-== Summary: Implementing Least Privilege with Authorization Policies
-
-In this section, you applied your first `AuthorizationPolicy` in {rhossm} to secure service-to-service communication within the `travel-agency` namespace.
-
-You learned that services within the same namespace can communicate freely by default—this includes services like `travels`, which should not have access to the sensitive `discounts` service.
-
-To align with the principle of *least privilege*, you:
-
-* Identified that only backend services (`cars`, `flights`, `hotels`, and `insurances`) should have access to `discounts`
-* Created an `AuthorizationPolicy` that explicitly allows only workloads using the `discount-access-sa` service account to communicate with `discounts`
-* Verified access using real traffic and saw:
-** ✅ Allowed access for trusted services
-** ❌ Denied access from unauthorized services like `travels`
-
-This hands-on activity demonstrated how Istio and OpenShift Service Mesh allow you to enforce fine-grained access control using a simple, declarative policy model. This helps you improve security posture and reduce the blast radius of potential service compromise.
+In this section, you applied an Istio `AuthorizationPolicy`  to secure service-to-service communication within the `travel-agency` namespace to demonstrate how {rhossm} allow you to enforce fine-grained access control using a simple, declarative policy model. 
 
 == Next steps
 

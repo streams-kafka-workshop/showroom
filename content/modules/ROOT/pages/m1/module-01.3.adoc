@@ -1,18 +1,23 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-== Activity: Transferring a secure token to RHEL
+== Activity: Complete the access configuration
+{m1}
 
-Recall the access token you created earlier. In a typical scenario, you would download and transfer this token directly to your RHEL machine. However, in this **workshop setting** (where you might have limited access to the local file system or download capabilities), we'll use a script to convert the cluster-stored grant into a token and transfer it to the RHEL machine. This script is purely for this workshop convenience and isn't necessary when using Service Interconnect in production environments.
+Recall the access token you created earlier in OpenShift. In a typical scenario, you would download and transfer this token from OpenShift directly to your RHEL machine. However, in this **workshop setting** (where you might have limited access to the local file system or download capabilities), we'll use a script to convert the cluster-stored grant into a token and transfer it to the RHEL machine. 
+
+NOTE: This script is solely for the convenience of this workshop and isn't required when using {rhsi} in production environments.
+
+=== Transfer secure token from OpenShift to RHEL
 
 . In the *OpenShift terminal (upper terminal)*, run the following script to convert the grant to a token and save it to a file. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-curl -s https://raw.githubusercontent.com/rpscodes/app_connectivity_summit25/refs/heads/main/convert_grant_token.sh | bash > summit_token.yaml
+curl -s https://raw.githubusercontent.com/app-connectivity-workshop/scripts/refs/heads/main/m1/convert_grant_token.sh | bash > summit_token.yaml
 ----
 
-. In the *OpenShift terminal (upper terminal)*, run the following script to Transfer the token file to the RHEL machine.
+. In the *OpenShift terminal (upper terminal)*, run the following script to transfer the token file (from the previous step) to the RHEL machine.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -27,7 +32,9 @@ image:m1/execute-script.png[]
 
 .. Enter the RHEL password `{rhel_ssh_password}` when prompted.
  
-. Since the token has now been transferred to the RHEL machine, let's start the Virtual Application Network by running the command below from the *RHEL terminal(lower terminal)*. 
+=== Start Virtual Application Network on RHEL
+
+. Since the token has now been transferred to the RHEL machine, start the Virtual Application Network by running the command below from the *RHEL terminal(lower terminal)*. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----

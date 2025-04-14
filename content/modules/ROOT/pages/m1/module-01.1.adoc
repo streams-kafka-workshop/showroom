@@ -1,39 +1,46 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
+== Activity: Set up {rhsi} on OpenShift
+{m1}
+
+You can set up Virtual Application Networks with {rhsi} by either using the command line interface or the OpenShift operator. 
+
+In this exercise, we'll use the operator on the OpenShift cluster and the command line interface on the RHEL side just to explore both options. You could also use automation tools such as Ansible to automate the creation of the Virtual Application Network on both sides.
 
 
 
-== Activity: Setting up the site on OpenShift
-You can set up Virtual Application Networks with Red Hat Service Interconnect by either using the command line interface or the OpenShift operator. In this exercise, we'll use the operator on the OpenShift cluster and the command line interface on the RHEL side just to explore both options. You could also use automation tools such as Ansible to automate the creation of the Virtual Application Network on both sides.
+== Verify inaccessibiliy of Database from Travels Service
 
-. First lets try to access our travels service and see if all our microservices have access to the database. We'll use the built-in terminal to the right of your screen. 
+. As a first step, verify whether the travels services has connectivity to the database. You will use the integrated terminal on the right to perform these checks as guided.
 
-
-. In the *first terminal (upper terminal)*, log in to the OpenShift cluster using the command below.
+. In the *upper terminal*, log in to the OpenShift cluster using the command below. Click the clipboard icon image:common/clipboard.png[width=30px] to copy.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.30.0.1:443
 ----
 
-. Type `y` when you are prompted with `Use insecure connections? (y/n):`. +
++
+Type `y` when you are prompted with `Use insecure connections? (y/n)`. +
 You should see a `Login successful` message
 
 . From the *OpenShift Terminal (upper terminal)*, run the following to check if the travels service and all other services are able to access the on-prem database.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-curl travels.travel-agency.svc.cluster.local:8000/travels/Prague
+curl travels.travel-agency.svc.cluster.local:8000/travels/Prague && echo
 ----
 
-. You will get a `{"error":"Travel Quote for Prague not found"}` message indicating that the database is not accessible and the service is unable to get a travel quote for Prague. 
-+
-Let's set up the Virtual Application Network using Red Hat Service Interconnect in the subsequent steps to help the core services (on ) access the database on-premises.
+. You will receive a response `{"error":"Travel Quote for Prague not found"}` indicating that the database is not accessible, and the service is unable to get a travel quote for Prague. 
+
+== Set up a {rhsi} Site
+
+Let's set up the Virtual Application Network using {rhsi} in the subsequent steps to help the core services (on OpenShift) access the database on-premises.
 
 . Navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[OpenShift Console, window="console"], and log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}`
 
-. Navigate to Home -> Projects -> travel-db, if you are not in the `travel-db` project now.
+. Navigate to Home -> Projects -> travel-db, if you are not already navigated to the `travel-db` project.
 +
 image::m1/projects_tab.png[]
 . From the `travel-db` project, click on the *Service Interconnect tab* or click on this  {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[link, window="console"] to navigate directly.
@@ -46,8 +53,9 @@ image::m1/site_button.png[]
 ****
 A site represents a place where you have real running workloads. Each site contains an application service router which helps its workloads connect with workloads in remote sites. Ex: A namespace is a site
 ****
-. In the *Create site* wizard, keep the default values. Note that the *Enable link access* is checked, indicating that this site will allow ingress connections from other sites.  +
-Click on *Submit* to set up the VAN routers in the `travel-db` namespace. 
+. In the *Create site* wizard, keep the default values. 
+.. Note that the *Enable link access* is checked, indicating that this site will allow ingress connections from other sites. 
+.. Click on *Submit* to set up the VAN routers in the `travel-db` namespace. 
 +
 image::m1/create_site.png[]
 +
@@ -58,7 +66,7 @@ Layer 7 application routers form the backbone of a VAN in the same way that conv
 ****
 
 
-. You will see a message similar to the one shown below, indicating that the *Service Interconnect routers* are being created. In a few seconds, the warning message will disappear, and the site will be created.
+. You will see a message indicating that the *Service Interconnect site* is being created. In a few seconds, the warning message will disappear, and the site will be created.
 +
 image::m1/site_create_warning.png[]
 
@@ -66,23 +74,23 @@ image::m1/site_create_warning.png[]
 +
 image::m1/site_created.png[]
 
-. After the site creation is complete, click on the *Deploy Network Console* button to visualize the network later. This will take a few seconds to load. Proceed to the next steps while this gets deployed.
+. Once the site creation is complete, click on the *Deploy Network Console* button. You will use this console to visualize the network later. Since it takes a few seconds to load, deploy it now and proceed to the next steps while it gets deployed.
 +
 image::m1/deploy_console_rhsi.png[]
 
-. In the next step, you will create a *listener*. 
-+
+== Set up a {rhsi} Listener
+
 [.concept]
 .What is a Listener?
 ****
 A listener creates a local connection point that links to connectors in remote sites using routing keys. On Kubernetes, it's implemented as a Service; on Docker, Podman, and Linux, it's a listening socket on a local network interface. The listener exposes a host/port for local clients while using the routing key to connect with remote sites.
 ****
 
-. Click on *Create listener*. This sets up the listeners in the namespace.
+. Click on *Create listener* to set up a listeners in the `travel-db` namespace.
 +
 image::m1/listener_button.png[]
 
-. Input the following details and *Submit*
+. Input the following details and click *Submit*
 ** *Name*: `mysqldb`
 ** *Port*: `3306`
 ** *Routing key*: `appconn`
@@ -91,21 +99,21 @@ image::m1/listener_button.png[]
 +
 image::m1/listener_form.png[]
 
-. Next, let us learn what an Access Token is and create one.
-+
-[.concept]
-.What is a token?
-****
-An access token is a short-lived credential for creating a link between sites. It contains a URL and secret code from an access grant. Tokens have limited validity - by default, they can be used only once and expire after 15 minutes. A single grant can issue multiple tokens, and you can customize these limitations by configuring the access grant.
-****
-+
-image::m1/token_redemption_box.png[]
+== Set up an Access Token
 
-. Click on *Generate a token*
+[.concept]
+.What is an Access Token?
+****
+An access token is a short-lived credential for creating a link between sites. It contains a URL and secret code from an access grant. Tokens have limited validity - by default, they can be used only once and expire after 15 minutes. 
+****
+// +
+// image::m1/token_redemption_box.png[]
+
+. Click on *Generate a token*.
 +
 image::m1/token_button.png[]
 
-. In the *Configuration* step, enter the following values, and click the *Create* button.
+. You are presented with the *Issue Access Token* wizard. In the *Configuration* step, enter the following values, and click the *Create* button.
 ** *FileName*: `my-grant`
 ** *Redemptions*: `1`
 ** *Code*: leave this blank

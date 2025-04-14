@@ -1,12 +1,14 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-== Activity: Setting up the site on RHEL
+== Activity: Set up {rhsi} on RHEL
+{m1}
+
 Similar to the OpenShift site, you will set up the site and routers on RHEL using the {rhsi} command line interface.
 
-. You need to SSH into the on-prem RHEL machine using the built-in Terminal to the right. 
+=== Login in to RHEL and validate the enviroment
 
-. Click on the lower terminal at the bottom. 
+. You need to SSH into the on-prem RHEL machine using the built-in Terminal to the right. 
 +
 image::m1/lower_terminal.png[]
 
@@ -18,7 +20,7 @@ ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=60 lab-user@{rhel_hostname}
 ----
 
 
-. Type *yes* and hit enter if prompted by the message *Are you sure you want to continue connecting (yes/no/fingerprint)?*
+. Type `yes` and hit enter if prompted by the message `Are you sure you want to continue connecting (yes/no/fingerprint)?`
 
 . Ignore the *Failed to add the host to the list of known hosts (/data/.ssh/known_hosts).* message
 
@@ -35,7 +37,7 @@ image::m1/rhel_user.png[]
 clear
 ----
 
-. To verify if the database is running on the RHEL machine, run the following command from the *RHEL terminal (lower terminal)*, .
+. To verify if the database is running on the RHEL machine, run the following command from the *RHEL terminal (lower terminal)*.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -58,7 +60,16 @@ If the output returns an empty list, it indicates that the database is not runni
 ----
 podman restart travels-mysqldb
 ----
+
+Run the following command again to validate that the database is indeed running now.
+[source,sh,role="execute",subs=attributes+]
+----
+podman ps
+----
+
 ====
+
+=== Create {rhsi} Site
 
 . In the *RHEL terminal (lower terminal)*, run the following command to create a site. Similar to the OpenShift site, this will set up the VAN routers.
 +
@@ -74,6 +85,8 @@ skupper site create rhel
 ----
 File written to /home/lab-user/.local/share/skupper/namespaces/default/input/resources/sites/rhel.yaml
 ----
+
+=== Create a connector
 
 . Next, let's learn what a connector is.
 +
@@ -99,7 +112,10 @@ skupper connector create mysqldb 3306 --host 127.0.0.1 -r appconn
 File written to /home/lab-user/.local/share/skupper/namespaces/default/input/resources/connectors/mysqldb.yaml
 ----
 
-. Before the final step of creating the Virtual Application Network, let's go the https://skupper-network-observer-travel-db.{ocp_cluster_openshift_cluster_ingress_domain}/[Service Interconnect Network Console, window="network-console"] to visualize the the Virtual Application Network.
+
+== Visualise set up on {rhsi} Network Console
+
+Before proceeding to the final step of creating the Virtual Application Network, navigate to the https://skupper-network-observer-travel-db.{ocp_cluster_openshift_cluster_ingress_domain}/[Service Interconnect Network Console, window="network-console"] to visualize what the Virtual Application Network based on the configuration you've set up so far.
 
 . Click on *Log in with OpenShift*, and log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` if prompted.
 

@@ -1,9 +1,8 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-== Module 3: Simplify and secure traffic management with {rhcl}
-
 == Activity: Platform Engineer Workflow
+{m3}
 
 To perform the section of the workshop, ensure you are logged into OpenShift within the terminal.
 
@@ -40,7 +39,11 @@ image:m3/rhcl-error.png[]
 
 === Review the Gateway
 
-. Access the `prod-web` Gateway shows under the *Gateways* section, and navigate to the YAML tab to review it. Here is a snippet of the Gateway details
+. Access the `prod-web` Gateway shows under the *Gateways* section. 
++
+image:m3/prod-web-snippet.png[width=60%] 
+
+. Navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/ns/ingress-gateway/gateway.networking.k8s.io%7Ev1%7EGateway/prod-web/yaml[YAML tab^, window=console] to review it. Here is a snippet of the Gateway details
 +
 [source,sh,subs=attributes+]
 ----
@@ -68,10 +71,7 @@ spec:
 
 === Review the DNSPolicy
 
-. Click to view the {ocp_cluster_openshift_cluster_console_url}/k8s/ns/ingress-gateway/kuadrant.io%7Ev1%7EDNSPolicy/prod-web-dnspolicy[`prod-web-dnspolicy`, window="console"]. 
-. Scroll to the bottom of the page to note that the DNSPolicy has been accepted and enforced.
-+
-image:m3/gw-dns-policy-created.png[]
+. Click to view the {ocp_cluster_openshift_cluster_console_url}/k8s/ns/ingress-gateway/kuadrant.io%7Ev1%7EDNSPolicy/prod-web-dnspolicy[prod-web-dnspolicy, window="console"]. 
 . You can review the policy by clicking on the *YAML* tab
 +
 [source,sh, subs=attributes+]
@@ -96,7 +96,7 @@ DNS Policies can be created with more complex configurations especially for hybr
 === Access the `echo-api` HTTPRoute
 
 . The `echo-api` HTTPRoute has been deployed as a way for Platform Engineers to verify their setup before opening this up to developers.
-. Execute the following `curl` command to access the `echo-api`
+. Execute the following `curl` command in the *upper terminal* to access the `echo-api`
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -165,13 +165,12 @@ spec:
 +
 image:m3/gw-ap-created.png[] 
 
-create-yaml
 === Create a default low-limit RateLimitPolicy
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 +
 image:common/create-yaml.png[]
-. In the YAML editor, copy the following RateLimitPolicy CR and save it
+. In the YAML editor, copy the following RateLimitPolicy CR and click the *Create* button.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -191,9 +190,6 @@ spec:
       - limit: 5
         window: 10s
 ----
-. Click the *Create* button at the bottom of the YAML editor
-+
-image:m3/gw-rlp-yaml.png[width=70%] 
 . Scroll to the bottom of the RateLimitPolicy details page to note that the RateLimitPolicy has been accepted and enforced.
 +
 image:m3/gw-rlp-created.png[]
@@ -208,7 +204,7 @@ Test the `echo-api` HTTPRoute to test the setup so far, to ensure all requests a
 ----
 curl -k -w "%{http_code}" https://echo.travels.{ocp_cluster_workshop_main_domain} && echo
 ----
-. This should display an error message. Note that this is the same response as configured in the Gateway.
+. This should now display an error message instead of success. Note that this is the same error message as configured in the Gateway.
 +
 ```yaml
 {
@@ -230,7 +226,7 @@ There is a possibility that you may face such an error: `curl: (6) Could not res
 image:m3/echoapi-topology.png[] 
 
 
-== Conclusion
+== Summary
 
 . You explored the Platform Engineer's workflow, setting up the Gateway, TLS Policy, DNS Policy, and Auth Policy.
 . You validated the `echo-api` HTTPRoute and confirmed access was denied as expected.

@@ -2,18 +2,18 @@
 ** xref:intro/intro.0.adoc[The story behind this workshop]
 
 * xref:m1/module-01.0.adoc[Connect apps across hybrid cloud]
-** xref:m1/module-01.1.adoc[Setting up the site on OpenShift]
-** xref:m1/module-01.2.adoc[Setting up the site on RHEL]
-** xref:m1/module-01.3.adoc[Transferring secure token to RHEL]
-** xref:m1/module-01.4.adoc[Update the environment variables to access the database]
+** xref:m1/module-01.1.adoc[Set up Red Hat Service Interconnect on OpenShift]
+** xref:m1/module-01.2.adoc[Set up Red Hat Service Interconnect on RHEL]
+** xref:m1/module-01.3.adoc[Complete the access configuration]
+** xref:m1/module-01.4.adoc[Verify database access from services]
 
 
 * xref:m2/module-02.0.adoc[Secure microservices access control]
-** xref:m2/module-02.1.adoc[Enabling OpenShift Service Mesh]
-** xref:m2/module-02.1.1.adoc[Exploring Service Mesh with Kiali]
-** xref:m2/module-02.2.adoc[Implementing Least Privilege with Authorization Policies]
-** xref:m2/module-02.3.adoc[Shaping Traffic with OpenShift Service Mesh]
-** xref:m2/module-02.3.1.adoc[Canary Rollout]
+** xref:m2/module-02.1.adoc[Enable OpenShift Service Mesh]
+** xref:m2/module-02.1.1.adoc[Explore Service Mesh with Kiali]
+** xref:m2/module-02.2.adoc[Implement Least Privilege with Authorization Policies]
+** xref:m2/module-02.3.adoc[Shape Traffic with OpenShift Service Mesh]
+** xref:m2/module-02.4.adoc[Canary Rollout]
 
 * xref:m3/module-03.0.adoc[Simplify and secure traffic management]
 ** xref:m3/module-03.1.adoc[Platform Engineer workflow]

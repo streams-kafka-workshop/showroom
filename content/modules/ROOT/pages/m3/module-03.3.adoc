@@ -1,11 +1,12 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-== Module 3: Simplify and secure traffic management with {rhcl}
-
 == Activity: Observability
+{m3}
 
 {rhcl} provides a variety of starting points for monitoring your installation in the Kuadrant upstream project https://github.com/Kuadrant/kuadrant-operator/tree/main/examples[(examples from kuadrant.io)^] folder. These dashboards and alerts are ready-to-use and easily customizable to fit your environment.
+
+NOTE: If an image is too tiny, click to view it full screen.
 
 == Login to Grafana
 . These dashboards can be accessed at https://grafana-route-monitoring.{ocp_cluster_openshift_cluster_ingress_domain}/login[via Grafana from here^]
@@ -15,23 +16,24 @@ image:m3/grafana-openshift-login.png[width=60%]
 +
 image:m3/grafana-openshift-login-cred.png[width=60%]
 . Click *Allow selected permissions* button 
-image:m3/grafana-allow-permissions.png[] 
++
+image:m3/grafana-allow-permissions.png[link=self, window=blank, width=100%] 
 
 
 == Access the dashboards
 
 * From the left-hand navigation, access the *Dashboards* menu. 
 +
-image::m3/grafana-dashboards-list.png[] 
-* Click on the *monitoring* folder to view the preloaded dashboards.
+image::m3/grafana-dashboards-list.png[link=self, window=blank, width=100%] 
+* Click on the *monitoring* folder to view the preloaded dashboards. Click on the image to view full size
 +
-image::m3/grafana-monitoring-dashboards.png[] 
+image::m3/grafana-monitoring-dashboards.png[link=self, window=blank, width=100%]
 
 == Explore persona-based Dashboards
 
 . Click on the *App Developer Dashboard* link to view  the data. You will be presented with the data for both `echo-api` and `travel-agency` APIs. 
 +
-image::m3/app-dashboard-no-data.png[] 
+image::m3/app-dashboard-no-data.png[link=self, window=blank, width=100%] 
 . For the sake of this workshop, let us create some traffic to the `echo-api`. Run the following command on the *upper* terminal. You will see a combination of 403 and 429 errors in the terminal.
 +
 [source,sh,role="execute",subs=attributes+]
@@ -42,12 +44,14 @@ for i in {1..1000}; do curl -k -w "%{http_code}" https://echo.travels.{ocp_clust
 ... You may need to refresh a couple of times for the metrics to appear in the Grafana dashboard.
 Notice that 429 and 403 requests, as well as the total requests, are available in the different sections of the dashboard.
 +
-image::m3/app-dashboard-with-data.png[] 
+image::m3/app-dashboard-with-data.png[link=self, window=blank, width=100%] 
+
+=== OPTIONAL: Explore dashboard as Platform Engineer or Business Owner
 
 . Next, click the *Platform Engineer Dashboard* link on the top left of the page. 
 .. View Gateway, HTTPRoute, and its policies
 +
-image::m3/pe-dashboard-gw.png[]
+image::m3/pe-dashboard-gw.png[link=self, window=blank, width=100%]
 +
 [CAUTION]
 ====
@@ -64,15 +68,31 @@ oc rollout restart deployment/kube-state-metrics-kuadrant -n monitoring
 ====
 .. View details of Total requests, latency, and CPU and memory usage
 +
-image::m3/pe-dashboard-requests.png[]
+image::m3/pe-dashboard-requests.png[link=self, window=blank, width=100%]
 
 . Finally, click the Business User Dashboard link at the top left of the page. This dashboard shows data such as traffic summary and historical request comparison, which are more relevant to business users.
 +
-image::m3/biz-dashboard-with-data.png[]
+image::m3/biz-dashboard-with-data.png[link=self, window=blank, width=100%]
 
-== Conclusion
+
+== Summary
 
 With this setup, {corp} is all set to onboard further service endpoints to be accessed securely. This solution can be further extended to span across a multi-cluster setup, too.
 
-We will also extend this pattern to include all the important aspects of observability.
+// optional modules section
+// You can now proceed to *Module 2* if you haven't completed that yet, or to the *Workshop Summary*
 
+// * xref:../m2/module-02.0.adoc[Module 2] - Secure microservices access control with Red Hat OpenShift Service Mesh
+// * xref:../conclusion/summary.0.adoc[Workshop Summary]
+
+
+// ++++
+
+// <style> 
+
+// .next {
+//     display: none !important;
+// }
+// </style>
+
+// ++++

@@ -38,3 +38,10 @@ With these enhancements, {corp} is better equipped to operate securely and effic
 // == Next steps
 
 // You can setup this workshop in your cluster as well. git clone https://github.com/app-connectivity-workshop/acw-ansible and run the Ansible playbook
+
+== Resources
+
+* Red Hat Service Interconnect on Red Hat Developers: https://developers.redhat.com/products/service-interconnect/overview
+
+* https://kiali.io/[More information about Kiali] | https://docs.redhat.com/en/documentation/red_hat_openshift_service_mesh/3.0/html/observability/kiali-operator-provided-by-red-hat[Kiali Operator provided by Red Hat]
+  

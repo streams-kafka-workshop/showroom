@@ -1,9 +1,8 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-
-
 == Module 3: Simplify and secure traffic management with {rhcl}
+{m3}
 
 With their growing popularity, {corp} would like to add new channels to their existing portals. They plan to onboard travel partners, that require secure access to their flights, cars and hotel offerings.
 
@@ -12,43 +11,29 @@ All incoming traffic from the external partner portal needs to be secured and ma
 
 == Solution 
 
-To expose core services to external travel partners, {corp} decides to embrace a policy-as-code approach which provides repeatable and automated policy-based management defined security through code.
+To expose their core services to external travel partners, {corp} decides to embrace a policy-as-code approach which provides repeatable and automated policy-based management defined security through code.
 
-. Secure access to the core (Travels) services is required for connectivity from the partner portals being onboarded.
-. The team adopts a Kubernetes-native approach to application connectivity through {rhcl}.
-. Platform Engineers configure a `Gateway` resource to securely expose core services, and set up default `AuthPolicy` and `RateLimitPolicy` to enforce a zero-trust policy and apply low rate limits based on non-functional requirements.
-. Developers onboard services by creating `HTTPRoute` resources representing the endpoints, and apply specific auth policies (e.g., API keys or OAuth) for controlled access.
+The team adopts a Kubernetes-native approach to application connectivity through {rhcl}.
 
 image:m3/m3-soln.png[] 
 
-== Technical considerations
+{rhcl} provides Kubernetes-native traffic management in multi-cluster environments. It builds on *Gateway API* (the new Kubernetes standard for Ingress), offering Policy APIs to support DNS management, TLS certificate lifecycle management, authentication, and rate limiting in multi-cluster environments. 
 
-{rhcl} provides Kubernetes-native traffic management in multi-cluster environments.
-
-* {rhcl} builds on *Gateway API* (the new Kubernetes standard for Ingress), offering Policy APIs to support DNS management, TLS certificate lifecycle management, authentication, and rate limiting across all gateway instances in multi-cluster environments. 
-* Platform engineers and application developers can collaborate to connect, secure, and protect distributed services and applications. 
-
-image:m3/rhcl-overview.png[width=70%] 
-
-{rhcl}'s policies are applied on the Gateway and HTTPRoute resources as shown below. 
+{rhcl}'s policies are applied on the Gateway and HTTPRoute resources (of Gateway API) as shown below. 
 
 image:m3/rhcl-policies.png[] 
 
-With this approach 
+With this approach, Platform engineers and application developers can collaborate to connect, secure, and protect distributed services and applications through the right policies needed to protect exposed endpoints.
 
-* *Platform Engineers* have the right level of control, and  can deploy, manage, observe, and protect services exposed via their gateways. They can confidently allow application developers to use self-service, knowing that endpoints are secured
-* *Application developers*, through self-service, can refine policies to their specific needs to protect exposed endpoints, and focus on what is important to them - their applications and code.
+== Environment Setup
 
-
-=== Environment Setup
-
-To ensure the module can be completed within a short timeframe, specific components have been preconfigured in advance for this workshop:
+To ensure the module can be completed within a short timeframe, specific components have been preconfigured in advance:
 
 . The applications and services are running on AWS on an OpenShift cluster, and AWS Route53 is used for DNS purposes.
 +
 `{rhcl}` also supports other DNS providers, including Azure and Google Cloud, with Core DNS support coming soon.
 . A *Gateway* and its *DNSPolicy* have already been created, because DNS resolution for new DNS records may take a few minutes.
-. The core services, the partner portal and the AWS Route53 config are already deployed as part of workshop setup.
+. The partner portal and the AWS Route53 config are already deployed as part of workshop setup.
 
 == Next steps
 

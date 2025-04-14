@@ -1,0 +1,117 @@
+:imagesdir: ../../assets/images
+include::../style.adoc[]
+
+== Activity: Canary Rollout of `discounts` service
+{m2}
+
+To enable canary rollout, you will run a simple script to gradually shift traffic from `v1` to `v2` in stages: 10%, 25%, 50%, 75%, and finally 100%. The script patches the `VirtualService` on the fly, and you'll observe the results in real time via Kiali and from logs in the terminal.
+
+[NOTE]
+====
+This script is meant for illustrative and educational purposes. In a real-world production environment, organizations typically use a progressive delivery tool like *Argo Rollouts* which is included as part of OpenShift.
+====
+
+. In the *upper terminal*, run the log monitoring script:
+
++
+[source,sh,role="execute",subs=attributes+]
+----
+sh <(curl -s https://raw.githubusercontent.com/app-connectivity-workshop/scripts/refs/heads/main/m2/canary-monitoring.sh)
+----
+
++
+You should immediately start seeing log output from discounts-v1 `[discounts/v1]`.
++
+image:m2/log-output-pre-rollout.png[]
+
+. In the *lower terminal*, run the canary-rollout script.
++
+[source,sh,role="execute",subs=attributes+]
+----
+sh <(curl -s https://raw.githubusercontent.com/app-connectivity-workshop/scripts/refs/heads/main/m2/canary-rollout.sh)
+----
++
+This will start updating the weights in the VirtualService every 20 seconds.
++
+image:m2/log-output-50-50-rollout.png[]
+
+. Once the rollout begins, you will see logs in the *upper terminal* for discount-v2 `[discount/v2]` gradually increase, while log messages from discount-v1 `[discount/v1]` decrease.
+
+. As the script progresses, you can also visualise the deployment the the *Kiali console*. Navigate to the Kiali console using http://kiali-istio-system.{ocp_cluster_openshift_cluster_ingress_domain}/console/graphpf/namespaces/?traffic=grpc%2CgrpcRequest%2Chttp%2ChttpRequest%2Ctcp%2CtcpSent&graphType=versionedApp&namespaces=travel-agency&duration=60&refresh=10000&animation=true&layout=kiali-dagre&idleNodes=true&edges=trafficDistribution[this link, window="kiali"] to make sure you have the right display options set in the Kiali *Traffic Graph*
+. You will begin by seeing all traffic being routed to `v1`. Click image to zoom in.
++
+image:m2/canary-k-0.png[link=self, window=blank, width=100%]
+
+. Although Kiali will lag by 1 minute, you'll begin to see more and more requests routed to the `discounts-v2` pod as the script progresses. Click image to zoom in.
++
+image:m2/canary-k-1.png[link=self, window=blank, width=100%]
+
+. And finally, all traffic is routed to `v2`. Click image to zoom in.
++
+image:m2/canary-k-2.png[link=self, window=blank, width=100%]
+. Expected final output in the *lower terminal*
++
+```bash
+Begin Canary Rollout...
+100% traffic routed to v1, 0% to v2
+virtualservice.networking.istio.io/discounts patched
+90% traffic routed to v1, 10% to v2
+virtualservice.networking.istio.io/discounts patched
+75% traffic routed to v1, 25% to v2
+virtualservice.networking.istio.io/discounts patched
+50% traffic routed to v1, 50% to v2
+virtualservice.networking.istio.io/discounts patched
+25% traffic routed to v1, 75% to v2
+virtualservice.networking.istio.io/discounts patched
+0% traffic routed to v1, 100% to v2
+```
+. Press `Ctrl+C` to stop the log output in the *upper terminal*.
+
+Congratulations! You've just performed a progressive rollout of a new version of a microservice using weighted routing in OpenShift Service Mesh. 
+
+=== Optional Activity
+
+.[underline]#Reset traffic to v1#
+[%collapsible]
+====
+
+[source,sh,role="execute",subs=attributes+]
+----
+oc -n travel-agency patch virtualservice discounts --type=json -p='[
+  {"op": "replace", "path": "/spec/http/0/route/0/weight", "value": 100},
+  {"op": "replace", "path": "/spec/http/0/route/1/weight", "value": 0}
+]'
+----
+====
+
+
+== Clean up
+
+. Close all the tabs except for this *instructions* tab 
+
+== Summary
+
+
+In this module, you explored how {corp} can use {rhossm} to address the growing complexity of managing microservices. By adopting a consistent, code-free approach to observability, traffic control, and security, {corp} is better positioned to scale its applications while reducing operational risk.
+
+Congratulations on completing "Secure microservices access control with {rhossm}" module!!!
+
+You can now proceed to *Module 3* Simplify and secure traffic management with {rhcl}
+
+// NOTE: Istio's “sidecar-less” ambient mode is now available for developer preview - which meansa future where sidecars are optional. Check out https://istio.io/latest/docs/ambient/overview/[this page^] for more details
+
+
+// optional modules section
+// * xref:../m3/module-03.0.adoc[Module 3] - Simplify and secure traffic management with Red Hat Connectivity Link
+// * xref:../conclusion/summary.0.adoc[Workshop Summary]
+
+// ++++
+
+// <style> 
+
+// .next {
+//     display: none !important;
+// }
+// </style>
+
+// ++++

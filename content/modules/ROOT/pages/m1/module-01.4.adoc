@@ -1,40 +1,10 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-== Activity: Update the environment variables to access the database
-After setting up the Virtual Application Network with Listeners and Connectors on both the OpenShift cluster and RHEL machine, update your service's environment variables to access the database. The MYSQL_SERVICE variable should store the value of the listener on OpenShift, which serves as a virtual endpoint for the actual on-premises database.
+== Activity: Verify database access from services
+{m1}
 
-. In *OpenShift terminal (upper terminal)*, run the following command to update the environment variable to point to the local listener service on the OpenShift cluster.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-oc set env deployment/cars-v1 MYSQL_SERVICE=mysqldb.travel-db:3306 -n travel-agency
-oc set env deployment/flights-v1 MYSQL_SERVICE=mysqldb.travel-db:3306 -n travel-agency
-oc set env deployment/hotels-v1 MYSQL_SERVICE=mysqldb.travel-db:3306 -n travel-agency
-oc set env deployment/insurances-v1 MYSQL_SERVICE=mysqldb.travel-db:3306 -n travel-agency
-----
-
-. Wait for a few seconds for the new environment variable to take effect. Double check all the pods are running by running the following command in the *OpenShift terminal (upper terminal)*.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-oc get pods -n travel-agency -w
-----
-. You should see all the pods are running in a few seconds.
-+
-[source,sh]
-----
-NAME                             READY   STATUS    RESTARTS   AGE
-NAME                             READY   STATUS    RESTARTS   AGE
-cars-v1-9888f46d9-chpkf          1/1     Running   0          35m
-discounts-v1-68b7454679-5tkq5    1/1     Running   0          5h37m
-flights-v1-648889f849-tdw89      1/1     Running   0          35m
-hotels-v1-76bf864cb9-ltlct       1/1     Running   0          35m
-insurances-v1-66cb568ccd-nvjjn   1/1     Running   0          35m
-travels-v1-7cf6ff7697-564cg      1/1     Running   0          5h37m
-----
-
-. Press `Ctrl+C` to stop the log output in the **OpenShift terminal** (upper terminal).
+You are now ready to  verify if the travels services is now able to access the database. The travesls services have already been configured to to connnect to the {rhsi} Listener on OpenShift, which serves as a virtual endpoint for the actual on-premises database.
 
 . In the *OpenShift terminal (upper terminal)*, to get a travel quote for the city Prague. Run the following to check if the travels services and all other services are able to access the on-prem database. 
 +
@@ -46,32 +16,46 @@ curl travels.travel-agency.svc.cluster.local:8000/travels/Prague | jq
 . You should see a response with cars, hotels, flights, and insurances returned from the database indicating that the services are able to access the database.
 +
 image:m1/travel-agency-response.png[] 
-. Return to the https://skupper-network-observer-travel-db.{ocp_cluster_openshift_cluster_ingress_domain}/[Service Interconnect Network Console, window="network-console"] and refresh the browser tab. Check if the RHEL machine is now part of the Virtual Application Network.
+
+== Optional: Explore Network Console
+
+. Return to the https://skupper-network-observer-travel-db.{ocp_cluster_openshift_cluster_ingress_domain}/[Service Interconnect Network Console, window="network-console"] and refresh the browser tab. Verify that the RHEL machine is now part of the Virtual Application Network.
 +
 image::m1/complete_console.png[]
 
-. Feel free to check the different options in the Service Interconnect Network Console such as service, Sites, components, and Processes to get a better understanding of the Virtual Application Network and some traffic related analytics. 
+. Feel free to check the different options in the Service Interconnect Network Console such as Services, Sites, Components, and Processes to get a better understanding of the Virtual Application Network and some traffic related analytics. 
 
-=== Future outlook for travels and how it works with Red Hat Service Interconnect
+== Next steps for {corp}
 If and when {corp} decides to add a database replica to a different environment or cluster, they can simply add it to the existing Virtual Application Network and link it to the same listener on OpenShift. Red Hat Service Interconnect will automatically handle failover and load balancing between the database instances.
 
 
-=== Summary
-
-Congratulations! You have successfully learnt how to use {rhsi} to securely bridge on-prem and cloud workloads with minimal time and complexity. Proceed to the next module to learn how to secure the communication between your microservices with {rhossm}.
-
-=== Cleanup for next module
+== Clean up
 . Log out of the **RHEL machine** (lower terminal) using the following command.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 exit
 ----
-
-. Output:
++
+Output:
 +
 [source,sh]
 ----
 logout
 Connection to rhel.l64pg-1.sandbox3928.opentlc.com closed.
 ----
+. Close all the tabs except for this *instructions* tab 
+
+== Summary
+
+Congratulations! You have successfully learnt how to use {rhsi} to securely bridge on-prem and cloud workloads with minimal time and complexity. 
+
+Proceed to the next module to learn how to secure the communication between your microservices with {rhossm}.
+
+// optional modules section
+// You can now proceed to either of the following modules
+
+// * xref:../m2/module-02.0.adoc[Module 2] - Secure microservices access control with Red Hat OpenShift Service Mesh
+// * xref:../m3/module-03.0.adoc[Module 3] - Simplify and secure traffic management with Red Hat Connectivity Link
+
+
