@@ -47,9 +47,11 @@ Example output:
 ----
 NAME                             READY   STATUS    RESTARTS   AGE
 cars-v1-d7b4b7cf-pm7nh           1/1     Running   0          113m
-....
+discounts-v1-7cfd444876-wrxtc    1/1     Running   0          113m
+flights-v1-77bbc76cbd-kfghl      1/1     Running   0          112m
+hotels-v1-55556b6574-kcxv7       1/1     Running   0          112m
+insurances-v1-656cdb54f6-gcc2m   1/1     Running   0          112m
 travels-v1-647d788486-wf4nm      1/1     Running   0          112m
-
 ----
 . Each pod shows `1/1` under the `READY` column, indicating that each pod has a single container and it is running.  
 
@@ -75,11 +77,11 @@ The `istio-injection=disabled` label is the implicit default value and might alw
 
 Onboarding a namespace to the mesh can be done manually by editing/patching labels in the `travel-agency` namespace, or by using the Kiali console.  
 
-In this module, you will use the Kiali consle to enable automatic Istio injection to the namespace. Service mesh will then automatically inject proxy sidecar containers into all pods in `travel-agency` namespace that will allow the service mesh to take manage them.
+In this module, you will use the Kiali consle to enable automatic Istio injection to the namespace. Service mesh will then automatically inject proxy sidecar containers into all pods in `travel-agency` namespace that will allow the service mesh to  manage the services in the namespace.
 
 . Navigate to http://kiali-istio-system.{ocp_cluster_openshift_cluster_ingress_domain}[Kiali console, window="kiali"], and log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` when prompted.
 +
-image:m2/kiali-overview.png[]
+image:m2/kiali-overview.png[link=self, window=blank, width=100%]
 
 . Enter `travel-agency` into the *Namespace* filter, and press *Enter* to make it easier to perform actions.
 +
@@ -117,7 +119,7 @@ With auto-injection enabled, you must restart the application pods to trigger si
 watch oc get pods -n travel-agency
 ----
 
-. In the *lower terminal*, run the following command.
+. In the *lower terminal*, run the following command to restart the pods in `travel-agency` namespace.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -129,18 +131,24 @@ Expected output on the lower terminal.
 +
 ```
 deployment.apps/cars-v1 restarted
-....
+deployment.apps/discounts-v1 restarted
+deployment.apps/discounts-v2 restarted
+deployment.apps/flights-v1 restarted
+deployment.apps/hotels-v1 restarted
+deployment.apps/insurances-v1 restarted
 deployment.apps/travels-v1 restarted
 ```
 
-. Once the applications have been restarted, the *upper terminal* will show that there are now 2 containers per pod, one of the being the Istio side car that has been auto-injected.
+. Once the applications have been restarted, the *upper terminal* will show that there are now 2 containers per pod, one of the containers being the Istio side car that has been auto-injected.
 +
 
 ```
 NAME                             READY   STATUS    RESTARTS   AGE
 cars-v1-8449bdcfcc-27ncs         2/2     Running   0          78s
 discounts-v1-f4d97b4b8-78z8w     2/2     Running   0          78s
-...
+flights-v1-594f54d7b-lg7n4       2/2     Running   0          77s
+hotels-v1-56fc4b478d-lcbn2       2/2     Running   0          77s
+insurances-v1-5fc4b7cdf6-khkl5   2/2     Running   0          76s
 mysqldb-v1-644c48c745-qq9ps      2/2     Running   0          76s
 travels-v1-99798fc94-2xw74       2/2     Running   0          75s
 ```

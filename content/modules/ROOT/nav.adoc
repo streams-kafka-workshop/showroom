@@ -13,7 +13,7 @@
 ** xref:m2/module-02.1.1.adoc[Explore Service Mesh with Kiali]
 ** xref:m2/module-02.2.adoc[Implement Least Privilege with Authorization Policies]
 ** xref:m2/module-02.3.adoc[Shape Traffic with OpenShift Service Mesh]
-** xref:m2/module-02.4.adoc[Canary Rollout]
+** xref:m2/module-02.4.adoc[Canary Rollout of discounts service]
 
 * xref:m3/module-03.0.adoc[Simplify and secure traffic management]
 ** xref:m3/module-03.1.adoc[Platform Engineer workflow]

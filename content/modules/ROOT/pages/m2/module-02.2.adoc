@@ -6,22 +6,28 @@ include::../style.adoc[]
 
 {m2}
 
-As it stands, the microservices in the `travel-agency` namespace can currently communicate freely. While this makes development cycle easier, it poses security risks especially for services like `discounts` which applies proprietary pricing logic and handles sensitive data.
+As it stands, the microservices in the `travel-agency` namespace can currently communicate freely. While this makes the development cycle easier, it poses security risks especially for services like `discounts` which applies proprietary pricing logic and handles sensitive data.
 
 image:m2/travel-agency-namespace-initial.png[width=70%] 
 
-In this section, you'll apply an Istio `AuthorizationPolicy` to enforce a least privilege model, allowing access to `discounts` only from the allowed backend services (such as `cars`, `flights`), and not from the `travels` REST API.
+In this section, you'll apply an Istio `AuthorizationPolicy` to enforce a least privilege model, allowing access to `discounts` only from the allowed backend services (`hotels`, `cars`, `flights` and `insurnace` services), and not from the `travels` REST API.
 
 
 == Review current access of *discounts* service
 
-. Run the following command in the *upper teminal* to verify that you are indeed able to access the `discounts` service directly from the other services in the `travel-agency` name space. +
-This command calls the `discounts` services directly from the  pods of the services. 
+. Run the following command in the *upper teminal* to verify that you are indeed able to access the `discounts` service directly from all the services in the `travel-agency` name space. +
+This command calls the `discounts` service directly from the  pods of the services. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 oc rsh -n travel-agency $(oc get pod -l app=travels -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
   curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-travels
+
+oc rsh -n travel-agency $(oc get pod -l app=flights -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
+  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-flights
+
+oc rsh -n travel-agency $(oc get pod -l app=insurances -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
+  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-insurances
 
 oc rsh -n travel-agency $(oc get pod -l app=cars -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
   curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-cars
@@ -29,19 +35,21 @@ oc rsh -n travel-agency $(oc get pod -l app=cars -n travel-agency -o jsonpath='{
 oc rsh -n travel-agency $(oc get pod -l app=hotels -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
   curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-hotels
 ----
-. The output verifies access of `discounts` service directly from `travels`, `cars` and `hotels`.
+. The output verifies access of `discounts` service directly from `travels` REST API, and other services such as `cars` and `hotels`.
 +
 ```
 {"user":"hello-from-travels","discount":0.05}
+{"user":"hello-from-flights","discount":0.05}
+{"user":"hello-from-insurances","discount":0.05}
 {"user":"hello-from-cars","discount":0.05}
 {"user":"hello-from-hotels","discount":0.05}
 ```
 
 == Restrict access to `discounts` service 
 
-Your goal is to restrict access to the `discounts` service so that only specific backend services can access it it, while preventing access from the `travels` REST API. This is achieved using an Istio Custom Resource (CR) `AuthorizationPolicy`.
+Your goal is to restrict access to the `discounts` service so that only specific backend services can access it, while preventing access from the `travels` REST API. This is achieved using an Istio Custom Resource (CR) `AuthorizationPolicy`.
 
-. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource. Log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}`if prompted.
+. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource. Log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` if prompted.
 +
 image:common/create-yaml.png[]
 
@@ -75,39 +83,51 @@ A brief description of the above `AuthorizationPolicy`
 * the *action* ALLOWs traffic based on the rules set
 * the *rules* allows requests from workloads using the service account named `discount-access-sa`
 
-The `discount-access-sa` service account has already created and added to the allowed backend services 
+The `discount-access-sa` service account has already created and added to the allowed backend services as part of the workshop set up.
 ====
 
 
 == Test the *AuthorizationPolicy* 
 
-. Run the following command in the *upper terminal* to ensure the `travels` REST API _cannnot_ access the `discounts` service.
+. Run the following command in the *upper terminal* to ensure the `travels` REST API is no longer able to access the `discounts` service.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 oc rsh -n travel-agency $(oc get pod -l app=travels -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
   curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-travels && echo
 ----
-. You should no longer be able to access `discounts` service and instead get an `access denied` response.
+. You should no longer be able to access `discounts` service but instead get an `access denied` response.
 +
 ```
 RBAC: access denied
 ```
 +
-WARNING: It maybe take a few seconds for the AuthorizationPolicy to take effect. Please retry if you still see an allowed response. 
+WARNING: It maybe take a few seconds for the AuthorizationPolicy to take effect. Please retry if you still see a success response. 
 
-. Verify that the allowed services (`cars` and `hotels`) can still access the `discounts` service by running the following command in the *upper terminal*.
+. Verify that the allowed services can still access the `discounts` service by running the following command in the *upper terminal*.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 oc rsh -n travel-agency $(oc get pod -l app=flights -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
-  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-flights  && echo
+  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-flights
+
+oc rsh -n travel-agency $(oc get pod -l app=insurances -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
+  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-insurances
+
+oc rsh -n travel-agency $(oc get pod -l app=cars -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
+  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-cars
+
+oc rsh -n travel-agency $(oc get pod -l app=hotels -n travel-agency -o jsonpath='{.items[0].metadata.name}') \
+  curl http://discounts.travel-agency.svc.cluster.local:8000/discounts/hello-from-hotels
 ----
 +
 Output:
 +
 ```
 {"user":"hello-from-flights","discount":0.05}
+{"user":"hello-from-insurances","discount":0.05}
+{"user":"hello-from-cars","discount":0.05}
+{"user":"hello-from-hotels","discount":0.05}
 ```
 
 == Summary: 
@@ -116,5 +136,5 @@ In this section, you applied an Istio `AuthorizationPolicy`  to secure service-t
 
 == Next steps
 
-In the next section we will leverage {rhossm} to shape and manage traffic flows using techniques like canary rollouts, mirroring, and weighted routing to safely introduce new service versions.
+In the next section you will leverage {rhossm} to shape and manage traffic flows using techniques like canary rollouts to safely introduce new service versions.
 

@@ -10,13 +10,13 @@ include::../style.adoc[]
 
 === Solution overview
 
-{corp} leverage {rhossm} as an easy way to set up service-to-service authentication, complex operational functions such canary releases and telemetry to understand traffic between services. 
+{corp} leverages {rhossm} as an easy way to set up service-to-service authentication, complex operational functions such canary releases and telemetry to understand traffic between services. 
 
 {rhossm} uses https://istio.io/[Istio^] as its core service mesh implementation and includes https://kiali.io/[Kiali^] to help you to configure, visualize, validate and troubleshoot your mesh! 
 
 image:m2/m2-arch.png[] 
 
-In this module, you will onboard *travel-agency* namespace to the mesh. The service mesh adds a transparent layer to the microservices within this namespace without requiring any application code changes. 
+In this module, you will onboard *travel-agency* namespace to the mesh. The service mesh adds a transparent layer to the microservices within this namespace without requiring any application code changes.  
 
 Once the namespace is part of the service mesh, you will  use the Kiali to visualize service traffic and gain observability into your application.
 
@@ -44,7 +44,7 @@ In this module, you'll get hands-on experience with OpenShift Service Mesh.
 
 * Learn how OpenShift Service Mesh works by exploring its main parts. You'll see how it gives you visibility and control over how services talk to each other.
 
-* Use zero trust security principles to make sure only the right services can access sensitive backends—helping protect your applications from unwanted access.
+* Use zero trust security principles to make sure only the right services can access sensitive backends — helping protect your applications from unwanted access.
 
 * Control how traffic flows between service versions so you can gradually roll out changes, reduce deployment risks, and test updates safely in production.
 

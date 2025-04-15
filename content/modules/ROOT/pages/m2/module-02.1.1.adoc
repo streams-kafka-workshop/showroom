@@ -10,15 +10,17 @@ In this module we will explore just a few ways to explore the real-time metrics.
 
 == Explore Traffic Graph
 
-. Click http://kiali-istio-system.{ocp_cluster_openshift_cluster_ingress_domain}/console/graphpf/namespaces/?graphType=versionedApp&namespaces=travel-agency&duration=60&refresh=10000&layout=kiali-dagre&edges=trafficDistribution&animation=true[Kiali's Traffic Graph, window="kiali"] to view the details of the `travel-agency` namespace. 
+. Click http://kiali-istio-system.{ocp_cluster_openshift_cluster_ingress_domain}/console/graphpf/namespaces/?graphType=versionedApp&namespaces=travel-agency&duration=60&refresh=10000&layout=kiali-dagre&edges=trafficDistribution&animation=true[Kiali's Traffic Graph^, window="kiali"] to view the details of the `travel-agency` namespace. 
 +
 Some parameters have been preset in this link for easier access. Refresh rate is set at `10s`, and Traffic Distribution and Traffic Animation (for a dynamic view) options have been turned ON.
 
 . The *Traffic Graph* shows service interactions, request rates, and HTTP status codes. This graph helps us identify services that may have problems. In our example, everything is green and healthy! 
 +
-image:m2/kiali-graph.png[]
+Click to view the image in full screen.
 +
-NOTE: Since enabled sidecar injection just a while ago, it may take a minute or two for  the graph to show the updated metrics.
+image:m2/kiali-graph.png[link=self, window=blank, width=100%]
++
+NOTE: Since sidecar injection was enabled just a while ago, it may take a minute or two for  the graph to show the updated metrics.
 
 . You can zoom into the Kiali console to get a better view of `travel-agency` Traffic Graph.
 +
@@ -26,18 +28,24 @@ NOTE: Wondering where all this traffic is coming from? As part of the workshop s
 
 == Explore Workloads
 
-. From Kiali Console, navigate to the http://kiali-istio-system.{ocp_cluster_openshift_cluster_ingress_domain}/console/workloads?duration=60&refresh=10000&namespaces=travel-agency[Workloads] menu.
+. From Kiali Console, navigate to the http://kiali-istio-system.{ocp_cluster_openshift_cluster_ingress_domain}/console/workloads?duration=60&refresh=10000&namespaces=travel-agency[Workloads^, window="kiali"] menu.
 +
-image:m2/kiali-workloads-travel.png[]
+image:m2/kiali-workloads-travel.png[link=self, window=blank, width=100%]
 
 . Select the `travels-v1` workload to review the various metrics available.
 
 . The *Overview tab* gives a high-level summary of the selected workload, including its health status and traffic metrics. It helps you quickly assess how a workload performs and interacts within the mesh.
 +
-image:m2/kiali-workloads-overview.png[Overview]
+Click to view the image in full screen.
++
+image:m2/kiali-workloads-overview.png[link=self, window=blank, width=100%]
 
 
-.[underline]#Optional Activity: Detailed metrics exploration#
+=== Optional Activity: Detailed metrics exploration
+
+If time permits, you can further explore the metrics offered.
+
+.[underline]#Click to view: Detailed metrics exploration#
 
 [%collapsible]
 ====

@@ -10,7 +10,7 @@ In this exercise, we'll use the operator on the OpenShift cluster and the comman
 
 
 
-== Verify inaccessibiliy of Database from Travels Service
+== Verify database access from Travels Service
 
 . As a first step, verify whether the travels services has connectivity to the database. You will use the integrated terminal on the right to perform these checks as guided.
 
@@ -25,7 +25,7 @@ oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.
 Type `y` when you are prompted with `Use insecure connections? (y/n)`. +
 You should see a `Login successful` message
 
-. From the *OpenShift Terminal (upper terminal)*, run the following to check if the travels service and all other services are able to access the on-prem database.
+. From the *OpenShift Terminal (upper terminal)*, run the following command to check if the `travels` service and all other services (cars, discounts etc) are able to access the on-prem database.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -36,13 +36,13 @@ curl travels.travel-agency.svc.cluster.local:8000/travels/Prague && echo
 
 == Set up a {rhsi} Site
 
-Let's set up the Virtual Application Network using {rhsi} in the subsequent steps to help the core services (on OpenShift) access the database on-premises.
+You will set up a Virtual Application Network using {rhsi} in the subsequent steps to help the core services (on OpenShift) access the on-premises database.
 
 . Navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[OpenShift Console, window="console"], and log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}`
 
-. Navigate to Home -> Projects -> travel-db, if you are not already navigated to the `travel-db` project.
+. Navigate to Home -> Projects -> travel-db, if you are not already in the `travel-db` project.
 +
-image::m1/projects_tab.png[]
+image::m1/projects_tab.png[link=self, window=blank, width=100%]
 . From the `travel-db` project, click on the *Service Interconnect tab* or click on this  {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[link, window="console"] to navigate directly.
 . Click on *Create site*.  
 +
@@ -86,7 +86,7 @@ image::m1/deploy_console_rhsi.png[]
 A listener creates a local connection point that links to connectors in remote sites using routing keys. On Kubernetes, it's implemented as a Service; on Docker, Podman, and Linux, it's a listening socket on a local network interface. The listener exposes a host/port for local clients while using the routing key to connect with remote sites.
 ****
 
-. Click on *Create listener* to set up a listeners in the `travel-db` namespace.
+. Click on *Create listener* to set up a listener in the `travel-db` namespace.
 +
 image::m1/listener_button.png[]
 

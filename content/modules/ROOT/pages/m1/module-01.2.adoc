@@ -4,7 +4,7 @@ include::../style.adoc[]
 == Activity: Set up {rhsi} on RHEL
 {m1}
 
-Similar to the OpenShift site, you will set up the site and routers on RHEL using the {rhsi} command line interface.
+Similar to the OpenShift site, you will set up the site and routers on RHEL - but in this activity you will use the {rhsi} command line interface.
 
 === Login in to RHEL and validate the enviroment
 
@@ -89,17 +89,17 @@ File written to /home/lab-user/.local/share/skupper/namespaces/default/input/res
 
 === Create a connector
 
-. Next, let's learn what a connector is.
-+
+Next, let's learn what a connector is, and create one.
+
 [.concept]
 .What is a connector?
 ****
 A connector links a local workload to listeners in remote sites using routing keys. On Kubernetes, it typically uses a pod selector; on Docker, Podman, and Linux, it uses host and port specifications. The routing key is a string identifier that binds the connector to matching listeners in remote sites.
 ****
-+
+
 image::m1/connector_arch.png[]
 
-. In the same *RHEL terminal (lower terminal)* , run the following command to create a connector.
+. In the *RHEL terminal (lower terminal)*, run the following command to create a connector.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -124,7 +124,7 @@ Before proceeding to the final step of creating the Virtual Application Network,
 +
 image::m1/allow_permission.png[]
 
-. You should only be able to see the OpenShift cluster (travel-db namespace). This is because the RHEL on-prem machine is not yet part of the Virtual Application Network.
+. You will only be able to see the OpenShift cluster (travel-db namespace) for the moment. This is because the RHEL on-prem machine is not yet part of the Virtual Application Network.
 +
 image::m1/network-console-ocp.png[]
 

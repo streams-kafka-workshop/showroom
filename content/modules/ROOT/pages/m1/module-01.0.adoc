@@ -6,7 +6,7 @@ include::../style.adoc[]
 
 {corp} is transitioning from a monolithic application to microservices using Red Hat OpenShift, while keeping their core database on-premises due to regulatory requirements. 
 
-With the microservices (on OpenShift) and database (on RHEL) running on different physical networks, they choose {rhsi} to create a secure Virtual Application Network (VAN) between these environments instead of implementing traditional VPNs which would require complex planning and management. +
+With the microservices (on OpenShift) and database (on RHEL) running on different physical networks, they choose *{rhsi}* to create a secure Virtual Application Network (VAN) between these environments instead of implementing traditional VPNs which would require complex planning and management. +
 {rhsi} enables connectivity through Layer 7, the Application Layer in the Open Systems Interconnection (OSI) model, by creating VANs between distributed services in minutes and securing all interconnections with mutual TLS (mTLS).
 
 *Advantages of Layer 7 VAN over Traditional VPNs:*
@@ -18,7 +18,7 @@ With the microservices (on OpenShift) and database (on RHEL) running on differen
 
 == Solution overview
 
-In the module, you will be guided through setting up a Virtual Application Network between the {corp}'s core services running on OpenShift in the public cloud (AWS in this case) and the travels database (`travels-db`), running on RHEL.
+In this module, you will be guided through setting up a Virtual Application Network between the {corp}'s core services running on OpenShift in the public cloud (AWS in this case) and the travels database (`travels-db`), running on RHEL.
 
 With {rhsi}, the core microservices (on OpenShift) can connect with `travels-db` (on RHEL) as though the database was a local service wihtin OpenShift.
 
@@ -32,6 +32,6 @@ image:m1/m1-arch.png[]
 
 . Exchange a secure token created on the OpenShift cluster to the RHEL machine to establish a secure connection between the two machines.
 
-. Validate that the microservices can use the listener (virtual endpoint) created by the Service Interconnect on the cluster to access remote database.
+. Validate that the microservices can use the listener (virtual endpoint) created by the Service Interconnect on the OpenShift cluster to access the remote database.
 
 

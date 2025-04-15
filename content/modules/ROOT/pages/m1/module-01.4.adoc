@@ -4,9 +4,9 @@ include::../style.adoc[]
 == Activity: Verify database access from services
 {m1}
 
-You are now ready to  verify if the travels services is now able to access the database. The travesls services have already been configured to to connnect to the {rhsi} Listener on OpenShift, which serves as a virtual endpoint for the actual on-premises database.
+You are now ready to  verify if the travels services is now able to access the database. As part of the workshop set up, the travels services have already been configured to to connnect to the {rhsi} Listener on OpenShift, which serves as a virtual endpoint for the actual on-premises database.
 
-. In the *OpenShift terminal (upper terminal)*, to get a travel quote for the city Prague. Run the following to check if the travels services and all other services are able to access the on-prem database. 
+. In the *OpenShift terminal (upper terminal)*, run the following command to get a travel quote for the city *Prague* to check if the services are able to access the on-prem database. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----

@@ -19,13 +19,13 @@ NOTE: Canary deployment is a strategy where a new version (the canary) is tested
 image:m2/canary.png[]
 
 
-In the next steps, you will create the `DestinationRule` and `VirtualService` resources. These resources control how traffic is routed between services, and are essential tools for canary deployment. They rely on the `version` label to identify different versions of the services. 
+In the next steps, you will create `DestinationRule` and `VirtualService` Istio resources. These resources control how traffic is routed between services, and are essential tools for canary deployment. They rely on the `version` label applied to service deployments to identify different versions of the services. 
 
 == Create a *DestinationRule* 
 
 You will now define a `DestinationRule` for the `discounts` service with two version subsets: `v1` and `v2`
 
-NOTE: A DestinationRule defines policies that apply to traffic intended for a service after routing has occurred. Version specific policies can be specified by defining a named subset
+NOTE: A DestinationRule defines policies that apply to traffic directed to a service after routing has occurred. Version specific policies can be specified by defining a named subset
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 +
@@ -90,13 +90,14 @@ spec:
 
 . This VirtualService currently routes 100% of traffic to version *v1*, since *v2* is not yet deployed.
 
-=== Step 2: Deploy the `discounts-v2` Service
+=== Deploy the `discounts-v2` Service
 
 You'll deploy a second version of the `discounts` service (`v2`) into the mesh. It will run alongside the existing `v1` version but won't receive traffic until we configure routing.
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 . In the YAML editor, copy the following *Deployment* CR and click *Create*.
-
++
+Note the `version: v2` label attached to it under `spec.selectionmatchLabels` in the YAML.
 +
 [source,sh,role="execute",subs=attributes+]
 ----

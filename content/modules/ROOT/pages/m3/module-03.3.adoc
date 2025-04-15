@@ -41,12 +41,12 @@ image::m3/app-dashboard-no-data.png[link=self, window=blank, width=100%]
 for i in {1..1000}; do curl -k -w "%{http_code}" https://echo.travels.{ocp_cluster_workshop_main_domain}; done
 ----
 . Access the Grafana dashboard tab again, and click the refresh button as shown in the screenshot below. 
-... You may need to refresh a couple of times for the metrics to appear in the Grafana dashboard.
++
+You may need to refresh a couple of times for the metrics to appear in the Grafana dashboard.
++
 Notice that 429 and 403 requests, as well as the total requests, are available in the different sections of the dashboard.
 +
 image::m3/app-dashboard-with-data.png[link=self, window=blank, width=100%] 
-
-=== OPTIONAL: Explore dashboard as Platform Engineer or Business Owner
 
 . Next, click the *Platform Engineer Dashboard* link on the top left of the page. 
 .. View Gateway, HTTPRoute, and its policies
@@ -70,7 +70,7 @@ oc rollout restart deployment/kube-state-metrics-kuadrant -n monitoring
 +
 image::m3/pe-dashboard-requests.png[link=self, window=blank, width=100%]
 
-. Finally, click the Business User Dashboard link at the top left of the page. This dashboard shows data such as traffic summary and historical request comparison, which are more relevant to business users.
+. Finally, click the *Business User Dashboard* link at the top left of the page. This dashboard shows data such as traffic summary and historical request comparison, which are more relevant to business users.
 +
 image::m3/biz-dashboard-with-data.png[link=self, window=blank, width=100%]
 

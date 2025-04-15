@@ -22,7 +22,7 @@ oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.
 == Activity: Platform Engineer workflow
 
 . Click to navigate to {ocp_cluster_openshift_cluster_console_url}/kuadrant/overview[Connectivity Link Overview^, window='content'], and 
-log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}`if prompted.
+log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` if prompted.
 +
 image:m3/rhcl-console-view.png[] 
 . In the *Overview* section, you will notice that a *Gateway*, a *TLSPolicy*, a *DNSPolicy*, and an `echo-api` *HTTPRoute* have been pre-configured. 

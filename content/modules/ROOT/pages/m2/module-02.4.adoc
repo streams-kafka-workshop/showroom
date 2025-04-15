@@ -87,6 +87,13 @@ oc -n travel-agency patch virtualservice discounts --type=json -p='[
 == Clean up
 
 . Close all the tabs except for this *instructions* tab 
+. Clear both the *upper* and *lower* terminals by executing the following command
++
+[source,sh,role="execute",subs=attributes+]
+----
+clear
+----
+
 
 == Summary
 

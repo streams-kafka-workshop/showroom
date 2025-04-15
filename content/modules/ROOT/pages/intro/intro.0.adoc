@@ -5,17 +5,26 @@ include::../style.adoc[]
 
 image:intro/travelzcorp.png[width=70%] 
 
-In this workshop we will follow the story of *{corp}*, a global travel services company that is modernizing its application infrastructure. As part of this transformation, {corp} has begun migrating applications to the cloud. 
+In this workshop we will follow the story of *{corp}*, a fictitious global travel services company that is modernizing its application infrastructure. As part of this transformation, {corp} has begun migrating applications to the cloud. 
 
 
-Here is a high-level architecture of the {corp} application. The {corp} web portal and core services have been migrated and deployed on OpenShift, while the database remains on Red Hat Enterprise Linux (RHEL). The team is currently working on establishing the necessary connectivity between the applications.
+==  Architecture overview
+Here is a high-level view of the {corp} application architecture. 
+
 
 image::intro/hl-arch.png[] 
 
-However, the company faces several challenges typical of a hybrid cloud environment:
+* The {corp} web portal and core services have been migrated and deployed on OpenShift, while the database remains on Red Hat Enterprise Linux (RHEL). 
+* The core services of {corp} are present in the `travel-agency` namespace. 
+** The `hotels`, `cars`, `flights` and `insurances` services connect with the `travel-db` for the data, and gets the offers to be applied from the `discounts` service
+** The `travels` service serves as the REST API to the web portal
 
-* *Secure connectivity between cloud and on-premises systems*: During the transition, some critical databases remain on-premises. {corp} needs to securely connect its new cloud-based services to these legacy systems without exposing sensitive data.
-* *Granular access control in a distributed environment*: With services now spread across multiple environments, controlling who can access what, and under which conditions, is increasingly complex. The company requires fine-grained, policy-driven service-to-service access controls.
+The team is currently working towards establishing the necessary connectivity between the applications. 
+
+However, they faces several challenges typical of a hybrid cloud environment:
+
+* *Secure connectivity between cloud and on-premises systems*: During the transition, some critical databases remain on-premises. {corp} needs to securely connect its new cloud-based services to the on-premises dayabase without exposing sensitive data.
+* *Granular access control in a distributed environment*: With a distributed micoservices architecture, controlling who can access what, and under which conditions, is increasingly complex. The company requires fine-grained, policy-driven service-to-service access controls.
 * *Secure access for third-party partners*: Core services must be accessible to trusted third-party partners. {corp} needs to expose these services securely, while protecting them from unauthorized access or misuse.
 
 Throughout this workshop, you will play the role of a platform engineer at {corp}, and occasionally that of a developer, and work through these challenges using Red Hat's connectivity solutions.
@@ -24,11 +33,11 @@ Throughout this workshop, you will play the role of a platform engineer at {corp
 
 This workshop is divided into 3 logical sections which provide a guided walkthrough shadowing {corp}'s journey
 
-* *Module 1*: Explore how *{rhsi}* allows the core services on OpenShift to to communicate with the database seamlessly thereby enabling app connectivity across on-prem and cloud.
+* *Module 1*: Explore how *{rhsi}* allows the core services on OpenShift to communicate with the on-prem database (on RHEL) seamlessly thereby enabling app connectivity across on-prem and cloud.
 
-* *Module 2*: Learn how to manage microservices with *{rhossm}* through fine-grained access control between services, _east-west_[.red]^*^ traffic management strategies and observability.
+* *Module 2*: Learn how to manage microservices with *{rhossm}* through fine-grained access control between services, _east-west_[.red]^*^ traffic management, complex deployment strategies and observability.
 
-* *Module 3:* Learn *{rhcl}* helps you to manage and secure _north-south_[.red]^*^ request traffic flow with   through rich policy APIs to secure access to core services from third-party partners.
+* *Module 3:* Learn how *{rhcl}* through rich policy APIs  helps you to manage and secure _north-south_[.red]^*^ traffic flow and  secure access to core services from third-party partners.
 
 TIP: [.red]^*^ In application connectivity, _east-west_ traffic refers to data flow between internal components/microservices, and  _north-south_ traffic refers to data flow between internal systems and external clients.
 
@@ -51,5 +60,5 @@ This is a fully guided workshop. All necessary links, credentials, access detail
 * You can adjust the width of this instructions and the right-side terminals windows with the resize grab handle as needed.
 * Several components have been preconfigured to ensure this workshop can be completed within a short timeframe. Each of these components will be explained as you progress through the workshop.
 
-The *{corp}* application used in this workshop is based on the https://kiali.io/docs/tutorials/travels/[Kiali Travel Demo Tutorial^]
+NOTE: The *{corp}* application used in this workshop is based on the https://kiali.io/docs/tutorials/travels/[Kiali Travel Demo Tutorial^]
 

@@ -1,17 +1,20 @@
-:imagesdir: ../../assets/images
+:imagesdir: ../assets/images
 include::style.adoc[]
 
 == Safeguarding Application Connectivity for the Hybrid Cloud
+
+image:intro/hybrid-cloud.png[width=50%]  
+
 
 Hybrid cloud environments offer enterprises with flexibility, scalability, and agility, but they also introduce significant connectivity and security challenges. Organizations must ensure systems and services can communicate effectively, securely and seamlessly - across on-premises, private, and public clouds
 
 Some of the key challenges include:
 
 * Fragmented app connectivity
-* Drift in configuration across multiple environment
-* Insufficient security policy in application communications
+* Drift in configuration across multiple environments
+* Insufficient security applied to application communications
 * Mismanagement of resources
-* Lack of visibility across hybrid  infrastructures
+* Lack of visibility across hybrid infrastructures
 
 == Workshop objectives 
 
@@ -19,7 +22,7 @@ In this workshop, we will guide you through Red Hat's connectivity solutions tha
 
 * Securely connect services running on different platforms and clouds, without VPNs or complex networking.
 * Safely expose and consume services both within and outside your organization.
-* Enforce authorization policies to restrict service-to-service communication without modifying application code, even within the same cluster
+* Enforce authorization policies to restrict service-to-service communication even within the same cluster, without modifying application code.
 * Implement and manage consistent security policies across multiple clusters through GitOps
 * Empower developers to independently manage their application connectivity with self-service guardrails.
 
