@@ -12,11 +12,12 @@ Similar to the OpenShift site, you will set up the site and routers on RHEL usin
 +
 image::m1/lower_terminal.png[]
 
-. Log in to the RHEL machine using the following command.
+. Log in to the RHEL machine using the following command using the *lower terminal*.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=60 lab-user@{rhel_hostname}
+ssh -o ServerAliveInterval=60 \
+    -o ServerAliveCountMax=60 lab-user@{rhel_hostname}
 ----
 
 

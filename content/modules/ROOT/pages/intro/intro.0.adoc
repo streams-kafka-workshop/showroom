@@ -48,7 +48,7 @@ This is a fully guided workshop. All necessary links, credentials, access detail
 
 * You will be working on a Single Node OpenShift (SNO) cluster deployed on AWS. 
 * The workshop activities are performed using the OpenShift console and the integrated terminals on the right-hand side.
-* You can adjust the width of this instructions, and the right-side terminals windows using the scrollbar as needed.
+* You can adjust the width of this instructions and the right-side terminals windows with the resize grab handle as needed.
 * Several components have been preconfigured to ensure this workshop can be completed within a short timeframe. Each of these components will be explained as you progress through the workshop.
 
 The *{corp}* application used in this workshop is based on the https://kiali.io/docs/tutorials/travels/[Kiali Travel Demo Tutorial^]

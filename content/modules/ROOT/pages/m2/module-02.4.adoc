@@ -11,20 +11,19 @@ To enable canary rollout, you will run a simple script to gradually shift traffi
 This script is meant for illustrative and educational purposes. In a real-world production environment, organizations typically use a progressive delivery tool like *Argo Rollouts* which is included as part of OpenShift.
 ====
 
-. In the *upper terminal*, run the log monitoring script:
+. In the *upper terminal*, run this log monitoring script which trails the logs of `v1` and `v2` discounts pods.
 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 sh <(curl -s https://raw.githubusercontent.com/app-connectivity-workshop/scripts/refs/heads/main/m2/canary-monitoring.sh)
 ----
-
 +
 You should immediately start seeing log output from discounts-v1 `[discounts/v1]`.
 +
 image:m2/log-output-pre-rollout.png[]
 
-. In the *lower terminal*, run the canary-rollout script.
+. In the *lower terminal*, run the following canary-rollout script. This script shifts traffic form `v1` to `v2` by updating the VirtualService you created earlier,
 +
 [source,sh,role="execute",subs=attributes+]
 ----

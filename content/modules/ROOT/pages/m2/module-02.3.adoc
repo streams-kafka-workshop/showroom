@@ -8,27 +8,24 @@ Now that your services are locked down and secured, it's time to focus on how tr
 
 As a growing travel platform, the {corp} team continuously rolls out new features and improvements to core services like `discounts`, which directly impact pricing and promotions. Because these changes affect customer experience and revenue, it's crucial that updates are rolled out in a safe, observable, and reversible way.
 
-You will leverage {rhossm} to **shape and manage traffic flows** using advanced techniques like:
-
-* **Canary rollouts** - gradually introducing new versions of a service
-* **Mirroring** - sending a copy of live traffic to a new version without impacting users
-* **Weighted routing** - splitting traffic between service versions based on percentage
-
-These patterns allow teams to roll out changes safely and confidently, minimizing risk while gaining real-time observability and control.
+You will leverage {rhossm} to *shape and manage traffic flows* using advanced techniques like *Canary rollouts* to gradually introducing new versions of a service. This allows teams to roll out changes safely and confidently, minimizing risk while gaining real-time observability and control.
 
 == Activity: Gradual Traffic Shifting with Weighted Routing
 
-In this activity, you'll simulate a real-world **canary deployment** strategy by introducing a new version of the `discounts` service (`v2`) and gradually shifting traffic to it.
+In this activity, you'll simulate a real-world *canary deployment* strategy by introducing a new version of the `discounts` service (`v2`) and gradually shifting traffic to it.
 
 NOTE: Canary deployment is a strategy where a new version (the canary) is tested before all of the old instances are replaced
 
 image:m2/canary.png[]
 
-You will define the `DestinationRule` and `VirtualService` resources which together to control how traffic is routed between services, and are essential tools for managing traffic flow, enabling advanced deployment strategies like canary releases, blue/green deployments, and A/B testing.
+
+In the next steps, you will create the `DestinationRule` and `VirtualService` resources. These resources control how traffic is routed between services, and are essential tools for canary deployment. They rely on the `version` label to identify different versions of the services. 
 
 == Create a *DestinationRule* 
 
-You will define a `DestinationRule` for the `discounts` service with two subsets: `v1` and `v2`
+You will now define a `DestinationRule` for the `discounts` service with two version subsets: `v1` and `v2`
+
+NOTE: A DestinationRule defines policies that apply to traffic intended for a service after routing has occurred. Version specific policies can be specified by defining a named subset
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 +
@@ -58,6 +55,8 @@ spec:
 == Apply the *VirtualService* 
 
 You will next create a `VirtualService` that initially sends 100% of traffic to `v1`, 0% to `v2`
+
+NOTE: A  VirtualService defines a set of traffic routing rules, that can route traffic based on subsets created by a DestinationRule.
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 . In the YAML editor, copy the following *VirtualService* CR and click *Create*.
