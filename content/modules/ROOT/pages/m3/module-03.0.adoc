@@ -11,17 +11,17 @@ All incoming traffic from the external partner portal needs to be secured and ma
 
 == Solution 
 
-To expose their core services to external travel partners, {corp} decides to embrace a policy-as-code approach which provides repeatable and automated policy-based management defined security through code.
+To safely expose their core services to external travel partners, {corp} decides to embrace a policy-as-code approach. This approach provides a repeatable and automated way to manage the Policy APIs, that define security, through code.
 
 The team adopts a Kubernetes-native approach to application connectivity through {rhcl}.
 
-image:m3/m3-soln.png[] 
+image:m3/m3-soln.png[link=self, window=blank, width=100%] 
 
 {rhcl} provides Kubernetes-native traffic management in multi-cluster environments. It builds on *Gateway API* (the new Kubernetes standard for Ingress), offering Policy APIs to support DNS management, TLS certificate lifecycle management, authentication, and rate limiting in multi-cluster environments. 
 
 {rhcl}'s policies are applied on the Gateway and HTTPRoute resources (of Gateway API) as shown below. 
 
-image:m3/rhcl-policies.png[] 
+image:m3/rhcl-policies.png[link=self, window=blank, width=100%] 
 
 With this approach, Platform engineers and application developers can collaborate to connect, secure, and protect distributed services and applications through the right policies needed to protect exposed endpoints.
 

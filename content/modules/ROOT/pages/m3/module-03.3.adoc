@@ -25,13 +25,15 @@ image:m3/grafana-allow-permissions.png[link=self, window=blank, width=100%]
 * From the left-hand navigation, access the *Dashboards* menu. 
 +
 image::m3/grafana-dashboards-list.png[link=self, window=blank, width=100%] 
-* Click on the *monitoring* folder to view the preloaded dashboards. Click on the image to view full size
+* Click on the *monitoring* folder to view the preloaded dashboards. 
++
+Click to view the image in full screen.
 +
 image::m3/grafana-monitoring-dashboards.png[link=self, window=blank, width=100%]
 
 == Explore persona-based Dashboards
 
-. Click on the *App Developer Dashboard* link to view  the data. You will be presented with the data for both `echo-api` and `travel-agency` APIs. 
+. Click on the *App Developer Dashboard* link to view  the data. You will be presented with the metrics for both `echo-api` and `travel-agency` APIs. 
 +
 image::m3/app-dashboard-no-data.png[link=self, window=blank, width=100%] 
 . For the sake of this workshop, let us create some traffic to the `echo-api`. Run the following command on the *upper* terminal. You will see a combination of 403 and 429 errors in the terminal.
@@ -55,7 +57,7 @@ image::m3/pe-dashboard-gw.png[link=self, window=blank, width=100%]
 +
 [CAUTION]
 ====
-Don't see the policies? You might need to restart the kube-state-metrics pod. 
+Don't see the HTTPRoute's policies? You might need to restart the kube-state-metrics pod. 
 
 * Run this command in the top-right terminal to nudge the metrics a bit.
 +
@@ -63,7 +65,7 @@ Don't see the policies? You might need to restart the kube-state-metrics pod.
 ----
 oc rollout restart deployment/kube-state-metrics-kuadrant -n monitoring
 ----
-* Refresh the dashboard, and voila, everything is alright in our dashboard world.
+* Refresh the dashboard using the image:m3/refresh.png[width=30px] button on top-right of the brwoser, and voila, everything is alright in our dashboard world.
 
 ====
 .. View details of Total requests, latency, and CPU and memory usage

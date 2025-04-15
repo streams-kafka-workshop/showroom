@@ -9,14 +9,14 @@ In this section, you will perform the role of a developer and create policies to
 == Test access to the Travelz Partner Portal Application
 
 . Access the *Travels Blue* partner portal by clicking https://travels-blue-ui-travel-web.{ocp_cluster_openshift_cluster_ingress_domain}/[here^, console="partner"]
-. You should see a 404 error status code because the Travels core services endpoint hasn't been exposed using an HTTPRoute to make it available to other applications/systems.
+. You should see a *404 error* status code because the Travels core services endpoint hasn't been exposed using an HTTPRoute to make it available to other applications/systems.
 +
 image:m3/partner-blue-404.png[] 
 
 == Set up HTTPRoute for Travels service endpoint
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new HTTPRoute.
-. In the YAML editor, copy the following *HTTPRoute* CR.
+. In the YAML editor, copy the following *HTTPRoute* CR for the `travel` REST API.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -53,12 +53,12 @@ spec:
 == Test Web App again after HTTPRoute is set up
 
 . Refresh the Web application or access it from https://travels-blue-ui-travel-web.{ocp_cluster_openshift_cluster_ingress_domain}/[here^, console="access Web app"]. 
-. You should see a *403 - Forbidden* error because while you have the HTTPRoute now, the `preod-web` Gateway's `deny-all` default policy kicks in and doesn't allow any requests to be made. We have a zero-trust auth in place!!
+. You should see a *403 - Forbidden* error because while you have created the `trvaels` API's HTTPRoute, the `pred-web` Gateway's `deny-all` default policy kicks in and doesn't allow any requests to be made. We have a zero-trust auth in place!!
 +
 image:m3/partner-blue-403.png[] 
 
 . This is because while you have the HTTPRoute now, the original deny-all default policy kicks in and doesn't allow any requests to made. We have a zero-trust auth in place!!
-. *[Optional]* You can validate this by accessing {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"]. You will notice that the `travel-agency` HTTPRoute also inherits the Gateway's policies (just like the `echo-api` HTTRoute)
+. You can validate this by accessing {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"]. You will notice that the `travel-agency` HTTPRoute also inherits the Gateway's policies (just like the `echo-api` HTTRoute)
 +
 image:m3/travel-404-policy-topology.png[] 
 
@@ -108,7 +108,7 @@ stringData:
 type: Opaque
 ----
 . Click *Create* to create these resources
-. The resources are create successfully.
+. The resources are created successfully.
 +
 image:m3/auth-apikey-created.png[width=80%] 
 +
@@ -137,7 +137,7 @@ image:m3/partner-blue-429.png[]
 . Since there is no RateLimit Policy for the Travels HTTPRoute, the Gateway's RateLimit Policy is applied to the HTTPRoute as well.
 
 
-== Create a new RateLimit Policy which overrides the default gateway policy
+== Create a new `travels` specific RateLimit Policy
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new AuthPolicy for the HTTPRoute.
 . In the YAML editor, copy the following CRs, which creates AuthPolicy along with the API Keys needed 
