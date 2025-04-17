@@ -41,16 +41,6 @@ This workshop is divided into 3 logical sections which provide a guided walkthro
 
 TIP: [.red]^*^ In application connectivity, _east-west_ traffic refers to data flow between internal components/microservices, and  _north-south_ traffic refers to data flow between internal systems and external clients.
 
-// optional modules section
-// === Working through the 3 modules:
-
-// image:intro/choose-module.png[] 
-
-
-// * *Module 1* is mandatory and must be completed first.
-// * You can then choose to proceed with *Module 2* or *Module 3* based on your interest.
-// * If time permits, you may complete the remaining module as well.
-
 == Workshop environment
 
 This is a fully guided workshop. All necessary links, credentials, access details, and configurations are provided exactly when and where they are needed. No prior setup is required (ツ)
@@ -61,8 +51,6 @@ This is a fully guided workshop. All necessary links, credentials, access detail
 
 
 === Lab instructions and commands
-
-Here is an overview of the different types of instructions you'll find 
 
 * Throughout the lab you will see instructions as shown below. You can click the clipboard icon  image:common/clipboard.png[width=30px] to copy and execute the command on the upper or lower terminal as directed by the instructions.
 +

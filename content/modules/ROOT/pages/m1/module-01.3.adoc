@@ -34,7 +34,6 @@ image:m1/execute-script.png[]
  
 === Start Virtual Application Network on RHEL
 
-. Make 
 . Since the token has now been transferred to the RHEL machine, start the Virtual Application Network by running the command below from the *RHEL terminal (lower terminal)*. 
 +
 [source,sh,role="execute",subs=attributes+]

@@ -19,7 +19,16 @@ oc whoami
 oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.30.0.1:443
 ----
 
-== Activity: Platform Engineer workflow
+== Workshop set up
+
+To ensure the module can be completed within a short timeframe, some of the components and Policies have been preconfigured. 
+
+. AWS Hosted Zone (DNS domain) `travels.{ocp_cluster_workshop_main_domain}` has been created on *AWS Route 53*.
+. A Gateway resource `prod-web` referencing the DNS domain `travels.{ocp_cluster_workshop_main_domain}`
+. {rhcl} operator and a few policies to provide dns management in external dns provider
+. A sample partner web-portal to test secure external access of the `travel-agency` core  services
+
+== Explore {rhcl} set up
 
 . Click to navigate to {ocp_cluster_openshift_cluster_console_url}/kuadrant/overview[Connectivity Link Overview^, window='content'], and 
 log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` if prompted.
@@ -38,6 +47,8 @@ image:m3/rhcl-error.png[]
 ====
 
 === Review the Gateway
+
+NOTE: A Gateway resource defines how external traffic enters a cluster and references a DNS domain (hosted zone). 
 
 . Access the `prod-web` Gateway shows under the *Gateways* section. 
 +
@@ -71,6 +82,8 @@ spec:
 
 === Review the DNSPolicy
 
+NOTE: A *DNS Policy* is attached to a Gateway to enable DNS management by managing DNS records in external DNS providers - in this case, *AWS Route53*.  This policy has been pre-created, because DNS resolution for new DNS records may take time to propogate and could delay your progress in this module. 
+
 . Click to view the {ocp_cluster_openshift_cluster_console_url}/k8s/ns/ingress-gateway/kuadrant.io%7Ev1%7EDNSPolicy/prod-web-dnspolicy[prod-web-dnspolicy, window="console"]. 
 . You can review the policy by clicking on the *YAML* tab
 +
@@ -90,10 +103,13 @@ spec:
 +
 [TIP] 
 ====
-DNS Policies can be created with more complex configurations especially for hybrid cloud architectures, including default Geo Code and load balancing options
+* DNS Policies can be created with more complex configurations especially for hybrid cloud architectures, including default Geo Code and load balancing options. 
+
 ====
 
 === Access the `echo-api` HTTPRoute
+
+NOTE: HTTPRoutes are attached to a Gateway to route all incoming traffic to appropriate backend services.
 
 . The `echo-api` HTTPRoute has been deployed as a way for Platform Engineers to verify their setup before opening this up to developers.
 . Execute the following `curl` command in the *upper terminal* to access the `echo-api`
@@ -122,7 +138,10 @@ curl -k -w "%{http_code}" https://echo.travels.{ocp_cluster_workshop_main_domain
 
 == Create a zero-trust AuthPolicy
 
-As a Platform Engineer, you will now set up a zero-trust *AuthPolicy* to secure your services.
+As a Platform Engineer, you will now set up a zero-trust *AuthPolicy* to secure all incoming traffic.
+
+NOTE: *Zero trust* a security model where every interaction begins in an untrusted state
+
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 +
@@ -166,6 +185,8 @@ spec:
 image:m3/gw-ap-created.png[] 
 
 === Create a default low-limit RateLimitPolicy
+
+NOTE: RateLimitPolicy provides rate limiting of requests to Gateways and HTTPRoutes and also offers fine-grained matching rules to apply the limits to.
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 +

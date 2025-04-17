@@ -9,32 +9,29 @@ With their growing popularity, {corp} would like to add new channels to their ex
 All incoming traffic from the external partner portal needs to be secured and managed. {corp} also wants to protect the endpoints by easily applying rate limiting and specific levels of access based on systems and users.
 
 
-== Solution 
+== Solution overview
 
-To safely expose their core services to external travel partners, {corp} decides to embrace a policy-as-code approach. This approach provides a repeatable and automated way to manage the Policy APIs, that define security, through code.
+To safely expose their core services to external travel partners, {corp} decides to embrace a policy-as-code approach. This approach provides a repeatable and automated way to manage the policies that can be applied to incoming north-south traffic and there by easily define security through code.
 
-The team adopts a Kubernetes-native approach to application connectivity through {rhcl}.
+The team adopts {rhcl} which is based on  https://kuadrant.io/[Kuadrant^, window='content'] open-source project, to enable secure traffic management across multi-cluster environments.
+
+{rhcl} extend the capabilities of https://gateway-api.sigs.k8s.io/[*Gateway API*^, window='content'], the new Kubernetes standard for Ingress. The , and offers Policy APIs to support DNS management, TLS certificate lifecycle management, authentication, and rate limiting.
 
 image:m3/m3-soln.png[link=self, window=blank, width=100%] 
 
-{rhcl} provides Kubernetes-native traffic management in multi-cluster environments. It builds on *Gateway API* (the new Kubernetes standard for Ingress), offering Policy APIs to support DNS management, TLS certificate lifecycle management, authentication, and rate limiting in multi-cluster environments. 
 
-{rhcl}'s policies are applied on the Gateway and HTTPRoute resources (of Gateway API) as shown below. 
+The {rhcl} policies are applied on the HTTP traffic being routed to a Service by using a Gateway and an HTTPRoute resources.
 
 image:m3/rhcl-policies.png[link=self, window=blank, width=100%] 
 
+Platform Engineers can apply policies to the Gateway which governs the the lower levels of the network (HTTPRoute/Services), until a more specific policy is applied.
+
 With this approach, Platform engineers and application developers can collaborate to connect, secure, and protect distributed services and applications through the right policies needed to protect exposed endpoints.
 
-== Environment Setup
+== Activities overview
 
-To ensure the module can be completed within a short timeframe, specific components have been preconfigured in advance:
+The next sections walks you through the activities as a Platform Engineer and a Developer securing the `travel-agency` core services for third-party partner access
 
-. The applications and services are running on AWS on an OpenShift cluster, and AWS Route53 is used for DNS purposes.
-+
-`{rhcl}` also supports other DNS providers, including Azure and Google Cloud, with Core DNS support coming soon.
-. A *Gateway* and its *DNSPolicy* have already been created, because DNS resolution for new DNS records may take a few minutes.
-. The partner portal and the AWS Route53 config are already deployed as part of workshop setup.
-
-== Next steps
-
-As part of the workshop, you will also configure the necessary `{rhcl}` Custom Resources (CRs) to connect, secure, and manage the `travel-agency` service. The next sections walks you through the activities as a Platform Engineer and a Developer. 
+. As a *Platform Engineer*, set up the right policies as security guardrails to the Gateway resource, and validate that the traffic flow is secured with a zero trust policy.
+. As an *Application Developer*, safely expose the `travel-agency` service route and apply specific policies to allow secure access to the core services endpoints
+. Explore Grafana dashboards for in-depth observability for business owners, platform engineers and application developers.
