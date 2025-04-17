@@ -121,7 +121,7 @@ image:m3/travel-ap-topology.png[]
 
 == Test Web App again (after HTTPRoute and AuthPolicy are set up)
 
-. Refresh the partner portal one more time. You should now see a `API Call is successful` message.
+. Refresh the https://travels-blue-ui-travel-web.{ocp_cluster_openshift_cluster_ingress_domain}/[partner portal^, console="partner"] one more time. You should now see a `API Call is successful` message. 
 +
 image:m3/webapp-success.png[] 
 . Choose a City, a From, and a To date, and click the *Find details* button

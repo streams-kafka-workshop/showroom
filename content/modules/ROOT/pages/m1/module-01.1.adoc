@@ -73,10 +73,17 @@ image::m1/site_create_warning.png[]
 . The warning message disappears once the site is created.
 +
 image::m1/site_created.png[]
-
-. Once the site creation is complete, click on the *Deploy Network Console* button. You will use this console to visualize the network later. Since it takes a few seconds to load, deploy it now and proceed to the next steps while it gets deployed.
 +
-image::m1/deploy_console_rhsi.png[]
+You will also notice a `Ready` status displayed in the *Details* tab
++
+image:m1/site-ready.png[] 
+. Once the site creation is complete, from the *Get Started tab* click on the *Deploy Network Console* button. 
++
+You will use this console to visualize the network later. Since it takes a few seconds to initialize, go ahead and deploy it now. While it is getting deployed, proceed to the next steps to save time.
++
+_Click to view the image in full screen._
++
+image::m1/deploy_console_rhsi.png[link=self, window=blank, width=100%]
 
 == Set up a {rhsi} Listener
 

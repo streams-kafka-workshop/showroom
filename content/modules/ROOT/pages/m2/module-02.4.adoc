@@ -68,11 +68,9 @@ virtualservice.networking.istio.io/discounts patched
 
 Congratulations! You've just performed a progressive rollout of a new version of a microservice using weighted routing in OpenShift Service Mesh. 
 
-=== Optional Activity
+=== Optional Activity: Reset traffic to v1
 
-.[underline]#Reset traffic to v1#
-[%collapsible]
-====
+Run the following command on the *upper terminal* to reset traffic to discounts service `v1`
 
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -81,43 +79,5 @@ oc -n travel-agency patch virtualservice discounts --type=json -p='[
   {"op": "replace", "path": "/spec/http/0/route/1/weight", "value": 0}
 ]'
 ----
-====
 
 
-== Clean up
-
-. Close all the tabs except for this *instructions* tab 
-. Clear both the *upper* and *lower* terminals by executing the following command
-+
-[source,sh,role="execute",subs=attributes+]
-----
-clear
-----
-
-
-== Summary
-
-
-In this module, you explored how {corp} can use {rhossm} to address the growing complexity of managing microservices. By adopting a consistent, code-free approach to observability, traffic control, and security, {corp} is better positioned to scale its applications while reducing operational risk.
-
-Congratulations on completing "Secure microservices access control with {rhossm}" module!!!
-
-You can now proceed to *Module 3* Simplify and secure traffic management with {rhcl}
-
-// NOTE: Istio's “sidecar-less” ambient mode is now available for developer preview - which meansa future where sidecars are optional. Check out https://istio.io/latest/docs/ambient/overview/[this page^] for more details
-
-
-// optional modules section
-// * xref:../m3/module-03.0.adoc[Module 3] - Simplify and secure traffic management with Red Hat Connectivity Link
-// * xref:../conclusion/summary.0.adoc[Workshop Summary]
-
-// ++++
-
-// <style> 
-
-// .next {
-//     display: none !important;
-// }
-// </style>
-
-// ++++
