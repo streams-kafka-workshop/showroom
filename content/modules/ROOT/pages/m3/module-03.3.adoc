@@ -66,7 +66,7 @@ Don't see the HTTPRoute's policies? You might need to restart the kube-state-met
 ----
 oc rollout restart deployment/kube-state-metrics-kuadrant -n monitoring
 ----
-* Refresh the dashboard using the image:m3/refresh.png[width=30px] button on top-right of the brwoser, and voila, everything is alright in our dashboard world.
+* Refresh the dashboard using the image:m3/refresh.png[width=30px] button on top-right of the browser, and voila, everything is alright in our dashboard world.
 
 ====
 .. View details of Total requests, latency, and CPU and memory usage

@@ -20,7 +20,7 @@ With the microservices (on OpenShift) and database (on RHEL) running on differen
 
 In this module, you will be guided through setting up a Virtual Application Network between the {corp}'s core services running on OpenShift in the public cloud (AWS in this case) and the travels database (`travels-db`), running on RHEL.
 
-With {rhsi}, the core microservices (on OpenShift) can connect with `travels-db` (on RHEL) as though the database was a local service wihtin OpenShift.
+With {rhsi}, the core microservices (on OpenShift) can connect with `travels-db` (on RHEL) as though the database was a local service within OpenShift.
 
 // image:m1/rhsi_architecture_image.png[]
 

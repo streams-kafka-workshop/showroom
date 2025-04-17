@@ -10,12 +10,12 @@ As it stands, the microservices in the `travel-agency` namespace can currently c
 
 image:m2/travel-agency-namespace-initial.png[width=70%] 
 
-In this section, you'll apply an Istio `AuthorizationPolicy` to enforce a least privilege model, allowing access to `discounts` only from the allowed backend services (`hotels`, `cars`, `flights` and `insurnace` services), and not from the `travels` REST API.
+In this section, you'll apply an Istio `AuthorizationPolicy` to enforce a least privilege model, allowing access to `discounts` only from the allowed backend services (`hotels`, `cars`, `flights` and `insurance` services), and not from the `travels` REST API.
 
 
 == Review current access of *discounts* service
 
-. Run the following command in the *upper teminal* to verify that you are indeed able to access the `discounts` service directly from all the services in the `travel-agency` name space. +
+. Run the following command in the *upper terminal* to verify that you are indeed able to access the `discounts` service directly from all the services in the `travel-agency` name space. +
 This command calls the `discounts` service directly from the  pods of the services. 
 +
 [source,sh,role="execute",subs=attributes+]
@@ -79,11 +79,11 @@ spec:
 ====
 A brief description of the above `AuthorizationPolicy`
 
-* the *selector* specifies the workload which is `discounts` in this case
+* the *selector* specifies the workload which is the `discounts` service in this case
 * the *action* ALLOWs traffic based on the rules set
 * the *rules* allows requests from workloads using the service account named `discount-access-sa`
 
-The `discount-access-sa` service account has already created and added to the allowed backend services as part of the workshop set up.
+The `discount-access-sa` service account has already been created and added to the allowed backend services as part of the workshop set up.
 ====
 
 
@@ -102,7 +102,7 @@ oc rsh -n travel-agency $(oc get pod -l app=travels -n travel-agency -o jsonpath
 RBAC: access denied
 ```
 +
-WARNING: It maybe take a few seconds for the AuthorizationPolicy to take effect. Please retry if you still see a success response. 
+WARNING: It may take a few seconds for the AuthorizationPolicy to take effect. Please retry if you still see a success response. 
 
 . Verify that the allowed services can still access the `discounts` service by running the following command in the *upper terminal*.
 +
@@ -132,7 +132,7 @@ Output:
 
 == Summary: 
 
-In this section, you applied an Istio `AuthorizationPolicy`  to secure service-to-service communication within the `travel-agency` namespace to demonstrate how {rhossm} allow you to enforce fine-grained access control using a simple, declarative policy model. 
+In this section, you applied an Istio `AuthorizationPolicy`  to secure service-to-service communication within the `travel-agency` namespace to demonstrate how {rhossm} allows you to enforce fine-grained access control using a simple, declarative policy model. 
 
 == Next steps
 

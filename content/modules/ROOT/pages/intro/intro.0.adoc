@@ -23,8 +23,8 @@ The team is currently working towards establishing the necessary connectivity be
 
 However, they faces several challenges typical of a hybrid cloud environment:
 
-* *Secure connectivity between cloud and on-premises systems*: During the transition, some critical databases remain on-premises. {corp} needs to securely connect its new cloud-based services to the on-premises dayabase without exposing sensitive data.
-* *Granular access control in a distributed environment*: With a distributed micoservices architecture, controlling who can access what, and under which conditions, is increasingly complex. The company requires fine-grained, policy-driven service-to-service access controls.
+* *Secure connectivity between cloud and on-premises systems*: During the transition, some critical databases remain on-premises. {corp} needs to securely connect its new cloud-based services to the on-premises database without exposing sensitive data.
+* *Granular access control in a distributed environment*: With a distributed microservices architecture, controlling who can access what, and under which conditions, is increasingly complex. The company requires fine-grained, policy-driven service-to-service access controls.
 * *Secure access for third-party partners*: Core services must be accessible to trusted third-party partners. {corp} needs to expose these services securely, while protecting them from unauthorized access or misuse.
 
 Throughout this workshop, you will play the role of a platform engineer at {corp}, and occasionally that of a developer, and work through these challenges using Red Hat's connectivity solutions.
@@ -59,7 +59,7 @@ This is a fully guided workshop. All necessary links, credentials, access detail
 echo 'This is a shell command you should execute in the terminal.
 You can copy the command with the clipboard icon on the right'
 ----
-* You can adjust the width of this instructions and the right-side terminals windows with the resize grab handles.
+* You can adjust the width of the instructions and the right-side terminals windows with the resize grab handles.
 +
 image:intro/grab-handles.png[link=self, window=blank, width=100%] 
 * Most images, particularly large screenshots, when clicked will open in a full screen. If the details aren't clear in an image, click to fullscreen.

@@ -4,7 +4,7 @@ include::../style.adoc[]
 == Activity: Enable OpenShift Service Mesh 
 {m2}
 
-{rhossm} have been installed and configured in your cluster. You will now onboard `travel-agency` namespace to be managed by {rhossm}
+{rhossm} has been installed and configured in your cluster. You will now onboard `travel-agency` namespace to be managed by {rhossm}
 
 === Set up your workshop environment
 
@@ -28,7 +28,7 @@ clear
 ----
 oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.30.0.1:443
 ----
-.. Type `y` if your are prompted with `Use insecure connections? (y/n)`
+.. Type `y` if you are prompted with `Use insecure connections? (y/n)`
 .. You should see a `Login successful` message
 
 == Review `travel-agency` namespace
@@ -77,9 +77,9 @@ The `istio-injection=disabled` label is the implicit default value and might alw
 
 Onboarding a namespace to the mesh can be done manually by editing/patching labels in the `travel-agency` namespace, or by using the Kiali console.  
 
-In this module, you will use the Kiali consle to enable automatic Istio injection to the namespace. Service mesh will then automatically inject proxy sidecar containers into all pods in `travel-agency` namespace that will allow the service mesh to  manage the services in the namespace.
+In this module, you will use the Kiali console to enable automatic Istio injection to the namespace. Service mesh will then automatically inject proxy sidecar containers into all pods in `travel-agency` namespace that will allow the service mesh to  manage the services in the namespace.
 
-. Navigate to http://kiali-istio-system.{ocp_cluster_openshift_cluster_ingress_domain}[Kiali console, window="kiali"], and log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` when prompted.
+. Navigate to the http://kiali-istio-system.{ocp_cluster_openshift_cluster_ingress_domain}[Kiali console, window="kiali"], and log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` when prompted.
 +
 image:m2/kiali-overview.png[link=self, window=blank, width=100%]
 
@@ -94,7 +94,7 @@ image:m2/kiali-enable-injection.png[]
 +
 image:m2/kiali-enable-injection-button.png[]
 . You are notified that the namespace has been updated.
-This action adds `travel-agency` namespace to the mesh, and also set the namespace's Istio label to `istio-injection=enabled`. Y
+This action adds `travel-agency` namespace to the mesh, and also sets the namespace's Istio label to `istio-injection=enabled`. Y
 +
 image:m2/kiali-enabled-confirmation.png[] 
 
@@ -119,7 +119,7 @@ With auto-injection enabled, you must restart the application pods to trigger si
 watch oc get pods -n travel-agency
 ----
 
-. In the *lower terminal*, run the following command to restart the pods in `travel-agency` namespace.
+. In the *lower terminal*, run the following command to restart the pods in the `travel-agency` namespace.
 +
 [source,sh,role="execute",subs=attributes+]
 ----

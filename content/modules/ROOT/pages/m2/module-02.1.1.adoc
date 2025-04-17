@@ -4,7 +4,7 @@ include::../style.adoc[]
 == Activity: Explore Service Mesh with Kiali
 {m2}
 
-Kiali offers a number of ways to examine the micoservices which are managed by {rhossm}. This helps users to quickly evaluate the health of their service architecture.
+Kiali offers a number of ways to examine the microservices which are managed by {rhossm}. This helps users to quickly evaluate the health of their service architecture.
 
 In this module we will explore just a few ways to explore the real-time metrics.
 
@@ -22,13 +22,13 @@ image:m2/kiali-graph.png[link=self, window=blank, width=100%]
 +
 NOTE: Since sidecar injection was enabled just a while ago, it may take a minute or two for  the graph to show the updated metrics.
 
-. You can zoom into the Kiali console to get a better view of `travel-agency` Traffic Graph.
+. You can zoom into the Kiali console to get a better view of the `travel-agency` Traffic Graph.
 +
 NOTE: Wondering where all this traffic is coming from? As part of the workshop set up, a traffic simulator has also been deployed on OpenShift (｡◕‿◕｡) 
 
 == Explore Workloads
 
-. From Kiali Console, navigate to the http://kiali-istio-system.{ocp_cluster_openshift_cluster_ingress_domain}/console/workloads?duration=60&refresh=10000&namespaces=travel-agency[Workloads^, window="kiali"] menu.
+. From the Kiali Console, navigate to the http://kiali-istio-system.{ocp_cluster_openshift_cluster_ingress_domain}/console/workloads?duration=60&refresh=10000&namespaces=travel-agency[Workloads^, window="kiali"] menu.
 +
 image:m2/kiali-workloads-travel.png[link=self, window=blank, width=100%]
 

@@ -4,18 +4,18 @@ include::../style.adoc[]
 == Module 3: Simplify and secure traffic management with {rhcl}
 {m3}
 
-With their growing popularity, {corp} would like to add new channels to their existing portals. They plan to onboard travel partners, that require secure access to their flights, cars and hotel offerings.
+With their growing popularity, {corp} would like to add new channels to their existing portals. They plan to onboard travel partners that require secure access to their flights, cars and hotel offerings.
 
 All incoming traffic from the external partner portal needs to be secured and managed. {corp} also wants to protect the endpoints by easily applying rate limiting and specific levels of access based on systems and users.
 
 
 == Solution overview
 
-To safely expose their core services to external travel partners, {corp} decides to embrace a policy-as-code approach. This approach provides a repeatable and automated way to manage the policies that can be applied to incoming north-south traffic and there by easily define security through code.
+To safely expose their core services to external travel partners, {corp} decides to embrace a policy-as-code approach. This approach provides a repeatable and automated way to manage the policies that can be applied to incoming north-south traffic and thereby easily define security through code.
 
 The team adopts {rhcl} which is based on  https://kuadrant.io/[Kuadrant^, window='content'] open-source project, to enable secure traffic management across multi-cluster environments.
 
-{rhcl} extend the capabilities of https://gateway-api.sigs.k8s.io/[*Gateway API*^, window='content'], the new Kubernetes standard for Ingress. The , and offers Policy APIs to support DNS management, TLS certificate lifecycle management, authentication, and rate limiting.
+{rhcl} extends the capabilities of https://gateway-api.sigs.k8s.io/[*Gateway API*^, window='content'], the new Kubernetes standard for Ingress. The , and offers Policy APIs to support DNS management, TLS certificate lifecycle management, authentication, and rate limiting.
 
 image:m3/m3-soln.png[link=self, window=blank, width=100%] 
 
@@ -24,7 +24,7 @@ The {rhcl} policies are applied on the HTTP traffic being routed to a Service by
 
 image:m3/rhcl-policies.png[link=self, window=blank, width=100%] 
 
-Platform Engineers can apply policies to the Gateway and there by govern the the lower levels of the network (HTTPRoute/Services), until a more specific policy is applied.
+Platform Engineers can apply policies to the Gateway and thereby govern the lower levels of the network (HTTPRoute/Services), until a more specific policy is applied.
 
 With this approach, Platform engineers and application developers can collaborate to connect, secure, and protect distributed services and applications through the right policies needed to protect exposed endpoints.
 

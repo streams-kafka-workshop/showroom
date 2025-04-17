@@ -6,7 +6,7 @@ include::../style.adoc[]
 
 {corp}'s move to a microservices-based architecture brings greater agility, but also results in increased complexity in managing how the microservices communicate with each other and stay secure. 
 
-{corp} wants apply access policies to the interaction between microservices, enable complex deployment strategies, and  monitor the microservices applications.
+{corp} wants to apply access policies to the interaction between microservices, enable complex deployment strategies, and  monitor the microservices applications.
 
 === Solution overview
 
@@ -16,7 +16,7 @@ include::../style.adoc[]
 
 image:m2/m2-arch.png[] 
 
-In this module, you will onboard *travel-agency* namespace to the mesh. The service mesh adds a transparent layer to the microservices within this namespace without requiring any application code changes.  
+In this module, you will onboard the *travel-agency* namespace to the mesh. The service mesh adds a transparent layer to the microservices within this namespace without requiring any application code changes.  
 
 Once the namespace is part of the service mesh, you will  use the Kiali to visualize service traffic and gain observability into your application.
 

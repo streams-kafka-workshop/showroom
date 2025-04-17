@@ -23,7 +23,7 @@ You should immediately start seeing log output from discounts-v1 `[discounts/v1]
 +
 image:m2/log-output-pre-rollout.png[]
 
-. In the *lower terminal*, run the following canary-rollout script. This script shifts traffic form `v1` to `v2` by updating the VirtualService you created earlier,
+. In the *lower terminal*, run the following canary-rollout script. This script shifts traffic from `v1` to `v2` by updating the VirtualService you created earlier,
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -36,7 +36,7 @@ image:m2/log-output-50-50-rollout.png[]
 
 . Once the rollout begins, you will see logs in the *upper terminal* for discount-v2 `[discount/v2]` gradually increase, while log messages from discount-v1 `[discount/v1]` decrease.
 
-. As the script progresses, you can also visualise the deployment the the *Kiali console*. Navigate to the Kiali console using http://kiali-istio-system.{ocp_cluster_openshift_cluster_ingress_domain}/console/graphpf/namespaces/?traffic=grpc%2CgrpcRequest%2Chttp%2ChttpRequest%2Ctcp%2CtcpSent&graphType=versionedApp&namespaces=travel-agency&duration=60&refresh=10000&animation=true&layout=kiali-dagre&idleNodes=true&edges=trafficDistribution[this link, window="kiali"] to make sure you have the right display options set in the Kiali *Traffic Graph*
+. As the script progresses, you can also visualise the deployment of the *Kiali console*. Navigate to the Kiali console using http://kiali-istio-system.{ocp_cluster_openshift_cluster_ingress_domain}/console/graphpf/namespaces/?traffic=grpc%2CgrpcRequest%2Chttp%2ChttpRequest%2Ctcp%2CtcpSent&graphType=versionedApp&namespaces=travel-agency&duration=60&refresh=10000&animation=true&layout=kiali-dagre&idleNodes=true&edges=trafficDistribution[this link, window="kiali"] to make sure you have the right display options set in the Kiali *Traffic Graph*
 . You will begin by seeing all traffic being routed to `v1`. Click image to zoom in.
 +
 image:m2/canary-k-0.png[link=self, window=blank, width=100%]

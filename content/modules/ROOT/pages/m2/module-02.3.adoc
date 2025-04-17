@@ -8,7 +8,7 @@ Now that your services are locked down and secured, it's time to focus on how tr
 
 As a growing travel platform, the {corp} team continuously rolls out new features and improvements to core services like `discounts`, which directly impact pricing and promotions. Because these changes affect customer experience and revenue, it's crucial that updates are rolled out in a safe, observable, and reversible way.
 
-You will leverage {rhossm} to *shape and manage traffic flows* using advanced techniques like *Canary rollouts* to gradually introducing new versions of a service. This allows teams to roll out changes safely and confidently, minimizing risk while gaining real-time observability and control.
+You will leverage {rhossm} to *shape and manage traffic flows* using advanced techniques like *Canary rollouts* to gradually introduce new versions of a service. This allows teams to roll out changes safely and confidently, minimizing risk while gaining real-time observability and control.
 
 == Activity: Gradual Traffic Shifting with Weighted Routing
 
@@ -56,7 +56,7 @@ spec:
 
 You will next create a `VirtualService` that initially sends 100% of traffic to `v1`, 0% to `v2`
 
-NOTE: A  VirtualService defines a set of traffic routing rules, that can route traffic based on subsets created by a DestinationRule.
+NOTE: A  VirtualService defines a set of traffic routing rules that can route traffic based on subsets created by a DestinationRule.
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 . In the YAML editor, copy the following *VirtualService* CR and click *Create*.

@@ -12,7 +12,7 @@ In this exercise, we'll use the operator on the OpenShift cluster and the comman
 
 == Verify database access from Travels Service
 
-. As a first step, verify whether the travels services has connectivity to the database. You will use the integrated terminal on the right to perform these checks as guided.
+. As a first step, verify whether the `travels` services has connectivity to the database. You will use the integrated terminal on the right to perform these checks as guided.
 
 . In the *upper terminal*, log in to the OpenShift cluster using the command below. Click the clipboard icon image:common/clipboard.png[width=30px] to copy.
 +
@@ -128,8 +128,8 @@ image::m1/token_button.png[]
 +
 image:m1/create-access-token.png[] 
 . You will be presented with the *Create token - How to* step. 
-.. You can ignore the rest of the steps since as you will use a script to directly convert and transfer it to the on-premises RHEL machine.
-.. If you would like to inspect how the token looks like, you can download and open the file. 
+.. You can ignore the rest of the steps since you will use a script to directly convert and transfer it to the on-premises RHEL machine.
+.. If you would like to inspect how the token looks, you can download and open the file. 
 .. Click on *Done*. 
 +
 image::m1/token_done_screen.png[]
