@@ -11,7 +11,7 @@ In this section, you will perform the role of a developer and create policies to
 . Access the *Travels Blue* partner portal by clicking https://travels-blue-ui-travel-web.{ocp_cluster_openshift_cluster_ingress_domain}/[here^, console="partner"]
 . You should see a *404 error* status code because the Travels core services endpoint hasn't been exposed using an HTTPRoute to make it available to other applications/systems.
 +
-image:m3/partner-blue-404.png[] 
+image:m3/partner-blue-404.png[link=self, window=blank, width=100%] 
 
 == Set up HTTPRoute for Travels service endpoint
 
@@ -55,12 +55,12 @@ spec:
 . Refresh the Web application or access it from https://travels-blue-ui-travel-web.{ocp_cluster_openshift_cluster_ingress_domain}/[here^, console="access Web app"]. 
 . You should see a *403 - Forbidden* error because while you have created the `trvaels` API's HTTPRoute, the `pred-web` Gateway's `deny-all` default policy kicks in and doesn't allow any requests to be made. We have a zero-trust auth in place!!
 +
-image:m3/partner-blue-403.png[] 
+image:m3/partner-blue-403.png[link=self, window=blank, width=100%] 
 
 . This is because while you have the HTTPRoute now, the original deny-all default policy kicks in and doesn't allow any requests to made. We have a zero-trust auth in place!!
 . You can validate this by accessing {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"]. You will notice that the `travel-agency` HTTPRoute also inherits the Gateway's policies (just like the `echo-api` HTTRoute)
 +
-image:m3/travel-404-policy-topology.png[] 
+image:m3/travel-404-policy-topology.png[link=self, window=blank, width=100%] 
 
 == Setup Authpolicy
 
@@ -126,13 +126,13 @@ image:m3/travel-ap-topology.png[]
 image:m3/webapp-success.png[] 
 . Choose a City, a From, and a To date, and click the *Find details* button
 +
-image:m3/webapp-see-details.png[] 
+image:m3/webapp-see-details.png[link=self, window=blank, width=100%] 
 
 ==  Test the default RateLimit Policy
 . Clicking the  *Find details* button more than 5 times.
 . Expect to see a 429 error:
 +
-image:m3/partner-blue-429.png[]
+image:m3/partner-blue-429.png[link=self, window=blank, width=100%]
 . This is because of the super low rate limit configured for the Gateway.
 . Since there is no RateLimit Policy for the Travels HTTPRoute, the Gateway's RateLimit Policy is applied to the HTTPRoute as well.
 
@@ -172,7 +172,7 @@ image:m3/webapp-see-details.png[]
 . You should now be able to retrieve details without a `429 - Too Many Requests` error for up to 20 requests in a duration of 10 seconds.
 .  You will notice in the  {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"], that  the `travel-agency` HTTPRoute has its own Auth and RateLimit policies which effectively override the zero-trust and super low-limits setup on the Gateway.
 +
-image:m3/travel-final-topo.png[width=80%] 
+image:m3/travel-final-topo.png[link=self, window=blank, width=80%] 
 
 == Summary
 

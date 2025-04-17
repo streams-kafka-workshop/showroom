@@ -24,7 +24,7 @@ The {rhcl} policies are applied on the HTTP traffic being routed to a Service by
 
 image:m3/rhcl-policies.png[link=self, window=blank, width=100%] 
 
-Platform Engineers can apply policies to the Gateway which governs the the lower levels of the network (HTTPRoute/Services), until a more specific policy is applied.
+Platform Engineers can apply policies to the Gateway and there by govern the the lower levels of the network (HTTPRoute/Services), until a more specific policy is applied.
 
 With this approach, Platform engineers and application developers can collaborate to connect, secure, and protect distributed services and applications through the right policies needed to protect exposed endpoints.
 
