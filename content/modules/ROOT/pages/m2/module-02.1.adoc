@@ -132,7 +132,6 @@ Expected output on the lower terminal.
 ```
 deployment.apps/cars-v1 restarted
 deployment.apps/discounts-v1 restarted
-deployment.apps/discounts-v2 restarted
 deployment.apps/flights-v1 restarted
 deployment.apps/hotels-v1 restarted
 deployment.apps/insurances-v1 restarted
@@ -149,7 +148,6 @@ discounts-v1-f4d97b4b8-78z8w     2/2     Running   0          78s
 flights-v1-594f54d7b-lg7n4       2/2     Running   0          77s
 hotels-v1-56fc4b478d-lcbn2       2/2     Running   0          77s
 insurances-v1-5fc4b7cdf6-khkl5   2/2     Running   0          76s
-mysqldb-v1-644c48c745-qq9ps      2/2     Running   0          76s
 travels-v1-99798fc94-2xw74       2/2     Running   0          75s
 ```
 . You can now stop the `watch` command in the *upper terminal* with `Ctrl+C`
