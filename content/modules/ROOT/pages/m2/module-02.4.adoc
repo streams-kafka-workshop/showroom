@@ -70,7 +70,7 @@ Congratulations! You've just performed a progressive rollout of a new version of
 
 === Optional Activity: Reset traffic to v1
 
-Run the following command on the *upper terminal* to reset traffic to discounts service `v1`
+Run the following command on the *lower terminal* to reset traffic to discounts service `v1`
 
 [source,sh,role="execute",subs=attributes+]
 ----
