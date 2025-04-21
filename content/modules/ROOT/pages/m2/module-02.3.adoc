@@ -97,7 +97,7 @@ You'll deploy a second version of the `discounts` service (`v2`) into the mesh. 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new resource.
 . In the YAML editor, copy the following *Deployment* CR and click *Create*.
 +
-Note the `version: v2` label attached to it under `spec.selectionmatchLabels` in the YAML.
+Note the `version: v2` label attached to it under `spec.selector.matchLabels` in the YAML.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
