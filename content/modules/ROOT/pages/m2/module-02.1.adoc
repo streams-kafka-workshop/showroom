@@ -68,7 +68,7 @@ image:m2/oc-travel-agency.png[]
 +
 [NOTE]
 ====
-The `istio-injection=disabled` label is the implicit default value and might always be present in the deployment. You can proceed to the next step even if it is not displayed.
+`istio-injection=disabled` is the implicit default value and might not be present in the deployment. You can proceed to the next step even if it is not displayed.
 ====
 
 . The Istio sidecars have not yet been deployed and the namespace has not been added to the mesh yet. Let's change that in the next step.
