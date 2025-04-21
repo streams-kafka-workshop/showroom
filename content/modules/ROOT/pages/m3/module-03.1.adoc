@@ -50,11 +50,11 @@ image:m3/rhcl-error.png[link=self, window=blank, width=100%]
 
 NOTE: A Gateway resource defines how external traffic enters a cluster and references a DNS domain (hosted zone). 
 
-. Access the `prod-web` Gateway shows under the *Gateways* section. 
+. Access the `prod-web` Gateway shown under the *Gateways* section. 
 +
 image:m3/prod-web-snippet.png[link=self, window=blank, width=60%] 
 
-. Navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/ns/ingress-gateway/gateway.networking.k8s.io%7Ev1%7EGateway/prod-web/yaml[YAML tab^, window=console] to review it. Here is a snippet of the Gateway details
+. Here is a snippet of the Gateway details. Optionally, you could also navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/ns/ingress-gateway/gateway.networking.k8s.io%7Ev1%7EGateway/prod-web/yaml[YAML tab^, window=console] on the console to review it. 
 +
 [source,sh,subs=attributes+]
 ----
@@ -84,8 +84,7 @@ spec:
 
 NOTE: A *DNS Policy* is attached to a Gateway to enable DNS management by managing DNS records in external DNS providers - in this case, *AWS Route53*.  This policy has been pre-created, because DNS resolution for new DNS records may take time to propagate and could delay your progress in this module. 
 
-. Click to view the {ocp_cluster_openshift_cluster_console_url}/k8s/ns/ingress-gateway/kuadrant.io%7Ev1%7EDNSPolicy/prod-web-dnspolicy[prod-web-dnspolicy, window="console"]. 
-. You can review the policy by clicking on the *YAML* tab
+. Here is a snippet of the DNS Policy details
 +
 [source,sh, subs=attributes+]
 ----
@@ -105,6 +104,9 @@ spec:
 ====
 DNS Policies can be created with more complex configurations especially for hybrid cloud architectures, including default Geo Code and load balancing options. This allows traffic routing across a hybrid cloud architecture using repeatable Policy APIs configuration with a GitOps approach.
 ====
+
+. Optionally, you could also navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/ns/ingress-gateway/kuadrant.io%7Ev1%7EDNSPolicy/prod-web-dnspolicy/yaml[prod-web-dnspolicy, window="console"] from the console.
+
 
 === Access the `echo-api` HTTPRoute
 
@@ -183,6 +185,28 @@ spec:
 +
 image:m3/gw-ap-created.png[] 
 
+. Test the `echo-api` HTTPRoute to test the setup so far, to ensure all requests are denied due to the zero trust policy you have set up. Execute the following `curl` command on the *upper* Terminal to access the `echo-api`
++
+[source,sh,role="execute",subs=attributes+]
+----
+curl -k -w "%{http_code}" https://echo.travels.{ocp_cluster_workshop_main_domain} && echo
+----
+. This should now display an error message instead of success. Note that this is the same error message as configured in the Gateway.
++
+```yaml
+{
+  "error": "Forbidden",
+  "message": "Access denied by default by the gateway operator. If you are the administrator of the service, create a specific auth policy for the route."
+}
+```
++
+This error message is caused by the zero-trust AuthPolicy applied to the Gateway to which the `API` HTTPRoute is attached. Since no other AuthPolicy is attached to `echo-api,` the Gateway's AuthPolicy is  enforced on it.
++
+[WARNING] 
+====
+There is a possibility that you may face such an error: `curl: (6) Could not resolve host: echo.travels.sandbo123.opentlc.com`. This may occur because DNS resolution can take a few minutes. Please try again in a minute or two.
+====
+
 === Create a default low-limit RateLimitPolicy
 
 NOTE: RateLimitPolicy provides rate limiting of requests to Gateways and HTTPRoutes and also offers fine-grained matching rules to apply the limits to.
@@ -214,31 +238,14 @@ spec:
 +
 image:m3/gw-rlp-created.png[]
 
-== Test the setup so far
-
-Test the `echo-api` HTTPRoute to test the setup so far, to ensure all requests are denied due to the zero trust policy you have set up
-
-. Execute the following `curl` command on the *upper* Terminal to access the `echo-api`
+. Optionally, execute the following `curl` command on the *upper* Terminal to access the `echo-api` and check if the default rate limit has been applied.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-curl -k -w "%{http_code}" https://echo.travels.{ocp_cluster_workshop_main_domain} && echo
+for i in {1..10}; do echo "($i)"; curl -k -w "%{http_code}" https://echo.travels.{ocp_cluster_workshop_main_domain}; echo; done
 ----
-. This should now display an error message instead of success. Note that this is the same error message as configured in the Gateway.
 +
-```yaml
-{
-  "error": "Forbidden",
-  "message": "Access denied by default by the gateway operator. If you are the administrator of the service, create a specific auth policy for the route."
-}
-```
-+
-This error message is caused by the zero-trust AuthPolicy applied to the Gateway to which the `API` HTTPRoute is attached. Since no other AuthPolicy is attached to `echo-api,` the Gateway's AuthPolicy is  enforced on it.
-+
-[WARNING] 
-====
-There is a possibility that you may face such an error: `curl: (6) Could not resolve host: echo.travels.sandbo123.opentlc.com`. This may occur because DNS resolution can take a few minutes. Please try again in a minute or two.
-====
+You should see the **Too Many Requests - 429** message after the fifth call
 
 . Navigate to {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"].
 . Note that the Auth, DNS, Rate Limit, and TLS policies are all attached to the `prod-web` Gateway, and are inherited by the `echo-api` HTTRoute.

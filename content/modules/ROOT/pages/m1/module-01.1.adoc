@@ -138,7 +138,7 @@ image::m1/token_done_screen.png[]
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc apply -f https://raw.githubusercontent.com/rpscodes/app_connectivity_summit25/refs/heads/main/manifest.yaml -n travel-db
+oc apply -f https://raw.githubusercontent.com/app-connectivity-workshop/scripts/refs/heads/main/m1/network_console_deploy.yaml -n travel-db
 ----
 +
 You will use this console to visualize the network later. Since it takes a few seconds to initialize, go ahead and deploy it now. While it is getting deployed, proceed to the next steps to save time.

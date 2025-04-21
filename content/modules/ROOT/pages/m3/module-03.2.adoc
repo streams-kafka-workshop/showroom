@@ -16,7 +16,7 @@ image:m3/partner-blue-404.png[link=self, window=blank, width=100%]
 == Set up HTTPRoute for Travels service endpoint
 
 . Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new HTTPRoute.
-. In the YAML editor, copy the following *HTTPRoute* CR for the `travel` REST API.
+. In the YAML editor, copy the following *HTTPRoute* CR for the `travel` REST API and click the Create button at the bottom of the YAML editor
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -139,8 +139,8 @@ image:m3/partner-blue-429.png[link=self, window=blank, width=100%]
 
 == Create a new `travels` specific RateLimit Policy
 
-. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new AuthPolicy for the HTTPRoute.
-. In the YAML editor, copy the following CRs, which creates AuthPolicy along with the API Keys needed 
+. Click the *(+)* button on the top navigation bar of {ocp_cluster_openshift_cluster_console_url}[OpenShift Console^, window="console"] to create a new RateLimitPolicy for the HTTPRoute.
+. In the YAML editor, copy the following CRs, which creates the RatLimit Policy of 20 calls per 10 seconds per user.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
