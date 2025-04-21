@@ -11,8 +11,7 @@ With the microservices (on OpenShift) and database (on Red Hat Enterprise Linux(
 
 *Advantages of Layer 7 VAN over Traditional VPNs:*
 
-* VAN exposes only services, not entire network layers, requiring fewer firewall rules
-* Traditional VPNs connect entire clusters, requiring extensive per-app firewall rules for isolation
+* VAN exposes only services, not entire network layers, requiring fewer firewall rules whereas traditional VPNs connect entire clusters, requiring extensive and time consuming per-app firewall rules to achieve the same level of isolation as a VAN.
 * In a VAN, each site has its own Certificate Authority(CA), limiting security compromises
 * Only exposed services can be accessed in a VAN, preventing unauthorized lateral movement in case of a breach
 

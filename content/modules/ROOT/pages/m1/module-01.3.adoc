@@ -4,7 +4,9 @@ include::../style.adoc[]
 == Activity: Complete the access configuration
 {m1}
 
-Recall the access token you created earlier in OpenShift. In a typical scenario, you would download and transfer this token from OpenShift directly to your RHEL server. However, in this **workshop setting** (where you might have limited access to the local file system or download capabilities), we'll use a script to convert the cluster-stored grant into a token and transfer it to the RHEL server. 
+Recall the access token you created earlier in OpenShift. In a typical scenario, you would download and transfer this token from OpenShift directly to your RHEL server. 
+
+However, in this **workshop setting** (where you might have limited access to the local file system or download capabilities), we'll use a simple script to convert the cluster-stored access grant into a token and transfer it to the RHEL server. The cluster grant contains the grant URL and secret code to obtain a certificate within a certain expiration window and for a limited number of redemptions.
 
 NOTE: This script is solely for the convenience of this workshop and isn't required when using {rhsi} in production environments.
 

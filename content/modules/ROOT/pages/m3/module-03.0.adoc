@@ -15,7 +15,7 @@ To safely expose their core services to external travel partners, {corp} decides
 
 The team adopts {rhcl} which is based on  https://kuadrant.io/[Kuadrant^, window='content'] open-source project, to enable secure traffic management across multi-cluster environments.
 
-{rhcl} extends the capabilities of https://gateway-api.sigs.k8s.io/[*Gateway API*^, window='content'], the new Kubernetes standard for Ingress. The , and offers Policy APIs to support DNS management, TLS certificate lifecycle management, authentication, and rate limiting.
+{rhcl} extends the capabilities of https://gateway-api.sigs.k8s.io/[*Gateway API*^, window='content'], the new Kubernetes standard for Ingress. It offers Policy APIs to support DNS management, TLS certificate lifecycle management, authentication, and rate limiting.
 
 image:m3/m3-soln.png[link=self, window=blank, width=100%] 
 

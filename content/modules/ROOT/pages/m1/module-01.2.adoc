@@ -96,8 +96,8 @@ Next, let's learn what a connector is, and create one.
 ****
 A connector links a local workload to listeners in remote sites using routing keys. On Kubernetes, it typically uses a pod selector; on Docker, Podman, and Linux, it uses host and port specifications. The routing key is a string identifier that binds the connector to matching listeners in remote sites.
 ****
+image::m1/connector_image.png[]
 
-image::m1/connector_arch.png[]
 
 . In the *RHEL terminal (lower terminal)*, run the following command to create a connector for the database.
 +

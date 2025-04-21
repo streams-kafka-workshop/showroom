@@ -106,8 +106,15 @@ image::m1/listener_form.png[]
 ****
 An access token is a short-lived credential for creating a link between sites. It contains a URL and secret code from an access grant. Tokens have limited validity - by default, they can be used only once and expire after 15 minutes. 
 ****
-// +
-// image::m1/token_redemption_box.png[]
+.What is an Access Grant?
+****
+A site wishing to accept a link (site 1) creates an access grant.
+It uses the access grant to issue a corresponding access token and transfers it to a remote site (site 2).
+Site 2 submits the access token to site 1 for redemption.
+If the token is valid, site 1 sends site 2 the TLS host, port, and credentials required to create a link to site 1
+****
+This image explains this concept in more detail.
+image::m1/token_redemption.png[]
 
 . Click on *Generate a token*.
 +
@@ -121,8 +128,8 @@ image::m1/token_button.png[]
 +
 image:m1/create-access-token.png[] 
 . You will be presented with the *Create token - How to* step. 
-.. You can ignore the rest of the steps since you will use a script to directly convert and transfer it to the on-premises RHEL server.
-.. If you would like to inspect how the token looks, you can download and open the file. 
+.. You can ignore the rest of the steps since you will use a script to directly convert the grant and transfer it to the on-premises RHEL server without the need for downloading the file.
+.. If you would like to inspect how the token looks, you can still proceed tp download and open the file. 
 .. Click on *Done*. 
 +
 image::m1/token_done_screen.png[]
