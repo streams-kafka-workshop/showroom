@@ -4,7 +4,7 @@ include::../style.adoc[]
 == Activity: Complete the access configuration
 {m1}
 
-Recall the access token you created earlier in OpenShift. In a typical scenario, you would download and transfer this token from OpenShift directly to your RHEL machine. However, in this **workshop setting** (where you might have limited access to the local file system or download capabilities), we'll use a script to convert the cluster-stored grant into a token and transfer it to the RHEL machine. 
+Recall the access token you created earlier in OpenShift. In a typical scenario, you would download and transfer this token from OpenShift directly to your RHEL server. However, in this **workshop setting** (where you might have limited access to the local file system or download capabilities), we'll use a script to convert the cluster-stored grant into a token and transfer it to the RHEL server. 
 
 NOTE: This script is solely for the convenience of this workshop and isn't required when using {rhsi} in production environments.
 
@@ -17,7 +17,7 @@ NOTE: This script is solely for the convenience of this workshop and isn't requi
 curl -s https://raw.githubusercontent.com/app-connectivity-workshop/scripts/refs/heads/main/m1/convert_grant_token.sh | bash > summit_token.yaml
 ----
 
-. In the *OpenShift terminal (upper terminal)*, run the following script to transfer the token file (from the previous step) to the RHEL machine.
+. In the *OpenShift terminal (upper terminal)*, run the following script to transfer the token file (from the previous step) to the RHEL server.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -34,7 +34,7 @@ image:m1/execute-script.png[]
  
 === Start Virtual Application Network on RHEL
 
-. Since the token has now been transferred to the RHEL machine, start the Virtual Application Network by running the command below from the *RHEL terminal (lower terminal)*. 
+. Since the token has now been transferred to the RHEL server, start the Virtual Application Network by running the command below from the *RHEL terminal (lower terminal)*. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -46,9 +46,9 @@ skupper system setup
 .Click if you are facing an error - `bash: skupper: command not found`
 [%collapsible]
 =====
-You might have been logged out of the RHEL machine.
+You might have been logged out of the RHEL server.
 
-. Log in to the RHEL machine using the following command using the *lower terminal*.
+. Log in to the RHEL server using the following command using the *lower terminal*.
 +
 [source,sh,role="execute",subs=attributes+]
 ----

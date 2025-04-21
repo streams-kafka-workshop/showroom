@@ -19,7 +19,7 @@ image:m1/travel-agency-response.png[]
 
 == Optional: Explore Network Console
 
-. Return to the https://skupper-network-observer-travel-db.{ocp_cluster_openshift_cluster_ingress_domain}/[Service Interconnect Network Console, window="network-console"] and refresh the browser tab. Verify that the RHEL machine is now part of the Virtual Application Network.
+. Return to the https://skupper-network-observer-travel-db.{ocp_cluster_openshift_cluster_ingress_domain}/[Service Interconnect Network Console, window="network-console"] and refresh the browser tab. Verify that the RHEL server is now part of the Virtual Application Network.
 +
 image::m1/complete_console.png[]
 

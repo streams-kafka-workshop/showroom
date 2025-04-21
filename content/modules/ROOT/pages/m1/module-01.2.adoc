@@ -8,11 +8,11 @@ Similar to the OpenShift site, you will set up the site and routers on RHEL - bu
 
 === Login in to RHEL and validate the environment
 
-. You need to SSH into the on-prem RHEL machine using the built-in Terminal to the right. 
+. You need to SSH into the on-prem RHEL server using the built-in Terminal to the **lower right** of the page. 
 +
 image::m1/lower_terminal.png[]
 
-. Log in to the RHEL machine using the following command using the *lower terminal*.
+. Log in to the RHEL server using the following command using the *lower terminal*.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -27,7 +27,7 @@ ssh -o ServerAliveInterval=60 \
 
 . Enter your password `{rhel_ssh_password}` when prompted and press *Enter*.
 +
-You should now be logged into the RHEL machine. Let's see how we can set up a link between the database and the OpenShift cluster.
+You should now be logged into the RHEL server. Let's see how we can set up a link between the database and the OpenShift cluster.
 +
 image::m1/rhel_user.png[]
 
@@ -38,7 +38,7 @@ image::m1/rhel_user.png[]
 clear
 ----
 
-. To verify if the database is running on the RHEL machine, run the following command from the *RHEL terminal (lower terminal)*.
+. To verify if the database is running on the **RHEL server**, run the following command from the *RHEL terminal (lower terminal)*.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -55,7 +55,7 @@ CONTAINER ID   IMAGE        COMMAND   CREATED   STATUS    PORTS    NAMES
 +
 [CAUTION]
 ====
-If the output returns an empty list, it indicates that the database is not running on the RHEL machine. Run the following command in the *lower terminal* to restart the database. 
+If the output returns an empty list, it indicates that the database is not running on the RHEL server. Run the following command in the *lower terminal* to restart the database. 
 
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -99,7 +99,7 @@ A connector links a local workload to listeners in remote sites using routing ke
 
 image::m1/connector_arch.png[]
 
-. In the *RHEL terminal (lower terminal)*, run the following command to create a connector.
+. In the *RHEL terminal (lower terminal)*, run the following command to create a connector for the database.
 +
 [source,sh,role="execute",subs=attributes+]
 ----

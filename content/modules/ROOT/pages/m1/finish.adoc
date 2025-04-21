@@ -3,7 +3,7 @@
 Congratulations! You have successfully learnt how to use {rhsi} to securely bridge on-prem and cloud workloads with minimal time and complexity. 
 
 == Clean up
-. Log out of the **RHEL machine** (lower terminal) using the following command.
+. Log out of the **RHEL server** (lower terminal) using the following command.
 +
 [source,sh,role="execute",subs=attributes+]
 ----

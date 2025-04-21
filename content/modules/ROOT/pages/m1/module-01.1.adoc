@@ -74,16 +74,9 @@ image::m1/site_create_warning.png[]
 +
 image::m1/site_created.png[]
 +
-You will also notice a `Ready` status displayed in the *Details* tab
+You will also notice a `Ready` status displayed in the *Details* tab, confirming that the site is ready.
 +
 image:m1/site-ready.png[] 
-. Once the site creation is complete, from the *Get Started tab* click on the *Deploy Network Console* button. 
-+
-You will use this console to visualize the network later. Since it takes a few seconds to initialize, go ahead and deploy it now. While it is getting deployed, proceed to the next steps to save time.
-+
-_Click to view the image in full screen._
-+
-image::m1/deploy_console_rhsi.png[link=self, window=blank, width=100%]
 
 == Set up a {rhsi} Listener
 
@@ -128,8 +121,17 @@ image::m1/token_button.png[]
 +
 image:m1/create-access-token.png[] 
 . You will be presented with the *Create token - How to* step. 
-.. You can ignore the rest of the steps since you will use a script to directly convert and transfer it to the on-premises RHEL machine.
+.. You can ignore the rest of the steps since you will use a script to directly convert and transfer it to the on-premises RHEL server.
 .. If you would like to inspect how the token looks, you can download and open the file. 
 .. Click on *Done*. 
 +
 image::m1/token_done_screen.png[]
+
+. From the *OpenShift Terminal (upper terminal)*, run the following command to deploy the ** {rhsi} Network Console**. 
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc apply -f https://raw.githubusercontent.com/rpscodes/app_connectivity_summit25/refs/heads/main/manifest.yaml -n travel-db
+----
++
+You will use this console to visualize the network later. Since it takes a few seconds to initialize, go ahead and deploy it now. While it is getting deployed, proceed to the next steps to save time.

@@ -9,7 +9,7 @@ Leveraging OpenShift, Red Hat Service Interconnect, OpenShift Service Mesh, and 
 
 . *Bridge On-Prem and Cloud Workloads with Red Hat Service Interconnect*
 +
-{corp} securely connected cloud-based services running on OpenShift to on-premises databases hosted on RHEL. Using Virtual Application Networks and environment variables, services like cars, flights, hotels, and insurances now have seamless and secure access to legacy data.
+{corp} securely connected cloud-based services running on OpenShift to on-premises databases hosted on Red hat Enterprise Linux (RHEL). Using Virtual Application Networks and environment variables, services like cars, flights, hotels, and insurances now have seamless and secure access to legacy data.
 
 
 . *Secure Microservices Communication with OpenShift Service Mesh*
