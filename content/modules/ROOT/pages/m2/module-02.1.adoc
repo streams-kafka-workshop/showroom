@@ -10,12 +10,12 @@ include::../style.adoc[]
 
 You will need to access the OpenShift console and command line terminals to apply configurations.
 
-. Make sure you have exited the RHEL server from the previous module. If needed, type `exit` in the lower terminal to exit out of the RHEL system.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-exit
-----
+// . Make sure you have exited the RHEL server from the previous module. If needed, type `exit` in the lower terminal to exit out of the RHEL system.
+// +
+// [source,sh,role="execute",subs=attributes+]
+// ----
+// exit
+// ----
 . Clear the output in both terminals to make it easier to work on the next steps.
 +
 [source,sh,role="execute",subs=attributes+]
