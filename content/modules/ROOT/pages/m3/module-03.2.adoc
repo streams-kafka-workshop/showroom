@@ -57,7 +57,7 @@ spec:
 +
 image:m3/partner-blue-403.png[link=self, window=blank, width=100%] 
 
-. This is because while you have the HTTPRoute now, the original deny-all default policy kicks in and doesn't allow any requests to be made. We have a zero-trust auth in place!!
+
 . You can validate this by accessing {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"]. You will notice that the `travel-agency` HTTPRoute also inherits the Gateway's policies (just like the `echo-api` HTTRoute)
 +
 image:m3/travel-404-policy-topology.png[link=self, window=blank, width=100%] 

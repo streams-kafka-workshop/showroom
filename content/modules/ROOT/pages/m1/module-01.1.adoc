@@ -114,6 +114,7 @@ Site 2 submits the access token to site 1 for redemption.
 If the token is valid, site 1 sends site 2 the TLS host, port, and credentials required to create a link to site 1
 ****
 This image explains this concept in more detail.
+
 image::m1/token_redemption.png[]
 
 . Click on {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[Generate a token, window="console"].

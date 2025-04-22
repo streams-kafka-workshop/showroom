@@ -25,7 +25,7 @@ To ensure the module can be completed within a short timeframe, some of the comp
 
 . An AWS Hosted Zone (DNS domain) `travels.{ocp_cluster_workshop_main_domain}` has been created on *AWS Route 53*.
 . A Gateway resource `prod-web` referencing the DNS domain `travels.{ocp_cluster_workshop_main_domain}`
-. {rhcl} operator and a few policies (to provide DNS management in AWS DNS provider ), are pre-configured.
+. {rhcl} operator and a few policies (to provide DNS management in AWS DNS provider) are pre-configured.
 . A sample partner web-portal to test secure external access of the `travel-agency` core  services has been deployed
 
 == Explore {rhcl} set up

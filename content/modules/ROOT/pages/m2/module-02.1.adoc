@@ -94,7 +94,7 @@ image:m2/kiali-enable-injection.png[]
 +
 image:m2/kiali-enable-injection-button.png[]
 . You are notified that the namespace has been updated.
-This action adds `travel-agency` namespace to the mesh, and also sets the namespace's Istio label to `istio-injection=enabled`. Y
+This action adds `travel-agency` namespace to the mesh, and also sets the namespace's Istio label to `istio-injection=enabled`. 
 +
 image:m2/kiali-enabled-confirmation.png[] 
 
