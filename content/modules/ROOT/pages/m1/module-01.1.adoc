@@ -125,7 +125,7 @@ image::m1/token_button.png[]
 ** *FileName*: `my-grant`
 ** *Redemptions*: `1`
 ** *Code*: leave this blank
-** *Valid for*: `60 minutes`
+** *Valid for*: `60` minutes
 +
 image:m1/create-access-token.png[] 
 . You will be presented with the *Create token - How to* step. 

@@ -55,6 +55,9 @@ CONTAINER ID   IMAGE        COMMAND   CREATED   STATUS    PORTS    NAMES
 +
 [CAUTION]
 ====
+.Click here if the output returns an empty list
+[%collapsible]
+=====
 If the output returns an empty list, it indicates that the database is not running on the RHEL server. Run the following command in the *lower terminal* to restart the database. 
 
 [source,sh,role="execute",subs=attributes+]
@@ -67,7 +70,7 @@ Run the following command again to validate that the database is indeed running 
 ----
 podman ps
 ----
-
+=====
 ====
 
 === Create {rhsi} Site
