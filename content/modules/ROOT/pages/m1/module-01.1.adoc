@@ -85,6 +85,7 @@ image:m1/site-ready.png[]
 ****
 A listener creates a local connection point that links to connectors in remote sites using routing keys. On Kubernetes, it's implemented as a Service; on Docker, Podman, and Linux, it's a listening socket on a local network interface. The listener exposes a host/port for local clients while using the routing key to connect with remote sites.
 ****
+image::m1/connector_image.png[]
 
 . Click on {ocp_cluster_openshift_cluster_console_url}/k8s/cluster/projects/travel-db/openshift-site-plugin[Create listener, window="console"]  to set up a listener in the `travel-db` namespace.
 +
