@@ -198,6 +198,7 @@ curl -k -w "%{http_code}" https://echo.travels.{ocp_cluster_workshop_main_domain
   "error": "Forbidden",
   "message": "Access denied by default by the gateway operator. If you are the administrator of the service, create a specific auth policy for the route."
 }
+403
 ```
 +
 This error message is caused by the zero-trust AuthPolicy applied to the Gateway to which the `API` HTTPRoute is attached. Since no other AuthPolicy is attached to `echo-api,` the Gateway's AuthPolicy is  enforced on it.

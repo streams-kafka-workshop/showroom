@@ -45,4 +45,4 @@ With these enhancements, {corp} is better equipped to operate securely and effic
 
 * https://kiali.io/[More information about Kiali, window=_blank] | https://docs.redhat.com/en/documentation/red_hat_openshift_service_mesh/3.0/html/observability/kiali-operator-provided-by-red-hat[Kiali Operator provided by Red Hat, window=_blank]
 
-* https://www.redhat.com/en/topics/security/what-is-zero-trust[What is Zero Trust, window=_blank]  
+* https://www.redhat.com/en/topics/security/what-is-zero-trust[What is Zero Trust ?, window=_blank]  
