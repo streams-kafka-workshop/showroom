@@ -30,11 +30,10 @@ To ensure the module can be completed within a short timeframe, some of the comp
 
 == Explore {rhcl} set up
 
-. Navigate to {ocp_cluster_openshift_cluster_console_url}/kuadrant/overview[Connectivity Link Overview^, window='content'], and 
-log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` if prompted.
+. Navigate to {ocp_cluster_openshift_cluster_console_url}/kuadrant/overview[Connectivity Link Overview^, window='console'], and log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` if prompted.
 +
-image:m3/rhcl-console-view.png[link=self, window=blank, width=100%] 
-. In the *Overview* section, you will notice that a *Gateway*, a *TLSPolicy*, a *DNSPolicy*, and an `echo-api` *HTTPRoute* have been pre-configured. 
+image:m3/rhcl-console-view.png[link=self, window=blank, width=100%]
+. In the *Overview* section, you will notice that a *Gateway*, *Policies* (*TLSPolicy* and *DNSPolicy*), and an `echo-api` *HTTPRoute* have been pre-configured. 
 +
 image:m3/rhcl-inital-overview.png[link=self, window=blank, width=100%]
 
@@ -52,7 +51,7 @@ NOTE: A Gateway resource defines how external traffic enters a cluster and refer
 
 . Access the `prod-web` Gateway shown under the *Gateways* section. 
 +
-image:m3/prod-web-snippet.png[link=self, window=blank, width=60%] 
+image:m3/prod-web-snippet.png[link=self, window=blank, width=100%] 
 
 . Here is a snippet of the Gateway details. Optionally, you could also navigate to the {ocp_cluster_openshift_cluster_console_url}/k8s/ns/ingress-gateway/gateway.networking.k8s.io%7Ev1%7EGateway/prod-web/yaml[YAML tab^, window=console] on the console to review it. 
 +
@@ -249,10 +248,15 @@ for i in {1..10}; do echo "($i)"; curl -k -w "%{http_code}" https://echo.travels
 You should see the **Too Many Requests - 429** message after the fifth call
 
 . Navigate to {rhcl}'s {ocp_cluster_openshift_cluster_console_url}/kuadrant/policy-topology[Policy Topology^, window="console"].
++
+image:m3/rhcl-topology.png[link=self, window=blank, width=100%] 
 . Note that the Auth, DNS, Rate Limit, and TLS policies are all attached to the `prod-web` Gateway, and are inherited by the `echo-api` HTTRoute.
 +
 image:m3/echoapi-topology.png[link=self, window=blank, width=100%] 
 
+.  Navigate to {ocp_cluster_openshift_cluster_console_url}/kuadrant/overview[Connectivity Link Overview^, window='console'] to view the updated *Gateway Traffic Analysis* showing stats around requests and errors.
++
+image:m3/gateway-stats.png[link=self, window=blank, width=100%] 
 
 == Summary
 
