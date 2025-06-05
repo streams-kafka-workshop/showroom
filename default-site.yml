@@ -3,7 +3,8 @@ site:
   title: Safeguarding Application Connectivity for the Hybrid Cloud
   url: https://github.com/app-connectivity-workshop
   start_page: modules::index.adoc
-
+  keys:
+    google_analytics: 'G-CFX85CRBQW'
 content:
   sources:
     - url: .
