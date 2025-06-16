@@ -31,7 +31,10 @@ Throughout this workshop, you will play the role of a platform engineer at {corp
 
 == Workshop Modules
 
+
 This workshop is divided into 3 logical sections which provide a guided walkthrough shadowing {corp}'s journey
+
+image::intro/modules.png[link=self, window=blank, width=100%]
 
 * *Module 1*: Explore how *{rhsi}* allows the core services on OpenShift to communicate with the on-prem database (on RHEL) seamlessly thereby enabling app connectivity across on-prem and cloud.
 
