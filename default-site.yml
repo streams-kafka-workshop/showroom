@@ -1,7 +1,7 @@
 ---
 site:
-  title: Safeguarding Application Connectivity for the Hybrid Cloud
-  url: https://github.com/app-connectivity-workshop
+  title: Streams Workshop
+  url: https://github.com/streams-kafka-workshop
   start_page: modules::index.adoc
   keys:
     google_analytics: 'G-CFX85CRBQW'

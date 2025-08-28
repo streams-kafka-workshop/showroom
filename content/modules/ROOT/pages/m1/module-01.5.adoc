@@ -1,0 +1,45 @@
+:imagesdir: ../../assets/images
+include::../style.adoc[]
+
+
+== Kafka Basics - Partitioning and Keys
+As we learned earlier, With a key, the records/messages with the same key go to the same partition → per-key order. Let's see this in action.
+
+. In the upper terminal, stop the existing producer (Ctrl+C) and run a new producer that accepts key-value pairs.
+
+. Run the producer and send messages with key-value pair in the upper terminal. This will ensure messages with the same key go to the same topic partition.
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc run -n kafka demo-producer-keys --rm -it --restart=Never \
+  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+  bash -lc '/opt/kafka/bin/kafka-console-producer.sh --bootstrap-server my-kafka-kafka-bootstrap:9092 --topic demo --property parse.key=true --property key.separator=":"'
+----
+
+. Provide key value pairs as input to the producer in the upper terminal as shown below.
++
+** `p0:message-1`
+** `p1:message-2`
+** `p2:message-3`
+** `p0:message-4`
+** `p1:message-5`
+** `p2:message-6`
+** `p3:message-7`
+
+
+. Run the below command and verify that the messages with the same key go to the same partition. See a better view of the topic partitions by running the following command in the lower terminal.
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc run -n kafka demo-consumer --rm -it --restart=Never \
+  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+  bash -lc '/opt/kafka/bin/kafka-console-consumer.sh \
+    --bootstrap-server my-kafka-kafka-bootstrap:9092 \
+    --topic demo \
+    --group demo-group-keys \
+    --from-beginning \
+    --property print.key=true \
+    --property print.partition=true \
+    --property key.separator=" | "'
+
+----

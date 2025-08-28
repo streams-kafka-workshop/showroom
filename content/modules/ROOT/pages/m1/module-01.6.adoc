@@ -1,0 +1,102 @@
+:imagesdir: ../../assets/images
+include::../style.adoc[]
+
+
+== Kafka Basics - Consumer Groups and Rebalancing
+Kafka Consumer Groups are designed for scalable and highly available message consumption from Kafka topics. Each consumer belongs to a consumer group, a list of consumer instances that ensures fault tolerance and scalable message processing. When a consumer group contains only one consumer, that consumer is responsible for processing all messages of all partitions. 
+
+When multiple consumers join the same group and subscribe to a topic, Kafka distributes the topic's partitions among them, ensuring that each partition is consumed by only one member of that group. This enables horizontal scaling of message processing; by adding more consumers to a group, the workload can be efficiently spread across them, allowing applications to handle high data volumes
+
+ IF you add more consumers to a consumer group than the number of partitions for a topic, the extra consumers stay idle without receiving any messages.
+
+
+ The dynamic assignment of partitions to consumers within a group is managed through a process called rebalancing. Rebalances occur when a consumer joins or leaves a group, crashes, or when a subscribed topic's partitions are modified, ensuring that partitions are quickly reassigned among active members
+
+ Let's see how this works in practice
+
+. Run a producer that generates messages with key-value pairs in the upper terminal
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc run -n kafka load-producer --rm -it --restart=Never \
+  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+  bash -lc 'i=1; while true; do echo "k$((i%10)):msg-$i"; i=$((i+1)); sleep 0.3; done | \
+  /opt/kafka/bin/kafka-console-producer.sh \
+    --bootstrap-server my-kafka-kafka-bootstrap:9092 \
+    --topic demo \
+    --property parse.key=true \
+    --property key.separator=:'
+----
+
+. Start one consumer in the group demo-cg. Since this is the only consumer in the group, it will receive all messages from all partitions
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc run -n kafka cg-c1 --rm -it --restart=Never \
+  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+  bash -lc '/opt/kafka/bin/kafka-console-consumer.sh \
+    --bootstrap-server my-kafka-kafka-bootstrap:9092 \
+    --topic demo \
+    --group demo-cg \
+    --from-beginning \
+    --property print.key=true \
+    --property print.partition=true \
+    --property key.separator=" | "'
+----
+
+. Start a second consumer in the same group demo-cg in a new terminal. Observe the rebalancing of partitions between the two consumers.
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc run -n kafka cg-c2 --rm -it --restart=Never \
+  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+  bash -lc '/opt/kafka/bin/kafka-console-consumer.sh \
+    --bootstrap-server my-kafka-kafka-bootstrap:9092 \
+    --topic demo \
+    --group demo-cg \
+    --property print.key=true \
+    --property print.partition=true \
+    --property key.separator=" | "'
+----
+
+. Start a third consumer in the same group demo-cg in a new terminal. Observe the rebalancing of partitions between the three consumers. Each consumer should now have one partition assigned to it.
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc run -n kafka cg-c3 --rm -it --restart=Never \
+  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+  bash -lc '/opt/kafka/bin/kafka-console-consumer.sh \
+    --bootstrap-server my-kafka-kafka-bootstrap:9092 \
+    --topic demo \
+    --group demo-cg \
+    --property print.key=true \
+    --property print.partition=true \
+    --property key.separator=" | "'
+----
+
+. If you start a 4th consumer in the same group, it will sit idle (no partition left), which is expected. 
+
+. You can also stop one of the consumers (cg-c1, cg-c2 or cg-c3) and observe the rebalancing of partitions between the remaining consumers.
+
+
+=== Offsets and Lag
+Offsets in Kafka are unique, continually increasing integer identifiers assigned to each message within a partition, acting as a bookmark for consumers to track their processing progress. Lag, or consumer lag, is a crucial metric that quantifies how far behind a consumer or consumer group is from the latest message available in a partition on the Kafka broker. It is calculated as the difference between the broker's log-end-offset (the offset of the last message committed to the cluster) and the consumer's last committed offset for that partition. Monitoring lag is essential to ensure consumers are keeping pace with the data stream and to identify any potential processing delays or backlogs
+
+. Describe your consumer-group to check the Offsets and Lag
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc run -n kafka group-describe --rm -it --restart=Never \
+  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+  bash -lc '/opt/kafka/bin/kafka-consumer-groups.sh --bootstrap-server my-kafka-kafka-bootstrap:9092 --describe --group demo-group'
+
+----
+
+=== Summary
+. A consumer group is a coordinated set of consumers that share a topic’s partitions.
+
+. At most one consumer per partition per group: if your topic has 3 partitions, up to 3 consumers in the same group can read in parallel; a 4th will sit idle.
+
+. Kafka tracks the group’s offset per partition (so the group, as a whole, has a reading position).
+
+. A different group has its own offsets, so it can re-read the entire topic independently.

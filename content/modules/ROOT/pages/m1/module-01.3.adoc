@@ -1,79 +1,30 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-== Activity: Complete the access configuration
-{m1}
 
-Recall the access token you created earlier in OpenShift. In a typical scenario, you would download and transfer this token from OpenShift directly to your RHEL server. 
 
-However, in this **workshop setting** (where you might have limited access to the local file system or download capabilities), we'll use a simple script to convert the cluster-stored access grant into a token and transfer it to the RHEL server. The cluster grant contains the grant URL and secret code to obtain a certificate within a certain expiration window and for a limited number of redemptions.
+== Kafka Basics - Producer (how data gets into Kafka)
 
-NOTE: This script is solely for the convenience of this workshop and isn't required when using {rhsi} in production environments.
+A Kafka Producer is a client application responsible for writing data to a Kafka cluster. These applications send messages, which are typically key-value pairs, into topics within the Kafka cluster. Any application that sends data to Kafka, such as a microservice, an Internet of Things (IoT) device, or a data pipeline, is considered a producer. Producers are how data gets into Kafka 
 
-=== Transfer secure token from OpenShift to RHEL
+=== Core Functionality and API:
+• API: Producers interact with Kafka through the KafkaProducer API. Producers can be in written in a variety of languages such as Java,  Python, Go, JavaScript, and .NET.
 
-. In the *OpenShift terminal (upper terminal)*, run the following script to convert the grant to a token and save it to a file. 
+
+Producers publish messages to a topic, which appends each message to the end of a partition. When a producer sends a message:
+- If a key is provided, Kafka uses its hash to choose the partition.
+- If no key is provided, Kafka distributes messages evenly (round-robin) across partitions.
+
+Kafka guarantees that as long as no new partitions are added, elements with the same key are stored in the same partition.
+
+In short, producers area flexible and powerful way to send data efficiently and reliably while abstracting away much of the underlying distributed system complexities
+
+
+. Run the basic producer in the upper terminal
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-curl -s https://raw.githubusercontent.com/app-connectivity-workshop/scripts/refs/heads/main/m1/convert_grant_token.sh | bash > summit_token.yaml
+oc run -n kafka demo-producer --rm -it --restart=Never \
+  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+  bash -lc '/opt/kafka/bin/kafka-console-producer.sh --bootstrap-server my-kafka-kafka-bootstrap:9092 --topic demo'
 ----
-
-. In the *OpenShift terminal (upper terminal)*, run the following script to transfer the token file (from the previous step) to the RHEL server.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-scp summit_token.yaml lab-user@{rhel_hostname}:/home/lab-user/.local/share/skupper/namespaces/default/input/resources/
-----
-
-
-.. Type *yes* and hit enter if prompted by the message *Are you sure you want to continue connecting (yes/no/fingerprint)?*
-+
-image:m1/execute-script.png[] 
-.. Ignore the *Failed to add the host to the list of known hosts (/data/.ssh/known_hosts).* message
-
-.. Enter the RHEL password `{rhel_ssh_password}` when prompted.
- 
-=== Start Virtual Application Network on RHEL
-
-. Since the token has now been transferred to the RHEL server, start the Virtual Application Network by running the command below from the *RHEL terminal (lower terminal)*. 
-+
-[source,sh,role="execute",subs=attributes+]
-----
-skupper system setup
-----
-+
-[CAUTION]
-====
-.Click if you are facing an error - `bash: skupper: command not found`
-[%collapsible]
-=====
-You might have been logged out of the RHEL server.
-
-. Log in to the RHEL server using the following command using the *lower terminal*.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-ssh -o ServerAliveInterval=60 \
-    -o ServerAliveCountMax=60 lab-user@{rhel_hostname}
-----
-. Type `yes` and hit enter if prompted by the message `Are you sure you want to continue connecting (yes/no/fingerprint)?`
-
-. Ignore the *Failed to add the host to the list of known hosts (/data/.ssh/known_hosts).* message
-
-. Enter your password `{rhel_ssh_password}` when prompted and press *Enter*.
-
-=====
-
-====
-. Wait for a few seconds, and you should see the following output.
-+
-[source,sh]
-----
-Sources will be consumed from the namespace "default"
-Site "rhel" has been created on namespace "default"
-Platform: podman
-Definition is available at: /home/lab-user/.local/share/skupper/namespaces/default/input/resources
-----
-
-

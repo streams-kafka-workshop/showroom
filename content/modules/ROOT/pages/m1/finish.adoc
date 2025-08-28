@@ -1,7 +1,6 @@
 == Congratulations on completing this module!
 
-Congratulations! You have successfully learnt how to use {rhsi} to securely bridge on-prem and cloud workloads with minimal time and complexity. 
-
+Congratulations! You have successfully learnt how to use 
 == Clean up
 . Log out of the **RHEL server** (lower terminal) using the following command.
 +
@@ -21,4 +20,4 @@ Connection to rhel.l64pg-1.sandbox3928.opentlc.com closed.
 
 == Next steps
 
-Proceed to the next module to learn how to secure the communication between your microservices with {rhossm}.
+Proceed to the next module 

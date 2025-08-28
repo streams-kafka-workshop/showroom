@@ -1,133 +1,35 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-== Activity: Set up {rhsi} on RHEL
-{m1}
 
-Similar to the OpenShift site, you will set up the site and routers on RHEL - but in this activity you will use the {rhsi} command line interface.
+== Kafka Basics - Partitions (how Kafka scales & orders)
 
-=== Login in to RHEL and validate the environment
+A topic is split into partitions, each an ordered, append-only log. Partitions enable parallelism and throughput.
 
-. You need to SSH into the on-prem RHEL server using the built-in Terminal to the **lower right** of the page. 
-+
-image::m1/lower_terminal.png[]
+=== Ordering rule
 
-. Log in to the RHEL server using the following command using the *lower terminal*.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-ssh -o ServerAliveInterval=60 \
-    -o ServerAliveCountMax=60 lab-user@{rhel_hostname}
-----
+Strict order exists within a partition.
 
+No global order across a topic — if you need order for a key (e.g., userId), ensure all events for that key go to the same partition.
 
-. Type `yes` and hit enter if prompted by the message `Are you sure you want to continue connecting (yes/no/fingerprint)?`
+=== Offsets
 
-. Ignore the *Failed to add the host to the list of known hosts (/data/.ssh/known_hosts).* message
+Each record in a partition has a monotonically increasing offset (0, 1, 2…). Offsets are the consumer’s “cursor”.
 
-. Enter your password `{rhel_ssh_password}` when prompted and press *Enter*.
-+
-You should now be logged into the RHEL server. Let's see how we can set up a link between the database and the OpenShift cluster.
-+
-image::m1/rhel_user.png[]
+=== Replication & durability
 
-. Enter the following command to clear the *RHEL terminal (lower terminal)*
-+
-[source,sh,role="execute",subs=attributes+]
-----
-clear
-----
+Each partition has one leader and replicas (followers).
 
-. To verify if the database is running on the **RHEL server**, run the following command from the *RHEL terminal (lower terminal)*.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-podman ps
-----
+Replication factor (e.g., 3) determines durability and availability.
 
-. You should see an output like the one below.
-+
-[source,sh,subs=attributes+]
-----
-CONTAINER ID   IMAGE        COMMAND   CREATED   STATUS    PORTS    NAMES 
-3d12164dd54b  quay.io/kiali/demo_travels_mysqldb:v1  --default-authent...  4 hours ago  Up 4 hours  0.0.0.0:3306->3306/tcp, 3306/tcp, 33060/tcp  travels-mysqldb
-----
-+
-[CAUTION]
-====
-.Click here if the output returns an empty list
-[%collapsible]
-=====
-If the output returns an empty list, it indicates that the database is not running on the RHEL server. Run the following command in the *lower terminal* to restart the database. 
-
-[source,sh,role="execute",subs=attributes+]
-----
-podman restart travels-mysqldb
-----
-
-Run the following command again to validate that the database is indeed running now.
-[source,sh,role="execute",subs=attributes+]
-----
-podman ps
-----
-=====
-====
-
-=== Create {rhsi} Site
-
-. In the *RHEL terminal (lower terminal)*, run the following command to create a site. Similar to the OpenShift site, this will set up the VAN routers.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-export SKUPPER_PLATFORM=podman
-skupper site create rhel
-----
-
-. You should see the following output.
-+
-[source,sh,subs=attributes+]
-----
-File written to /home/lab-user/.local/share/skupper/namespaces/default/input/resources/sites/rhel.yaml
-----
-
-=== Create a connector
-
-Next, let's learn what a connector is, and create one.
-
-[.concept]
-.What is a connector?
-****
-A connector links a local workload to listeners in remote sites using routing keys. On Kubernetes, it typically uses a pod selector; on Docker, Podman, and Linux, it uses host and port specifications. The routing key is a string identifier that binds the connector to matching listeners in remote sites.
-****
-image::m1/connector_image.png[]
+Producers/consumers talk to the leader; followers keep up via replication.
 
 
-. In the *RHEL terminal (lower terminal)*, run the following command to create a connector for the database.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-skupper connector create mysqldb 3306 --host 127.0.0.1 -r appconn
-----
 
-. You should see the following output.
-+
-[source,sh,subs=attributes+]
-----
-File written to /home/lab-user/.local/share/skupper/namespaces/default/input/resources/connectors/mysqldb.yaml
-----
+=== Key-based routing
 
+With a key, the producer’s partitioner routes records with the same key to the same partition → per-key order.
 
-== Visualise set up on {rhsi} Network Console
+With no key, producers distribute across partitions and order is not guaranteed.
 
-Before proceeding to the final step of creating the Virtual Application Network, navigate to the https://skupper-network-observer-travel-db.{ocp_cluster_openshift_cluster_ingress_domain}/[Service Interconnect Network Console, window="network-console"] to visualize the *Virtual Application Network* based on the configuration you've set up so far.
-
-. Click on *Log in with OpenShift*, and log in with username `admin` and password `{ocp_cluster_openshift_cluster_admin_password}` if prompted.
-
-. Click *Allow selected permissions*.
-+
-image::m1/allow_permission.png[]
-
-. You will only be able to see the OpenShift cluster (travel-db namespace) for the moment. This is because the RHEL on-prem machine is not yet part of the Virtual Application Network.
-+
-image::m1/network-console-ocp.png[]
 

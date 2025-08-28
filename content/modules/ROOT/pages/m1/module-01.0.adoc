@@ -1,37 +1,130 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-== Module 1: Connect applications across on-prem and cloud with {rhsi}
+== Module 1: 
 {m1}
 
-{corp} is transitioning from a monolithic application to microservices using Red Hat OpenShift, while keeping their core database on-premises due to regulatory requirements. 
+=== Kafka Basics - What is a Kafka Cluster?
 
-With the microservices (on OpenShift) and database (on Red Hat Enterprise Linux(RHEL)) running on different physical networks, they choose *{rhsi}* to create a secure Virtual Application Network (VAN) between these environments instead of implementing traditional VPNs which would require complex planning and management. 
+A Kafka cluster is the whole distributed system that stores and moves your events. It’s made up of multiple Kafka processes with specific roles:
 
-{rhsi} enables connectivity through Layer 7, the Application Layer in the Open Systems Interconnection (OSI) model, by creating VANs between distributed services in minutes and securing all interconnections with mutual TLS (mTLS).
+Controllers (KRaft): keep the cluster’s metadata (what topics/partitions exist, which broker leads which partition, etc.) and run leader elections.
 
-*Advantages of Layer 7 VAN over Traditional VPNs:*
+Brokers: store data and serve client traffic .
 
-* VAN exposes only services, not entire network layers, requiring fewer firewall rules whereas traditional VPNs connect entire clusters, requiring extensive and time consuming per-app firewall rules to achieve the same level of isolation as a VAN.
-* In a VAN, each site has its own Certificate Authority(CA), limiting security compromises
-* Only exposed services can be accessed in a VAN, preventing unauthorized lateral movement in case of a breach
+=== Why clusters matter:
 
-== Solution overview
+* Scalability: add more brokers → more throughput and storage.
 
-In this module, you will be guided through setting up a Virtual Application Network between the {corp}'s core services running on OpenShift in the public cloud (AWS in this case) and the travels database (`travels-db`), running on RHEL.
+* Fault tolerance: replicate partitions across brokers so a node loss doesn’t lose data or availability.
 
-With {rhsi}, the core microservices (on OpenShift) can connect with `travels-db` (on RHEL) as though the database was a local service within OpenShift.
+* Central bootstrap: clients connect to a single “bootstrap” address (e.g., my-kafka-kafka-bootstrap:9092) and discover the rest.
+
+* In OpenShift/AMQ Streams with KRaft + Node Pools:
+
+** The Kafka CR defines cluster-wide settings (Kafka version, listeners, configs).
+
+** KafkaNodePool CRs create sets of controller nodes and broker nodes.
+
+== Kafka Basics - What is a Kafka Broker?
+
+A broker is one Kafka server process that:
+
+* Stores topic partitions on disk (append-only logs, with retention policies).
+
+* Handles produce (writes) and consume (reads) requests.
+
+* Replicates partitions to/from peers; one broker is the leader for a partition, others are followers (when replication factor > 1).
 
 // image:m1/rhsi_architecture_image.png[]
 
-image:m1/m1-arch.png[] 
+//image:m1/m1-arch.png[] 
 
 == Activities overview:
 
-. Set up the Service Interconnect routers on both OpenShift and RHEL
+== Activity: Set up Kafka on OpenShift
+. Create your kafka namespace
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc new-project kafka || oc project kafka
+----
 
-. Exchange a secure token created on the OpenShift cluster to the RHEL server to establish a secure connection between the two machines.
+. Create a Kafka cluster using the operator
++
+[source,sh,role="execute",subs=attributes+]
+----
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: my-kafka
+  namespace: kafka
+  annotations:
+    strimzi.io/kraft: "enabled"
+    strimzi.io/node-pools: "enabled"
+spec:
+  kafka:
+    version: 3.9.0
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+    config:
+      # single-broker lab settings
+      offsets.topic.replication.factor: 1
+      transaction.state.log.replication.factor: 1
+      transaction.state.log.min.isr: 1
+      default.replication.factor: 1
+      min.insync.replicas: 1
+      auto.create.topics.enable: "true"
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+----
 
-. Validate that the microservices can use the listener (virtual endpoint) created by the Service Interconnect on the OpenShift cluster to access the remote database.
+. Create the controller node pool
++
+[source,sh,role="execute",subs=attributes+]
+----
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: my-kafka-controllers
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: my-kafka
+spec:
+  replicas: 1
+  roles: [controller]
+  storage:
+    type: ephemeral
+----
+
+. Create the broker node pool
++
+[source,sh,role="execute",subs=attributes+]
+----
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: my-kafka-brokers
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: my-kafka
+spec:
+  replicas: 1
+  roles: [broker]
+  storage:
+    type: ephemeral
+----
+
+. Verify that the Kafka cluster is running
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc get pods -n kafka -w
+----
+
 
 

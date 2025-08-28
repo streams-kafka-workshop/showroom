@@ -1,29 +1,40 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-== Activity: Verify database access from services
-{m1}
 
-You are now ready to  verify if the travels services is now able to access the database. As part of the workshop set up, the travels services have already been configured to connect to the {rhsi} Listener on OpenShift, which serves as a virtual endpoint for the actual on-premises database.
 
-. In the *OpenShift terminal (upper terminal)*, run the following curl command again to get a travel quote for the city *Prague* to check if the services are able to access the on-prem database. 
+== Kafka Basics - Consumer (how data gets out)
+A Kafka Consumer reads messages from Kafka topics and hands them to your application code for processing. The consumer is the component that:
+
+
+. Subscribes to one or more topics,
+
+. Fetches records from assigned partitions,
+
+. Tracks offsets (positions) to know what’s been processed,
+
+. Coordinates with other consumers via consumer groups for parallelism and fault tolerance.
+
+Each message published to a topic is delivered to a consumer that has subscribed to that topic. A consumer can read data from any offset within a topic partition. In most cases, a consumer advances its offset linearly, but it could start at any offset and read messages in any order. The consumer will typically “commit” its offset back to the  Kafka cluster so the consumer can resume from where it left off, for example, in case it restarts.
+
+. Run the consumer in the lower terminal
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-curl travels.travel-agency.svc.cluster.local:8000/travels/Prague | jq
+oc run -n kafka demo-consumer --rm -it --restart=Never \
+  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+  bash -lc '/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server my-kafka-kafka-bootstrap:9092 --topic demo --group demo-group --from-beginning --property print.key=true --property print.partition=true --property key.separator=" | "'
 ----
 
-. You should see a response with cars, hotels, flights, and insurances returned from the database indicating that the services are able to access the database.
-+
-image:m1/travel-agency-response.png[] 
 
-== Explore Network Console
 
-. Return to the https://skupper-network-observer-travel-db.{ocp_cluster_openshift_cluster_ingress_domain}/[Service Interconnect Network Console, window="network-console"] and refresh the browser tab. Verify that the RHEL server is now part of the Virtual Application Network.
-+
-image::m1/complete_console.png[]
+. Observe the messages being consumed in the lower terminal as you produce messages in the upper terminal. Since we are not providing a key, the messages are distributed across partitions and order is not guaranteed. 
 
-. Feel free to check the different options in the Service Interconnect Network Console such as Services, Sites, Components, and Processes to get a better understanding of the Virtual Application Network and some traffic related analytics. 
+. We will see how partitions and keys can help us with ordering in the next section.
 
-== Next steps for {corp}
-If and when {corp} decides to add a database replica to a different environment or cluster, they can simply add it to the existing Virtual Application Network and link it to the same listener on OpenShift. Red Hat Service Interconnect will automatically handle failover and load balancing between the database instances.
+
+
+
+
+
+Each consumer belongs to a consumer group, a list of consumer instances that ensures fault tolerance and scalable message processing. When a consumer group contains only one consumer, that consumer is responsible for processing all messages of all partitions. With multiple consumers in a group, each consumer receives messages from only a subset of the partitions. Thus, if you add more consumers to a consumer group than the number of partitions for a topic, the extra consumers stay idle without receiving any messages.

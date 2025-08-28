@@ -1,0 +1,45 @@
+:imagesdir: ../../assets/images
+include::../style.adoc[]
+
+== Kafka Basics - Topic Replication and Fault Tolerance
+Kafka's fault tolerance is fundamentally built upon its topic replication mechanism, ensuring data durability and high availability in the event of broker failures.
+
+Here's how it works:
+
+• Topics and Partitions: Data in Kafka is organized into topics, which are further divided into partitions. Each partition is essentially an ordered, append-only commit log.
+
+• Replicas (Leader and Followers): For each partition, Kafka maintains multiple copies called replicas, distributed across different Kafka brokers.
+    ◦ One replica is designated as the leader. All produce and consume requests for that partition are handled exclusively by its leader to ensure strong consistency and message ordering.
+    ◦ The other replicas are followers. Their sole responsibility is to diligently replicate messages from the leader to stay up-to-date. 
+
+
+Let's see this in action
+
+. Let's increase our broker count to 3. Set the desired broker count as 3. 
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc -n kafka patch kafkanodepool my-kafka-brokers --type=merge -p '{"spec":{"replicas":3}}'
+----
+
+. Create new topic with replication factor of 3
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc run -n kafka topic-create-rf3 --rm -it --restart=Never \
+  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+  bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server my-kafka-kafka-bootstrap:9092 --create --topic replicated --partitions 3 --replication-factor 3'
+----
+
+. Describe the topic, You will notice that each partition has 3 replicas and one of them is the leader. The first broker is the leader for the partition and the other two brokers are followers replicating data from the leader.
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc run -n kafka topic-describe-rf3 --rm -it --restart=Never \
+  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+  bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server my-kafka-kafka-bootstrap:9092 --describe --topic replicated'
+----
++
+
+
+
