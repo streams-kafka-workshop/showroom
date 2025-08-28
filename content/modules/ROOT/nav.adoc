@@ -2,7 +2,6 @@
 ** xref:intro/intro.0.adoc[The story behind this workshop]
 
 * xref:m1/module-01.0.adoc[Module 1 - Fundamentals of Kafka and Basic Concepts]
-** xref:m1/module-01.0.adoc[Introduction]
 ** xref:m1/module-01.1.adoc[Kafka Basics - Topics]
 ** xref:m1/module-01.2.adoc[Kafka Basics - Partitions (how Kafka scales & orders)]
 ** xref:m1/module-01.3.adoc[Kafka Basics - Producer]
