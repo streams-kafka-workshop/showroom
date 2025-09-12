@@ -28,7 +28,7 @@ oc run -n kafka demo-consumer --rm -it --restart=Never \
 
 
 
-. Observe the messages being consumed in the lower terminal as you produce messages in the upper terminal. Since we are not providing a key, the messages are distributed across partitions and order is not guaranteed. 
+. Observe the messages being consumed in the lower terminal as you produce messages in the upper terminal. Since we are not providing a key, the messages might get distributed across partitions and the ordering is not guaranteed if that is the case. 
 
 . We will see how partitions and keys can help us with ordering in the next section.
 

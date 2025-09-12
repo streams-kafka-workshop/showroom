@@ -28,51 +28,20 @@ oc run -n kafka load-producer --rm -it --restart=Never \
     --property key.separator=:'
 ----
 
-. Start one consumer in the group demo-cg. Since this is the only consumer in the group, it will receive all messages from all partitions
+. Now let's start three consumers in the same consumer group demo-cg in one by one using a simple bash script. As you proceed through the script and keep starting new consumers, you will see the rebalancing of partitions between the consumers. 
+
+. First run the following command to start the first consumer. Donot press enter when it prompts to start the second consumer yet. 
 +
-[source,sh,role="execute",subs=attributes+]
+[source,bash,role="execute",subs=attributes+]
 ----
-oc run -n kafka cg-c1 --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-console-consumer.sh \
-    --bootstrap-server my-kafka-kafka-bootstrap:9092 \
-    --topic demo \
-    --group demo-cg \
-    --from-beginning \
-    --property print.key=true \
-    --property print.partition=true \
-    --property key.separator=" | "'
+curl -s https://raw.githubusercontent.com/streams-kafka-workshop/workshop_scripts/refs/heads/main/demo-cg_consumers.sh | bash
 ----
 
-. Start a second consumer in the same group demo-cg in a new terminal. Observe the rebalancing of partitions between the two consumers.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-oc run -n kafka cg-c2 --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-console-consumer.sh \
-    --bootstrap-server my-kafka-kafka-bootstrap:9092 \
-    --topic demo \
-    --group demo-cg \
-    --property print.key=true \
-    --property print.partition=true \
-    --property key.separator=" | "'
-----
 
-. Start a third consumer in the same group demo-cg in a new terminal. Observe the rebalancing of partitions between the three consumers. Each consumer should now have one partition assigned to it.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-oc run -n kafka cg-c3 --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-console-consumer.sh \
-    --bootstrap-server my-kafka-kafka-bootstrap:9092 \
-    --topic demo \
-    --group demo-cg \
-    --property print.key=true \
-    --property print.partition=true \
-    --property key.separator=" | "'
-----
+. After the first consumer (cg-c1) starts, press enter to start the second consumer (cg-c2). You will see a rebalance happening and partitions getting reassigned between cg-c1 and cg-c2. Do not press enter to start the third consumer yet.
+
+. After the second consumer (cg-c2) starts, press enter to start the third consumer (cg-c3). You will see another rebalance happening and partitions getting reassigned between cg-c1, cg-c2 and cg-c3.
+
 
 . If you start a 4th consumer in the same group, it will sit idle (no partition left), which is expected. 
 
