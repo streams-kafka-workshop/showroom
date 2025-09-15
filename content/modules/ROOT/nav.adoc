@@ -7,7 +7,7 @@
 ** xref:m1/module-01.3.adoc[Kafka Basics - Producer]
 ** xref:m1/module-01.4.adoc[Kafka Basics - Consumer]
 ** xref:m1/module-01.5.adoc[Kafka Basics - Partitioning and Keys]
-** xref:m1/module-01.6.adoc[Kafka Basics - Consumer Groups and Rebalancing
+** xref:m1/module-01.6.adoc[Kafka Basics - Consumer Groups and Rebalancing]
 ** xref:m1/module-01.7.adoc[Kafka Basics - Topic Replication and Fault Tolerance]
 ** xref:m1/finish.adoc[Finish]
 

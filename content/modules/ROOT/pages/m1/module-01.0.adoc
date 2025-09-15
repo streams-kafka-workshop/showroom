@@ -40,6 +40,13 @@ A broker is one Kafka server process that:
 
 //image:m1/m1-arch.png[] 
 
+. Sample command image:common/clipboard.png[width=30px] to copy.
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.30.0.1:443
+----
+
 == Activities overview:
 
 == Activity: Set up Kafka on OpenShift
