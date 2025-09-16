@@ -13,11 +13,7 @@ include::style.adoc[]
 
 | GitOps/Argo | https://openshift-gitops-server-openshift-gitops.{ocp_cluster_openshift_cluster_ingress_domain}[click here^, window="argo"] | {ocp_cluster_openshift_gitops_user}/{ocp_cluster_openshift_gitops_password}
 
-| RHEL Host | {rhel_hostname} | {rhel_ssh_username}/{rhel_ssh_password}
 
-|Service Interconnect Network Console|https://skupper-network-observer-travel-db.{ocp_cluster_openshift_cluster_ingress_domain}/[click here^, window="network-console"] | admin/{ocp_cluster_openshift_cluster_admin_password}
-
-|Kiali Web Console| http://kiali-istio-system.{ocp_cluster_openshift_cluster_ingress_domain}[click here^, window="kiali"] | admin/{ocp_cluster_openshift_cluster_admin_password}
 
 
 |==================

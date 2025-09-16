@@ -44,94 +44,12 @@ A broker is one Kafka server process that:
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc login -u admin -p {ocp_cluster_openshift_cluster_admin_password} https://172.30.0.1:443
+oc login -u admin -p {openshift_cluster_admin_password} https://172.30.0.1:443
 ----
 
 == Activities overview:
 
-== Activity: Set up Kafka on OpenShift
-. Create your kafka namespace
-+
-[source,sh,role="execute",subs=attributes+]
-----
-oc new-project kafka || oc project kafka
-----
 
-. Create a Kafka cluster using the operator
-+
-[source,sh,role="execute",subs=attributes+]
-----
-apiVersion: kafka.strimzi.io/v1beta2
-kind: Kafka
-metadata:
-  name: my-kafka
-  namespace: kafka
-  annotations:
-    strimzi.io/kraft: "enabled"
-    strimzi.io/node-pools: "enabled"
-spec:
-  kafka:
-    version: 3.9.0
-    listeners:
-      - name: plain
-        port: 9092
-        type: internal
-        tls: false
-    config:
-      # single-broker lab settings
-      offsets.topic.replication.factor: 1
-      transaction.state.log.replication.factor: 1
-      transaction.state.log.min.isr: 1
-      default.replication.factor: 1
-      min.insync.replicas: 1
-      auto.create.topics.enable: "true"
-  entityOperator:
-    topicOperator: {}
-    userOperator: {}
-----
-
-. Create the controller node pool
-+
-[source,sh,role="execute",subs=attributes+]
-----
-apiVersion: kafka.strimzi.io/v1beta2
-kind: KafkaNodePool
-metadata:
-  name: my-kafka-controllers
-  namespace: kafka
-  labels:
-    strimzi.io/cluster: my-kafka
-spec:
-  replicas: 1
-  roles: [controller]
-  storage:
-    type: ephemeral
-----
-
-. Create the broker node pool
-+
-[source,sh,role="execute",subs=attributes+]
-----
-apiVersion: kafka.strimzi.io/v1beta2
-kind: KafkaNodePool
-metadata:
-  name: my-kafka-brokers
-  namespace: kafka
-  labels:
-    strimzi.io/cluster: my-kafka
-spec:
-  replicas: 1
-  roles: [broker]
-  storage:
-    type: ephemeral
-----
-
-. Verify that the Kafka cluster is running
-+
-[source,sh,role="execute",subs=attributes+]
-----
-oc get pods -n kafka -w
-----
 
 
 
