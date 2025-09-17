@@ -15,29 +15,24 @@ Here's how it works:
 
 Let's see this in action
 
-. Let's increase our broker count to 3. Set the desired broker count as 3. 
-+
-[source,sh,role="execute",subs=attributes+]
-----
-oc -n kafka patch kafkanodepool my-kafka-brokers --type=merge -p '{"spec":{"replicas":3}}'
-----
+
 
 . Create new topic with replication factor of 3
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka topic-create-rf3 --rm -it --restart=Never \
+oc run -n kafka-{user_name} topic-create-rf3 --rm -it --restart=Never \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server my-kafka-kafka-bootstrap:9092 --create --topic replicated --partitions 3 --replication-factor 3'
+  bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --create --topic replicated --partitions 3 --replication-factor 3'
 ----
 
 . Describe the topic, You will notice that each partition has 3 replicas and one of them is the leader. The first broker is the leader for the partition and the other two brokers are followers replicating data from the leader.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka topic-describe-rf3 --rm -it --restart=Never \
+oc run -n kafka-{user_name} topic-describe-rf3 --rm -it --restart=Never \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server my-kafka-kafka-bootstrap:9092 --describe --topic replicated'
+  bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --describe --topic replicated'
 ----
 +
 

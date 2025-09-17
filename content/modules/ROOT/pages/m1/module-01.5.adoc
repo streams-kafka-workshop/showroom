@@ -11,9 +11,9 @@ As we learned earlier, With a key, the records/messages with the same key go to 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka demo-producer-keys --rm -it --restart=Never \
+oc run -n kafka-{user_name} demo-producer-keys --rm -it --restart=Never \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-console-producer.sh --bootstrap-server my-kafka-kafka-bootstrap:9092 --topic demo --property parse.key=true --property key.separator=":"'
+  bash -lc '/opt/kafka/bin/kafka-console-producer.sh --bootstrap-server kafka-kafka-bootstrap:9092 --topic demo --property parse.key=true --property key.separator=":"'
 ----
 
 . Provide key value pairs as input to the producer in the upper terminal as shown below.
@@ -31,10 +31,10 @@ oc run -n kafka demo-producer-keys --rm -it --restart=Never \
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka demo-consumer --rm -it --restart=Never \
+oc run -n kafka-{user_name} demo-consumer --rm -it --restart=Never \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
   bash -lc '/opt/kafka/bin/kafka-console-consumer.sh \
-    --bootstrap-server my-kafka-kafka-bootstrap:9092 \
+    --bootstrap-server kafka-kafka-bootstrap:9092 \
     --topic demo \
     --group demo-group-keys \
     --from-beginning \

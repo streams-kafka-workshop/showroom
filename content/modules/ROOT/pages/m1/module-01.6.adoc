@@ -18,11 +18,11 @@ When multiple consumers join the same group and subscribe to a topic, Kafka dist
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka load-producer --rm -it --restart=Never \
+oc run -n kafka-{user_name} load-producer --rm -it --restart=Never \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
   bash -lc 'i=1; while true; do echo "k$((i%10)):msg-$i"; i=$((i+1)); sleep 0.3; done | \
   /opt/kafka/bin/kafka-console-producer.sh \
-    --bootstrap-server my-kafka-kafka-bootstrap:9092 \
+    --bootstrap-server kafka-kafka-bootstrap:9092 \
     --topic demo \
     --property parse.key=true \
     --property key.separator=:'
@@ -55,9 +55,9 @@ Offsets in Kafka are unique, continually increasing integer identifiers assigned
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka group-describe --rm -it --restart=Never \
+oc run -n kafka-{user_name} group-describe --rm -it --restart=Never \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-consumer-groups.sh --bootstrap-server my-kafka-kafka-bootstrap:9092 --describe --group demo-group'
+  bash -lc '/opt/kafka/bin/kafka-consumer-groups.sh --bootstrap-server kafka-kafka-bootstrap:9092 --describe --group demo-group'
 
 ----
 

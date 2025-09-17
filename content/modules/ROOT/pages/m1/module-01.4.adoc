@@ -21,9 +21,9 @@ Each message published to a topic is delivered to a consumer that has subscribed
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka demo-consumer --rm -it --restart=Never \
+oc run -n kafka-{user_name} demo-consumer --rm -it --restart=Never \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server my-kafka-kafka-bootstrap:9092 --topic demo --group demo-group --from-beginning --property print.key=true --property print.partition=true --property key.separator=" | "'
+  bash -lc '/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-kafka-bootstrap:9092 --topic demo --group demo-group --from-beginning --property print.key=true --property print.partition=true --property key.separator=" | "'
 ----
 
 

@@ -24,9 +24,9 @@ In short, producers area flexible and powerful way to send data efficiently and 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka demo-producer --rm -it --restart=Never \
+oc run -n kafka-{user_name} demo-producer --rm -it --restart=Never \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-console-producer.sh --bootstrap-server my-kafka-kafka-bootstrap:9092 --topic demo'
+  bash -lc '/opt/kafka/bin/kafka-console-producer.sh --bootstrap-server kafka-kafka-bootstrap:9092 --topic demo'
 ----
 
 . Type the below messages as soon as the producer is ready in the upper terminal. Each line you type is sent as a separate message to the Kafka topic `demo`.
