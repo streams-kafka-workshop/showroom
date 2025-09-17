@@ -53,7 +53,7 @@ oc login -u admin -p {openshift_cluster_admin_password} https://172.30.0.1:443
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-{openshift_cluster_user_password}
+{openshift_cluster_user_password} {showroom_primary_view_url} {lab_ui_url}
 ----
 
 

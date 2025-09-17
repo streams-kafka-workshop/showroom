@@ -2,21 +2,7 @@
 
 Congratulations! You have successfully learnt how to use 
 == Clean up
-. Log out of the **RHEL server** (lower terminal) using the following command.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-exit
-----
-+
-Output:
-+
-[source,sh]
-----
-logout
-Connection to rhel.l64pg-1.sandbox3928.opentlc.com closed.
-----
-. Close all the tabs except for this *instructions* tab 
+
 
 == Next steps
 
