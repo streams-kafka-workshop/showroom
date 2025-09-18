@@ -31,7 +31,7 @@ They decouple producers (writers) and consumers (readers). Many producers can wr
 
 === Creating a Topic
 
-. Create a Kafka topic named `demo` with 3 partitions and a replication factor of 1 using the following command.
+. In the upper terminal, create a Kafka topic named `demo` with 3 partitions and a replication factor of 1 (we will learn about replication later) using the following command.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -49,6 +49,19 @@ oc run -n kafka-{user_name} topic-describe --rm -it --restart=Never \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
   bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --describe --topic demo'
 ----
+
+. Click https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka/E71SE2wtRUOMJFtaf9Mviw/topics/AcbEWuRbQR613oZf8RLm_g/messages[here, window="console"] to navigate to the streams console to view the topic you created. The streams console is a web-based user interface for visualizing and monitoring Kafka clusters, topics, messages etc.
+
+. Login anonymously to the console.
++
+image::m1/console_anonymous.png[]
+
+. Click on *Topics* in the left menu to see the list of topics. You should see the `demo` topic you created. The topic has 3 partitions.
++
+image::m1/console_topics.png[]
+
+
+
 
 
 

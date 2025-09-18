@@ -7,27 +7,22 @@ As we learned earlier, With a key, the records/messages with the same key go to 
 
 . In the upper terminal, stop the existing producer (Ctrl+C) and run a new producer that accepts key-value pairs.
 
-. Run the producer and send messages with key-value pair in the upper terminal. This will ensure messages with the same key go to the same topic partition.
+. Run a new producer that will send a bunch of messages with key-value pair in the upper terminal. This will ensure messages with the same key go to the same topic partition.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-{user_name} demo-producer-keys --rm -it --restart=Never \
+oc run -n kafka-{user_name} load-producer --rm -it --restart=Never \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-console-producer.sh --bootstrap-server kafka-kafka-bootstrap:9092 --topic demo --property parse.key=true --property key.separator=":"'
+  bash -lc 'i=1; while true; do echo "k$((i%10)):msg-$i"; i=$((i+1)); sleep 0.3; done | \
+  /opt/kafka/bin/kafka-console-producer.sh \
+    --bootstrap-server kafka-kafka-bootstrap:9092 \
+    --topic demo \
+    --property parse.key=true \
+    --property key.separator=:'
 ----
 
-. Provide key value pairs as input to the producer in the upper terminal as shown below.
-+
-** `p0:message-1`
-** `p1:message-2`
-** `p2:message-3`
-** `p0:message-4`
-** `p1:message-5`
-** `p2:message-6`
-** `p3:message-7`
 
-
-. Run the below command and verify that the messages with the same key go to the same partition. See a better view of the topic partitions by running the following command in the lower terminal.
+. Run the below command and to run a consumer and verify that the messages with the same key go to the same partition. See a better view of the topic partitions by running the following command in the lower terminal.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -43,3 +38,16 @@ oc run -n kafka-{user_name} demo-consumer --rm -it --restart=Never \
     --property key.separator=" | "'
 
 ----
+
+. Let's check for the key `k1` in the messages view of the console. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] to view the messages being produced to the topic `demo`. 
+
+. Login anonymously to the console.
+
+. Click on topics in the left menu and select the topic `demo`. From the messages tab, filter the messages with key `k1`. 
+
+. You can do this by deleting the existing text in the search box and typing `k1` and hitting enter. You should see that all the messages with key `k1` are in the same partition.
++
+image::m1/console_keys_messages.png[]
+
+. Try the same with the other keys such as `k2`, `k3` etc., and observe that all messages with the same key go to the same partition.
+

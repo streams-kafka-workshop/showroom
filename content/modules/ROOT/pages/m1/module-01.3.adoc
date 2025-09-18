@@ -17,7 +17,7 @@ Producers publish messages to a topic, which appends each message to the end of 
 
 Kafka guarantees that as long as no new partitions are added, elements with the same key are stored in the same partition.
 
-In short, producers area flexible and powerful way to send data efficiently and reliably while abstracting away much of the underlying distributed system complexities
+In short, producers are a flexible and powerful way to send data efficiently and reliably while abstracting away much of the underlying distributed system complexities
 
 
 . Run the basic producer in the upper terminal
@@ -29,7 +29,7 @@ oc run -n kafka-{user_name} demo-producer --rm -it --restart=Never \
   bash -lc '/opt/kafka/bin/kafka-console-producer.sh --bootstrap-server kafka-kafka-bootstrap:9092 --topic demo'
 ----
 
-. Type the below messages as soon as the producer is ready in the upper terminal. Each line you type is sent as a separate message to the Kafka topic `demo`.
+. Type the below messages as soon as the producer is ready in the upper terminal. Each line you type is sent as a separate message to the Kafka topic `demo`. Type each word and hit enter.
 +
 ** `welcome`
 ** `to`
@@ -37,5 +37,3 @@ oc run -n kafka-{user_name} demo-producer --rm -it --restart=Never \
 ** `kafka`
 ** `workshop`
 ** `enjoy!`
-+
-image::m1/site_button.png[]

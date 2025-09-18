@@ -7,12 +7,10 @@ Kafka Consumer Groups are designed for scalable and highly available message con
 
 When multiple consumers join the same group and subscribe to a topic, Kafka distributes the topic's partitions among them, ensuring that each partition is consumed by only one member of that group. This enables horizontal scaling of message processing; by adding more consumers to a group, the workload can be efficiently spread across them, allowing applications to handle high data volumes
 
- IF you add more consumers to a consumer group than the number of partitions for a topic, the extra consumers stay idle without receiving any messages.
+If you add more consumers to a consumer group than the number of partitions for a topic, the extra consumers stay idle without receiving any messages.
 
-
- The dynamic assignment of partitions to consumers within a group is managed through a process called rebalancing. Rebalances occur when a consumer joins or leaves a group, crashes, or when a subscribed topic's partitions are modified, ensuring that partitions are quickly reassigned among active members
-
- Let's see how this works in practice
+The dynamic assignment of partitions to consumers within a group is managed through a process called *rebalancing*. Rebalances occur when a consumer joins or leaves a group, crashes, or when a subscribed topic's partitions are modified, ensuring that partitions are quickly reassigned among active members
+Let's see how this works in practice
 
 . Run a producer that generates messages with key-value pairs in the upper terminal
 +
@@ -30,29 +28,85 @@ oc run -n kafka-{user_name} load-producer --rm -it --restart=Never \
 
 . Now let's start three consumers in the same consumer group demo-cg in one by one using a simple bash script. As you proceed through the script and keep starting new consumers, you will see the rebalancing of partitions between the consumers. 
 
-. First run the following command to start the first consumer. Donot press enter when it prompts to start the second consumer yet. 
+. Make sure you are on the `kafka-{user_name}` project.
++
+[source,bash,role="execute",subs=attributes+]
+----
+oc project kafka-{user_name}
+----
+
+
+. First run the following command to start the first consumer in the upper terminal. Do not press enter when it prompts to start the second consumer yet. 
 +
 [source,bash,role="execute",subs=attributes+]
 ----
 curl -s https://raw.githubusercontent.com/streams-kafka-workshop/workshop_scripts/refs/heads/main/demo-cg_consumers.sh | bash
 ----
 
+. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] > consumer groups > demo-cg to view the first consumers and partitions being assigned to each consumer. 
++
+image::m1/demo-cg.png[]
 
-. After the first consumer (cg-c1) starts, press enter to start the second consumer (cg-c2). You will see a rebalance happening and partitions getting reassigned between cg-c1 and cg-c2. Do not press enter to start the third consumer yet.
+Since there is currently only one consumer (cg-c1), it will be assigned all the partitions of the topic `demo`. All messages sent to all the partitions will be consumed by this single consumer (cg-c1).
++
+image::m1/cg-c1.png[]
 
-. After the second consumer (cg-c2) starts, press enter to start the third consumer (cg-c3). You will see another rebalance happening and partitions getting reassigned between cg-c1, cg-c2 and cg-c3.
 
 
-. If you start a 4th consumer in the same group, it will sit idle (no partition left), which is expected. 
 
-. You can also stop one of the consumers (cg-c1, cg-c2 or cg-c3) and observe the rebalancing of partitions between the remaining consumers.
+. After verifying that all the partitions are assigned to cg-c1, press enter to start the second consumer (cg-c2). 
+
+. Go back to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] and observe the partitions being assigned to cg-c1 and cg-c2.  You will see a rebalance happening and partitions getting reassigned between cg-c1 and cg-c2 as shown below. Do not press enter to start the third consumer yet.
++
+image::m1/cg-c1-c2.png[]
+
+. You should see that one consumer is responsible for one partition and the other consumer is responsible for the other two partitions.
+
+. Press enter on the lower terminal to start the third consumer (cg-c3). You will see another rebalance happening and partitions getting reassigned between cg-c1, cg-c2 and cg-c3.
+
+. Go back to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] and observe the partitions being assigned to cg-c1, cg-c2 and cg-c3.
++
+image::m1/cg-c1-c2-c3.png[]
+
+
+. If you start a 4th consumer in the same group, it will sit idle (no partition left), which is expected. In this case, we have 3 partitions and 3 consumers. Since there are no more partitions left, the 4th consumer will not be assigned any partitions and will remain idle. This is because Kafka ensures that each partition is consumed by only one member of a consumer group at any given time to avoid duplicate processing of messages. 
+
+. If you stop one of the consumers (cg-c1, cg-c2 or cg-c3) the rebalancing of partitions between the remaining consumers takes place automatically.
 
 
 === Offsets and Lag
-Offsets in Kafka are unique, continually increasing integer identifiers assigned to each message within a partition, acting as a bookmark for consumers to track their processing progress. Lag, or consumer lag, is a crucial metric that quantifies how far behind a consumer or consumer group is from the latest message available in a partition on the Kafka broker. It is calculated as the difference between the broker's log-end-offset (the offset of the last message committed to the cluster) and the consumer's last committed offset for that partition. Monitoring lag is essential to ensure consumers are keeping pace with the data stream and to identify any potential processing delays or backlogs
+Offsets in Kafka are unique, continually increasing integer identifiers assigned to each message within a partition, acting as a bookmark for consumers to track their processing progress. 
 
-. Describe your consumer-group to check the Offsets and Lag
+Lag, or consumer lag, is a crucial metric that quantifies how far behind a consumer or consumer group is from the latest message available in a partition on the Kafka broker. It is calculated as the difference between the broker's log-end-offset (the offset of the last message committed to the cluster) and the consumer's last committed offset for that partition. Monitoring lag is essential to ensure consumers are keeping pace with the data stream and to identify any potential processing delays or backlogs
+
+. To visualize these concepts, first let's run a producer that generates messages with key-value pairs in the upper terminal.
 +
+[source,sh,role="execute",subs=attributes+]
+----
+oc run -n kafka-{user_name} load-producer --rm -it --restart=Never \
+  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+  bash -lc 'i=1; while true; do echo "k$((i%10)):msg-$i"; i=$((i+1)); sleep 0.3; done | \
+  /opt/kafka/bin/kafka-console-producer.sh \
+    --bootstrap-server kafka-kafka-bootstrap:9092 \
+    --topic demo \
+    --property parse.key=true \
+    --property key.separator=:'
+----
+
+. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] > topics > consumer groups > demo-cg and expand all the 3 consumers we started previously. 
+
+. As the producer continuously keeps churning out messages, observer the lag, committed offset and end offset keep changing for each consumer as shown below. The lag is basically End Offset - Committed Offset.
++
+image::m1/lag-offset.png[]
+
+
+. The Consumer group demo-cg also maintains an overall lag for the entire group which is the sum of the lag for each consumer as shown below.
++
+image::group-lag.png[]
+
+. Now go ahead and stop the producer in the upper terminal and also stop all the consumers in the lower terminal.
+
+
 [source,sh,role="execute",subs=attributes+]
 ----
 oc run -n kafka-{user_name} group-describe --rm -it --restart=Never \

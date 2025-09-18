@@ -28,13 +28,9 @@ oc run -n kafka-{user_name} demo-consumer --rm -it --restart=Never \
 
 
 
-. Observe the messages being consumed in the lower terminal as you produce messages in the upper terminal. Since we are not providing a key, the messages might get distributed across partitions and the ordering is not guaranteed if that is the case. 
+. Observe the messages being consumed in the lower terminal as you produce messages in the upper terminal. Since we are not providing a key, the messages might get distributed across partitions and the ordering is not guaranteed if that is the case. We will see how partitions and keys can help us with ordering in the next section.
 
-. We will see how partitions and keys can help us with ordering in the next section.
-
-
-
-
+. Type more messages in the producer terminal and observe them being consumed in the consumer terminal.
 
 
 Each consumer belongs to a consumer group, a list of consumer instances that ensures fault tolerance and scalable message processing. When a consumer group contains only one consumer, that consumer is responsible for processing all messages of all partitions. With multiple consumers in a group, each consumer receives messages from only a subset of the partitions. Thus, if you add more consumers to a consumer group than the number of partitions for a topic, the extra consumers stay idle without receiving any messages.
