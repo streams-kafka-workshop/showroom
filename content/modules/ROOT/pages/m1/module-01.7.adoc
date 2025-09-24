@@ -17,7 +17,7 @@ Let's see this in action
 
 
 
-. Create new topic with replication factor of 3
+. In the *upper terminal*, create new topic with replication factor of 3
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -26,14 +26,18 @@ oc run -n kafka-{user_name} topic-create-rf3 --rm -it --restart=Never \
   bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --create --topic replicated --partitions 3 --replication-factor 3'
 ----
 
-. Describe the topic, You will notice that each partition has 3 replicas and one of them is the leader. The first broker is the leader for the partition and the other two brokers are followers replicating data from the leader.
+. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] > topics > replicated and verify that the topic `replicated` is created with 3 partitions
 +
-[source,sh,role="execute",subs=attributes+]
-----
-oc run -n kafka-{user_name} topic-describe-rf3 --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --describe --topic replicated'
-----
+image::m1/replicated-topic.png[]
+
+. Click on the topic name `replicated` and navigate to the partitions tab to view the details of the topic. You will see that each partition has 3 replicas and one of them is the leader and other two are replicas.
++
+image::m1/replicated-topic-partitions.png[]
+
+. The number shown in the brackets is the broker id. In this case, we have 3 brokers with ids 0, 1 and 2. Each partition has one leader and two followers (replicas). The leader handles all the read and write requests for that partition while the followers replicate data from the leader to ensure fault tolerance.
+
+. If the leader broker goes down, one of the followers will be automatically elected as the new leader to ensure high availability. This ensures that Producers and consumers, which continue to operate without interruption.
+
 +
 
 

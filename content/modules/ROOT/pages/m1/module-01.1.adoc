@@ -50,7 +50,7 @@ oc run -n kafka-{user_name} topic-describe --rm -it --restart=Never \
   bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --describe --topic demo'
 ----
 
-. Click https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka/E71SE2wtRUOMJFtaf9Mviw/topics/AcbEWuRbQR613oZf8RLm_g/messages[here, window="console"] to navigate to the streams console to view the topic you created. The streams console is a web-based user interface for visualizing and monitoring Kafka clusters, topics, messages etc.
+. Click https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka/[here, window="console"] to navigate to the streams console to view the topic you created. The streams console is a web-based user interface for visualizing and monitoring Kafka clusters, topics, messages etc.
 
 . Login anonymously to the console.
 +

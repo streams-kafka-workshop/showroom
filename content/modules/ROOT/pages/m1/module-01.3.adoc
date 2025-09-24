@@ -37,3 +37,9 @@ oc run -n kafka-{user_name} demo-producer --rm -it --restart=Never \
 ** `kafka`
 ** `workshop`
 ** `enjoy!`
+
+. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] topics > demo to see the messages you sent.
++
+image::m1/console_messages.png[]
+
+This shows that the messages you sent from the producer are successfully received and stored in the Kafka topic `demo`. In the next section, we will learn how to consume these messages from the topic.

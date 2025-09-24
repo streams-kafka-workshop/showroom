@@ -21,33 +21,19 @@ oc run -n kafka-{user_name} load-producer --rm -it --restart=Never \
     --property key.separator=:'
 ----
 
-
-. Run the below command and to run a consumer and verify that the messages with the same key go to the same partition. See a better view of the topic partitions by running the following command in the lower terminal.
+. Wait for 5-10 seconds after the producer starts to allow some messages to be produced and stop the producer (Ctrl+C).
 +
-[source,sh,role="execute",subs=attributes+]
-----
-oc run -n kafka-{user_name} demo-consumer --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-console-consumer.sh \
-    --bootstrap-server kafka-kafka-bootstrap:9092 \
-    --topic demo \
-    --group demo-group-keys \
-    --from-beginning \
-    --property print.key=true \
-    --property print.partition=true \
-    --property key.separator=" | "'
+The messages produced will be in the format `key:value` such as `k1:msg-1`, `k2:msg-2` etc
 
-----
+. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] > topics > demo and verify the messages being produced to the topic `demo`. You should see messages with keys `k0` to `k9` being produced to the topic.
++
+image::m1/console_key_messages_pairs.png[]
 
-. Let's check for the key `k1` in the messages view of the console. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] to view the messages being produced to the topic `demo`. 
-
-. Login anonymously to the console.
-
-. Click on topics in the left menu and select the topic `demo`. From the messages tab, filter the messages with key `k1`. 
-
-. You can do this by deleting the existing text in the search box and typing `k1` and hitting enter. You should see that all the messages with key `k1` are in the same partition.
+. From the messages tab, filter the messages with key `k1`. You can do this by deleting the existing text in the search box and typing `k1` and hitting enter. You should see that all the messages with key `k1` are in the same partition.
 +
 image::m1/console_keys_messages.png[]
 
 . Try the same with the other keys such as `k2`, `k3` etc., and observe that all messages with the same key go to the same partition.
+
+. Kafka uses a partitioner to determine which partition a message goes to based on the key. By default, Kafka uses a hash function on the key to determine the partition the message goes to. This ensures that messages with the same key always go to the same partition, which is important for maintaining order for the messages with the same key.
 
