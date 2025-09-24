@@ -37,7 +37,7 @@ oc run -n kafka-{user_name} demo-consumer --rm -it --restart=Never \
 
 . Since we are not providing a key, the messages might get distributed across partitions and the ordering is not guaranteed if that is the case. We will see how partitions and keys can help us with ordering in the next section.
 
-. Verify the same by navigating to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] > Consumer groups. Click on the on the *demo-group* consumer group to see the details. 
+. Verify the same by navigating to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > Consumer groups. Click on the on the *demo-group* consumer group to see the details. 
 +
 image::m1/console_demo-group.png[]
 

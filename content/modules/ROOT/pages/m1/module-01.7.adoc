@@ -26,7 +26,7 @@ oc run -n kafka-{user_name} topic-create-rf3 --rm -it --restart=Never \
   bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --create --topic replicated --partitions 3 --replication-factor 3'
 ----
 
-. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] > topics > replicated and verify that the topic `replicated` is created with 3 partitions
+. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > topics > replicated and verify that the topic `replicated` is created with 3 partitions
 +
 image::m1/replicated-topic.png[]
 

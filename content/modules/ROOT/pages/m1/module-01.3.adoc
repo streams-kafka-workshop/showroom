@@ -38,7 +38,7 @@ oc run -n kafka-{user_name} demo-producer --rm -it --restart=Never \
 ** `workshop`
 ** `enjoy!`
 
-. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] topics > demo to see the messages you sent.
+. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] topics > demo to see the messages you sent.
 +
 image::m1/console_messages.png[]
 

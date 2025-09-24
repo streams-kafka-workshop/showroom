@@ -25,7 +25,7 @@ oc run -n kafka-{user_name} load-producer --rm -it --restart=Never \
 +
 The messages produced will be in the format `key:value` such as `k1:msg-1`, `k2:msg-2` etc
 
-. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] > topics > demo and verify the messages being produced to the topic `demo`. You should see messages with keys `k0` to `k9` being produced to the topic.
+. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > topics > demo and verify the messages being produced to the topic `demo`. You should see messages with keys `k0` to `k9` being produced to the topic.
 +
 image::m1/console_key_messages_pairs.png[]
 

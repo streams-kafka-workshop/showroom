@@ -43,7 +43,7 @@ oc project kafka-{user_name}
 curl -s https://raw.githubusercontent.com/streams-kafka-workshop/workshop_scripts/refs/heads/main/demo-cg_consumers.sh | bash
 ----
 
-. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] > consumer groups > demo-cg to view the first consumers and partitions being assigned to each consumer. 
+. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > consumer groups > demo-cg to view the first consumers and partitions being assigned to each consumer. 
 +
 image::m1/demo-cg.png[]
 
@@ -56,7 +56,7 @@ image::m1/demo-cg-c1.png[]
 
 . After verifying that all the partitions are assigned to cg-c1, press enter to start the second consumer (cg-c2) in the *lower terminal*. Do not press enter to start the third consumer yet.
 
-. Go back to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] and observe the partitions being assigned to cg-c1 and cg-c2.  You will see a rebalance happening and partitions getting reassigned between cg-c1 and cg-c2 as shown below. 
+. Go back to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] and observe the partitions being assigned to cg-c1 and cg-c2.  You will see a rebalance happening and partitions getting reassigned between cg-c1 and cg-c2 as shown below. 
 
 
 . You should see that one consumer is responsible for one partition and the other consumer is responsible for the other two partitions.
@@ -65,7 +65,7 @@ image::m1/demo-cg-c1-c2.png[]
 
 . Press enter on the lower terminal to start the third consumer (cg-c3). You will see another rebalance happening and partitions getting reassigned between cg-c1, cg-c2 and cg-c3. Do not press enter to start the fourth consumer yet.
 
-. Go back to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] and observe the partitions being assigned to cg-c1, cg-c2 and cg-c3.
+. Go back to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] and observe the partitions being assigned to cg-c1, cg-c2 and cg-c3.
 +
 image::m1/demo-cg-c1-c2-c3.png[]
 
@@ -102,7 +102,7 @@ oc run -n kafka-{user_name} load-producer --rm -it --restart=Never \
     --property key.separator=:'
 ----
 
-. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_domain}/kafka[streams console, window="console"] > topics > consumer groups > demo-cg and expand all the 3 consumers we started previously. 
+. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > topics > consumer groups > demo-cg and expand all the 3 consumers we started previously. 
 
 . As the producer continuously keeps churning out messages, observer the lag, committed offset and end offset keep changing for each consumer as shown below. The lag is basically End Offset - Committed Offset.
 +
