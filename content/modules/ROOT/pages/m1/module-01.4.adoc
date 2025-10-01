@@ -37,13 +37,13 @@ oc run -n kafka-{user_name} demo-consumer --rm -it --restart=Never \
 
 . Since we are not providing a key, the messages might get distributed across partitions and the ordering is not guaranteed if that is the case. We will see how partitions and keys can help us with ordering in the next section.
 
-. Verify the same by navigating to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > Consumer groups. Click on the on the *demo-group* consumer group to see the details. 
+. Verify the same by navigating to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > Consumer groups. Click on the *demo-group* consumer group to see the details. 
 +
 image::m1/console_demo-group.png[]
 
 . Each consumer belongs to a consumer group, a list of consumer instances that ensures fault tolerance and scalable message processing. We will learn about consumer groups in detail in the next section.
 
-. Click on the only consumer in the group (consumer ID: console-consumer to see the details. When a consumer group contains only one consumer, that consumer is responsible for processing all messages of all partitions.
+. Click on the only consumer in the group (consumer ID: console-consumer) to see the details. When a consumer group contains only one consumer, that consumer is responsible for processing all messages of all partitions.
 +
 image::m1/console_consumer.png[]
 
@@ -54,7 +54,3 @@ image::m1/console_consumed_partition.png[]
 . You should be able to see the messages consumed by the consumer from that partition.
 +
 image::m1/console_consumed_partition_messages.png[]
-
-
-
-  With multiple consumers in a group, each consumer receives messages from only a subset of the partitions. Thus, if you add more consumers to a consumer group than the number of partitions for a topic, the extra consumers stay idle without receiving any messages.

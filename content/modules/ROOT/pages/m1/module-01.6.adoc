@@ -36,7 +36,7 @@ oc project kafka-{user_name}
 ----
 
 
-. First run the following command to start the first consumer in the lower terminal. Do not press enter when it prompts to start the second consumer yet. 
+. First run the following command to start the first consumer in the lower terminal. *Do not press enter when it prompts to start the second consumer yet.* 
 +
 [source,bash,role="execute",subs=attributes+]
 ----
@@ -54,7 +54,7 @@ image::m1/demo-cg-c1.png[]
 
 
 
-. After verifying that all the partitions are assigned to cg-c1, press enter to start the second consumer (cg-c2) in the *lower terminal*. Do not press enter to start the third consumer yet.
+. After verifying that all the partitions are assigned to cg-c1, press enter to start the second consumer (cg-c2) in the *lower terminal*. *Do not press enter to start the third consumer yet.*
 
 . Go back to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] and observe the partitions being assigned to cg-c1 and cg-c2.  You will see a rebalance happening and partitions getting reassigned between cg-c1 and cg-c2 as shown below. 
 
@@ -63,7 +63,7 @@ image::m1/demo-cg-c1.png[]
 +
 image::m1/demo-cg-c1-c2.png[]
 
-. Press enter on the lower terminal to start the third consumer (cg-c3). You will see another rebalance happening and partitions getting reassigned between cg-c1, cg-c2 and cg-c3. Do not press enter to start the fourth consumer yet.
+. Press enter on the lower terminal to start the third consumer (cg-c3). You will see another rebalance happening and partitions getting reassigned between cg-c1, cg-c2 and cg-c3. *Do not press enter to start the fourth consumer yet.*
 
 . Go back to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] and observe the partitions being assigned to cg-c1, cg-c2 and cg-c3.
 +
@@ -72,7 +72,7 @@ image::m1/demo-cg-c1-c2-c3.png[]
 
 . If you start a 4th consumer in the same group, it will sit idle (no partition left), which is expected. In this case, we have 3 partitions and 3 consumers. Since there are no more partitions left, the 4th consumer will not be assigned any partitions and will remain idle. This is because Kafka ensures that each partition is consumed by only one member of a consumer group at any given time to avoid duplicate processing of messages. 
 
-. Go ahead and start the 4th consumer by pressing enter in the lower terminal. You will see that the 4th consumer (cg-c4) is started but it is not assigned any partitions and remains idle as shown below.
+. Go ahead and start the 4th consumer by pressing enter in the lower terminal. You will see that the 4th consumer (cg-c4) is started but it is not assigned any partitions and remains idle as shown below. *Do not press enter again to stop the other consumers yet.*
 +
 image::m1/demo-cg-c1-c2-c3-c4.png[]
 
@@ -80,7 +80,7 @@ image::m1/demo-cg-c1-c2-c3-c4.png[]
 +
 image::m1/demo-cd-c1-only.png[]
 
-. Stop the first consumer (cg-c1) by pressing enter in the lower terminal. 
+. * Do not hit enter stop the first consumer (cg-c1) yet as we will need it in the next section. 
 
 
 === Offsets and Lag
@@ -88,41 +88,21 @@ Offsets in Kafka are unique, continually increasing integer identifiers assigned
 
 Lag, or consumer lag, is a crucial metric that quantifies how far behind a consumer or consumer group is from the latest message available in a partition on the Kafka broker. It is calculated as the difference between the broker's log-end-offset (the offset of the last message committed to the cluster) and the consumer's last committed offset for that partition. Monitoring lag is essential to ensure consumers are keeping pace with the data stream and to identify any potential processing delays or backlogs
 
-. To visualize these concepts, first let's run a producer that generates messages with key-value pairs in the upper terminal.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-oc run -n kafka-{user_name} load-producer --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc 'i=1; while true; do echo "k$((i%10)):msg-$i"; i=$((i+1)); sleep 0.3; done | \
-  /opt/kafka/bin/kafka-console-producer.sh \
-    --bootstrap-server kafka-kafka-bootstrap:9092 \
-    --topic demo \
-    --property parse.key=true \
-    --property key.separator=:'
-----
 
-. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > topics > consumer groups > demo-cg and expand all the 3 consumers we started previously. 
+
+. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > topics > consumer groups > demo-cg and expand consumer cg-c1 we started previously. 
 
 . As the producer continuously keeps churning out messages, observer the lag, committed offset and end offset keep changing for each consumer as shown below. The lag is basically End Offset - Committed Offset.
 +
 image::m1/lag-offset.png[]
 
 
-. The Consumer group demo-cg also maintains an overall lag for the entire group which is the sum of the lag for each consumer as shown below.
+. If there are mutliple consumers, the Consumer group demo-cg also maintains an overall lag for the entire group which is the sum of the lag for each consumer as shown below.
 +
 image::m1/group-lag.png[]
 
-. Now go ahead and stop the producer in the upper terminal and also stop all the consumers in the lower terminal.
+. Now go ahead and stop the producer in the upper terminal (Ctrl+C) and also stop all the consumers in the lower terminal.
 
-
-[source,sh,role="execute",subs=attributes+]
-----
-oc run -n kafka-{user_name} group-describe --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-consumer-groups.sh --bootstrap-server kafka-kafka-bootstrap:9092 --describe --group demo-group'
-
-----
 
 === Summary
 . A consumer group is a coordinated set of consumers that share a topic’s partitions.
