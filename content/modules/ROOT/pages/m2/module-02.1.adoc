@@ -75,9 +75,11 @@ _Configure how the producer connects and communicates with the Kafka cluster._
 | {check} line 26
 |===
 
-[%collapsible]
-.Advanced: Producer Serialization & Reliability Options
+[NOTE]
 ====
+.Click to expand advanced producer options
+[%collapsible]
+=====
 [discrete]
 === Serialization
 _Define how message keys and values are converted to bytes before transmission._
@@ -97,6 +99,7 @@ _Define how message keys and values are converted to bytes before transmission._
 | Option to implement custom serialization to handle complex types.
 | {check} line 22
 |===
+
 
 [discrete]
 === Reliability & Delivery Guarantees
@@ -135,7 +138,9 @@ _Control how strictly the producer ensures message delivery and avoids duplicate
 | If exceeded, the record fails even if `retries` remain.
 | {cross}
 |===
+=====
 ====
+
 
 
 
