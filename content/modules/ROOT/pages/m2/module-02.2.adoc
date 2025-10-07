@@ -1,0 +1,277 @@
+:imagesdir: ../../assets/images
+include::../style.adoc[]
+:check: ✓
+:cross: –
+
+
+== Kafka Consumer API
+The Kafka consumer allows developers to write kafka consumers within their applications to read records from Kafka topics. The API provides various configuration options to control the behavior of the consumer, such as offset management, polling, and group coordination.
+
+
+=== The Simple Consumer Application
+
+
+. Let's us now look at the consumer code. Click on the *src/main/java/com/example/KafkaConsumerService.java* file in the file explorer to open it.
++
+image::m2/kafka-consumer-service.png[]
+
+This section breaks down the code and explain hows a **Kafka consumer** is configured and how it works under the hood.
+
+In this example:
+* The consumer connects to a Kafka cluster using configuration from `AppConfig`
+* It reads messages with string keys and values
+* It automatically commits offsets to ensure reliability
+* It safely closes when done
+
+=== Consumer Configuration
+
+* The configuration is defined using `Properties` and constants from `ConsumerConfig`. Look at lines 26-33 of the code.
+
+This reference organizes consumer configuration options by concern (offsets, coordination, polling, etc.).  
+The **Used in example?** column shows whether the option appears in the sample code.
+
+
+=== Basic Core Settings
+_Configure how the consumer discovers and communicates with the Kafka cluster._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
+
+| `bootstrap.servers`
+| How the client finds the kafka cluster
+| `HOST:PORT` (comma-separated)
+| Must be reachable; used to discover topics and partitions.
+| {check} line 28
+
+| `group.id`
+| Consumer group identity
+| free string
+| All consumers with same group share partitions cooperatively.
+| {check} line 31
+|===
+
+=== Deserialization
+_Define how message keys and values are turned from bytes into objects._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
+
+| `key.deserializer`
+| Converts key bytes to objects
+| `StringDeserializer`, `ByteArrayDeserializer`, Avro/Protobuf for advanced data
+| Must match producer’s serializer and topic schema.
+| {check} line 29
+
+| `value.deserializer`
+| Converts value bytes to objects
+| Same as above
+| Must match producer’s serializer and topic schema.
+| {check} line 30
+|===
+
+=== Consumer Group & Coordination
+_Control how instances coordinate, balance partitions, and scale._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
+
+| `group.id`
+| Consumer group identity
+| free string
+| All consumers with same group share partitions cooperatively.
+| {check} line 31
+
+| `partition.assignment.strategy`
+| How partitions are assigned
+| `range`, `roundrobin`, , `sticky`, `cooperative-sticky`
+| Implementing the `org.apache.kafka.clients.consumer.ConsumerPartitionAssignor` interface allows you to plug in a custom assignment strategy..
+| {cross}
+
+| `session.timeout.ms`
+| Client Failure detection
+| Default `45000`
+| If no heartbeat in time, coordinator triggers rebalance.
+| {cross}
+|===
+
+=== Offsets & Delivery Semantics
+_Control how offsets are stored, committed, and reset to ensure correct processing._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
+
+| `enable.auto.commit`
+| Automatic offset commits
+| `true` / `false`
+| If true the consumer's offset will be periodically committed in the background.
+| {check} line 33
+
+| `auto.offset.reset`
+| Where to start if no committed offset exists
+| `earliest`, `latest`, `none`
+| `earliest` = start from beginning; `latest` = only new data.
+| {check} line 32
+
+| `auto.commit.interval.ms`
+| Period in milliseconds that the consumer offsets are auto-committed
+| e.g., `5000`
+| Effective only when `enable.auto.commit=true`.
+| {cross}
+|===
+
+=== Polling & Throughput
+_Tune how much data each poll fetches and how often the app must process it._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
+
+| *Application poll interval* (not a config)
+| Loop cadence and responsiveness
+| `consumer.poll(Duration.ofMillis(...))`
+| Smaller duration → more responsive, more CPU wakeups.
+| {check} line 39
+
+| `max.poll.interval.ms`
+| Max allowed processing time between polls
+| default `300000` (5 min)
+| If exceeded, consumer is considered dead → rebalance occurs.
+| {cross}
+
+| `max.poll.records`
+| Max records returned per poll
+| e.g., `500`, `1000`
+| Does not impact the underlying fetching behavior
+| {cross}
+
+| `fetch.min.bytes`
+| Minimum bytes the broker should return
+| int
+| Higher → better batching, added latency.
+| {cross}
+
+| `fetch.max.bytes`
+| Max bytes per fetch request
+| Default `52428800` (50 MiB)
+| Upper bound on response size; may need to increase for large messages.
+| {cross}
+
+| `fetch.max.wait.ms`
+| Max wait time for `fetch.min.bytes`
+| e.g., `500`
+| Broker will wait up to this long to accumulate bytes.
+| {cross}
+|===
+
+
+=== Timeouts & Backoff
+_Define network timeouts and retry pacing for stable consumption._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
+
+| `request.timeout.ms`
+| Broker request timeout
+| Default `30000`
+| -
+| {cross}
+
+| `retry.backoff.ms`
+| Delay between retries
+| Default `100`
+| Avoids retry loops on transient issues.
+| {cross}
+
+| `metadata.max.age.ms`
+| Metadata refresh interval
+| Default `300000`
+| Helps to proactively discover new brokers or partitions.
+| {cross}
+|===
+
+
+
+=== Client Identity & Telemetry
+_Add traceability and hooks for monitoring and custom logic._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
+
+| `client.id`
+| Logical app identifier
+| free string
+| Useful for metrics/log tracing; not specified in example.
+| {cross}
+|===
+
+=== Inside the Consumer Poll Loop (line 35-53)
+This block runs the KafkaConsumer continuously in a separate thread:
+
+
+* **Consumer Creation**
++
+`new KafkaConsumer<>(props)` initializes a consumer with the provided configuration, establishing connections to the brokers and the group coordinator.
+
+* **Subscription**
++
+`consumer.subscribe(Collections.singletonList(config.topic))` registers this consumer to one or more topics.  
+Kafka assigns partitions automatically based on the consumer group ID (`group.id`).
+
+* **Polling**
++
+`consumer.poll(Duration.ofMillis(500))` is the core of the Kafka consumer API:  
+it fetches available records from the broker and must be called regularly to:
+**(1)** retrieve messages, and  
+**(2)** send heartbeats to the group coordinator to prevent rebalances.
+
+* **Record Iteration**
++
+Each `ConsumerRecord` includes key metadata:
+`timestamp`, `partition`, `offset`, `key`, and `value`.  
+These fields are critical for tracking processing order and message provenance.
+
+* **Offset Management**
++
+Because `enable.auto.commit=true` (line 33), offsets are automatically committed in the background after each poll cycle.  
+This provides *at-least-once* delivery semantics.
+
+* **Loop Behavior**
++
+The polling loop continues as long as `running` is true.  
+If no messages arrive, the consumer still polls to maintain its group session and partition ownership.
+
+
+=== Graceful Shutdown (line 57-61)
+_Ensures the Kafka consumer exits cleanly without leaving the group unbalanced._
+
+`close()` tells the thread to stop polling, lets Kafka commit final offsets, and exits the group cleanly.
+
+==== Why It Matters
+Gracefully closing the consumer prevents:
+- Rebalance storms caused by sudden disconnects.  
+- Message reprocessing from uncommitted offsets.  
+- Thread leaks or dangling connections.
+
+
+=== How This Consumer Works (Recap)
+_Step-by-step flow from subscribe to processing with offset behavior._
+
+. Build `Properties` with deserializers, group id, `auto.offset.reset=earliest`, `enable.auto.commit=true`.
+. Create `KafkaConsumer` and `subscribe([topic])`.
+. Enter loop: `poll(500 ms)` to fetch available records.
+. For each `ConsumerRecord`, read metadata (`timestamp`, `partition`, `offset`, `key`, `value`).
+. Push to `recent` deque (most-recent-first) and trim to `config.maxMessages`.
+. With `enable.auto.commit=true`, offsets are committed periodically in the background.
+. On shutdown, stop loop and let thread join to exit cleanly.
+
+
+
+
+=== In Summary
+This demonstrates the minimal pattern every Kafka consumer follows:
+
+----
+subscribe → poll → process → (commit offsets)
+----
+
+
+
