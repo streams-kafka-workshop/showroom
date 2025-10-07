@@ -56,7 +56,7 @@ In this example:
 This reference organizes producer configuration options by concern (batching, reliability, etc.).  
 The **Used in example?** column shows whether the option appears in the sample code.
 
-== Basic Core Settings
+=== Basic Core Settings
 _Configure how the producer connects and communicates with the Kafka cluster._
 
 |===
@@ -75,7 +75,11 @@ _Configure how the producer connects and communicates with the Kafka cluster._
 | {check} line 26
 |===
 
-== Serialization
+[%collapsible]
+.Advanced: Producer Serialization & Reliability Options
+====
+[discrete]
+=== Serialization
 _Define how message keys and values are converted to bytes before transmission._
 
 |===
@@ -94,7 +98,67 @@ _Define how message keys and values are converted to bytes before transmission._
 | {check} line 22
 |===
 
-== Reliability & Delivery Guarantees
+[discrete]
+=== Reliability & Delivery Guarantees
+_Control how strictly the producer ensures message delivery and avoids duplicates._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
+
+| `acks`
+| Durability of writes
+| `0`, `1`, `all`
+| `all` - message written to leader and all replicas before ack. Strongest guarantee. `1` - leader ack only. `0` - no ack, fire-and-forget.
+| {check} line 23
+
+| `enable.idempotence`
+| Duplicate prevention on retries
+| `true` / `false`
+| Producer will ensure that exactly one copy of each message is written in the stream Requires `acks=all`.
+| {check} line 25
+
+| `max.in.flight.requests.per.connection`
+| Concurrent in-flight batches per connection
+| `1`–`5` (with idempotence), higher without
+| set this to `1` to ensure message order when retries occur.
+| {cross} (implicitly constrained by idempotence)
+
+| `retries`
+| Automatic resend attempts
+| integer (often large)
+| With idempotence, safe to set high; bounded by `delivery.timeout.ms`.
+| {cross}
+
+| `delivery.timeout.ms`
+| Overall send deadline (incl. retries)
+| Default `120000` (2 min)
+| If exceeded, the record fails even if `retries` remain.
+| {cross}
+|===
+====
+
+
+
+=== Serialization
+_Define how message keys and values are converted to bytes before transmission._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
+
+| `key.serializer`
+| How keys are converted to bytes
+| `StringSerializer`, `ByteArraySerializer`, etc
+| Must match the producer’s key type (and consumer deserializer).
+| {check} line 21
+
+| `value.serializer`
+| How values are converted to bytes
+| `StringSerializer`, `ByteArraySerializer`, Avro/JSON/Protobuf
+| Option to implement custom serialization to handle complex types.
+| {check} line 22
+|===
+
+=== Reliability & Delivery Guarantees
 _Control how strictly the producer ensures message delivery and avoids duplicates._
 
 |===
@@ -131,20 +195,20 @@ _Control how strictly the producer ensures message delivery and avoids duplicate
 | {cross}
 |===
 
-== Throughput & Batching
+=== Throughput & Batching
 _Improve efficiency and throughput by controlling batching, compression, and buffering._
 
 |===
 | Option | What it controls | Typical values | Notes | Used in example?
 
 | `linger.ms`
-| Time to wait for more records before send
+| Delaying the producer sending to give more time for batching
 | `0`–`50+`
 | Higher = better batching/throughput, higher latency. `0` = send ASAP.
 | {check} line 24
 
 | `batch.size`
-| Max bytes per batch per partition
+| Max bytes per batch
 | e.g., `16384` (16 KiB), `32768`, `65536`
 | Larger batches improve compression and throughput at cost of memory.
 | {cross}
@@ -152,28 +216,28 @@ _Improve efficiency and throughput by controlling batching, compression, and buf
 | `compression.type`
 | Message compression
 | `none`, `gzip`, `snappy`, `lz4`, `zstd`
-| Compression reduces bandwidth and storage; adds CPU. Great with batching.
+| Compression covers full message batches. 
 | {cross}
 
 | `buffer.memory`
-| Total memory for record accumulation
-| e.g., `33554432` (32 MiB)
-| If full, `send()` may block per `max.block.ms` or throw.
+| Total bytes of memory the producer can use to buffer records waiting to be sent to the server.
+| Default `33554432` (32 MiB)
+| If records are sent faster than they can be delivered to the server the producer will block for max.block.ms after which it will fail with an exception
 | {cross}
 |===
 
 
 
-== Timeouts & Backoff
+=== Timeouts & Backoff
 _Define how long the producer waits and how it behaves during temporary failures._
 
 |===
 | Option | What it controls | Typical values | Notes | Used in example?
 
 | `request.timeout.ms`
-| Broker response timeout per request
+| timeout to avoid queuing records indefinitely
 | e.g., `30000`
-| Should be less than `delivery.timeout.ms`.
+| timeout expires --> message will be removed from the queue --> throw exception
 | {cross}
 
 | `retry.backoff.ms`
@@ -185,7 +249,7 @@ _Define how long the producer waits and how it behaves during temporary failures
 | `metadata.max.age.ms`
 | Metadata refresh interval
 | e.g., `300000`
-| Controls how often producer refreshes cluster/topology info.
+| Controls how often producer refreshes kafka cluster metadata.
 | {cross}
 |===
 
