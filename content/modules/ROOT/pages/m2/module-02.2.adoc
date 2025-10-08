@@ -169,7 +169,7 @@ _Tune how much data each poll fetches and how often the app must process it._
 |===
 
 
-[NOTE]
+[.info]
 ====
 .Click to learn about other polling and throughput options
 [%collapsible]
@@ -225,11 +225,6 @@ _Define network timeouts and retry pacing for stable consumption._
 .Click to learn about Timeouts & Backoff options
 [%collapsible]
 =====
-
-[discrete]
-=== Timeouts & Backoff
-_Define network timeouts and retry pacing for stable consumption._
-
 |===
 | Option | What it controls | Typical values | Notes | Used in example?
 
@@ -258,18 +253,18 @@ _Define network timeouts and retry pacing for stable consumption._
 === Client Identity & Telemetry
 _Add traceability and hooks for monitoring and custom logic._
 
+[NOTE]
 ====
 .Click to learn about Client Identity & Telemetry options
 [%collapsible]
 =====
 |===
-| Option | What it controls | Typical values | Notes | Used in example?
+| Option | What it controls | Typical values | Notes
 
 | `client.id`
 | Logical app identifier
 | free string
 | Useful for metrics/log tracing; not specified in example.
-| {cross}
 |===
 
 =====
