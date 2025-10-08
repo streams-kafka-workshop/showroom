@@ -81,6 +81,22 @@ _Control how instances coordinate, balance partitions, and scale._
 | All consumers with same group share partitions cooperatively.
 | {check} line 31
 
+|===
+
+
+[NOTE]
+====
+.Click to learn about other Consumer Group & Coordination options
+[%collapsible]
+=====
+
+[discrete]
+=== Consumer Group & Coordination
+_Control how instances coordinate, balance partitions, and scale._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
+
 | `partition.assignment.strategy`
 | How partitions are assigned
 | `range`, `roundrobin`, , `sticky`, `cooperative-sticky`
@@ -93,6 +109,8 @@ _Control how instances coordinate, balance partitions, and scale._
 | If no heartbeat in time, coordinator triggers rebalance.
 | {cross}
 |===
+=====
+====
 
 === Offsets & Delivery Semantics
 _Control how offsets are stored, committed, and reset to ensure correct processing._
@@ -111,6 +129,21 @@ _Control how offsets are stored, committed, and reset to ensure correct processi
 | `earliest`, `latest`, `none`
 | `earliest` = start from beginning; `latest` = only new data.
 | {check} line 32
+|===
+
+[NOTE]
+====
+.Click to learn about other offset and delivery semantics options
+[%collapsible]
+=====
+
+[discrete]
+=== Offsets & Delivery Semantics
+_Control how offsets are stored, committed, and reset to ensure correct processing._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
+
 
 | `auto.commit.interval.ms`
 | Period in milliseconds that the consumer offsets are auto-committed
@@ -118,6 +151,9 @@ _Control how offsets are stored, committed, and reset to ensure correct processi
 | Effective only when `enable.auto.commit=true`.
 | {cross}
 |===
+=====
+====
+
 
 === Polling & Throughput
 _Tune how much data each poll fetches and how often the app must process it._
@@ -130,6 +166,21 @@ _Tune how much data each poll fetches and how often the app must process it._
 | `consumer.poll(Duration.ofMillis(...))`
 | Smaller duration → more responsive, more CPU wakeups.
 | {check} line 39
+|===
+
+
+[NOTE]
+====
+.Click to learn about other polling and throughput options
+[%collapsible]
+=====
+
+[discrete]
+=== Polling & Throughput
+_Tune how much data each poll fetches and how often the app must process it._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
 
 | `max.poll.interval.ms`
 | Max allowed processing time between polls
@@ -161,8 +212,21 @@ _Tune how much data each poll fetches and how often the app must process it._
 | Broker will wait up to this long to accumulate bytes.
 | {cross}
 |===
+=====
+====
 
 
+
+
+=== Timeouts & Backoff
+_Define network timeouts and retry pacing for stable consumption._
+[NOTE]
+====
+.Click to learn about Timeouts & Backoff options
+[%collapsible]
+=====
+
+[discrete]
 === Timeouts & Backoff
 _Define network timeouts and retry pacing for stable consumption._
 
@@ -187,12 +251,17 @@ _Define network timeouts and retry pacing for stable consumption._
 | Helps to proactively discover new brokers or partitions.
 | {cross}
 |===
-
+=====
+====
 
 
 === Client Identity & Telemetry
 _Add traceability and hooks for monitoring and custom logic._
 
+====
+.Click to learn about Client Identity & Telemetry options
+[%collapsible]
+=====
 |===
 | Option | What it controls | Typical values | Notes | Used in example?
 
@@ -202,6 +271,9 @@ _Add traceability and hooks for monitoring and custom logic._
 | Useful for metrics/log tracing; not specified in example.
 | {cross}
 |===
+
+=====
+====
 
 === Inside the Consumer Poll Loop (line 35-53)
 This block runs the KafkaConsumer continuously in a separate thread:

@@ -75,31 +75,50 @@ _Configure how the producer connects and communicates with the Kafka cluster._
 | {check} line 26
 |===
 
+
+=== Serialization
+_Define how message keys and values are converted to bytes before transmission._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
+
+| `key.serializer`
+| How keys are converted to bytes
+| `StringSerializer`, `ByteArraySerializer`, etc
+| Must match the producer’s key type (and consumer deserializer).
+| {check} line 21
+
+| `value.serializer`
+| How values are converted to bytes
+| `StringSerializer`, `ByteArraySerializer`, Avro/JSON/Protobuf
+| Option to implement custom serialization to handle complex types.
+| {check} line 22
+|===
+
+=== Reliability & Delivery Guarantees
+_Control how strictly the producer ensures message delivery and avoids duplicates._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
+
+| `acks`
+| Durability of writes
+| `0`, `1`, `all`
+| `all` - message written to leader and all replicas before ack. Strongest guarantee. `1` - leader ack only. `0` - no ack, fire-and-forget.
+| {check} line 23
+
+| `enable.idempotence`
+| Duplicate prevention on retries
+| `true` / `false`
+| Producer will ensure that exactly one copy of each message is written in the stream Requires `acks=all`.
+| {check} line 25
+|===
+
 [NOTE]
 ====
-.Click to expand advanced producer options
+.Click to expand  and learn about other Reliability & Delivery Guarantees options
 [%collapsible]
 =====
-[discrete]
-=== Serialization
-_Define how message keys and values are converted to bytes before transmission._
-
-|===
-| Option | What it controls | Typical values | Notes | Used in example?
-
-| `key.serializer`
-| How keys are converted to bytes
-| `StringSerializer`, `ByteArraySerializer`, etc
-| Must match the producer’s key type (and consumer deserializer).
-| {check} line 21
-
-| `value.serializer`
-| How values are converted to bytes
-| `StringSerializer`, `ByteArraySerializer`, Avro/JSON/Protobuf
-| Option to implement custom serialization to handle complex types.
-| {check} line 22
-|===
-
 
 [discrete]
 === Reliability & Delivery Guarantees
@@ -107,18 +126,6 @@ _Control how strictly the producer ensures message delivery and avoids duplicate
 
 |===
 | Option | What it controls | Typical values | Notes | Used in example?
-
-| `acks`
-| Durability of writes
-| `0`, `1`, `all`
-| `all` - message written to leader and all replicas before ack. Strongest guarantee. `1` - leader ack only. `0` - no ack, fire-and-forget.
-| {check} line 23
-
-| `enable.idempotence`
-| Duplicate prevention on retries
-| `true` / `false`
-| Producer will ensure that exactly one copy of each message is written in the stream Requires `acks=all`.
-| {check} line 25
 
 | `max.in.flight.requests.per.connection`
 | Concurrent in-flight batches per connection
@@ -140,65 +147,6 @@ _Control how strictly the producer ensures message delivery and avoids duplicate
 |===
 =====
 ====
-
-
-
-
-=== Serialization
-_Define how message keys and values are converted to bytes before transmission._
-
-|===
-| Option | What it controls | Typical values | Notes | Used in example?
-
-| `key.serializer`
-| How keys are converted to bytes
-| `StringSerializer`, `ByteArraySerializer`, etc
-| Must match the producer’s key type (and consumer deserializer).
-| {check} line 21
-
-| `value.serializer`
-| How values are converted to bytes
-| `StringSerializer`, `ByteArraySerializer`, Avro/JSON/Protobuf
-| Option to implement custom serialization to handle complex types.
-| {check} line 22
-|===
-
-=== Reliability & Delivery Guarantees
-_Control how strictly the producer ensures message delivery and avoids duplicates._
-
-|===
-| Option | What it controls | Typical values | Notes | Used in example?
-
-| `acks`
-| Durability of writes
-| `0`, `1`, `all`
-| `all` - message written to leader and all replicas before ack. Strongest guarantee. `1` - leader ack only. `0` - no ack, fire-and-forget.
-| {check} line 23
-
-| `enable.idempotence`
-| Duplicate prevention on retries
-| `true` / `false`
-| Producer will ensure that exactly one copy of each message is written in the stream Requires `acks=all`.
-| {check} line 25
-
-| `max.in.flight.requests.per.connection`
-| Concurrent in-flight batches per connection
-| `1`–`5` (with idempotence), higher without
-| set this to `1` to ensure message order when retries occur.
-| {cross} (implicitly constrained by idempotence)
-
-| `retries`
-| Automatic resend attempts
-| integer (often large)
-| With idempotence, safe to set high; bounded by `delivery.timeout.ms`.
-| {cross}
-
-| `delivery.timeout.ms`
-| Overall send deadline (incl. retries)
-| Default `120000` (2 min)
-| If exceeded, the record fails even if `retries` remain.
-| {cross}
-|===
 
 === Throughput & Batching
 _Improve efficiency and throughput by controlling batching, compression, and buffering._
@@ -211,6 +159,21 @@ _Improve efficiency and throughput by controlling batching, compression, and buf
 | `0`–`50+`
 | Higher = better batching/throughput, higher latency. `0` = send ASAP.
 | {check} line 24
+
+|===
+
+[NOTE]
+====
+.Click to expand  and learn about other Throughput & Batching options
+[%collapsible]
+=====
+
+[discrete]
+=== Throughput & Batching
+_Improve efficiency and throughput by controlling batching, compression, and buffering._
+
+|===
+| Option | What it controls | Typical values | Notes | Used in example?
 
 | `batch.size`
 | Max bytes per batch
@@ -230,7 +193,8 @@ _Improve efficiency and throughput by controlling batching, compression, and buf
 | If records are sent faster than they can be delivered to the server the producer will block for max.block.ms after which it will fail with an exception
 | {cross}
 |===
-
+=====
+====
 
 
 === Timeouts & Backoff
@@ -283,6 +247,7 @@ return producer.send(rec);
 ----
 
 This builds a `ProducerRecord` (topic, optional key, value) and sends it to the Kafka cluster.
+
 
 === Closing the Producer (line 38-39)
 
