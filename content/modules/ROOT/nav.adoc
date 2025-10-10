@@ -16,7 +16,7 @@
 ** xref:m2/module-02.0.adoc[Introducing the Globex Application]
 ** xref:m2/module-02.1.adoc[Building Producers]
 ** xref:m2/module-02.2.adoc[Building Consumers]
-** xref:m2/module-02.2.adoc[Configuration Parameters]
+** xref:m2/module-02.3.adoc[Running the Streaming Application]
 ** xref:m2/finish.adoc[Finish]
 
 * xref:m3/module-03.0.adoc[Module 3 - Schema Related ]

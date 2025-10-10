@@ -1,7 +1,7 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 :check: ✓
-:cross: –
+:cross: ×
 
 
 == Kafka Producer API
@@ -119,11 +119,6 @@ _Control how strictly the producer ensures message delivery and avoids duplicate
 .Click to expand  and learn about other Reliability & Delivery Guarantees options
 [%collapsible]
 =====
-
-[discrete]
-=== Reliability & Delivery Guarantees
-_Control how strictly the producer ensures message delivery and avoids duplicates._
-
 |===
 | Option | What it controls | Typical values | Notes | Used in example?
 
@@ -167,11 +162,6 @@ _Improve efficiency and throughput by controlling batching, compression, and buf
 .Click to expand  and learn about other Throughput & Batching options
 [%collapsible]
 =====
-
-[discrete]
-=== Throughput & Batching
-_Improve efficiency and throughput by controlling batching, compression, and buffering._
-
 |===
 | Option | What it controls | Typical values | Notes | Used in example?
 
@@ -200,6 +190,11 @@ _Improve efficiency and throughput by controlling batching, compression, and buf
 === Timeouts & Backoff
 _Define how long the producer waits and how it behaves during temporary failures._
 
+[NOTE]
+====
+.Click to expand  and learn about Timeouts & Backoff options
+[%collapsible]
+=====
 |===
 | Option | What it controls | Typical values | Notes | Used in example?
 
@@ -221,6 +216,8 @@ _Define how long the producer waits and how it behaves during temporary failures
 | Controls how often producer refreshes kafka cluster metadata.
 | {cross}
 |===
+=====
+====
 
 === Producer Creation (line 27)
 Then the producer is created:

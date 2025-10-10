@@ -90,10 +90,6 @@ _Control how instances coordinate, balance partitions, and scale._
 [%collapsible]
 =====
 
-[discrete]
-=== Consumer Group & Coordination
-_Control how instances coordinate, balance partitions, and scale._
-
 |===
 | Option | What it controls | Typical values | Notes | Used in example?
 
@@ -137,10 +133,6 @@ _Control how offsets are stored, committed, and reset to ensure correct processi
 [%collapsible]
 =====
 
-[discrete]
-=== Offsets & Delivery Semantics
-_Control how offsets are stored, committed, and reset to ensure correct processing._
-
 |===
 | Option | What it controls | Typical values | Notes | Used in example?
 
@@ -169,15 +161,11 @@ _Tune how much data each poll fetches and how often the app must process it._
 |===
 
 
-[.info]
+[NOTE]
 ====
 .Click to learn about other polling and throughput options
 [%collapsible]
 =====
-
-[discrete]
-=== Polling & Throughput
-_Tune how much data each poll fetches and how often the app must process it._
 
 |===
 | Option | What it controls | Typical values | Notes | Used in example?
@@ -220,6 +208,7 @@ _Tune how much data each poll fetches and how often the app must process it._
 
 === Timeouts & Backoff
 _Define network timeouts and retry pacing for stable consumption._
+
 [NOTE]
 ====
 .Click to learn about Timeouts & Backoff options
@@ -259,12 +248,13 @@ _Add traceability and hooks for monitoring and custom logic._
 [%collapsible]
 =====
 |===
-| Option | What it controls | Typical values | Notes
+| Option | What it controls | Typical values | Notes | Used in example?
 
 | `client.id`
 | Logical app identifier
 | free string
 | Useful for metrics/log tracing; not specified in example.
+| {cross}
 |===
 
 =====
@@ -312,7 +302,7 @@ _Ensures the Kafka consumer exits cleanly without leaving the group unbalanced._
 
 `close()` tells the thread to stop polling, lets Kafka commit final offsets, and exits the group cleanly.
 
-==== Why It Matters
+**Why It Matters**
 Gracefully closing the consumer prevents:
 - Rebalance storms caused by sudden disconnects.  
 - Message reprocessing from uncommitted offsets.  
@@ -336,9 +326,9 @@ _Step-by-step flow from subscribe to processing with offset behavior._
 === In Summary
 This demonstrates the minimal pattern every Kafka consumer follows:
 
-----
-subscribe → poll → process → (commit offsets)
-----
+
+**subscribe → poll → process → (commit offsets)**
 
 
-
+=== What's Next?
+Now that we have analyzed the Producer and Consumer APIs and the related code, let's put it to work by running the simple application.
