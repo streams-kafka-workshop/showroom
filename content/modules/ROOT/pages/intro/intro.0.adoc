@@ -3,9 +3,11 @@ include::../style.adoc[]
 
 This Content is work in Progress and is not ready for use. It will be soon.
 
-== Event Streaming with Streams for Apache Kafka 
+== Event Streaming
 Event streaming is a modern approach to building data-intensive applications that are responsive, resilient, and scalable. It enables real-time data processing and integration across diverse systems, making it ideal for today's fast-paced digital environments.
 Event streaming treats every change in your business (an order placed, payment authorized, sensor reading, log line, click) as an event written to an append-only log. Instead of pushing data directly from one service to another, systems publish events once and many consumers independently read, process, and react—now or later.
+
+image::intro/event-streaming.png[]
 
 Key properties:
 
@@ -45,9 +47,18 @@ Kafka is the most widely used event-streaming platform because it combines:
 
 * **Log aggregation:** Unified transport for logs and security events with long-enough retention to reprocess.
 
-=== What is Red Hat AMQ Streams?
+=== When Kafka might not be the right fit
+While we recommend Kafka for many use cases, there are some cases where it may not be the right fit.
 
-AMQ Streams is Kafka built for OpenShift/Kubernetes, using the Strimzi operators to make Kafka declarative and automated:
+* Simple RPC or synchronous request/response between two services (use HTTP/gRPC).
+
+* Tiny workloads or one-off tasks where a lightweight queue is simpler.
+
+* Huge binary blobs (store in object storage; send references via Kafka).
+
+=== What is {streams}?
+
+{streams} is Kafka built for OpenShift/Kubernetes, using the Strimzi operators to make Kafka declarative and automated:
 
 * **CRDs & operators:** Define clusters, topics, and users in YAML; operators handle deployment, scaling, and upgrades.
 
@@ -59,18 +70,11 @@ AMQ Streams is Kafka built for OpenShift/Kubernetes, using the Strimzi operators
 
 * **Why it matters:** You get Kafka’s standard APIs with Kubernetes-native reliability, GitOps workflows, and platform governance—ideal for multi-team, multi-tenant environments.
 
-=== When Kafka might not be the right fit
 
-* Simple RPC or synchronous request/response between two services (use HTTP/gRPC).
-
-* Tiny workloads or one-off tasks where a lightweight queue is simpler.
-
-* Huge binary blobs (store in object storage; send references via Kafka).
 
 === Workshop Objectives
 
-This workshop introduces you to the fundamentals of Event Streaming with Apache Kafka. You will learn key concepts such as topics, partitions, producers, consumers, consumer groups, and replication. You will also gain hands-on experience by using a sample application to understand these concepts.
+This workshop introduces you to the fundamentals of Event Streaming with {streams}. You will learn key concepts such as topics, partitions, producers, consumers, consumer groups, and replication. You will also gain hands-on experience by using a sample application to understand these concepts.
 
 This workshop is intended for developers and architects who are new to event streaming and want to learn how to use Kafka for building real-time data pipelines and streaming applications. 
 
-Before we get started with Kafka,let's first understand the concept of Event Streaming and why Kafka is the most widely used event-streaming platform.

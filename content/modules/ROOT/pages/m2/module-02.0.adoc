@@ -21,5 +21,3 @@ Kafka provides several APIs that allow developers to interact with the Kafka clu
 
 === Activities overview:
 In this module we will focus on the Producer API and Consumer API. Kafka producer and consumer APIs are the primary means of interacting with a Kafka cluster in a client application. The APIs control the flow of messages.
-
-You will also explore Kafka Streams, a powerful library for building real-time stream processing applications in the later modules.

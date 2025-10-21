@@ -1,3 +1,9 @@
+:imagesdir: ../../assets/images
+include::../style.adoc[]
+:check: ✓
+:cross: ×
+
+
 == Kafka Producer API
 
 Let's run the simple streaming application that we analyzed in the previous sections. 
@@ -83,7 +89,6 @@ image::m2/kafka-web-app-console-keys-partitions.png[]
 image::m2/k1-color-pins.png[]
 
 . Optionally, you can repeat this for other keys as well 
-
 
 
 

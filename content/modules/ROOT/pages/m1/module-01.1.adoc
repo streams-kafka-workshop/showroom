@@ -4,7 +4,9 @@ include::../style.adoc[]
 
 == Kafka Basics - Topics
 
-A topic is a collection of messages that you want to group together for processing by a consumer. It is a named, append-only stream of records (events/messages). Think of it like a log file you never edit in place — you only append new entries.
+A topic is a logical collection of messages that you want to group together. It is a named, append-only stream of records (events/messages). Think of it like a log file you never edit in place — you only append new entries.
+
+image::m1/topic-image.png[]
 
 === Why Topics?
 They decouple producers (writers) and consumers (readers). Many producers can write, many consumers can read — independently and at their own pace.
@@ -31,7 +33,7 @@ They decouple producers (writers) and consumers (readers). Many producers can wr
 
 === Creating a Topic
 
-. In the upper terminal, create a Kafka topic named `demo` with 3 partitions and a replication factor of 1 (we will learn about replication later) using the following command.
+. In the upper terminal, create a Kafka topic named `demo` with 3 partitions and a replication factor of 1 (we will learn more about replication later) using the following command. This command creates a container with the Kafka client tools installed and executes the Kafka command to create the topic. The container is removed after the command is executed. This is method is an easy way to learn the basics without having to install the client tools on your local machine.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -41,7 +43,7 @@ oc run -n kafka-{user_name} topic-create --rm -it --restart=Never \
 ----
 
 
-. Describe the topic
+. Describe the topic. This will show you the details of the topic, including the number of partitions and replicas.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -50,7 +52,7 @@ oc run -n kafka-{user_name} topic-describe --rm -it --restart=Never \
   bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --describe --topic demo'
 ----
 
-. Click https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka/[here, window="console"] to navigate to the streams console to view the topic you created. The streams console is a web-based user interface for visualizing and monitoring Kafka clusters, topics, messages etc.
+. Click https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka/[here, window="console"] to navigate to the {streams} console to view the topic you created. The console is a web-based user interface for visualizing and monitoring Kafka clusters, topics, messages etc.
 
 . Login anonymously to the console.
 +

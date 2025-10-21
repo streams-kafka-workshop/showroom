@@ -1,0 +1,151 @@
+:imagesdir: ../../assets/images
+include::../style.adoc[]
+:check: ✓
+:cross: ×
+
+== Quarkus and Kafka
+
+In this section, we will explore an e-commerce application - Globex that uses Quarkus and Kafka to demonstrate real-time data streaming and processing use cases. 
+
+
+While the Globex web application used in this workshop is a demo app and as such does not pretend to be a real-life retail application, it packs enough functionality to make it feel like a real retail web app.
+
+. From your browser, navigate to {openshift_cluster_console}/topology/all-namespaces?view=graph[OpenShift Cluster Console, window="_console"]. Login with your username and password ({user_name}/{user_password}).
+
+
+. You should be redirected to a view which lists the different OpenShift _projects_ (also known as _namespaces_) you have access to.
++
+image::m2/openshift-console-developer-view-projects.png[]
++
+[NOTE]
+====
+The list of namespaces you have access to will depends on which modules you have deployed.
+====
+
+
+
+
+. The Globex web application is deployed in the *globex-{user_name}* namespace. Click on *Topology* in the menu on the left and then click on the *globex-{user_name}* link to open the topology view of the namespace. The Topology view gives you a graphical representation of the different resources deployed in the namespace.
++
+image::m2/openshift-console-developer-select-topology.png[]
+
+
+. In the *Topology View* of the Developer Perspective, expect to see something like this in the *globex-{user_name}* namespace:
++
+image::m2/openshift-console-topology-view.png[]
++
+The Globex web-app deployment consists of:
++
+[cols="28m,~"]
+[frame=all, grid=all]
+|===
+|*Service* | *Description*
+
+| globex-web
+| The web front-end of the Globex web application. Running on Node.js with an Angular UI.
+
+| globex-store-app
+| The backend application of the Globex retail app. Written in Quarkus. Provides catalog, inventory, cart and order services. 
+
+| globex-db
+| The PostgreSQL database used by the globex-store-app application. Stores the catalog, inventory, customer and order information.
+
+| activity-tracking 
+| This microservice has a REST endpoint for user activity events generated from the UI. These events are produced to a Kafka topic.
+
+| recommendation-engine (We will explore this service in more detail in a later module.)
+| An example of an application which does real-time processing of an event stream. This application uses Kafka Streams, an event-streaming library, to process the stream of events produced by the activity tracking service to build a list of the most popular products on the web site. This list is exposed as a REST endpoint, and called by the front-end to display featured products.
+
+|===
+
+. To open the Globex web application, click on the image:m2/openshift-console-open-url.png[] symbol next to the *globex-web* deployment in the topology view.
++
+image::m2/openshift-console-open-url-2.png[]
++
+This opens a new browser tab pointing to the home page of the Globex Web application. Alternatively, open a new browser tab and navigate to {globex_web_url}[{globex_web_url}, window="_globex"].
+
+
+== Generate user _like_ activity to view top _liked_ products
+
+
+. On the Globex web site, click on the *Cool Stuff Store* link on the top menu. From here you can browse through the product catalog, open product detail pages and add items to the shopping cart.
+
+. To generate user activity events, click on the image:m2/globex-product-like.png[] symbol next to a product. You can repeat this for 3-4 products.
+
+. Every _like_ action generates a user activity event that is captured by the _activity tracking_ service and sent to a Kafka topic. +
+The Kafka broker is installed in the *kafka-{user_name}* namespace. In the same namespace, streams for Apache Kafka console, a web UI for viewing Kafka topics and browsing consumer groups, is also installed.
+
+. Click to navigate to https://streams-console-{user_name}.{openshift_cluster_subdomain}[streams for Apache Kafka console, window="_amqstreams"]. This redirects you to the streams for Apache Kafka console login page. For the purpose of this workshop, choose *Click to login anonymously* to access the console
+
+. Choose the *Topics* menu on the left-hand side to see the list of topics.
++
+image::m2/amqstreams-cluster-topics.png[]
+
+. One of those topics is called *globex.tracking*, which is the topic that contains the user activity events. Click on the topic name to see the details of the topic. If you liked some products on the web site, the topic should contain some messages.
++
+image::m2/amqstreams-globex-tracking.png[]
+
+. Click on any of the messages listed to see its contents. In this case, the body of each message consists of a JSON structure of a user activity event from the Globex web application.
++
+image::m2/amqstreams-expand-message.png[]
+
+. The activity tracking service is the producer of these events. This service is implemented using Quarkus, a Java framework for building cloud-native applications,  which simplifies the interaction with Kafka as compared to using the Kafka Producer API directly. 
+
+Let's briefly explore how Quarkus simplifies the interaction with Kafka. Learn more about Quarkus at https://quarkus.io/
+
+=== Quarkus and Kafka
+Quarkus significantly simplifies interaction with Kafka compared to using the bare Apache Kafka Client in normal Java by leveraging the SmallRye Reactive Messaging framework based on the MicroProfile Reactive Messaging specification. This abstraction removes boilerplate code, manages low-level concerns like threading, serialization, and offset commits, and provides an annotation-driven, message-channel model.
+
+Let's look at how the activity tracking service uses Quarkus to produce and consume messages to and from Kafka topics.
+
+. Open the KafkaService.java file in the activity-tracking project by clicking on this link https://github.com/rh-cloud-architecture-workshop/activity-tracking-service/blob/main/src/main/java/org/globex/retail/KafkaService.java[link, window="_github"].This file is the Kafka producer responsible for sending user activity events to the Kafka topic.
+
+
+==== Simplified Programming Model
+. In normal Java with the Kafka Client, you must manually set up the KafkaProducer or KafkaConsumer, handle configuration, manage threading for continuous polling, perform manual serialization/deserialization, and explicitly commit offsets.
+
+Quarkus abstracts this into a clean, annotation-based model using @Incoming and @Outgoing. You focus purely on the business logic of processing the message payload.
+
+Kafka Producer (Sending Messages)
+|===
+| Aspect | Normal Java(Kafka Client) | Quarkus(Reactive Messaging)
+| Setup
+| Manually configure ProducerConfig (bootstrap servers, serializers), create KafkaProducer instance.
+| Inject an Emitter and configure the channel in application.properties. Quarkus manages the Producer lifecycle.
+
+| Sending
+| Create a ProducerRecord, call producer.send(), and handle the returned Future for asynchronous send results.
+| Call the Emitter.send() method with the message payload.
+|===
+
+Kafka Consumer (Receiving Messages)
+|===
+| Aspect | Normal Java(Kafka Client) | Quarkus(Reactive Messaging)
+| Setup
+| Manually configure ConsumerConfig, create KafkaConsumer instance, and subscribe to topics.
+| Define a simple method with the @Incoming annotation. Quarkus manages the Consumer lifecycle and subscription.
+
+| Consumption Loop
+| You must run a continuous polling loop in a separate thread and handle ConsumerRecords
+| Quarkus runs the message processing automatically on a thread.
+
+| Committing Offsets
+| You must manually call consumer.commitSync() or consumer.commitAsync() after processing.
+| Automatic acknowledgment (offset commit) is managed by the commit strategies attribute (e.g., throttled).
+|===
+
+==== Developer Experience
+Quarkus also provides tooling and features that enhance the development and operation of Kafka-based microservices
+
+* Local Development and Testing - For development and testing, Quarkus has Dev Services. If you have the Kafka extension but no local configuration, Quarkus will automatically start a Kafka broker in a Docker container for you (using Testcontainers).
+
+* Shared Broker - Dev Services for Kafka implements a service discovery mechanism for your multiple Quarkus applications running in dev mode to share a single broker.
+
+* Health Checks - Quarkus provides several health checks for Kafka. These checks are used in combination with the quarkus-smallrye-health extension. Some of these checks include: Kafka Broker Readiness Check, Kafka Reactive Messaging Health Checks etc
+
+There are a lot more features and capabilities that makes Quarkus a great choice for Kafka development and testing. You can learn more about Quarkus at link:https://quarkus.io/guides/kafka[Quarkus Kafka Guide, window="_quarkus"]
+
+
+
+
+

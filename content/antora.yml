@@ -15,4 +15,4 @@ asciidoc:
     page-links:
     - url: https://redhat.com
       text: Red Hat
-    streams: Streams for Apache Kafka
+    streams: Red Hat Streams for Apache Kafka

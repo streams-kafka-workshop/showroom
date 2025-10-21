@@ -1,8 +1,7 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 :check: ✓
-:cross: –
-
+:cross: ×
 
 == Kafka Consumer API
 The Kafka consumer allows developers to write kafka consumers within their applications to read records from Kafka topics. The API provides various configuration options to control the behavior of the consumer, such as offset management, polling, and group coordination.

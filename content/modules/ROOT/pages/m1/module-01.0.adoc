@@ -4,7 +4,7 @@ include::../style.adoc[]
 == Module 1: 
 {m1}
 
-=== Kafka Basics - What is a Kafka Cluster?
+=== Basics - What is a Kafka Cluster?
 
 A Kafka cluster is the whole distributed system that stores and moves your events. It’s made up of multiple Kafka processes with specific roles:
 
@@ -26,7 +26,7 @@ Brokers: store data and serve client traffic .
 
 ** KafkaNodePool CRs create sets of controller nodes and broker nodes.
 
-== Kafka Basics - What is a Kafka Broker?
+== What is a Broker?
 
 A broker is one Kafka server process that:
 
@@ -36,9 +36,7 @@ A broker is one Kafka server process that:
 
 * Replicates partitions to/from peers; one broker is the leader for a partition, others are followers (when replication factor > 1).
 
-// image:m1/rhsi_architecture_image.png[]
-
-//image:m1/m1-arch.png[] 
+image::m1/broker_image.png[]
 
 . Sample command image:common/clipboard.png[width=30px] to copy.
 +

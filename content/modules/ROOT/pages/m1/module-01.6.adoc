@@ -88,6 +88,8 @@ Offsets in Kafka are unique, continually increasing integer identifiers assigned
 
 Lag, or consumer lag, is a crucial metric that quantifies how far behind a consumer or consumer group is from the latest message available in a partition on the Kafka broker. It is calculated as the difference between the broker's log-end-offset (the offset of the last message committed to the cluster) and the consumer's last committed offset for that partition. Monitoring lag is essential to ensure consumers are keeping pace with the data stream and to identify any potential processing delays or backlogs
 
+image::m1/roundup-image.png[]
+
 
 
 . Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > topics > consumer groups > demo-cg and expand consumer cg-c1 we started previously. 
@@ -97,7 +99,7 @@ Lag, or consumer lag, is a crucial metric that quantifies how far behind a consu
 image::m1/lag-offset.png[]
 
 
-. If there are mutliple consumers, the Consumer group demo-cg also maintains an overall lag for the entire group which is the sum of the lag for each consumer as shown below.
+. If there are multiple consumers, the Consumer group demo-cg also maintains an overall lag for the entire group which is the sum of the lag for each consumer as shown below.
 +
 image::m1/group-lag.png[]
 
