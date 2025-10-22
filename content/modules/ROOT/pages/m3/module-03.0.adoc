@@ -6,5 +6,13 @@ include::../style.adoc[]
 
 === Stream Processing with {streams}
 
+As Kafka based applications become more complex, they need do more than just sending and receiving messages. Often, applications need to analyze, aggregate, or react to that data in real time rather than simply forwarding it elsewhere. That’s where Stream Processing with Kafka Streams comes in.
 
+Kafka Streams is a lightweight, client-side library for building real-time data processing and event-driven applications on top of Apache Kafka.
+
+Instead of moving data into an external processing cluster, your application itself becomes the stream processor — reading from Kafka topics, performing transformations, mapping, filtering,joining or aggregations, and writing results back to Kafka or to local state stores.
+
+image::m3/kafka-streams-architecture.png[]
+
+Let's analyze the how Globex webs application uses the Kafka Streams API to build a list of the most popular products on the web site, based on the user activity you generate by liking products on the web site in the earlier module.
 
