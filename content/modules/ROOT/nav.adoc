@@ -1,4 +1,4 @@
-* xref:index.adoc[Introduction]
+// * xref:index.adoc[Introduction]
 ** xref:intro/intro.0.adoc[The story behind this workshop]
 
 * xref:m1/module-01.0.adoc[Module 1 - Fundamentals of Kafka and Basic Concepts]

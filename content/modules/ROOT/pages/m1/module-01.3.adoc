@@ -5,21 +5,18 @@ include::../style.adoc[]
 
 == Kafka Basics - Producer (how data gets into Kafka)
 
-A Kafka Producer is a client application responsible for writing data to a Kafka cluster. These applications send messages, which are typically key-value pairs, into topics within the Kafka cluster. Any application that sends data to Kafka, such as a microservice, an Internet of Things (IoT) device, or a data pipeline, is considered a producer. Producers are how data gets into Kafka 
+A Kafka Producer is a client application responsible for writing data to a Kafka cluster. These applications send messages, which are typically key-value pairs, into topics within the Kafka cluster.
 
 === Core Functionality and API:
-• API: Producers interact with Kafka through the KafkaProducer API. Producers can be in written in a variety of languages such as Java,  Python, Go, JavaScript, and .NET.
+* API: Producers interact with Kafka through the KafkaProducer API. Producers can be in written in a variety of languages such as Java,  Python, Go, JavaScript, and .NET.
 
-
-Producers publish messages to a topic, which appends each message to the end of a partition. When a producer sends a message:
-- If a key is provided, Kafka uses its hash to choose the partition.
-- If no key is provided, Kafka distributes messages evenly (round-robin) across partitions.
-
-Kafka guarantees that as long as no new partitions are added, elements with the same key are stored in the same partition.
+* Producers publish messages to a topic, which appends each message to the end of a partition. When a producer sends a message:
+** If a key is provided, Kafka uses its hash to choose the partition.
+**If no key is provided, Kafka distributes messages evenly (round-robin) across partitions.
 
 In short, producers are a flexible and powerful way to send data efficiently and reliably while abstracting away much of the underlying distributed system complexities
 
-
+=== Running the Producer
 . Run the basic producer in the upper terminal
 +
 [source,sh,role="execute",subs=attributes+]
@@ -42,4 +39,4 @@ oc run -n kafka-{user_name} demo-producer --rm -it --restart=Never \
 +
 image::m1/console_messages.png[]
 
-This shows that the messages you sent from the producer are successfully received and stored in the Kafka topic `demo`. In the next section, we will learn how to consume these messages from the topic.
+* The messages you sent from the producer are successfully received and stored in the Kafka topic `demo`. In the next section, we will learn how to consume these messages from the topic.

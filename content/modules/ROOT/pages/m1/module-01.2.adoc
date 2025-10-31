@@ -10,9 +10,9 @@ image::m1/topic-image.png[]
 
 === Ordering rule
 
-Strict order exists within a partition.
+* Strict order exists within a partition.
 
-No global order across a topic — if you need order for a key (e.g., userId), ensure all events for that key go to the same partition.
+* No global order across a topic — if you need order for a key (e.g., userId), ensure all events for that key go to the same partition.
 
 === Offsets
 
@@ -41,3 +41,21 @@ With a key, the producer’s partitioner routes records with the same key to the
 With no key, producers distribute across partitions and order is not guaranteed.
 
 
+=== Excercise
+
+* Click https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka/[here, window="console"] to navigate to the {streams} console to view the topic you created.
+
+* Click on *Topics* in the left menu to see the list of topics. You should see the `demo` topic you created. Click on the `demo`topic and then navigate to the partitions tab. You should see the `demo` topic  has 3 partitions.
++
+image::m1/partitions-image-console.png[]
+
+* The partitions are spread across different brokers to ensure fault tolerance. The leader column shows the Broker ID in which the partition is located. 
++
+image::m1/leader-image-console.png[]
+
+
+* The replicas column typically shows the broker IDs of the other brokers that hold replicas of the partition and currently there are empty since we have created our topic with replication factor of 1.
++
+image::m1/replica-image-console.png[]
+
+This concludes are very high-level overview of how Kafka partitions work. In the next module we'll learn about kafka producers and consumers.
