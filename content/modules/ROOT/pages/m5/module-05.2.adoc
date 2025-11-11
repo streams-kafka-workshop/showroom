@@ -1,0 +1,241 @@
+:imagesdir: ../../assets/images
+include::../style.adoc[]
+
+== Producer and Consumer with Schema Registry
+
+In this section, we will create a producer and a consumer that will use the schema that we added to the Schema Registry in the previous section.
+
+* Navigate to the Devspaces IDE
+
+* Open the file *src/main/java/com/example/Config.java* in the file explorer
++
+image::config-java.png[]
+
+* Replace the placeholder values with your registry API URL provided below
++
+[source,URL,role="execute",subs=attributes+]
+----
+https://service-registry-app-{user_name}.{openshift_cluster_subdomain}/apis/registry/v3
+----
+
+* The config file will look like the following. Observe that along with the registry API URL, we have also defined the group id, artifact id, version, topic name and bootstrap servers information needed in this file.
++
+image::config-java-variables.png[]
+
+* Start a new terminal by clicking on the menu on the top left corner. Then select *Terminal > New Terminal.* to launch a new terminal window.
++
+image::new-terminal.png[]
+
+* In the terminal window, run the following command to make sure you are in the project directory. It should print the current working directory as `/projects/registry-java`.
++
+[source,sh,role="execute",subs=attributes+]
+----
+pwd
+----
+
+* Make sure the terminal is configured to use Java 17.
++
+[source,sh,role="execute",subs=attributes+]
+----
+sdk use java 17.0.3-tem
+java --version
+----
+
+* Run the following command to build the application and run the interactive application
++
+[source,sh,role="execute",subs=attributes+]
+----
+./run.sh
+----
+
+* First let's retrieve the schema from the Schema Registry. Choose the option 2 by entering `2` and press enter.
+
+* You should see an output similar to the following, indicating that the schema was retrieved successfully from the Schema Registry.
++
+image::retrieve-schema-output.png[]
+
+* Next, let's run a producer and send a message. Choose the option 1 by entering `1` and press enter.
+
+* You should see an output similar to the following, indicating the user to enter the message.  
++
+[source,bash]
+----
+--- Enter your JSON message (single-line or multi-line, press Enter on empty line when done): ---
+----
+
+* Paste this message into the terminal and *press enter twice*. This json is valid and confirms to the schema defined in the schema registry, which means this must be accepted and sent to the topic `schema-demo`.
++
+[source,json,role="execute",subs=attributes+]
+----
+{
+  "customer_id": "CUST-001",
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "john.doe@example.com",
+  "age": 30,
+  "is_active": true,
+  "signup_date": 1699123456789
+}
+----
+
+* You should see an output similar to the following, indicating that the message was sent successfully.
++
+[source,bash]
+----
+✓ Message sent successfully!
+   Validation: ✓ Automatic (by Apicurio Registry)
+   Schema source: Registry (artifact 'demo' in group 'my-group')
+   Record sent: {"customer_id": "CUST-001", "first_name": "John", "last_name": "Doe", "email": "john.doe@example.com", "age": 30, "is_active": true, "signup_date": 1699123456789}
+----
+
+* Navigate to the streams console by clicking on the link:https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] and go the schema-demo topic and observe that we have a new message.
+
+* Next, let's try to send a message that is invalid. Choose the option 1 by entering `1` and press enter.
+
+* You should see an output similar to the following, indicating the user to enter the message.  
++
+[source,bash]
+----
+--- Enter your JSON message (single-line or multi-line, press Enter on empty line when done): ---
+----
+
+* Paste this message into the terminal and *press enter twice*. This json is invalid because our schema  indicates the type of `customer_id` to be `string` and this provides a integer value. This message should not be accepted.
++
+[source,json,role="execute",subs=attributes+]
+----
+{
+  "customer_id": 12345,
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "john.doe@example.com",
+  "age": 30,
+  "is_active": true,
+  "signup_date": 1699123456789
+}
+----
+
+* You should see the application throwing an error and if your scroll through the error log, you should see the following error message.
++
+[source,bash]
+----
+Caused by: java.lang.ClassCastException: value 12345 (a java.lang.Long) cannot be cast to expected type string at Customer.customer_id
+----
+
+* You can also navigate back to the streams console and observe that the new message was not sent.
+
+=== Working with compatibility
+
+* Navigate to link:https://service-registry-ui-{user_name}.{openshift_cluster_subdomain}/xplore/my-group/schema-demo[service registry UI, window="_schema-registry"].
+
+* Navigate to the rules tab and click on the *Enable* button in the *Compatibility rule* row. 
++
+image::enable-rule.png[]
+
+
+* Choose the `backward` option from the dropdown. This options checks for backward compatibility for the future versions of the schema.
++
+image::backward.png[]
+
+* Click on the Overview tab and click on the Crate version button.
++
+image::create-version.png[] 
+
+* We are going to paste a new version of the schema that introduces a new field called `phone number` in the existing schema and makes it a required field. This breaks backward compatibility and should trigger the compatibility rule in the registry. Let's see that in action.
+
+* Copy and paste the below schema into the editor.
++
+[source,avro,role="execute",subs=attributes+]
+----
+{
+    "type": "record",
+    "name": "Customer",
+    "namespace": "com.example.avro",
+    "fields": [
+      {"name": "customer_id", "type": "string"},
+      {"name": "first_name", "type": "string"},
+      {"name": "last_name", "type": "string"},
+      {"name": "email", "type": ["null", "string"], "default": null},
+      {"name": "phone", "type": "long"},
+      {"name": "age", "type": ["null", "int"], "default": null},
+      {"name": "is_active", "type": "boolean", "default": true},
+      {"name": "signup_date", "type": "long"}
+    ]
+  }
+----
+
+* You should see an an error message similar to the following.
++
+image::error-compatibility.png[]
+
+* This indicates that the new schema is not compatible with the existing schema and the schema registry does a backward compatibility check and ensures that the new schema is compatible with the existing schema.
+
+* Click on the *Create Version* button again and paste the below schema, which is the same the one we provided earlier but provides a default value for the `phone` field in case it's missing. This time the compatibility rule should not trigger and new version of the schema should be created.
++
+[source,avro,role="execute",subs=attributes+]
+----
+{
+    "type": "record",
+    "name": "Customer",
+    "namespace": "com.example.avro",
+    "fields": [
+      {"name": "customer_id", "type": "string"},
+      {"name": "first_name", "type": "string"},
+      {"name": "last_name", "type": "string"},
+      {"name": "email", "type": ["null", "string"], "default": null},
+      {"name": "phone", "type": "long", "default": 0},
+      {"name": "age", "type": ["null", "int"], "default": null},
+      {"name": "is_active", "type": "boolean", "default": true},
+      {"name": "signup_date", "type": "long"}
+    ]
+  }
+----
+
+* Now producers can send messages with or without the `phone` field and the messages will still get accepted. You can navigate back to dev spaces terminal and run the below command to start the application
++
+[source,bash,role="execute",subs=attributes+]
+----
+./run.sh
+----
+
+* Choose the option 1 and enter the below message. Hit enter twice.
++
+[source,json,role="execute",subs=attributes+]
+----
+{
+  "customer_id": "CUST-033",
+  "first_name": "Jane",
+  "last_name": "Doe",
+  "age": 42,
+  "is_active": true,
+  "signup_date": 1699123456789
+}
+----
+
+* The message without the `phone` field is accepted and sent to the topic `schema-demo`. 
+
+* Run the producer again and choose the option 1 and enter the below message. Hit enter twice.
++
+[source,json,role="execute",subs=attributes+]
+----
+{
+  "customer_id": "CUST-035",
+  "first_name": "Richard",
+  "last_name": "Roe",
+  "age": 52,
+  "phone": 4443456789,
+  "is_active": true,
+  "signup_date": 1699123456789
+}
+----
+
+* This message with a valid `phone` field is accepted and sent to the topic `schema-demo` too. This shows the backward compatibility feature of the schema registry.
+
+* Now choose option 3 to run the consumer and observe the new messages. For the messages that we have not sent with the `phone` field, the consumer will use the default value of 0 for the `phone` field.
+
+This brings us to the end of this module. In order to understand more about the different compatibility rules, you can refer to the link:https://docs.redhat.com/en/documentation/red_hat_build_of_apicurio_registry/3.1/html/apicurio_registry_user_guide/registry-rule-reference_registry#registry-rule-types_registry[documentation here].
+
+=== Summary
+
+Schema registry is a powerful tool that allows you to manage the schemas for your data streaming application. It ensures that the schemas are compatible with each other and that the new schemas are compatible with the existing schemas and provides multiple compatibility rules to fit your needs. 
+
+.

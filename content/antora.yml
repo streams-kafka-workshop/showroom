@@ -16,3 +16,4 @@ asciidoc:
     - url: https://redhat.com
       text: Red Hat
     streams: Red Hat Streams for Apache Kafka
+    registry: Red Hat build of Apicurio Registry

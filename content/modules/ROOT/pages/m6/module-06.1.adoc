@@ -152,20 +152,5 @@ In the next section, we will learn about Access Control Lists (ACLs) which will 
 
 
 
-Click on the *demo-group* consumer group to see the details.
-oc run -n kafka-user1 topic-create --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc 'cat >/tmp/client.properties <<EOF
-security.protocol=SASL_PLAINTEXT
-sasl.mechanism=SCRAM-SHA-512
-sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="admin" password="adminpassword";
-EOF
-/opt/kafka/bin/kafka-topics.sh \
-  --bootstrap-server kafka-kafka-bootstrap:9095 \
-  --command-config /tmp/client.properties \
-  --create --topic demo --partitions 3 --replication-factor 1'
-
-
-bash -c 'oc get svc kafka-kafka-bootstrap -o jsonpath="{range .spec.ports[*]}{.name}{\" → \"}{.port}{\" (\"}{.protocol}{\")\"}{\"\\n\"}{end}" ; echo ; echo "Strimzi Discovery:" ; oc get svc kafka-kafka-bootstrap -o jsonpath="{.metadata.annotations.strimzi\\.io/discovery}" | jq'
 
 
