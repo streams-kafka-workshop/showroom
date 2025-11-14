@@ -33,7 +33,7 @@
 ** xref:m5/module-05.2.adoc[Producing and Consuming Messages interacting with Schema Registry]
 ** xref:m5/finish.adoc[Finish]
 
-* xref:m6/module-06.0.adoc[Module 7 - Security]
+* xref:m6/module-06.0.adoc[Module 6 - Security]
 ** xref:m6/module-06.1.adoc[Authentication]
 ** xref:m6/module-06.2.adoc[Authorization, ACLs]
 ** xref:m6/finish.adoc[Finish]
