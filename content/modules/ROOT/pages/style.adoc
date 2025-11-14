@@ -42,3 +42,6 @@ summary  {
 :m1: pass:quotes[[.label.added]#Module 1#]
 :m2: pass:q[[.label.changed]#Module 2#]
 :m3: pass:q[[.label.updated]#Module 3#]
+:m4: pass:quotes[[.label.added]#Module 4#]
+:m5: pass:q[[.label.changed]#Module 5#]
+:m6: pass:q[[.label.updated]#Module 6#]

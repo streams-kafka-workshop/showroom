@@ -4,7 +4,7 @@ include::../style.adoc[]
 
 == Kafka Basics - Partitions (how Kafka scales & orders)
 
-Storing the messages in a topic in a single node would limit the scalability of the system. Partitions are the solution for this.A topic is split into partitions, each an ordered, append-only log, that are distributed across brokers. This allows {streams} to process a large number of messages in parallel and in a distributed manner. Partitions enable parallelism and throughput.
+Storing the messages in a topic in a single node would limit the scalability of the system. Partitions are the solution for this. A topic is split into partitions, each an ordered, append-only log, that are distributed across brokers. This allows kafka to process a large number of messages in parallel and in a distributed manner. Partitions enable parallelism and throughput.
 
 image::m1/topic-image.png[]
 
@@ -12,7 +12,9 @@ image::m1/topic-image.png[]
 
 * Strict order exists within a partition.
 
-* No global order across a topic — if you need order for a key (e.g., userId), ensure all events for that key go to the same partition.
+* Global ordering is not guaranteed across a topic — 
+
+* If you need ordering, use the same key to ensure all events for that key go to the same partition.
 
 === Offsets
 
@@ -20,7 +22,7 @@ Each record in a partition has a monotonically increasing offset (0, 1, 2…). O
 
 === Lag
 
-The difference between the offset of the last message consumed and the offset of the last message in the partition.
+The difference between the offset of the last message consumed and the offset of the last message in the partition. It basically represents the number of messages that have not been consumed yet in a partition.
 
 === Replication & durability
 
@@ -36,12 +38,12 @@ image::m1/replication-broker.png[]
 
 === Key-based routing
 
-With a key, the producer’s partitioner routes records with the same key to the same partition → per-key order.
+With a key, the records/messages with the same key go to the same partition → per-key order.
 
 With no key, producers distribute across partitions and order is not guaranteed.
 
 
-=== Excercise
+=== Exercise
 
 * Click https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka/[here, window="console"] to navigate to the {streams} console to view the topic you created.
 
@@ -54,7 +56,7 @@ image::m1/partitions-image-console.png[]
 image::m1/leader-image-console.png[]
 
 
-* The replicas column typically shows the broker IDs of the other brokers that hold replicas of the partition and currently there are empty since we have created our topic with replication factor of 1.
+* The replicas column typically shows the broker IDs of the other brokers that hold replicas of the partition and currently there are empty since we have created our topic with replication factor of 1 (which is not recommended in a production setup).
 +
 image::m1/replica-image-console.png[]
 

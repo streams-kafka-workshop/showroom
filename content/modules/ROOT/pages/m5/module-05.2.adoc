@@ -9,7 +9,7 @@ In this section, we will create a producer and a consumer that will use the sche
 
 * Open the file *src/main/java/com/example/Config.java* in the file explorer
 +
-image::config-java.png[]
+image::m5/config-java.png[]
 
 * Replace the placeholder values with your registry API URL provided below
 +
@@ -20,11 +20,11 @@ https://service-registry-app-{user_name}.{openshift_cluster_subdomain}/apis/regi
 
 * The config file will look like the following. Observe that along with the registry API URL, we have also defined the group id, artifact id, version, topic name and bootstrap servers information needed in this file.
 +
-image::config-java-variables.png[]
+image::m5/config-java-variables.png[]
 
 * Start a new terminal by clicking on the menu on the top left corner. Then select *Terminal > New Terminal.* to launch a new terminal window.
 +
-image::new-terminal.png[]
+image::m5/new-terminal.png[]
 
 * In the terminal window, run the following command to make sure you are in the project directory. It should print the current working directory as `/projects/registry-java`.
 +
@@ -52,7 +52,7 @@ java --version
 
 * You should see an output similar to the following, indicating that the schema was retrieved successfully from the Schema Registry.
 +
-image::retrieve-schema-output.png[]
+image::m5/retrieve-schema-output.png[]
 
 * Next, let's run a producer and send a message. Choose the option 1 by entering `1` and press enter.
 
@@ -129,16 +129,16 @@ Caused by: java.lang.ClassCastException: value 12345 (a java.lang.Long) cannot b
 
 * Navigate to the rules tab and click on the *Enable* button in the *Compatibility rule* row. 
 +
-image::enable-rule.png[]
+image::m5/enable-rule.png[]
 
 
 * Choose the `backward` option from the dropdown. This options checks for backward compatibility for the future versions of the schema.
 +
-image::backward.png[]
+image::m5/backward.png[]
 
 * Click on the Overview tab and click on the Crate version button.
 +
-image::create-version.png[] 
+image::m5/create-version.png[] 
 
 * We are going to paste a new version of the schema that introduces a new field called `phone number` in the existing schema and makes it a required field. This breaks backward compatibility and should trigger the compatibility rule in the registry. Let's see that in action.
 
@@ -165,7 +165,7 @@ image::create-version.png[]
 
 * You should see an an error message similar to the following.
 +
-image::error-compatibility.png[]
+image::m5/error-compatibility.png[]
 
 * This indicates that the new schema is not compatible with the existing schema and the schema registry does a backward compatibility check and ensures that the new schema is compatible with the existing schema.
 

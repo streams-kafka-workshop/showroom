@@ -5,9 +5,9 @@ include::../style.adoc[]
 == Kafka Basics - Partitioning and Keys
 As we learned earlier, With a key, the records/messages with the same key go to the same partition → per-key order. Let's see this in action.
 
-. In the upper terminal, stop the existing producer (Ctrl+C) and run a new producer that accepts key-value pairs.
+* In the upper terminal, stop the existing producer and consumer by typing (Ctrl+C) in the upper and lower terminals. Now in the upper terminal, let's run a new producer that accepts key-value pairs.
 
-. Run a new producer that will send a bunch of messages with key-value pair in the upper terminal. This will ensure messages with the same key go to the same topic partition.
+* In the upper terminal, run a new producer that will send a bunch of messages with key-value pair in the upper terminal. This will ensure messages with the same key go to the same topic partition.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -21,19 +21,21 @@ oc run -n kafka-{user_name} load-producer --rm -it --restart=Never \
     --property key.separator=:'
 ----
 
-. Wait for 5-10 seconds after the producer starts to allow some messages to be produced and stop the producer (Ctrl+C).
+* Wait for 10 seconds after the producer starts to allow some messages to be produced and stop the producer (Ctrl+C).
 +
 The messages produced will be in the format `key:value` such as `k1:msg-1`, `k2:msg-2` etc
 
-. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > topics > demo and verify the messages being produced to the topic `demo`. You should see messages with keys `k0` to `k9` being produced to the topic.
+* Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > topics > demo and verify the messages being produced to the topic `demo`. You should see messages with keys `k0` to `k9` being produced to the topic.
 +
 image::m1/console_key_messages_pairs.png[]
 
-. From the messages tab, filter the messages with key `k1`. You can do this by deleting the existing text in the search box and typing `k1` and hitting enter. You should see that all the messages with key `k1` are in the same partition.
+* From the messages tab, filter the messages with key `k1`. You can do this by deleting the existing text in the search box and typing `k1` and hitting enter. You should see that all the messages with key `k1` are in the same partition.
 +
 image::m1/console_keys_messages.png[]
 
-. Try the same with the other keys such as `k2`, `k3` etc., and observe that all messages with the same key go to the same partition.
+* Try the same with the other keys such as `k2`, `k3` etc., and observe that all messages with the same key go to the same partition.
 
-. Kafka uses a partitioner to determine which partition a message goes to based on the key. By default, Kafka uses a hash function on the key to determine the partition the message goes to. This ensures that messages with the same key always go to the same partition, which is important for maintaining order for the messages with the same key.
+Kafka uses a partitioner to determine which partition a message goes to based on the key. By default, Kafka uses a hash function on the key to determine the partition the message goes to. This ensures that messages with the same key always go to the same partition, which is important for maintaining order for the messages with the same key.
+
+This is a simple example of how Kafka partitions messages based on keys. In the next section, we will learn about consumer groups and rebalancing.
 

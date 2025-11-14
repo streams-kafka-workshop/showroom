@@ -42,7 +42,7 @@ oc run -n kafka-{user_name} topic-create --rm -it --restart=Never \
   bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --create --topic demo --partitions 3 --replication-factor 1'
 ----
 +
-NOTE: This command creates a container with the Kafka client tools installed and executes the Kafka command to create the topic. The container is removed after the command is executed. This is method is an easy way to learn the basics without having to install the client tools on your local machine.
+NOTE: This command creates a temporary container with the Kafka client tools installed and executes the Kafka command to create the topic. The container is removed after the command is executed. This is method is an easy way to learn the basics without having to install the client tools on your local machine.
 
 
 * Describe the topic. This will show you the details of the topic, including the number of partitions and replicas.
@@ -60,11 +60,11 @@ oc run -n kafka-{user_name} topic-describe --rm -it --restart=Never \
 +
 image::m1/console_anonymous.png[]
 
-* Click on *Topics* in the left menu to see the list of topics. You should see the `demo` topic you created. The topic has 3 partitions.
+* Click on *Topics* in the left menu to see the list of topics. You should see the `demo` topic you created. This topic has 3 partitions.
 +
 image::m1/console_topics.png[]
 
-
+We will learn more about partitions and replication in the later sections.
 
 
 

@@ -1,10 +1,9 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-== Module 6: 
+== Module 6: Securing {streams}
 {m6}
 
-== Securing {streams}
 
 As organizations increasingly rely on Kafka for mission-critical data pipelines, securing the cluster becomes essential. This module introduces the key aspects of Kafka security and lays the foundation for building a trusted, compliant event-streaming platform.
 

@@ -35,9 +35,11 @@ oc run -n kafka-{user_name} demo-consumer --rm -it --restart=Never \
 
 * Type more messages in the producer terminal and observe them being consumed in the consumer terminal.
 
-* Since we are not providing a key, the messages might get distributed across partitions and the ordering is not guaranteed if that is the case. We will see how partitions and keys can help us with ordering in the next section.
+* Since we are not providing a key, the messages *might* get distributed across partitions and the ordering is not guaranteed if that is the case. We will see how partitions and keys can help us with guaranteed ordering in the next section.
++
+NOTE: Since we are sending very few messages, there is chance that all the messages might end up in the same partition. But in real world, there would be thousand of messages per second and without a key, the messages might end up in different partitions.
 
-. Verify the same by navigating to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > Consumer groups. Click on the *demo-group* consumer group to see the details. 
+* Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > Consumer groups. Click on the *demo-group* consumer group to see the details. 
 +
 image::m1/console_demo-group.png[]
 

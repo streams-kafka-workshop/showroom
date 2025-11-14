@@ -51,7 +51,7 @@ oc create route edge kafka-web --service=kafka-web --insecure-policy=Redirect -n
 oc get pods -w -n kafka-{user_name} | grep kafka-web
 ----
 
-. Once the application pod is in the `Running` state, click https://kafka-web-{user_name}.{openshift_cluster_subdomain}[here, window="console"] to access the application in a new browser tab.
+. Once the application pod is in the `Running` state, click https://kafka-web-kafka-{user_name}.{openshift_cluster_subdomain}[here, window="console"] to access the application in a new browser tab.
 
 . This is a simple web application that produces and consumes messages to and from a Kafka topic. Both the producer and consumer are implemented using the Kafka Producer and Consumer APIs using the code that we analyzed earlier.
 +

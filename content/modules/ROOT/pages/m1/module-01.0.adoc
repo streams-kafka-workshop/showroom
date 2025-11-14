@@ -42,7 +42,7 @@ image::m1/broker_image.png[]
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc login -u {user_name} -p {openshift_cluster_admin_password} https://172.30.0.1:443
+oc login --insecure-skip-tls-verify=false -u {user_name} -p {password} {openshift_api_url}
 ----
 
 == Activities overview:
