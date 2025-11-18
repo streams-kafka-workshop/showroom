@@ -14,9 +14,10 @@
 
 * xref:m2/module-02.0.adoc[Module 2 - Kafka Application: Producing and Consuming Messages using a Real-World Application]
 ** xref:m2/module-02.1.adoc[Building Producers]
-** xref:m2/module-02.2.adoc[Building Consumers]
-** xref:m2/module-02.3.adoc[Running the simple Streaming Application]
-** xref:m2/module-02.4.adoc[Globex Activity Tracking Application]
+** xref:m2/module-02.2.adoc[Producer in Action]
+** xref:m2/module-02.3.adoc[Building Consumers]
+** xref:m2/module-02.4.adoc[Consumer in Action]
+** xref:m2/module-02.5.adoc[Real Time Streaming Application]
 ** xref:m2/module-02.5.adoc[Quarkus and Kafka: Better Together]
 ** xref:m2/finish.adoc[Finish]
 

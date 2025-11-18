@@ -1,0 +1,96 @@
+:imagesdir: ../../assets/images
+include::../style.adoc[]
+:check: ✓
+:cross: ×
+
+
+== Kafka Producer API
+
+Let's run the simple streaming application that we analyzed in the previous sections. 
+
+
+=== Running the Application
+
+. In the Devspaces IDE, open a new terminal by clicking on the menu on the top left corner. Then select *Terminal > New Terminal.* to launch a new terminal window.
++
+image::m2/devspaces-terminal.png[]
+
+. In the terminal window, run the following command to make sure you are in the project directory. It should print the current working directory as `/projects/kafka-web-demo`.
++
+[source,bash]
+----
+pwd
+----
+
+. Login to the 'kafka-{user_name}' project using the following command.
++
+[source,bash,role="execute",subs=attributes+]
+----
+oc project kafka-{user_name}
+----    
+
+. We'll be using OpenShift S2I (Source-to-Image) to build and deploy our application. Run the following command to create a new S2I application.
++
+[source,bash,role="execute",subs=attributes+]
+----
+oc new-app registry.access.redhat.com/ubi8/openjdk-11~https://github.com/rpscodes/kafka-web-demo.git --name=kafka-web -n kafka-{user_name}
+----
+// . This command tells OpenShift to create a new application named `kafka-web` using the OpenJDK 11 UBI8 image as the base image and the source code from the specified GitHub repository, which has the same source code as the one we have in our Devspaces IDE.
+
+. Create a route to access the application from outside the cluster using the following command.
++
+[source,bash,role="execute",subs=attributes+]
+----
+oc create route edge kafka-web --service=kafka-web --insecure-policy=Redirect -n kafka-{user_name}
+----
+
+. The application will take a minute or two to build and deploy. You can monitor the progress of the build using the following command.
++
+[source,bash,role="execute",subs=attributes+]
+----
+oc get pods -w -n kafka-{user_name} | grep kafka-web
+----
+
+. Once the application pod is in the `Running` state, click https://kafka-web-kafka-{user_name}.{openshift_cluster_subdomain}[here, window="console"] to access the application in a new browser tab.
+
+. This is a simple web application that produces and consumes messages to and from a Kafka topic. Both the producer and consumer are implemented using the Kafka Producer and Consumer APIs using the code that we analyzed earlier.
++
+image::m2/kafka-web-app.png[] 
+
+. To make it easy, we have provided a Quick Send feature, which invokes the producer and send a bunch of messages(key,value) to the Kafka topic `demo`. It uses the keys `k0` to `k8` and values is just random strings. Each key is assigned a specific color for easy observation.
+
+. From the Quick Send section, click on the number *5* button to send 5 messages. This will send the message to the Kafka topic `demo` which we created in the previous module. It has 3 partitions depicted as separate lanes in the UI.
++
+image::m2/kafka-web-app-quick-send.png[]
+
+. You should see the messages being produced and consumed in real-time in the UI. The messages are depicted as colored pins moving from the producer section to the consumer section. The color of the pins represents the *key* of the message.
++
+image::m2/kafka-web-app-messages.png[]
+
+. You should observe that each key is assigned to a specific partition. In the subsequent sends, we will observe that the messages with the same key always go to the same partition. Let's try sending more messages. 
+
+. From the Quick Send section, Click on the number *30* button to send 30 more messages. Observe the color of the pins and the partitions they are assigned to. The pins of the same color should always go to the same partition. For easy observation, we've added the color of the keys in the partition lanes as well.
++
+image::m2/kafka-web-app-partitions.png[]
+
+. Not let's double check the same using the AMQ Streams Console. Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] topics > demo to see the messages you sent.
+
+
+. Filter the messages by key to check which partition they are assigned to. Let's check for the key `k1`. Type `k1` in the filter box and hit enter.
++
+image::m2/kafka-web-app-console-filter.png[]
+
+. Observer that all the messages with the key `k1` are assigned to the same partition. 
++
+image::m2/kafka-web-app-console-keys-partitions.png[]
+
+. Go back to the application and double check the key `k1` in the UI has the same partition. You should see that all the pins with the color representing key `k1` are assigned to the same partition as well.
++
+image::m2/k1-color-pins.png[]
+
+. Optionally, you can repeat this for other keys as well 
+
+
+
+
+

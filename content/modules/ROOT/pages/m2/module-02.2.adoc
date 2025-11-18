@@ -3,331 +3,161 @@ include::../style.adoc[]
 :check: ✓
 :cross: ×
 
-== Kafka Consumer API
-The Kafka consumer allows developers to write kafka consumers within their applications to read records from Kafka topics. The API provides various configuration options to control the behavior of the consumer, such as offset management, polling, and group coordination.
 
+== Running a Simple Producer Application
 
-=== The Simple Consumer Application
+Let's run the simple streaming application that we analyzed in the previous sections.
 
-
-. Let's us now look at the consumer code. Click on the *src/main/java/com/example/KafkaConsumerService.java* file in the file explorer to open it.
+* In the Devspaces IDE, open a new terminal by clicking on the menu on the top left corner. Then select *Terminal > New Terminal.* to launch a new terminal window.
 +
-image::m2/kafka-consumer-service.png[]
+image::m2/devspaces-terminal.png[]
 
-This section breaks down the code and explain hows a **Kafka consumer** is configured and how it works under the hood.
-
-In this example:
-* The consumer connects to a Kafka cluster using configuration from `AppConfig`
-* It reads messages with string keys and values
-* It automatically commits offsets to ensure reliability
-* It safely closes when done
-
-=== Consumer Configuration
-
-* The configuration is defined using `Properties` and constants from `ConsumerConfig`. Look at lines 26-33 of the code.
-
-This reference organizes consumer configuration options by concern (offsets, coordination, polling, etc.).  
-The **Used in example?** column shows whether the option appears in the sample code.
-
-
-=== Basic Core Settings
-_Configure how the consumer discovers and communicates with the Kafka cluster._
-
-|===
-| Option | What it controls | Typical values | Notes | Used in example?
-
-| `bootstrap.servers`
-| How the client finds the kafka cluster
-| `HOST:PORT` (comma-separated)
-| Must be reachable; used to discover topics and partitions.
-| {check} line 28
-
-| `group.id`
-| Consumer group identity
-| free string
-| All consumers with same group share partitions cooperatively.
-| {check} line 31
-|===
-
-=== Deserialization
-_Define how message keys and values are turned from bytes into objects._
-
-|===
-| Option | What it controls | Typical values | Notes | Used in example?
-
-| `key.deserializer`
-| Converts key bytes to objects
-| `StringDeserializer`, `ByteArrayDeserializer`, Avro/Protobuf for advanced data
-| Must match producer’s serializer and topic schema.
-| {check} line 29
-
-| `value.deserializer`
-| Converts value bytes to objects
-| Same as above
-| Must match producer’s serializer and topic schema.
-| {check} line 30
-|===
-
-=== Consumer Group & Coordination
-_Control how instances coordinate, balance partitions, and scale._
-
-|===
-| Option | What it controls | Typical values | Notes | Used in example?
-
-| `group.id`
-| Consumer group identity
-| free string
-| All consumers with same group share partitions cooperatively.
-| {check} line 31
-
-|===
-
-
-[NOTE]
-====
-.Click to learn about other Consumer Group & Coordination options
-[%collapsible]
-=====
-
-|===
-| Option | What it controls | Typical values | Notes | Used in example?
-
-| `partition.assignment.strategy`
-| How partitions are assigned
-| `range`, `roundrobin`, , `sticky`, `cooperative-sticky`
-| Implementing the `org.apache.kafka.clients.consumer.ConsumerPartitionAssignor` interface allows you to plug in a custom assignment strategy..
-| {cross}
-
-| `session.timeout.ms`
-| Client Failure detection
-| Default `45000`
-| If no heartbeat in time, coordinator triggers rebalance.
-| {cross}
-|===
-=====
-====
-
-=== Offsets & Delivery Semantics
-_Control how offsets are stored, committed, and reset to ensure correct processing._
-
-|===
-| Option | What it controls | Typical values | Notes | Used in example?
-
-| `enable.auto.commit`
-| Automatic offset commits
-| `true` / `false`
-| If true the consumer's offset will be periodically committed in the background.
-| {check} line 33
-
-| `auto.offset.reset`
-| Where to start if no committed offset exists
-| `earliest`, `latest`, `none`
-| `earliest` = start from beginning; `latest` = only new data.
-| {check} line 32
-|===
-
-[NOTE]
-====
-.Click to learn about other offset and delivery semantics options
-[%collapsible]
-=====
-
-|===
-| Option | What it controls | Typical values | Notes | Used in example?
-
-
-| `auto.commit.interval.ms`
-| Period in milliseconds that the consumer offsets are auto-committed
-| e.g., `5000`
-| Effective only when `enable.auto.commit=true`.
-| {cross}
-|===
-=====
-====
-
-
-=== Polling & Throughput
-_Tune how much data each poll fetches and how often the app must process it._
-
-|===
-| Option | What it controls | Typical values | Notes | Used in example?
-
-| *Application poll interval* (not a config)
-| Loop cadence and responsiveness
-| `consumer.poll(Duration.ofMillis(...))`
-| Smaller duration → more responsive, more CPU wakeups.
-| {check} line 39
-|===
-
-
-[NOTE]
-====
-.Click to learn about other polling and throughput options
-[%collapsible]
-=====
-
-|===
-| Option | What it controls | Typical values | Notes | Used in example?
-
-| `max.poll.interval.ms`
-| Max allowed processing time between polls
-| default `300000` (5 min)
-| If exceeded, consumer is considered dead → rebalance occurs.
-| {cross}
-
-| `max.poll.records`
-| Max records returned per poll
-| e.g., `500`, `1000`
-| Does not impact the underlying fetching behavior
-| {cross}
-
-| `fetch.min.bytes`
-| Minimum bytes the broker should return
-| int
-| Higher → better batching, added latency.
-| {cross}
-
-| `fetch.max.bytes`
-| Max bytes per fetch request
-| Default `52428800` (50 MiB)
-| Upper bound on response size; may need to increase for large messages.
-| {cross}
-
-| `fetch.max.wait.ms`
-| Max wait time for `fetch.min.bytes`
-| e.g., `500`
-| Broker will wait up to this long to accumulate bytes.
-| {cross}
-|===
-=====
-====
-
-
-
-
-=== Timeouts & Backoff
-_Define network timeouts and retry pacing for stable consumption._
-
-[NOTE]
-====
-.Click to learn about Timeouts & Backoff options
-[%collapsible]
-=====
-|===
-| Option | What it controls | Typical values | Notes | Used in example?
-
-| `request.timeout.ms`
-| Broker request timeout
-| Default `30000`
-| -
-| {cross}
-
-| `retry.backoff.ms`
-| Delay between retries
-| Default `100`
-| Avoids retry loops on transient issues.
-| {cross}
-
-| `metadata.max.age.ms`
-| Metadata refresh interval
-| Default `300000`
-| Helps to proactively discover new brokers or partitions.
-| {cross}
-|===
-=====
-====
-
-
-=== Client Identity & Telemetry
-_Add traceability and hooks for monitoring and custom logic._
-
-[NOTE]
-====
-.Click to learn about Client Identity & Telemetry options
-[%collapsible]
-=====
-|===
-| Option | What it controls | Typical values | Notes | Used in example?
-
-| `client.id`
-| Logical app identifier
-| free string
-| Useful for metrics/log tracing; not specified in example.
-| {cross}
-|===
-
-=====
-====
-
-=== Inside the Consumer Poll Loop (line 35-53)
-This block runs the KafkaConsumer continuously in a separate thread:
-
-
-* **Consumer Creation**
+* In the terminal window, run the following command to navigate to the project directory.
 +
-`new KafkaConsumer<>(props)` initializes a consumer with the provided configuration, establishing connections to the brokers and the group coordinator.
+[source,bash]
+----
+cd module-kafka-api/
+----
 
-* **Subscription**
+* Login to the 'kafka-{user_name}' project using the following command.
 +
-`consumer.subscribe(Collections.singletonList(config.topic))` registers this consumer to one or more topics.  
-Kafka assigns partitions automatically based on the consumer group ID (`group.id`).
+[source,bash,role="execute",subs=attributes+]
+----
+oc project kafka-{user_name}
+---- 
 
-* **Polling**
+* Make sure you are using java 17 by running the following command.
 +
-`consumer.poll(Duration.ofMillis(500))` is the core of the Kafka consumer API:  
-it fetches available records from the broker and must be called regularly to:
-**(1)** retrieve messages, and  
-**(2)** send heartbeats to the group coordinator to prevent rebalances.
+[source,sh,role="execute",subs=attributes+]
+----
+sdk use java 17.0.3-tem
+java --version
+----
 
-* **Record Iteration**
+* Click on the paste button if prompted.
 +
-Each `ConsumerRecord` includes key metadata:
-`timestamp`, `partition`, `offset`, `key`, and `value`.  
-These fields are critical for tracking processing order and message provenance.
+image::m2/paste-devspaces.png[]
 
-* **Offset Management**
+* Your terminal output should confirm that you are indeed using java 17.
+
+* Now let's run the producer application. Run the following command. This should start building the application and running the interactive application when it's done.
 +
-Because `enable.auto.commit=true` (line 33), offsets are automatically committed in the background after each poll cycle.  
-This provides *at-least-once* delivery semantics.
+[source,bash,role="execute",subs=attributes+]
+----
+./run.sh
+----
 
-* **Loop Behavior**
+* You should see a prompt similar to the following.
 +
-The polling loop continues as long as `running` is true.  
-If no messages arrive, the consumer still polls to maintain its group session and partition ownership.
+[source,bash]
+----
+========================================
+   Kafka Java Tutorial Application
+========================================
+
+Main Menu:
+1. Run Producer
+2. Run Consumer
+3. Exit
+
+Enter your choice: 
+----
+
+* Choose the option 1 by entering `1` and press enter.
+
+* Press enter to accept the default values, which should trigger the producer sending the messages.
+
+* You should see the following error message. Indicating that the topic `tutorial-topic` does not exist.
++
+[source,bash]
+----
+Error while fetching metadata with correlation id 57 : {tutorial-topic=UNKNOWN_TOPIC_OR_PARTITION}
+[kafka-producer-network-thread | producer-1] WARN org.apache.kafka.clients.NetworkClient - [Producer clientId=producer-1] Error while fetching metadata with correlation id 58 : {tutorial-topic=UNKNOWN_TOPIC_OR_PARTITION}
+----
+
+* In our cluster *auto.create.topics.enable* property is set to `false`. This is a Kafka broker configuration setting that controls whether new topics are created automatically when a producer or consumer attempts to access a non-existent one
+
+* This might be useful setting as it prevents typos in producer or consumer codefrom creating junk topics. 
+
+* Type `clear` and press enter to clear the terminal output on the devspaces terminal.
+
+* Now let's create the topic. Run the following command.
++
+[source,bash,role="execute",subs=attributes+]
+----
+oc run -n kafka-{user_name} topic-create --rm -it --restart=Never \
+  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+  bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --create --topic tutorial-topic --partitions 3 --replication-factor 1'
+----
+
+* Run the interactive application again. You should see the following output.
++
+[source,bash,role="execute",subs=attributes+]
+----
+./run.sh
+----
+
+* Choose the option 1 by entering `1` and press enter to run the producer.
+
+* The producer is configured to automatically send 10 messages with keys and values. Each message is approximately 30 bytes. 
+
+* First you should be prompted to enter the batch size. The default value for our application is set to 16384 bytes. Press enter to accept the default value.
 
 
-=== Graceful Shutdown (line 57-61)
-_Ensures the Kafka consumer exits cleanly without leaving the group unbalanced._
 
-`close()` tells the thread to stop polling, lets Kafka commit final offsets, and exits the group cleanly.
+* The next option is linger.ms. The default value for our application is 0, which means that the producer will not wait for any messages to accumulate before sending them. Enter `30000` and press enter. This will make the producer wait for 30 seconds until the batch is full before sending it. The producer will send the batch after 30 seconds, even if it is not full. Enter the below value and press enter.
++
+[source,bash,role="execute",subs=attributes+]
+----
+30000
+----
 
-**Why It Matters**
-Gracefully closing the consumer prevents:
-- Rebalance storms caused by sudden disconnects.  
-- Message reprocessing from uncommitted offsets.  
-- Thread leaks or dangling connections.
+* You should see that some messages are none of the messages are sent immediately. Only after 30 seconds the messages are sent to the topic.
+
+* Wait for the 30 seconds and then you will see that the messages will be sent after the 30 seconds have elapsed.
++
+[source,bash]
+----
+Waiting for Kafka to send messages (callbacks will fire when linger.ms expires)...
+
+✓ Message 2 sent: Queued at 27 ms, Sent at 10062 ms, Delay: 10035 ms (partition: 2, offset: 25)
+✓ Message 3 sent: Queued at 28 ms, Sent at 10063 ms, Delay: 10035 ms (partition: 2, offset: 26)
+✓ Message 5 sent: Queued at 28 ms, Sent at 10063 ms, Delay: 10035 ms (partition: 2, offset: 27)
+✓ Message 6 sent: Queued at 28 ms, Sent at 10063 ms, Delay: 10035 ms (partition: 2, offset: 28)
+✓ Message 10 sent: Queued at 29 ms, Sent at 10063 ms, Delay: 10034 ms (partition: 2, offset: 29)
+✓ Message 7 sent: Queued at 28 ms, Sent at 10064 ms, Delay: 10036 ms (partition: 1, offset: 10)
+✓ Message 8 sent: Queued at 28 ms, Sent at 10064 ms, Delay: 10036 ms (partition: 1, offset: 11)
+✓ Message 1 sent: Queued at 0 ms, Sent at 10082 ms, Delay: 10082 ms (partition: 0, offset: 15)
+✓ Message 4 sent: Queued at 28 ms, Sent at 10083 ms, Delay: 10055 ms (partition: 0, offset: 16)
+✓ Message 9 sent: Queued at 28 ms, Sent at 10083 ms, Delay: 10055 ms (partition: 0, offset: 17)
+
+=== Batching Analysis ===
+Note: Batches are per partition - messages in different partitions cannot be in the same batch
+
+Partition 0:
+  Batch 1: 3 message(s)
+
+Partition 1:
+  Batch 1: 2 message(s)
+
+Partition 2:
+  Batch 1: 5 message(s)
+
+Total batches across all partitions: 3
+----
+
+* Since we have a huge batch size compared to the messages that are being sent, the producer will wait for linger.ms to elapse before sending the batch. 
+
+* Next, press enter and press `1` to run the producer again.
+
+* Accept the default value for batch size(16 KB) and linger.ms (0) seconds. Before you press enter, take a guess on what will happen and observe the output.
+
+* Now hit enter. You should observe that the messages are sent immediately without any wait. This is because the linger.ms has been set to 0 seconds. The producer will not wait for any messages to accumulate before sending them.
+
+* Hit enter and press `3` and press enter again to exit the application.
+
+=== Summary
+This section hopefully helped you get a high level understanding of the producer api and see a couple of producer configurations in action. In the next section, we will first learn about the consumer configuration and then see the consumer in action.
 
 
-=== How This Consumer Works (Recap)
-_Step-by-step flow from subscribe to processing with offset behavior._
 
-. Build `Properties` with deserializers, group id, `auto.offset.reset=earliest`, `enable.auto.commit=true`.
-. Create `KafkaConsumer` and `subscribe([topic])`.
-. Enter loop: `poll(500 ms)` to fetch available records.
-. For each `ConsumerRecord`, read metadata (`timestamp`, `partition`, `offset`, `key`, `value`).
-. Push to `recent` deque (most-recent-first) and trim to `config.maxMessages`.
-. With `enable.auto.commit=true`, offsets are committed periodically in the background.
-. On shutdown, stop loop and let thread join to exit cleanly.
-
-
-
-
-=== In Summary
-This demonstrates the minimal pattern every Kafka consumer follows:
-
-
-**subscribe → poll → process → (commit offsets)**
-
-
-=== What's Next?
-Now that we have analyzed the Producer and Consumer APIs and the related code, let's put it to work by running the simple application.
