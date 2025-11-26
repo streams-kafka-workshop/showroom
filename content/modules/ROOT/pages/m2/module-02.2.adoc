@@ -14,7 +14,7 @@ image::m2/devspaces-terminal.png[]
 
 * In the terminal window, run the following command to navigate to the project directory.
 +
-[source,bash]
+[source,bash,role="execute",subs=attributes+]
 ----
 cd module-kafka-api/
 ----
@@ -75,6 +75,8 @@ Error while fetching metadata with correlation id 57 : {tutorial-topic=UNKNOWN_T
 [kafka-producer-network-thread | producer-1] WARN org.apache.kafka.clients.NetworkClient - [Producer clientId=producer-1] Error while fetching metadata with correlation id 58 : {tutorial-topic=UNKNOWN_TOPIC_OR_PARTITION}
 ----
 
+* Press *ctrl+c* to stop the producer.
+
 * In our cluster *auto.create.topics.enable* property is set to `false`. This is a Kafka broker configuration setting that controls whether new topics are created automatically when a producer or consumer attempts to access a non-existent one
 
 * This might be useful setting as it prevents typos in producer or consumer codefrom creating junk topics. 
@@ -112,7 +114,7 @@ oc run -n kafka-{user_name} topic-create --rm -it --restart=Never \
 30000
 ----
 
-* You should see that some messages are none of the messages are sent immediately. Only after 30 seconds the messages are sent to the topic.
+* You should see that none of the messages are sent immediately. Only after 30 seconds the messages are sent to the topic.
 
 * Wait for the 30 seconds and then you will see that the messages will be sent after the 30 seconds have elapsed.
 +
@@ -148,7 +150,9 @@ Total batches across all partitions: 3
 
 * Since we have a huge batch size compared to the messages that are being sent, the producer will wait for linger.ms to elapse before sending the batch. 
 
-* Next, press enter and press `1` to run the producer again.
+* Next, press enter to go the menu
+
+* Press `1` and hit *enter* again to run the producer again.
 
 * Accept the default value for batch size(16 KB) and linger.ms (0) seconds. Before you press enter, take a guess on what will happen and observe the output.
 

@@ -11,6 +11,9 @@ The Kafka producer allows developers to write kafka producers within their appli
 We'll be looking at a simple Java application that uses the Kafka Producer API to send messages to a Kafka topic. The Java client libraries for Kafka streamline a lot of the work that goes into producing messages to and consuming messages from Kafka brokers.
 
 === A Simple Producer Application
+
+* Navigate to {openshift_cluster_console}/topology/all-namespaces?view=graph[OpenShift Cluster Console, window="_console"]. Login with your username and password ({user_name}/{user_password}).
+
 * Open the Devspaces IDE from the top right corner of your OpenShift console.
 +
 image::m2/devspaces.png[]

@@ -88,13 +88,3 @@ This section hopefully helped you get a high level understanding of the consumer
 
 In the next section, we will look at a real world streaming application in action and understand how Quarkus makes it very easy to build streaming applications.
 
-
-
-
-
-
-
-
-
-
-* 

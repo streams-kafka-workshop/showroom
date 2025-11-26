@@ -19,6 +19,13 @@ A Kafka Consumer reads messages from Kafka topics and hands them to your applica
 * The consumer will typically “commit” its offset back to the  Kafka cluster so the consumer can resume from where it left off, for example, in case it restarts.
 
 === Running a Consumer
+* In the lower terminal, login to the OpenShift cluster using the following command. use the image:common/clipboard.png[width=30px] icon to copy.
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc login --insecure-skip-tls-verify=false -u {user_name} -p {password} {openshift_api_url}
+----
+
 * Run the consumer in the lower terminal
 +
 [source,sh,role="execute",subs=attributes+]
