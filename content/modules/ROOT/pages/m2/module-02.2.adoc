@@ -12,21 +12,21 @@ Let's run the simple streaming application that we analyzed in the previous sect
 +
 image::m2/devspaces-terminal.png[]
 
-* In the terminal window, run the following command to navigate to the project directory.
+. In the terminal window, run the following command to navigate to the project directory.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
 cd module-kafka-api/
 ----
 
-* Login to the 'kafka-{user_name}' project using the following command.
+. Login to the 'kafka-{user_name}' project using the following command.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
 oc project kafka-{user_name}
 ---- 
 
-* Make sure you are using java 17 by running the following command.
+. Make sure you are using java 17 by running the following command.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -34,20 +34,36 @@ sdk use java 17.0.3-tem
 java --version
 ----
 
-* Click on the paste button if prompted.
+. Click on the paste button if prompted.
 +
 image::m2/paste-devspaces.png[]
 
-* Your terminal output should confirm that you are indeed using java 17.
+. Your terminal output should confirm that you are indeed using java 17.
 
-* Now let's run the producer application. Run the following command. This should start building the application and running the interactive application when it's done.
+. In the file explorer on the left side, expand the `module-kafka-api` folder and then expand the `src/main/java/kafka/tutorial` folder. Click on the `KafkaConfig.java` file to open it.
+
+. Replace the bootstrap servers value with the following value.
++
+[source,bash,role="execute",subs=attributes+]
+----
+kafka-kafka-bootstrap.kafka-{user_name}.svc.cluster.local:9092
+----
+
+. Double check again to make sure that the bootstrap servers value and has your corresponding username
++
+image::m2/kafka-config-java-bootstrap-servers.png[]
+
+
+
+
+. Now let's run the producer application. Run the following command. This should start building the application and running the interactive application when it's done.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
 ./run.sh
 ----
 
-* You should see a prompt similar to the following.
+. You should see a prompt similar to the following.
 +
 [source,bash]
 ----
@@ -63,11 +79,11 @@ Main Menu:
 Enter your choice: 
 ----
 
-* Choose the option 1 by entering `1` and press enter.
+. Choose the *option* 1 by entering `1` and press enter.
 
-* Press enter to accept the default values, which should trigger the producer sending the messages.
+. Keep pressing *enter* to accept the default values, which should trigger the producer sending the messages.
 
-* You should see the following error message. Indicating that the topic `tutorial-topic` does not exist.
+. You should see the following error message. Indicating that the topic `tutorial-topic` does not exist.
 +
 [source,bash]
 ----
@@ -75,15 +91,15 @@ Error while fetching metadata with correlation id 57 : {tutorial-topic=UNKNOWN_T
 [kafka-producer-network-thread | producer-1] WARN org.apache.kafka.clients.NetworkClient - [Producer clientId=producer-1] Error while fetching metadata with correlation id 58 : {tutorial-topic=UNKNOWN_TOPIC_OR_PARTITION}
 ----
 
-* Press *ctrl+c* to stop the producer.
+. Press *ctrl+c* to stop the producer.
 
-* In our cluster *auto.create.topics.enable* property is set to `false`. This is a Kafka broker configuration setting that controls whether new topics are created automatically when a producer or consumer attempts to access a non-existent one
+. In our cluster *auto.create.topics.enable* property is set to `false`. This is a Kafka broker configuration setting that controls whether new topics are created automatically when a producer or consumer attempts to access a non-existent one
 
-* This might be useful setting as it prevents typos in producer or consumer codefrom creating junk topics. 
+. This might be useful setting as it prevents typos in producer or consumer code from creating junk topics. 
 
-* Type `clear` and press enter to clear the terminal output on the devspaces terminal.
+. Type `clear` and press enter to clear the terminal output on the devspaces terminal.
 
-* Now let's create the topic. Run the following command.
+. Now let's create the topic. Run the following command.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
@@ -92,31 +108,33 @@ oc run -n kafka-{user_name} topic-create --rm -it --restart=Never \
   bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --create --topic tutorial-topic --partitions 3 --replication-factor 1'
 ----
 
-* Run the interactive application again. You should see the following output.
+. After the topic is created, run the interactive application again.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
 ./run.sh
 ----
 
-* Choose the option 1 by entering `1` and press enter to run the producer.
+. Choose the option 1 by entering `1` and press enter to run the producer.
 
-* The producer is configured to automatically send 10 messages with keys and values. Each message is approximately 30 bytes. 
+. The producer is configured to automatically send *10 messages* with keys and values. Each message is approximately *30 bytes*. 
 
-* First you should be prompted to enter the batch size. The default value for our application is set to 16384 bytes. Press enter to accept the default value.
+. First you should be prompted to enter the *batch size.* The default value for our application is set to 16384 bytes. Press enter to accept the default value.
 
 
 
-* The next option is linger.ms. The default value for our application is 0, which means that the producer will not wait for any messages to accumulate before sending them. Enter `30000` and press enter. This will make the producer wait for 30 seconds until the batch is full before sending it. The producer will send the batch after 30 seconds, even if it is not full. Enter the below value and press enter.
+. The next option is *linger.ms.* The default value for our application is 0, which means that the producer will not wait for any messages to accumulate before sending them. 
+
+. Enter `30000` and press enter. This will make the producer wait for 30 seconds until the batch is full before sending it. The producer will send the batch after 30 seconds, even if it is not full. Enter the below value and press enter.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
 30000
 ----
 
-* You should see that none of the messages are sent immediately. Only after 30 seconds the messages are sent to the topic.
+. You should see that none of the messages are sent immediately. Only after 30 seconds the messages are sent to the topic.
 
-* Wait for the 30 seconds and then you will see that the messages will be sent after the 30 seconds have elapsed.
+. Wait for the 30 seconds and then you will see that the messages will be sent after the 30 seconds have elapsed.
 +
 [source,bash]
 ----
@@ -148,17 +166,17 @@ Partition 2:
 Total batches across all partitions: 3
 ----
 
-* Since we have a huge batch size compared to the messages that are being sent, the producer will wait for linger.ms to elapse before sending the batch. 
+. Since we have a huge batch size compared to the messages that are being sent, the producer will wait for linger.ms to elapse before sending the batch. 
 
-* Next, press enter to go the menu
+. Next, press *enter* to go the menu
 
-* Press `1` and hit *enter* again to run the producer again.
+. Press `1` and hit *enter* again to run the producer again.
 
-* Accept the default value for batch size(16 KB) and linger.ms (0) seconds. Before you press enter, take a guess on what will happen and observe the output.
+. Accept the default value for batch size(16 KB) and linger.ms (0) seconds. Before you press enter, take a guess on what will happen and observe the output.
 
-* Now hit enter. You should observe that the messages are sent immediately without any wait. This is because the linger.ms has been set to 0 seconds. The producer will not wait for any messages to accumulate before sending them.
+. Now hit enter. You should observe that the messages are sent immediately without any wait. This is because the linger.ms has been set to 0 seconds. The producer will not wait for any messages to accumulate before sending them.
 
-* Hit enter and press `3` and press enter again to exit the application.
+. Hit enter and press `3` and press enter again to exit the application.
 
 === Summary
 This section hopefully helped you get a high level understanding of the producer api and see a couple of producer configurations in action. In the next section, we will first learn about the consumer configuration and then see the consumer in action.

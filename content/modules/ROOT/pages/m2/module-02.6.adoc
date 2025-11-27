@@ -11,8 +11,10 @@ Let's look at how the activity tracking service uses Quarkus to produce and cons
 
 . Open the KafkaService.java file in the activity-tracking project by clicking on this link https://github.com/rh-cloud-architecture-workshop/activity-tracking-service/blob/main/src/main/java/org/globex/retail/KafkaService.java[link, window="_github"].This file is the Kafka producer responsible for sending user activity events to the Kafka topic.
 
+. Feel from to explore the code in detail to understand what's happening. 
 
-=== Simplified Programming Model
+
+=== Simplified Programming Model with Quarkus
 . In normal Java with the Kafka Client, you must manually set up the KafkaProducer or KafkaConsumer, handle configuration, manage threading for continuous polling, perform manual serialization/deserialization, and explicitly commit offsets.
 
 Quarkus abstracts this into a clean, annotation-based model using @Incoming and @Outgoing. You focus purely on the business logic of processing the message payload.

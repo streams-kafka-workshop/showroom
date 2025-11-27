@@ -18,7 +18,7 @@
 ** xref:m2/module-02.3.adoc[Building Consumers]
 ** xref:m2/module-02.4.adoc[Consumer in Action]
 ** xref:m2/module-02.5.adoc[Real Time Streaming Application]
-** xref:m2/module-02.5.adoc[Quarkus and Kafka: Better Together]
+** xref:m2/module-02.6.adoc[Quarkus and Kafka: Better Together]
 ** xref:m2/finish.adoc[Finish]
 
 * xref:m3/module-03.0.adoc[Module 3 - Stream Processing]

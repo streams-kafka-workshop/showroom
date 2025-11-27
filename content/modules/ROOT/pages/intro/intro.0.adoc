@@ -1,9 +1,12 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-This Content is work in Progress and is not ready for use. It will be soon.
+
 
 == Event Streaming
+This Content is work in Progress and is not ready for use. It will be soon.
+
+
 Event streaming is a modern approach to building data-intensive applications that are responsive, resilient, and scalable. It enables real-time data processing and integration across diverse systems, making it ideal for today's fast-paced digital environments.
 Event streaming treats every change in your business (an order placed, payment authorized, sensor reading, log line, click) as an event written to an append-only log. Instead of pushing data directly from one service to another, systems publish events once and many consumers independently read, process, and react—now or later.
 
