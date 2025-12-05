@@ -27,6 +27,9 @@
 ** xref:m3/finish.adoc[Finish]
 
 * xref:m4/module-04.0.adoc[Module 4 - Change Data Capture]
+** xref:m4/module-04.1.adoc[Deploy Debezium Connector]
+** xref:m4/module-04.2.adoc[Verify Change Events are Captured]
+** xref:m4/module-04.3.adoc[Globex Loyalty Program with Change Data Capture]
 ** xref:m4/finish.adoc[Finish]
 
 * xref:m5/module-05.0.adoc[Module 5- Schema Registry]
