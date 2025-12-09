@@ -179,7 +179,10 @@ Total batches across all partitions: 3
 . Hit enter and press `3` and press enter again to exit the application.
 
 === Summary
-This section hopefully helped you get a high level understanding of the producer api and see a couple of producer configurations in action. In the next section, we will first learn about the consumer configuration and then see the consumer in action.
+This section hopefully helped you get a high level understanding of the producer api and see a couple of producer configurations in action. 
+
+=== Up Next
+In the next section, we will first learn about the consumer configuration and then see the consumer in action.
 
 
 

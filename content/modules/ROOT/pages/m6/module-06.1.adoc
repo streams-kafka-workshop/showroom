@@ -143,6 +143,7 @@ EOF
 
 * You should be able to see the topic `secure-demo`in the list. This is the topic we created using the secure 9095 listener with authentication.
 
+=== Up Next
 In the next section, we will learn about Access Control Lists (ACLs) which will allow us to control the access to topics, clusters, brokers, etc at a granular level. For example, we can allow a user to read from a topic but not write to it.
 
 

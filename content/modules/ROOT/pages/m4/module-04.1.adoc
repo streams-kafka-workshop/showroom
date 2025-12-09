@@ -132,5 +132,7 @@ image::m4/amqconsole-debezium-topic-customers-200.png[]
 ** *after*: the state of the record after the transaction. This is a JSON representation of the current state of the record in the database (every column in the table becomes a JSON field).
 ** *op*: The operation that leads to the change event. Possible values are '*c*' for _create_, '*u*' for _update_, '*d*' for _delete_ and '*r*' for _read_. As the records in the *customer* already existed when the Debezium connector was deployed, the operation is '*r*'.
 
-* The Globex application database does not contain any order information at the moment, so the *globex.updates.public.orders* and *globex.updates.public.line_item* topics are not yet created. You can verify this through the streams for Apache Kafka console. +
+* The Globex application database does not contain any order information at the moment, so the *globex.updates.public.orders* and *globex.updates.public.line_item* topics are not yet created. You can verify this through the streams for Apache Kafka console. 
+
+=== Up Next
 In the next section of the workshop, you will create some orders, and verify that the corresponding change events are picked up by Debezium anf published to the above mentioned two topics.  

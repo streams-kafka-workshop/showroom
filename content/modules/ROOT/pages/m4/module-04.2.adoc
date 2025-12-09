@@ -90,6 +90,7 @@ image::m4/order-simulator-random-customer.png[]
 
 * This shows how Debezium can be used to capture change events from a relational database and produce them to Kafka topics in real-time, enabling event-driven architectures and data integration scenarios.
 
+=== Up Next
 In the next section, we will see some practical applications of change data capture in the context of the Globex retail application.
 
 

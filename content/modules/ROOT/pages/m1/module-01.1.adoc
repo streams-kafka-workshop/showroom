@@ -5,7 +5,7 @@ include::../style.adoc[]
 == Kafka Basics - Topics
 
 Topics are the building blocks of Kafka. A topic is a logical collection of messages that you want to group together. It is a named, append-only stream of records (events/messages).
-+
+
 image::m1/topic-image.png[]
 
 === Why Topics?
@@ -37,7 +37,7 @@ They decouple producers (writers) and consumers (readers). Many producers can wr
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc login --insecure-skip-tls-verify=false -u {user_name} -p {password} {openshift_api_url}
+{login_command}
 ----
 
 * In the upper terminal, create a Kafka topic named `demo` with 3 partitions and a replication factor of 1 (we will learn more about replication later) using the following command. 

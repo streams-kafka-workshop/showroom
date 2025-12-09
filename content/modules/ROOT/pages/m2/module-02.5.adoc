@@ -99,5 +99,6 @@ image::m2/amqstreams-expand-message.png[]
 
 This is a simple real world practical example of a Kafka producer application that sends events to a Kafka topic. Both the activity tracking and recommendation engine services(which we will explore in the stream processing module) are implemented using Quarkus, a Java framework for building cloud-native applications,  which simplifies the interaction with Kafka as compared to using the Kafka Producer API directly. 
 
-Let's briefly explore how Quarkus simplifies the interaction with Kafka. Learn more about Quarkus at https://quarkus.io/
+=== Up Next
+Let's briefly explore how Quarkus simplifies the interaction with Kafka. 
 

@@ -42,4 +42,6 @@ image::m1/console_messages.png[]
 
 * The messages you sent from the producer are successfully received and stored in the Kafka topic `demo`. 
 
+
+=== Up Next
 In the next section, we will learn how to consume these messages from the topic.

@@ -60,4 +60,5 @@ image::m1/leader-image-console.png[]
 +
 image::m1/replica-image-console.png[]
 
+=== Up Next
 This concludes are very high-level overview of how Kafka partitions work. In the next module we'll learn about kafka producers and consumers.

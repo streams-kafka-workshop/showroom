@@ -314,5 +314,5 @@ This demonstrates the minimal pattern every Kafka consumer follows:
 **subscribe → poll → process → (commit offsets)**
 
 
-=== What's Next?
+=== Up Next
 Now that we have analyzed the Consumer APIs and the related code, let's put running our simple application to the see the consumer in action.

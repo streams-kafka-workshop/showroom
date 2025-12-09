@@ -4,35 +4,39 @@ include::../style.adoc[]
 == Module 5: Schema Registry
 {m5}
 
-What is a schema
-A schema is a formal description of the structure of a data type. A schema can be used to validate data at runtime and to serialize and deserialize data.
+*What is a schema?*
+A schema is a formal description of the structure of a data type. A schema can be used to validate data at runtime and to serialize and deserialize data that is being sent or received from a kafka topic.
 
+*Why use a schema?*
+Using a schema provides several benefits:
+** Data validation: ensures that the data being sent or received conforms to the expected structure.    
+** Data serialization/deserialization: enables efficient serialization and deserialization of data, reducing the size of messages and improving performance.    
+** Schema evolution: allows for changes to the schema over time while maintaining compatibility with existing data.    
+** Interoperability: enables different systems to communicate with each other by using a common schema.
+
+
+
+**Schema Registry**
 Schema Registry is a datastore for sharing standard event schemas and API designs across event-driven and API architectures. You can use  Registry to decouple the structure of your data from your client applications, and to share and manage your data types  at runtime using a REST interface.
 
-Client applications can dynamically push or pull the latest schema updates to or from Apicurio Registry at runtime without needing to redeploy. Developer teams can query  Registry for existing schemas required for services already deployed in production, and can register new schemas required for new services in development.
+Client applications such as producers and consumers can dynamically push or pull the latest schema updates to or from Apicurio Registry at runtime without needing to redeploy. Developer teams can query  Registry for existing schemas required for services already deployed in production, and can register new schemas required for new services in development.
 
-
-=== Benefit of Schema Registry
-** Centralized location for schema management
-** Schema versioning and evolution
-** Schema validation at runtime
-** Schema sharing and reuse
-** Schema documentation
+image::m5/schema-registry-diagram.png[]
 
 === Red Hat build of Apicurio Registry
-
-Red Hat build of Apicurio Registry is based on the Apicurio Registry open source community project. 
+Red Hat offers a Red Hat build of Apicurio Registry, which is a schema registry on the Open source Apicurio Registry project. Client applications use the registry URL to fetch schemas for serialization/deserialization and runtime compatibility checks. A web console and optional validation/compatibility rules help manage and enforce schema evolution.
 
 *Apicurio Registry Capabilities*
 * Multiple payload formats for standard event schema and API specifications such as Apache Avro, JSON Schema, Google Protobuf, AsyncAPI, OpenAPI, and more.
-
 * Pluggable Apicurio Registry storage options for storing content in Apache Kafka or PostgreSQL database.
 * Rules for content validation, compatibility, and integrity to govern how Apicurio Registry content evolves over time.
 * Apicurio Registry content management using web console, REST API, command line, Maven plug-in, or language SDKs.
 * Full Apache Kafka schema registry support, including integration with Kafka Connect for external systems.
 * Kafka client serializers/deserializers (SerDes) to validate message types at runtime.
-* Compatibility with existing Confluent schema registry client applications.
 * Cloud-native Quarkus Java runtime for low memory footprint and fast deployment times.
 * Operator-based installation of Apicurio Registry on OpenShift/Kubernetes.
 * OpenID Connect (OIDC) authentication using Red Hat build of Keycloak.
+
+=== Activity Overview
+In this module, you will explore how to use Schema Registry to manage schemas for Kafka topics. You will create a new schema for a Kafka topic, register it with Schema Registry, and then use that schema in a producer and consumer application to send and receive messages. You will also briefly explore compatibility rules for Schema Registry.
 

@@ -117,3 +117,6 @@ image::m1/group-lag.png[]
 === Clean up
 * Type ctrl+c in the upper terminal to stop the producer.
 * Hit enter in the lower terminal to stop all the remaining consumers.
+
+=== Up Next
+In the next section we will learn about Topic Replication and Fault Tolerance

@@ -16,7 +16,7 @@ oc run -n kafka-{user_name} topic-create --rm -it --restart=Never \
   bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --create --topic schema-demo --partitions 3 --replication-factor 1'
 ----
 
-* Navigate to the {registry} UI by clicking the link: https://schema-registry-ui-{user_name}.{openshift_cluster_subdomain}[Schema Registry, window="_schema-registry"].
+* Navigate to the {registry} UI by clicking the link: https://service-registry-ui-{user_name}.{openshift_cluster_subdomain}[Schema Registry, window="_schema-registry"].
 
 * You should see the explore page of the Schema Registry UI as shown in the image below.
 +
@@ -41,14 +41,14 @@ image::m5/artifact-coordinates.png[]
 
 [NOTE]
 ====
-The Artifact Id and topic name need not always be the same. In our case we are using the SimpleTopicIdStrategy so we used the same name. There are different strategies that you can use. You cam learn more about them link:https://docs.redhat.com/en/documentation/red_hat_build_of_apicurio_registry/3.1/html/apicurio_registry_user_guide/using-kafka-client-serdes_registry#registry-serdes-concepts-strategy_registry[here].
+The Artifact Id and topic name need not always be the same. In our case we are using the SimpleTopicIdStrategy so we used the same name. There are different strategies that you can use. You can learn more about them link:https://docs.redhat.com/en/documentation/red_hat_build_of_apicurio_registry/3.1/html/apicurio_registry_user_guide/using-kafka-client-serdes_registry#registry-serdes-concepts-strategy_registry[here].
 ====
 
 * All the fields in the next screen are optional. Leave them blank and click on Next.
 +
 image::m5/artifact-metadata.png[]
 
-* On the next screen, under the cotents section, copy and paste the below schema. Leave the Version number field blank.
+* On the next screen, under the contents section, copy and paste the below schema. Leave the Version number field blank.
 +
 [source,avro,role="execute",subs=attributes+]
 ----
@@ -85,3 +85,5 @@ image::m5/schema-created.png[]
 
 * Great job! You have successfully added a new schema to the Schema Registry. 
 
+=== Up Next
+In the next section, we will see how to producer and consumer application use this schema to send and receive messages and make sure that the messages conform to the schema.

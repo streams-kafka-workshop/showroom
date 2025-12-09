@@ -37,5 +37,6 @@ image::m1/console_keys_messages.png[]
 
 Kafka uses a partitioner to determine which partition a message goes to based on the key. By default, Kafka uses a hash function on the key to determine the partition the message goes to. This ensures that messages with the same key always go to the same partition, which is important for maintaining order for the messages with the same key.
 
+=== Up Next
 This is a simple example of how Kafka partitions messages based on keys. In the next section, we will learn about consumer groups and rebalancing.
 

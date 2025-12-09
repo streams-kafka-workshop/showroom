@@ -286,7 +286,7 @@ The producer lifecycle:
 
 **Configure → Serialize → Partition → Batch → Send → Acknowledge → Close**
 
-=== What's Next?
+=== Up Next
 In the next section, we will see this producer in action and tweak some of the options to see how they affect the producer's behavior.
 
 

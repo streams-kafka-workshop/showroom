@@ -108,6 +108,6 @@ You can also experiment with different values for `fetch.min.bytes` and `fetch.m
 === Summary
 This section hopefully helped you get a high level understanding of the consumer api and see a couple of consumer configurations in action. Feel free to play with the other options in the application and observe the consumer behavior.
 
-
+=== Up Next
 In the next section, we will look at a real world streaming application in action and understand how Quarkus makes it very easy to build streaming applications.
 

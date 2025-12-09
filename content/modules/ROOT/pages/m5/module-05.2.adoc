@@ -1,13 +1,13 @@
 :imagesdir: ../../assets/images
 include::../style.adoc[]
 
-== Producer and Consumer with Schema Registry
+== Schema Retrieval, Producing and Consuming Messages with Schema Registry
 
 In this section, we will create a producer and a consumer that will use the schema that we added to the Schema Registry in the previous section.
 
 * Navigate to the Devspaces IDE
 
-* Open the file *src/main/java/com/example/Config.java* in the file explorer
+* Open the file *module-registry/src/main/java/com/example/Config.java* in the file explorer
 +
 image::m5/config-java.png[]
 
@@ -18,6 +18,7 @@ image::m5/config-java.png[]
 https://service-registry-app-{user_name}.{openshift_cluster_subdomain}/apis/registry/v3
 ----
 
+
 * The config file will look like the following. Observe that along with the registry API URL, we have also defined the group id, artifact id, version, topic name and bootstrap servers information needed in this file.
 +
 image::m5/config-java-variables.png[]
@@ -26,12 +27,19 @@ image::m5/config-java-variables.png[]
 +
 image::m5/new-terminal.png[]
 
-* In the terminal window, run the following command to make sure you are in the project directory. It should print the current working directory as `/projects/registry-java`.
+* Navigate to the module-registry directory in the terminal
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-pwd
+cd module-registry
 ----
+
+// * In the terminal window, run the following command to make sure you are in the project directory. It should print the current working directory as `/projects/registry-java`.
+// +
+// [source,sh,role="execute",subs=attributes+]
+// ----
+// pwd
+// ----
 
 * Make sure the terminal is configured to use Java 17.
 +
@@ -47,12 +55,30 @@ java --version
 ----
 ./run.sh
 ----
+* This should start an interactive application with the following options.
++
+[source,bash]
+----
+======================================
+Apicurio Registry Producer Demo
+======================================
+1. Send custom message (JSON input)
+2. Fetch and display schema from registry
+3. Consume messages from topic
+4. Exit
+======================================
+Select scenario (1-4):
+----
 
+=== Schema Retrieval
 * First let's retrieve the schema from the Schema Registry. Choose the option 2 by entering `2` and press enter.
 
 * You should see an output similar to the following, indicating that the schema was retrieved successfully from the Schema Registry.
 +
 image::m5/retrieve-schema-output.png[]
+
+
+=== Producing Messages that conform to the Schema
 
 * Next, let's run a producer and send a message. Choose the option 1 by entering `1` and press enter.
 
@@ -78,7 +104,7 @@ image::m5/retrieve-schema-output.png[]
 }
 ----
 
-* You should see an output similar to the following, indicating that the message was sent successfully.
+* You should see an output similar to the following, indicating that the message was sent successfully. This shows that the producer was able to retrieve the schema from the schema registry, validate the message against the schema and send the message to the topic `schema-demo`.
 +
 [source,bash]
 ----
@@ -90,6 +116,7 @@ image::m5/retrieve-schema-output.png[]
 
 * Navigate to the streams console by clicking on the link:https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] and go the schema-demo topic and observe that we have a new message.
 
+=== Producing Messages that do not conform to the Schema
 * Next, let's try to send a message that is invalid. Choose the option 1 by entering `1` and press enter.
 
 * You should see an output similar to the following, indicating the user to enter the message.  
@@ -123,7 +150,7 @@ Caused by: java.lang.ClassCastException: value 12345 (a java.lang.Long) cannot b
 
 * You can also navigate back to the streams console and observe that the new message was not sent.
 
-=== Working with compatibility
+=== Working with compatibility rules in Schema Registry
 
 * Navigate to link:https://service-registry-ui-{user_name}.{openshift_cluster_subdomain}/xplore/my-group/schema-demo[service registry UI, window="_schema-registry"].
 
@@ -190,7 +217,9 @@ image::m5/error-compatibility.png[]
   }
 ----
 
-* Now producers can send messages with or without the `phone` field and the messages will still get accepted. You can navigate back to dev spaces terminal and run the below command to start the application
+* Now producers can send messages with or without the `phone` field and the messages will still get accepted. This makes the schema backward compatible . 
+
+*Navigate back to dev spaces terminal and run the below command to start the application
 +
 [source,bash,role="execute",subs=attributes+]
 ----
@@ -228,14 +257,14 @@ image::m5/error-compatibility.png[]
 }
 ----
 
-* This message with a valid `phone` field is accepted and sent to the topic `schema-demo` too. This shows the backward compatibility feature of the schema registry.
+* This message with a valid `phone` field is accepted and sent to the topic `schema-demo` too. This shows the backward compatibility feature of the schema registry and enables the producers using the older version of the schema to send messages even if the new version of the schema is introduced.
 
-* Now choose option 3 to run the consumer and observe the new messages. For the messages that we have not sent with the `phone` field, the consumer will use the default value of 0 for the `phone` field.
+* Now choose option 3 to run the consumer and observe the new messages. 
 
-This brings us to the end of this module. In order to understand more about the different compatibility rules, you can refer to the link:https://docs.redhat.com/en/documentation/red_hat_build_of_apicurio_registry/3.1/html/apicurio_registry_user_guide/registry-rule-reference_registry#registry-rule-types_registry[documentation here].
+*Observe that for the messages that we have not sent with the `phone` field, the consumer will use the default value of 0 for the `phone` field to ensure backward compatibility.
 
 === Summary
 
-Schema registry is a powerful tool that allows you to manage the schemas for your data streaming application. It ensures that the schemas are compatible with each other and that the new schemas are compatible with the existing schemas and provides multiple compatibility rules to fit your needs. 
+This brings us to the end of this module. In order to understand more about the different compatibility rules, you can refer to the link:https://docs.redhat.com/en/documentation/red_hat_build_of_apicurio_registry/3.1/html/apicurio_registry_user_guide/registry-rule-reference_registry#registry-rule-types_registry[documentation here].
 
-.
+Schema registry is a powerful tool that allows you to manage the schemas for your data streaming application. It ensures that the schemas are compatible with each other and that the new schemas are compatible with the existing schemas and provides multiple compatibility rules to fit your needs. 
