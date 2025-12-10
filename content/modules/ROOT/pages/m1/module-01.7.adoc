@@ -6,7 +6,7 @@ Kafka's fault tolerance is fundamentally built upon its topic replication mechan
 
 Here's how it works:
 
-* *Topics and Partitions:* Data in Kafka is organized into topics, which are further divided into partitions. Each partition is essentially an ordered, append-only commit log.
+* *Topics and Partitions (Recap):* Data in Kafka is organized into topics, which are further divided into partitions. Each partition is essentially an ordered, append-only commit log.
 
 * *Replicas (Leader and Followers):* For each partition, Kafka maintains multiple copies called replicas, distributed across different Kafka brokers.
 ** One replica is designated as the leader. All produce and consume requests for that partition are handled exclusively by its leader to ensure strong consistency and message ordering.
