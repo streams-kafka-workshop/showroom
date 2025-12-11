@@ -17,7 +17,7 @@ A Kafka Producer is a client application responsible for writing data to a Kafka
 In short, producers are a flexible and powerful way to send data efficiently and reliably while abstracting away much of the underlying distributed system complexities
 
 === Running the Producer
-* Run the basic producer in the upper terminal
+* Run the basic producer in the *upper terminal*
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -26,7 +26,7 @@ oc run -n kafka-{user_name} demo-producer --rm -it --restart=Never \
   bash -lc '/opt/kafka/bin/kafka-console-producer.sh --bootstrap-server kafka-kafka-bootstrap:9092 --topic demo'
 ----
 
-* Type the below messages as soon as the producer is ready in the upper terminal. The producer is ready when you see the `> ` prompt. Each line you type is sent as a separate message to the Kafka topic `demo`. Type each word and hit enter.
+* Type the below messages as soon as the producer is ready in the *upper terminal*. The producer is ready when you see the `> ` prompt. Each line you type is sent as a separate message to the Kafka topic `demo`. Type each word and hit enter.
 +
 ** `welcome`
 ** `to`
@@ -35,6 +35,7 @@ oc run -n kafka-{user_name} demo-producer --rm -it --restart=Never \
 ** `workshop`
 ** `enjoy!`
 
+// * Hit `Ctrl + C` followed by `Enter` in the *upper terminal* to stop the producer after sending the messages.
 
 * Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] topics > demo to see the messages you sent.
 +

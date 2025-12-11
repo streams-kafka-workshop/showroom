@@ -5,9 +5,9 @@ include::../style.adoc[]
 == Kafka Basics - Partitioning and Keys
 As we learned earlier, With a key, the records/messages with the same key go to the same partition → per-key order. Let's see this in action.
 
-* In the upper terminal, stop the existing producer and consumer by typing (Ctrl+C) in the upper and lower terminals. Now in the upper terminal, let's run a new producer that accepts key-value pairs.
+* In the *upper terminal*, stop the existing producer and consumer by typing (Ctrl+C) in the upper and *lower terminal*s. Now in the *upper terminal*, let's run a new producer that accepts key-value pairs.
 
-* In the upper terminal, run a new producer that will send a bunch of messages with key-value pair in the upper terminal. This will ensure messages with the same key go to the same topic partition.
+* In the *upper terminal*, run a new producer that will send a bunch of messages with key-value pair in the *upper terminal*. This will ensure messages with the same key go to the same topic partition.
 +
 [source,sh,role="execute",subs=attributes+]
 ----

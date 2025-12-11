@@ -5,7 +5,7 @@ include::../style.adoc[]
 
 * One way to verify that the connector is working is to create some change events in the database by creating some orders through the Globex retail application.
 
-* Click on the browser tab pointing to the Globex retail application. If you don't have a browser tab open on the application, navigate to the link:{globex_web_url}[Globex retail application, window="globex"] to launch the application.
+* Click on the browser tab pointing to the Globex retail application. If you don't have a browser tab open on the application, navigate to the link:{globex_web_url}[Globex retail application, window="_globex"] to launch the application.
 
 * Click on the login button on the top right corner of the application. 
 +
@@ -45,8 +45,9 @@ image::m4/order_confirmation_page.png[]
 
 * Now that you have created some orders in the Globex retail application, let's verify that the Debezium connector has captured the corresponding change events in the database and produced them to the appropriate Kafka topics.
 
-* Open the browser tab pointing to the streams for Apache Kafka console UI. If you did close the tab, navigate to https://amq-streams-console-{user_name}.{openshift_subdomain}[streams for Apache Kafka console, window="_amqstreams"]. +
-From the Topics page, open the *globex.updates.public.orders* topic, and verify that the topic contains 1 message.
+* Open the browser tab pointing to the streams for Apache Kafka console UI. If you did close the tab, navigate to https://amq-streams-console-{user_name}.{openshift_subdomain}[streams for Apache Kafka console, window="_amqstreams"]. 
+
+* From the Topics page, open the *globex.updates.public.orders* topic, and verify that the topic contains 1 message.
 +
 image::m4/amq-console-debezium-topic-orders.png[]
 
@@ -61,12 +62,12 @@ image::m4/amqconsole-debezium-topic-line-items.png[]
 
 * If you want to simulate a larger number of orders, you can use the _Order simulator_ application deployed in the _globex-{user_name}_ namespace on OpenShift.
 
-* In the browser window, open the tab pointing to the OpenShift console. If you don't have a tab open to the console, click navigate to {openshift_cluster_console}[OpenShift console, window="console"]. If needed login with your username and password ({user_name}/{password}).
+* In the browser window, open the tab pointing to the OpenShift console. If you don't have a tab open to the console, click navigate to {openshift_cluster_console}/topology/ns/globex-user5?view=graph[OpenShift console, window="console"]. If needed login with your username and password ({user_name}/{password}).
 
 
-* Switch to the *globex-{user_name}* namespace by selecting the namespace from the namespace selection drop-down menu in the top left.
-+
-image::m4/openshift-console-developer-select-namespace.png[]
+// * Switch to the *globex-{user_name}* namespace by selecting the namespace from the namespace selection drop-down menu in the top left.
+// +
+// image::m4/openshift-console-developer-select-namespace.png[]
 
 
 * In the Topology view, click on the  route link next to the *order-simulator* deployment shown below.

@@ -20,7 +20,7 @@ Let's see this in action
 
 
 
-* In the *upper terminal*, create new topic with replication factor of 3
+* In the **upper terminal**, create new topic with replication factor of 3
 +
 [source,sh,role="execute",subs=attributes+]
 ----

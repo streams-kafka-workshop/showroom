@@ -7,21 +7,21 @@ include::../style.adoc[]
 == Running a Simple Consumer Application
 Let's run the simple streaming application that we analyzed in the previous sections to see the consumer in action .
 
-. Go back to Devspaces IDE and clear the terminal window by typing `clear` and pressing enter.
+* Go back to Devspaces IDE and clear the terminal window by typing `clear` and pressing enter.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
 clear
 ----
 
-. Run the interactive application in the terminal.
+* Run the interactive application in the terminal.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
 ./run.sh
 ----
 
-. It should build the application in a few seconds and display a menu of options.
+* It should build the application in a few seconds and display a menu of options.
 +
 
 [source,bash]
@@ -38,42 +38,42 @@ Main Menu:
 Enter your choice:
 ----
 
-. Choose the option 2 to run the consumer. Enter the option 2 and press enter.
+* Choose the option 2 to run the consumer* Enter the option 2 and press enter.
 
-. First, you should be prompted to enter the value for `auto.offset.reset`
+* First, you should be prompted to enter the value for `auto.offset.reset`
 +
 [source,bash]
 ----
 Enter auto.offset.reset (earliest/latest, or press Enter for default)
 ----
 
-. Type `latest` and press enter. 
+* Type `latest` and press enter* 
 +
-NOTE: This property defines what the consumer should do when there is no initial offset or offset is out of range for a consumer or consumer group. *"earliest"* = start from the beginning of the topic (read all messages from the start) *"latest"* = start from the end (only read new messages sent after consumer starts)
+NOTE: This property defines what the consumer should do when there is no initial offset or offset is out of range for a consumer or consumer group* *"earliest"* = start from the beginning of the topic (read all messages from the start) *"latest"* = start from the end (only read new messages sent after consumer starts)
 
-. The next prompt asks for `fetch.min.bytes`. Press enter to use the default value.
+* The next prompt asks for `fetch.min.bytes`* Press enter to use the default value.
 
-. The next prompt asks for `fetch.max.wait.ms`. Press enter to use the default value.
+* The next prompt asks for `fetch.max.wait.ms`* Press enter to use the default value.
 
-. The next prompt asks for `Enter number of messages`. Enter the below value and press enter.
+* The next prompt asks for `Enter number of messages`* Enter the below value and press enter.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
 30
 ----
 
-. Observe that the consumer doesn't read any of the messages that the producer just sent. This is because we chose the `latest` value for `auto.offset.reset` and the consumer starts from the end of the topic and it will not consume any messages that are sent before the consumer starts. You can confirm the same the double checking in the streams console.
+* Observe that the consumer doesn't read any of the messages that the producer just sent* This is because we chose the `latest` value for `auto.offset.reset` and the consumer starts from the end of the topic and it will not consume any messages that are sent before the consumer starts* You can confirm the same the double checking in the streams console.
 
-. Navigate to the link:https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka/[streams console, window="console"] > consumer groups and click on the *tutorial-consumer-group*. 
+* Navigate to the link:https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka/[streams console, window="console"] > consumer groups and click on the *tutorial-consumer-group** 
 
-. Observe that the overall lag for the consumer group is zero even though the topic had some unread messages. This is the because the consumer is reading from the end of the topic and the values of committed offset are set to the same value as end offset, which means the lag is zero.
+* Observe that the overall lag for the consumer group is zero even though the topic had some unread messages* This is the because the consumer is reading from the end of the topic and the values of committed offset are set to the same value as end offset, which means the lag is zero.
 
 
-. Hit enter and press `1` again to run the producer again. Accept all the default values and press enter. Make sure that the messages are sent.
+* Hit enter and press `1` again to run the producer again* Accept all the default values and press enter* Make sure that the messages are sent.
 
-. Now hit enter and press `2` again to run the consumer again. This time let's choose the default values for `auto.offset.reset`, `fetch.min.bytes`, `fetch.max.wait.ms` 
+* Now hit enter and press `2` again to run the consumer again* This time let's choose the default values for `auto.offset.reset`, `fetch.min.bytes`, `fetch.max.wait.ms` 
 
-. For the 'Enter number of messages' prompt. Enter the below value and press enter. 
+* For the 'Enter number of messages' prompt* Enter the below value and press enter* 
 +
 [source,bash,role="execute",subs=attributes+]
 ----
@@ -81,32 +81,35 @@ NOTE: This property defines what the consumer should do when there is no initial
 ----
 
 
-. You will observe that the consumer is now running and consumes all the messages that were just sent by the producer. The messages are displayed in the terminal. 
+* You will observe that the consumer is now running and consumes all the messages that were just sent by the producer* The messages are displayed in the terminal* 
 
 
 === Experiment with fetch.min.bytes and fetch.max.wait.ms (option exercise)
 You can also experiment with different values for `fetch.min.bytes` and `fetch.max.wait.ms` to see how they affect the consumer behavior.
 
-. Hit enter and press `1` again to run the producer again. Accept all the default values and press enter. 
+* Hit enter and press `1` again to run the producer again* Accept all the default values and press enter* 
 
-. Now hit enter and press `2` and hit enter again to run the consumer again.
+* Now hit enter and press `2` and hit enter again to run the consumer again.
 
-. This time, for the `fetch.min.bytes` prompt, enter `1024` and press enter.
+* This time, for the `fetch.min.bytes` prompt, enter `1024` and press enter.
 
-. For the `fetch.max.wait.ms` prompt, enter `4000` and press enter.
+* For the `fetch.max.wait.ms` prompt, enter `4000` and press enter.
 
-. For the 'Enter number of messages' prompt. Enter the below value and press enter.
-+[source,bash,role="execute",subs=attributes+]
+* Since the number of bytes would never exceed 1024 bytes in our example, the `fetch.min.bytes` will be ignored and the consumer will wait for at-least 4 seconds before fetching the messages* You should observe a delay of approximately 4-6 seconds before the messages are displayed in the terminal.
+
+* For the 'Enter number of messages' prompt* Enter the below value and press enter. You will observe the delay before the messages are displayed.
++
+[source,bash,role="execute",subs=attributes+]
 ----
 30
 ----
 
 
-. Since the number of bytes would never exceed 1024 bytes in our example, the `fetch.min.bytes` will be ignored and the consumer will wait for at-least 4 seconds before fetching the messages. You should observe a delay of approximately 4-6 seconds before the messages are displayed in the terminal.
+
 
 
 === Summary
-This section hopefully helped you get a high level understanding of the consumer api and see a couple of consumer configurations in action. Feel free to play with the other options in the application and observe the consumer behavior.
+This section hopefully helped you get a high level understanding of the consumer api and see a couple of consumer configurations in action* Feel free to play with the other options in the application and observe the consumer behavior.
 
 === Up Next
 In the next section, we will look at a real world streaming application in action and understand how Quarkus makes it very easy to build streaming applications.

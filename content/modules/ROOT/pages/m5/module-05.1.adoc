@@ -7,7 +7,7 @@ include::../style.adoc[]
 
 In this section, you will add a new schema to the Schema Registry and later the producer and consumers will use the schema to send and receive messages.
 
-* First let's create a topic that we can use for this section. Run the following command in the upper terminal.
+* First let's create a topic that we can use for this section. Run the following command in the *upper terminal*.
 +
 [source,sh,role="execute",subs=attributes+]
 ----

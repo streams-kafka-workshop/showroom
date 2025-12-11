@@ -7,9 +7,9 @@ Let's start with deploying the Debezium Connector. With {streams}, a Kafka Conne
 
 To deploy the connector, you are going to use OpenShift Dev Spaces. OpenShift Dev Spaces uses Kubernetes and containers to provide a consistent, secure, and zero-configuration development environment, accessible from a browser window.
 
-* In a browser window, navigate to the browser tab pointing to the OpenShift cluster console. If you don't have a browser tab open on the console, Navigate to the link:{openshift_cluster_console}[OpenShift console, window="console"] to launch the console. If needed login with your username and password ({user_name}/{password}).
+* In a browser window, navigate to the browser tab pointing to the OpenShift cluster console. If you don't have a browser tab open on the console, Navigate to the link:{openshift_cluster_console}[OpenShift console, window="console"] to launch the console. If needed login with your username and password (`{user_name}`/`{password}`).
 
-* Open the Devspaces IDE from the top right corner of your OpenShift console.
+* If you have not already launched Devspaces, open the Devspaces IDE from the top right corner of your OpenShift console.
 +
 image::m4/devspaces.png[]
 
@@ -17,7 +17,7 @@ image::m4/devspaces.png[]
 +
 image::m4/login-openshift.png[]
 
-* Login using your credentials  - *{user_name} and {password}*.
+* Login using your credentials  - `{user_name}` and `{password}`.
 
 
 * From the Devspaces dashboard, click on *open* button to launch your workspace.
@@ -110,7 +110,7 @@ kafkaconnector.kafka.strimzi.io/globex created
 
 ** For the purpose of this workshop, choose *Click to login anonymously* to access the console if you are not already signed in.
 +
-image::m2/console_anonymous.png[]
+image::common/console_anonymous.png[]
 
 * Navigate to *Topics* menu on the left hand side. 
 +

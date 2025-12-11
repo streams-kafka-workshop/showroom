@@ -5,6 +5,5 @@ include::../style.adoc[]
 Thank you for completing the Streams for Apache Kafka Workshop! In this workshop, you have learned the fundamentals of event streaming using Apache Kafka and related technologies. You have explored various concepts, tools, and techniques to build event-driven applications that can process and analyze data in real-time. 
 
 
-We hope this workshop has provided you with a solid foundation to further explore and implement event streaming solutions in your own projects. For more information and resources, please refer to the following links:
-* https://developers.redhat.com/products/streams-for-apache-kafka/overview[Streams for Apache Kafka on Red Hat Developers, window=_blank]
+We hope this workshop has provided you with a solid foundation to further explore and implement event streaming solutions in your own projects. For more information and resources, please refer to the following link:https://developers.redhat.com/products/streams-for-apache-kafka/overview[Streams for Apache Kafka on Red Hat Developers, window=_blank]
 

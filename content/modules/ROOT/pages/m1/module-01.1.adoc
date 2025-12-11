@@ -33,14 +33,18 @@ They decouple producers (writers) and consumers (readers). Many producers can wr
 
 === Creating a Topic
 
-* In the upper terminal, login to the OpenShift cluster using the following command. use the image:common/clipboard.png[width=30px] icon to copy.
+* In the *upper terminal*, login to the OpenShift cluster using the following command. use the image:common/clipboard.png[width=30px] icon to copy.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
 {login_command}
 ----
 
-* In the upper terminal, create a Kafka topic named `demo` with 3 partitions and a replication factor of 1 (we will learn more about replication later) using the following command. 
+* Type 'yes' when prompted `Use insecure connections? (y/n):`
+
+
+
+* In the *upper terminal*, create a Kafka topic named `demo` with 3 partitions and a replication factor of 1 (we will learn more about replication later) using the following command. Wait for a few seconds until you see the confirmation message that the topic is created.
 +
 [source,sh,role="execute",subs=attributes+]
 ----

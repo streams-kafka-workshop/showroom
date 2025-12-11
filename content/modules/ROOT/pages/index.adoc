@@ -54,7 +54,7 @@ While we recommend Kafka for many use cases, there are some cases where it may n
 
 === What is {streams}?
 
-{streams} is Kafka built for OpenShift/Kubernetes, using the Strimzi operators to make Kafka declarative and automated:
+*{streams}* is Kafka built for OpenShift/Kubernetes, using the Strimzi operators to make Kafka declarative and automated:
 
 * **CRDs & operators:** Define clusters, topics, and users in YAML; operators handle deployment, scaling, and upgrades.
 
@@ -70,7 +70,7 @@ While we recommend Kafka for many use cases, there are some cases where it may n
 
 === Workshop Objectives
 
-This workshop introduces you to the fundamentals of Event Streaming with {streams}. You will learn key concepts such as topics, partitions, producers, consumers, consumer groups, and replication. You will also gain hands-on experience by using a sample application to understand these concepts.
+This workshop introduces you to the fundamentals of Event Streaming with *{streams}*. You will learn key concepts such as topics, partitions, producers, consumers, consumer groups, and replication. You will also gain hands-on experience by using a sample application to understand these concepts.
 
 This workshop is intended for developers and architects who are new to event streaming and want to learn how to use Kafka for building real-time data pipelines and streaming applications. 
 

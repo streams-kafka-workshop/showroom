@@ -12,7 +12,7 @@ When multiple consumers join the same group and subscribe to a topic, Kafka dist
 The dynamic assignment of partitions to consumers within a group is managed through a process called *rebalancing*. Rebalances occur when a consumer joins or leaves a group, crashes, or when a subscribed topic's partitions are modified, ensuring that partitions are quickly reassigned among active members
 Let's see how this works in practice
 
-* Again, run a producer that generates messages with key-value pairs in the upper terminal. 
+* Again, run a producer that generates messages with key-value pairs in the *upper terminal*. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -28,7 +28,7 @@ oc run -n kafka-{user_name} load-producer --rm -it --restart=Never \
 
 * Now let's start three consumers in the same consumer group demo-cg in one by one using a simple bash script. As you proceed through the script and keep starting new consumers, you will see the rebalancing of partitions between the consumers. 
 
-* In the lower terminal, make sure you are on the `kafka-{user_name}` project.
+* In the *lower terminal*, make sure you are on the `kafka-{user_name}` project.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
@@ -36,7 +36,7 @@ oc project kafka-{user_name}
 ----
 
 
-* First run the following command to start the first consumer in the lower terminal. *Do not press enter when it prompts to start the second consumer yet.* 
+* First run the following command to start the first consumer in the *lower terminal*. *Do not press enter when it prompts to start the second consumer yet.* 
 +
 [source,bash,role="execute",subs=attributes+]
 ----
@@ -54,7 +54,7 @@ image::m1/demo-cg-c1.png[]
 
 
 
-* After verifying that all the partitions are assigned to cg-c1, press enter to start the second consumer (cg-c2) in the *lower terminal*. *Do not press enter to start the third consumer yet.*
+* After verifying that all the partitions are assigned to cg-c1, press enter to start the second consumer (cg-c2) in the **lower terminal**. *Do not press enter to start the third consumer yet.*
 
 * Go back to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] and observe the partitions being assigned to cg-c1 and cg-c2.  You will see a rebalance happening and partitions getting reassigned between cg-c1 and cg-c2 as shown below. 
 
@@ -63,7 +63,7 @@ image::m1/demo-cg-c1.png[]
 +
 image::m1/demo-cg-c1-c2.png[]
 
-* Press enter on the lower terminal to start the third consumer (cg-c3). You will see another rebalance happening and partitions getting reassigned between cg-c1, cg-c2 and cg-c3. *Do not press enter to start the fourth consumer yet.*
+* Press enter on the *lower terminal* to start the third consumer (cg-c3). You will see another rebalance happening and partitions getting reassigned between cg-c1, cg-c2 and cg-c3. *Do not press enter to start the fourth consumer yet.*
 
 * Go back to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] and observe the partitions being assigned to cg-c1, cg-c2 and cg-c3.
 +
@@ -72,7 +72,7 @@ image::m1/demo-cg-c1-c2-c3.png[]
 
 * If you start a 4th consumer in the same group, it will sit idle (no partition left), which is expected. In this case, we have 3 partitions and 3 consumers. Since there are no more partitions left, the 4th consumer will not be assigned any partitions and will remain idle. This is because Kafka ensures that each partition is consumed by only one member of a consumer group at any given time to avoid duplicate processing of messages. 
 
-* Go ahead and start the 4th consumer by pressing enter in the lower terminal. You will see that the 4th consumer (cg-c4) is started but it is not assigned any partitions and remains idle as shown below. *Do not press enter again to stop the other consumers yet.*
+* Go ahead and start the 4th consumer by pressing enter in the *lower terminal*. You will see that the 4th consumer (cg-c4) is started but it is not assigned any partitions and remains idle as shown below. *Do not press enter again to stop the other consumers yet.*
 +
 image::m1/demo-cg-c1-c2-c3-c4.png[]
 
@@ -93,7 +93,7 @@ image::m1/roundup-image.png[]
 
 . Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > topics > consumer groups > demo-cg and expand consumer cg-c1 we started previously. 
 
-. As the producer continuously keeps churning out messages, observe the lag, committed offset and end offset keep changing for each consumer as shown below. The lag is basically End Offset - Committed Offset.
+. As the producer continuously keeps churning out messages, observe the lag, committed offset and end offset keep changing for each consumer as shown below. The lag is basically End Offset - Committed Offset. Feel free to refresh the page if you don't see the values changing for the lag, committed offset and end offset.
 +
 image::m1/lag-offset.png[]
 
@@ -102,7 +102,7 @@ image::m1/lag-offset.png[]
 +
 image::m1/group-lag.png[]
 
-. Now go ahead and stop the producer in the upper terminal (Ctrl+C) and also stop all the consumers in the lower terminal.
+. Now go ahead and stop the producer in the *upper terminal* (Ctrl+C) and also stop all the consumers in the *lower terminal* by pressing enter.
 
 
 === Summary
@@ -115,8 +115,8 @@ image::m1/group-lag.png[]
 . A different group has its own offsets, so it can re-read the entire topic independently.
 
 === Clean up
-* Type *ctrl+c* in the upper terminal to stop the producer.
-* Hit enter in the lower terminal to stop all the remaining consumers.
+* Type *ctrl+c* in the *upper terminal* to stop the producer.
+* Hit enter in the *lower terminal* to stop all the remaining consumers.
 
 === Up Next
 In the next section we will learn about Topic Replication and Fault Tolerance

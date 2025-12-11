@@ -17,7 +17,11 @@ For example, a rule might be set so that user John can view the topic comments f
 === Creating ACLs
 In this section, we will setup ACLs for a producer and a consumer user respectively. We will setup the ACLS for the producer user such that they will be able to write to the topic `secure-demo-again` but not create or delete it. We will setup the ACLs for the consumer user such that they will be able to read from the topic `secure-demo-again` but not write to it.
 
-* We can define the ACLs while creating the KafkaUser resource. Let's create the ACLs for the producer user first. Navigate to the link:{openshift_cluster_console}[OpenShift console, window="console"] and click on the image:common/create-yaml.png[] icon. Click on the `Import YAML` option and paste the following YAML into the YAML editor.
+* We can define the ACLs while creating the KafkaUser resource. Let's create the ACLs for the producer user first. Navigate to the link:{openshift_cluster_console}[OpenShift console, window="console"] and click on the *+* icon. 
++
+image:common/create-yaml.png[]
+
+* Click on the `Import YAML` option and paste the following YAML into the YAML editor.
 +
 [source,yaml,role="execute",subs=attributes+]
 ----
@@ -25,7 +29,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: producer-password
-  namespace: kafka-user1
+  namespace: kafka-{user_name}
 type: Opaque
 stringData:
   password: "producerpassword"
@@ -34,7 +38,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
   name: producer
-  namespace: kafka-user1
+  namespace: kafka-{user_name}
   labels:
     strimzi.io/cluster: kafka
 spec:
@@ -62,11 +66,11 @@ spec:
 +
 image::m6/producer-user-yaml-create.png[]
 
-* Now, let's try to delete the topic using the producer user. Navigate to the upper terminal and run the following command. Notice the username and credentials we are passing in the command.
+* Now, let's try to delete the topic using the producer user. Navigate to the *upper terminal* and run the following command. Notice the username and credentials we are passing in the command.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-user1 topic-delete-producer --rm -it --restart=Never \
+oc run -n kafka-{user_name} topic-delete-producer --rm -it --restart=Never \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
   bash -lc 'cat >/tmp/client.properties <<EOF
 security.protocol=SASL_PLAINTEXT
@@ -86,11 +90,11 @@ EOF
 ERROR org.apache.kafka.common.errors.TopicAuthorizationException: Topic authorization failed.
 ----
 
-* The above error is expected and shows the ACL in action as the producer user only has permissions to write to the topic but not delete it. Let's try to write to topic. Run the below command in the upper terminal and write some messages to the topic.
+* The above error is expected and shows the ACL in action as the producer user only has permissions to write to the topic but not delete it. Let's try to write to topic. Run the below command in the *upper terminal* and write some messages to the topic.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-user1 k-producer --rm -it --restart=Never \
+oc run -n kafka-{user_name} k-producer --rm -it --restart=Never \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
   bash -lc 'cat >/tmp/client.properties <<EOF
 security.protocol=SASL_PLAINTEXT
@@ -119,7 +123,11 @@ EOF
 +
 image::m6/secure-acl-message.png[]
 
-* Next let's implement a sample ACL for a consumer user. Navigate to the link:{openshift_cluster_console}[OpenShift console, window="console"] and click on the image:common/create-yaml.png[] icon. Click on the `Import YAML` option and paste the following YAML into the YAML editor.
+* Next let's implement a sample ACL for a consumer user. Navigate to the link:{openshift_cluster_console}[OpenShift console, window="console"] and click on the *+* icon 
++
+image:common/create-yaml.png[] icon. 
+
+*Click on the `Import YAML` option and paste the following YAML into the YAML editor.
 +
 [source,yaml,role="execute",subs=attributes+]
 ----
@@ -135,7 +143,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
   name: consumer
-  namespace: kafka-user1
+  namespace: kafka-{user_name}
   labels:
     strimzi.io/cluster: kafka
 spec:
@@ -166,9 +174,9 @@ spec:
         host: '*'
 ----
 
-* Observe that this user only has read access to the topic `secure-demo`. Run the below command in the upper terminal to see the ACLs implemented. Go ahead hit the create button now. 
+* Observe that this user only has read access to the topic `secure-demo`. Run the below command in the *upper terminal* to see the ACLs implemented. Go ahead hit the create button now. 
 
-* Let's double check if this user can write to the topic. Navigate to the upper terminal and run the following command. 
+* Let's double check if this user can write to the topic. Since this user is for consumers they should not be able to write to the topic. Navigate to the *upper terminal* and run the following command. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -198,11 +206,11 @@ EOF
 
 * Hit `ctrl+c` to stop.
 
-* Let's check if the consumer user is able to read the topic, which the ACL allows. Run the below command in the upper terminal.
+* Let's check if the consumer user is able to read the topic, which the ACL allows. Run the below command in the *upper terminal*.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-user1 k-consumer --rm -it --restart=Never \
+oc run -n kafka-{user_name} k-consumer --rm -it --restart=Never \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
   bash -lc 'cat >/tmp/client.properties <<EOF
 security.protocol=SASL_PLAINTEXT
@@ -217,6 +225,8 @@ EOF
 ----
 
 * You should see all the messages written by the producer to the topic `secure-demo` indicating that the consumer user is able to read the topic and ACLs are implemented as expected.
+
+* Press `ctrl+c` to stop the consumer.
 
 === Conclusion
 What we have seen so far is a simple example of ACLs. Enterprises can synchronize users and groups from their existing IDMs with *Red Hat Single Sign-On* technologies to implement fine-grained access control. The policies and ACL rules can be configured for the users or groups in Red Hat Single Sign-On which the kafka admins can use to secure the Kafka clusters using ACLs. 
