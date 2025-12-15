@@ -14,9 +14,9 @@ A Kafka Consumer reads messages from Kafka topics and hands them to your applica
 
 * Coordinates with other consumers via consumer groups for parallelism and fault tolerance.
 
-*A consumer can read data from any offset within a topic partition. In most cases, a consumer advances its offset linearly, but it could start at any offset and read messages in any order. 
+* A consumer can read data from any offset within a topic partition. In most cases, a consumer advances its offset linearly, but it could start at any offset and read messages in any order. 
 
-* The consumer will typically “commit” its offset back to the  Kafka cluster so the consumer can resume from where it left off, for example, in case it restarts.
+* The consumer will typically “commit” its offset back to the  Kafka cluster so the consumer can resume from where it left off (for example, in case it restarts.
 
 === Running a Consumer
 * In the *lower terminal*, login to the OpenShift cluster using the following command. use the image:common/clipboard.png[width=30px] icon to copy.
@@ -46,7 +46,7 @@ oc run -n kafka-{user_name} demo-consumer --rm -it --restart=Never \
 +
 NOTE: Since we are sending very few messages, there is chance that all the messages might end up in the same partition. But in real world, there would be thousand of messages per second and without a key, the messages might end up in different partitions.
 
-* Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > Consumer groups. Click on the *demo-group* consumer group to see the details. 
+* Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="_amqstreams"] > Consumer groups. Click on the *demo-group* consumer group to see the details. 
 +
 image::m1/console_demo-group.png[]
 
@@ -56,7 +56,7 @@ image::m1/console_demo-group.png[]
 +
 image::m1/console_consumer.png[]
 
-* Click on the any partition which has messages consumed(non zero values under Committed and End Offset column) to see the details.
+* Click on the any partition which has messages consumed(non zero values under *Committed* and *End Offset* column) to see the details.
 +
 image::m1/console_consumed_partition.png[]
 

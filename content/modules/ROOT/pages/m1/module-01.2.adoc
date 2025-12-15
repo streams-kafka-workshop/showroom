@@ -12,7 +12,7 @@ image::m1/topic-image.png[]
 
 * Strict order exists within a partition.
 
-* Global ordering is not guaranteed across a topic — 
+* Global ordering is not guaranteed across a topic 
 
 * If you need ordering, use the same key to ensure all events for that key go to the same partition.
 
@@ -26,11 +26,11 @@ The difference between the offset of the last message consumed and the offset of
 
 === Replication & durability
 
-Each partition has one leader and replicas (followers).
+* Each partition has one leader and replicas (followers).
 
-Replication factor (e.g., 3) determines durability and availability.
+* Replication factor (e.g., 3) determines durability and availability.
 
-Producers/consumers talk to the leader; followers keep up via replication.
+* Producers/consumers talk to the leader; followers keep up via replication.
 
 image::m1/replication-broker.png[]
 
@@ -38,14 +38,14 @@ image::m1/replication-broker.png[]
 
 === Key-based routing
 
-With a key, the records/messages with the same key go to the same partition → per-key order.
+* With a key, the records/messages with the same key go to the same partition.
 
-With no key, producers distribute across partitions and order is not guaranteed.
+* With no key, producers distribute across partitions and order is not guaranteed.
 
 
 === Exercise
 
-* Click https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka/[here, window="console"] to navigate to the {streams} console to view the topic you created.
+* Click https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka/[here, window="_amqstreams"] to navigate to the {streams} console to view the topic you created.
 
 * Click on *Topics* in the left menu to see the list of topics. You should see the `demo` topic you created. Click on the `demo` topic and then navigate to the partitions tab. You should see the `demo` topic  has 3 partitions.
 +

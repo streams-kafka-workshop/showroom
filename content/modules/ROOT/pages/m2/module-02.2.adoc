@@ -19,14 +19,16 @@ image::m2/devspaces-terminal.png[]
 cd module-kafka-api/
 ----
 
-* Login to the 'kafka-{user_name}' project using the following command.
+NOTE: Hit *allow* if the browser prompts for permission to paste into the terminal.
+
+* Login to the *kafka-{user_name}* project using the following command.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
 oc project kafka-{user_name}
 ---- 
 
-* Make sure you are using java 17 by running the following command.
+* THe temrinal has multiple java versions installed. For the sake of consistency across the workshop make sure you are using java 17 by running the following command.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -42,7 +44,7 @@ image::m2/paste-devspaces.png[]
 
 * In the file explorer on the left side, expand the `module-kafka-api` folder and then expand the `src/main/java/kafka/tutorial` folder. Click on the `KafkaConfig.java` file to open it.
 
-* Replace the bootstrap servers value with the following value.
+* Replace the bootstrap servers placeholder value(line 10) with the following value.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
@@ -119,7 +121,7 @@ oc run -n kafka-{user_name} topic-create --rm -it --restart=Never \
 
 * The producer is configured to automatically send *10 messages* with keys and values. Each message is approximately *30 bytes*. 
 
-* First you should be prompted to enter the *batch size.* The default value for our application is set to 16384 bytes. Press enter to accept the default value.
+* First you should be prompted to enter the *batch size.* The default value for our application is set to *16384 bytes*. Press enter to accept the default value.
 
 
 
@@ -168,11 +170,11 @@ Total batches across all partitions: 3
 
 * Since we have a huge batch size compared to the messages that are being sent, the producer will wait for linger.ms to elapse before sending the batch. 
 
-* Next, press *enter* to go the menu
+* Next, press *enter* to go back to the main menu
 
 * Press `1` and hit *enter* again to run the producer again.
 
-* Accept the default value for batch size(16 KB) and linger.ms (0) seconds. Before you press enter, take a guess on what will happen and observe the output.
+* Accept the *default values* for batch size(16 KB) and linger.ms (0) seconds. Before you press enter, take a guess on what will happen and observe the output.
 
 * Now hit enter. You should observe that the messages are sent immediately without any wait. This is because the linger.ms has been set to 0 seconds. The producer will not wait for any messages to accumulate before sending them.
 

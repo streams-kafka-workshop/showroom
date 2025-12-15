@@ -6,7 +6,7 @@ include::../style.adoc[]
 
 == Kafka Producer API
 
-The Kafka producer allows developers to write kafka producers within their applications to send records to Kafka topics. The API provides various configuration options to control the behavior of the producer, such as batching, compression, retries, and acknowledgments.
+The Kafka producer API allows developers to write kafka producers within their applications to send records to Kafka topics. The API provides various configuration options to control the behavior of the producer, such as batching, compression, retries, and acknowledgments.
 
 We'll be looking at a simple Java application that uses the Kafka Producer API to send messages to a Kafka topic. The Java client libraries for Kafka streamline a lot of the work that goes into producing messages to and consuming messages from Kafka brokers.
 
@@ -24,7 +24,7 @@ image::m2/login-openshift.png[]
 
 * Login using your credentials  - `{user_name}` and `{password}`
 
-* Click on Allow Selected Permissions button to proceed.
+* Click on *Allow Selected Permissions* button to proceed.
 
 * From the Devspaces dashboard, click on *open* button to launch your workspace.
 +
@@ -47,7 +47,7 @@ image::m2/module-kafka-api-dependencies.png[]
 
 This section breaks down the code and explain hows a **Kafka Producer** is configured and how it works under the hood.
 
-* Let us now look at the producer code. In the `module-kafka-api` folder, click on the *src/main/java/com/example/SimpleKafkaProducer.java* file in the file explorer to open it.
+* Let us now look at the producer code. In the `module-kafka-api` folder, click on the *src/main/java/com/kafka/tutorial/SimpleKafkaProducer.java* file in the file explorer to open it.
 +
 image::m2/simple-kafka-producer-nav.png[]
 
@@ -61,8 +61,7 @@ In this example:
 === Producer Configuration
 * The configuration is defined using `Properties` and constants from `ProducerConfig`. Look at lines 43-67 of the `SimpleKafkaProducer.java` file.
 
-This reference organizes producer configuration options by concern (batching, reliability, etc.).  
-The **Used in example?** column shows whether the option appears in the sample code.
+The subsequent section has a reference that organizes producer configuration options by concern (batching, reliability, etc.). The **Used in example?** column shows whether the option appears in the sample code.
 
 === Basic Core Settings
 _Configure how the producer connects and communicates with the Kafka cluster._

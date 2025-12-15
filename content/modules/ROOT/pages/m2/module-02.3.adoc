@@ -10,7 +10,7 @@ We'll be looking at a simple Java application that uses the Kafka Consumer API t
 
 === A Simple Consumer Application
 
-. Let's us now look at the consumer code. In the `module-kafka-api` folder, click on the *src/main/java/com/example/SimpleKafkaConsumer.java* file in the file explorer to open it.
+. Let's us now look at the consumer code. In the `module-kafka-api` folder, click on the *src/main/java/com/kafka/tutorial/SimpleKafkaConsumer.java* file in the file explorer to open it.
 +
 image::m2/module-kafka-api-consumer.png[]
 

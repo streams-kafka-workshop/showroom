@@ -15,7 +15,7 @@ For example, a rule might be set so that user John can view the topic comments f
 
 
 === Creating ACLs
-In this section, we will setup ACLs for a producer and a consumer user respectively. We will setup the ACLS for the producer user such that they will be able to write to the topic `secure-demo-again` but not create or delete it. We will setup the ACLs for the consumer user such that they will be able to read from the topic `secure-demo-again` but not write to it.
+In this section, we will setup ACLs for a producer and a consumer user respectively. We will setup the ACLS for the producer user such that they will be able to write to the topic `secure-demo-again` but not create or delete it. We will setup the ACLs for the consumer user such that they will be able to read from the topic `secure-demo` but not write to it.
 
 * We can define the ACLs while creating the KafkaUser resource. Let's create the ACLs for the producer user first. Navigate to the link:{openshift_cluster_console}[OpenShift console, window="console"] and click on the *+* icon. 
 +
@@ -62,11 +62,11 @@ spec:
         host: "*"
 ----
 
-* The above customer resource creates a KafkaUser with username `producer` and the password is stored in a secret named `producer-password`. Under the authorization section, we define an ACL for the topic `secure-demo-again`. This user will be able to write to the topic `secure-demo-again` but not create or delete it. Go ahead and click the create button now
+* The above customer resource creates a KafkaUser with username `producer` and the password is stored in a secret named `producer-password`. Under the authorization section, we define an ACL for the topic `secure-demo`. This user will be able to write to the topic `secure-demo-again` but not create or delete it. Go ahead and click the create button now
 +
 image::m6/producer-user-yaml-create.png[]
 
-* Now, let's try to delete the topic using the producer user. Navigate to the *upper terminal* and run the following command. Notice the username and credentials we are passing in the command.
+* Now, let's try to delete the topic using the producer user you just created. Navigate to the *upper terminal* and run the following command. Notice the username and credentials we are passing in the command.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -119,7 +119,7 @@ EOF
 > secure
 ----
 
-* To verify the ACL worked, navigate to the link:https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > topics and click on the topic `secure-demo` and notice your messages. This shows that the producer user is able to write to the topic `secure-demo` but not delete it.
+* To verify the ACL worked, navigate to the link:https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="_amqstreams"] > topics and click on the topic `secure-demo` and notice your messages. This shows that the producer user is able to write to the topic `secure-demo` but not delete it.
 +
 image::m6/secure-acl-message.png[]
 
@@ -174,13 +174,17 @@ spec:
         host: '*'
 ----
 
-* Observe that this user only has read access to the topic `secure-demo`. Run the below command in the *upper terminal* to see the ACLs implemented. Go ahead hit the create button now. 
+* Observe that this user only has read access to the topic `secure-demo`.  Go ahead hit the create button now. 
 
-* Let's double check if this user can write to the topic. Since this user is for consumers they should not be able to write to the topic. Navigate to the *upper terminal* and run the following command. 
+* Let's double check if this user can write to the topic. Since this user is for consumers they should not be able to write to the topic. 
+
+* Quit the producer if it is still running by hitting `ctrl+c` in the terminal.
+
+*Navigate to the *upper terminal* and run the following command. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-user1 sinster-consumer --rm -it --restart=Never \
+oc run -n kafka-{user_name} sinster-consumer --rm -it --restart=Never \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
   bash -lc 'cat >/tmp/client.properties <<EOF
 security.protocol=SASL_PLAINTEXT
@@ -193,7 +197,7 @@ EOF
   --topic secure-demo'
 ----
 
-* Try to write a message to the topic. You will see that the write operation fails.
+* Try to write a message to the topic. 
 +
 [source,bash]
 ----
@@ -202,9 +206,28 @@ EOF
 > an
 > evil
 > consumer
+> trying
+> to
+> write
+> to
+> a
+> topic
 ----
 
-* Hit `ctrl+c` to stop.
+* You should see an error message similar to the following indicating that the consumer user is not allowed to write to the topic `secure-demo`.
++
+[source,bash]
+----
+2025-12-15 22:51:20,756] ERROR [Producer clientId=console-producer] Aborting producer batches due to fatal error (org.apache.kafka.clients.producer.internals.Sender)
+org.apache.kafka.common.errors.ClusterAuthorizationException: Cluster authorization failed.
+[2025-12-15 22:51:20,771] ERROR Error when sending message to topic secure-demo with key: null, value: 2 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback)
+org.apache.kafka.common.errors.ClusterAuthorizationException: Cluster authorization failed.
+pod "sinster-consumer" deleted
+----
+
+
+
+
 
 * Let's check if the consumer user is able to read the topic, which the ACL allows. Run the below command in the *upper terminal*.
 +

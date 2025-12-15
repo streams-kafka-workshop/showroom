@@ -11,9 +11,9 @@ Kafka listeners use authentication to ensure a secure client connection to the K
 
 In all the previous modules, we used the listeners without authentication. Our Kafka cluster has multiple listeners with different protocols and authentication methods. 
 
-Let's have a quick look at the listeners in the Kafka cluster. Learn about the purpose and configuration of the listeners in the Kafka cluster.
+Let's have a quick look at the listeners in the Kafka cluster and learn about the purpose and configuration of the listeners in the Kafka cluster.
 
-* Login to the project namespace `kafka-{user_name}` using the following command in a terminal. 
+* Login to the project namespace `kafka-{user_name}` using the following command in the upper terminal. 
 +
 [source,bash,role="execute",subs=attributes+]
 ----
@@ -99,7 +99,7 @@ Let's briefly decipher what this means:
 === Security in action
 Let's now see this action.
 
-* In the **upper terminal**, create a new topic `secure-demo` using the secure 9095 listener, without authentication. The same command we used in the previous modules, and let's see what happens.
+* In the **upper terminal**, create a new topic `secure-demo` using the secure 9095 listener, without authentication. The same command we successfully used in the previous modules, and let's see what happens.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -119,9 +119,9 @@ pod "topic-create" deleted
 pod kafka-user1/topic-create terminated (Error)
 ----
 
-* This is because we are using the secure 9095 listener without authentication. 
+* This is because we are using the *secure 9095 listener without authentication.* 
 
-* We've already created a admin users on this cluster with all the previliges. 
+* We've already created a admin users on this cluster with all the privileges needed. We will use this user to create the topic using the secure listener with authentication. 
 
 // Navigate to the link:{openshift_cluster_console}/k8s/ns/kafka-user1/secrets/admin[OpenShift console, window="_console"] to the see the secret and the credentials.
 

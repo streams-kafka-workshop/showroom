@@ -51,29 +51,29 @@ Enter auto.offset.reset (earliest/latest, or press Enter for default)
 +
 NOTE: This property defines what the consumer should do when there is no initial offset or offset is out of range for a consumer or consumer group* *"earliest"* = start from the beginning of the topic (read all messages from the start) *"latest"* = start from the end (only read new messages sent after consumer starts)
 
-* The next prompt asks for `fetch.min.bytes`* Press enter to use the default value.
+* The next prompt asks for `fetch.min.bytes`. Press enter to use the default value.
 
-* The next prompt asks for `fetch.max.wait.ms`* Press enter to use the default value.
+* The next prompt asks for `fetch.max.wait.ms`. Press enter to use the default value.
 
-* The next prompt asks for `Enter number of messages`* Enter the below value and press enter.
+* The next prompt asks for `Enter number of messages`. Enter the below value and press enter.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
 30
 ----
 
-* Observe that the consumer doesn't read any of the messages that the producer just sent* This is because we chose the `latest` value for `auto.offset.reset` and the consumer starts from the end of the topic and it will not consume any messages that are sent before the consumer starts* You can confirm the same the double checking in the streams console.
+* Observe that the consumer doesn't read any of the messages that the producer just sent. This is because we chose the `latest` value for `auto.offset.reset` and the consumer starts from the end of the topic and it will not consume any messages that are sent before the consumer starts. You can confirm the same the double checking in the streams console.
 
-* Navigate to the link:https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka/[streams console, window="console"] > consumer groups and click on the *tutorial-consumer-group** 
+* Navigate to the link:https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka/[streams console, window="_amqstreams"] > consumer groups and click on the *tutorial-consumer-group* 
 
-* Observe that the overall lag for the consumer group is zero even though the topic had some unread messages* This is the because the consumer is reading from the end of the topic and the values of committed offset are set to the same value as end offset, which means the lag is zero.
+* Observe that the overall lag for the consumer group is *zero even though the topic had some unread messages*. This is the because the consumer is reading from the end of the topic and the values of committed offset are set to the same value as end offset, which means the lag is zero.
 
 
-* Hit enter and press `1` again to run the producer again* Accept all the default values and press enter* Make sure that the messages are sent.
+* Hit enter and press `1` again to run the producer again. Accept all the *default values and press enter*. Make sure that the messages are sent.
 
-* Now hit enter and press `2` again to run the consumer again* This time let's choose the default values for `auto.offset.reset`, `fetch.min.bytes`, `fetch.max.wait.ms` 
+* Now hit enter and press `2` again to run the consumer again. This time let's choose the *default values* for `auto.offset.reset`, `fetch.min.bytes`, `fetch.max.wait.ms` by pressing enter for the prompts.
 
-* For the 'Enter number of messages' prompt* Enter the below value and press enter* 
+* For the 'Enter number of messages' prompt. Enter the below value and press enter.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
@@ -81,13 +81,13 @@ NOTE: This property defines what the consumer should do when there is no initial
 ----
 
 
-* You will observe that the consumer is now running and consumes all the messages that were just sent by the producer* The messages are displayed in the terminal* 
+* You will observe that the consumer is now running and consumes all the messages that were just sent by the producer. The messages are displayed in the terminal.
 
 
 === Experiment with fetch.min.bytes and fetch.max.wait.ms (option exercise)
 You can also experiment with different values for `fetch.min.bytes` and `fetch.max.wait.ms` to see how they affect the consumer behavior.
 
-* Hit enter and press `1` again to run the producer again* Accept all the default values and press enter* 
+* Hit enter and press `1` again to run the producer again. Accept all the default values and press enter. 
 
 * Now hit enter and press `2` and hit enter again to run the consumer again.
 
@@ -97,7 +97,7 @@ You can also experiment with different values for `fetch.min.bytes` and `fetch.m
 
 * Since the number of bytes would never exceed 1024 bytes in our example, the `fetch.min.bytes` will be ignored and the consumer will wait for at-least 4 seconds before fetching the messages* You should observe a delay of approximately 4-6 seconds before the messages are displayed in the terminal.
 
-* For the 'Enter number of messages' prompt* Enter the below value and press enter. You will observe the delay before the messages are displayed.
+* For the *Enter number of messages* prompt. Enter the below value and press enter. You will observe the delay before the messages are displayed.
 +
 [source,bash,role="execute",subs=attributes+]
 ----

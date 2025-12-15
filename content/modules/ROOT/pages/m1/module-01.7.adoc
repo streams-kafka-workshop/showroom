@@ -12,6 +12,9 @@ Here's how it works:
 ** One replica is designated as the leader. All produce and consume requests for that partition are handled exclusively by its leader to ensure strong consistency and message ordering.
 ** The other replicas are followers. Their sole responsibility is to diligently replicate messages from the leader to stay up-to-date. 
 
+** A broker with leader partition goes down, new leader partition is elected on different node
+
+
 
 image::m1/replication-broker.png[]
 
@@ -29,7 +32,7 @@ oc run -n kafka-{user_name} topic-create-rf3 --rm -it --restart=Never \
   bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --create --topic replicated --partitions 3 --replication-factor 3'
 ----
 
-* Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > topics > replicated and verify that the topic `replicated` is created with 3 partitions
+* Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="_amqstreams"] > topics > replicated and verify that the topic `replicated` is created with 3 partitions
 +
 image::m1/replicated-topic.png[]
 
@@ -42,6 +45,8 @@ image::m1/replicated-topic-partitions.png[]
 * Each partition has one leader and two followers (replicas). The leader handles all the read and write requests for that partition while the followers replicate data from the leader to ensure fault tolerance.
 
 * If the leader broker goes down, one of the followers will be automatically elected as the new leader to ensure high availability. This ensures that Producers and consumers, which continue to operate without interruption.
+
+NOTE: We are not going to simulate a broker failure in this exercise, since we need them to be up and running for the rest of the module. 
 
 
 === Summary

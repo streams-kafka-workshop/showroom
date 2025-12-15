@@ -10,7 +10,7 @@ include::../style.adoc[]
 
 * Select the *loyalty-deployment.yaml* file in the *kafka-workshop/module-cdc* folder
 
-* Replace the placeholder value for the bootstrap servers with the following value
+* Replace the placeholder value for the bootstrap servers(line 28) with the following value
 +
 [source,bash,role=execute,subs="attributes"]
 ----
@@ -39,7 +39,7 @@ oc get pods -n globex-{user_name} -l app=cdc-dashboard -w
 
 * Open the link:https://cdc-dashboard-globex-{user_name}.{openshift_cluster_subdomain}[Loyalty Program Dashboard, window="loyalty"] to access the loyalty program dashboard deployed in the globex-{user_name} 
 
-* This dashboard builds a real-time view of customer loyalty points based on the change events captured from the Globex retail application database. It uses the messages in the *globex.updates.public.orders* and *globex.updates.public.line_item* topic to track customer purchases and update loyalty points accordingly.
+* This dashboard builds a real-time view of customer loyalty points based on the change events captured from the Globex retail application database. It uses the messages in the *globex.updates.public.orders* and *globex.updates.public.line_item* topic to track customer purchases and update loyalty points accordingl without directly interacting with the retail application database.
 +
 image::m4/loyalty-dashboard.png[]
 
@@ -50,7 +50,7 @@ image::m4/loyalty-dashboard.png[]
 
 * The loyalty program application team can now build their own services and applications that leverage the change events produced by Debezium, without having to directly interact with the Globex retail application database. This decouples the loyalty program from the retail application, enabling more flexibility and scalability in building event-driven applications.
 
-* Another use case could be build a real time order tracker that could be displayed on screens in the store showing incoming orders as they are created for the warehouse team to process them quickly. You can see a sample application link:https://cdc-dashboard-globex-{user_name}.{openshift_cluster_subdomain}/warehouse[here]
+* Another use case could be *build a real time order tracker* that could be displayed on screens in the warehouse showing incoming orders as they are created for the warehouse team to process them quickly. You can see a sample application link:https://cdc-dashboard-globex-{user_name}.{openshift_cluster_subdomain}/warehouse[here]
 
 This brings us to the end of this module on Change Data Capture with Debezium. In this module, we have seen how to deploy a Debezium connector to capture change events from a relational database and produce them to Kafka topics in real-time. We also saw how to build simple applications that consume these change events to build event-driven applications.
 

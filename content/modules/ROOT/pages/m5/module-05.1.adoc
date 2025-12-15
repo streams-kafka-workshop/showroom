@@ -48,7 +48,7 @@ The Artifact Id and topic name need not always be the same. In our case we are u
 +
 image::m5/artifact-metadata.png[]
 
-* On the next screen, under the contents section, copy and paste the below schema. Leave the Version number field blank.
+* On the next screen, under the contents section, copy and paste the below schema. Leave the Version number field blank. This is a simple Avro schema for a customer record.
 +
 [source,avro,role="execute",subs=attributes+]
 ----
@@ -79,7 +79,7 @@ image::m5/create-schema.png[]
 +
 image::m5/create-schema-final.png[]
 
-* The artifact should take a couple of seconds to be created and then you should see the schema in the Schema Registry UI as shown in the image below.
+* The artifact should take a couple of seconds to be created and then you should see the schema in the *Schema Registry UI* as shown in the image below.
 +
 image::m5/schema-created.png[]
 
