@@ -55,4 +55,3 @@
 
 * xref:conclusion/summary.adoc[Workshop Summary]
 
-// * xref:myenv.adoc[My Env Details]
