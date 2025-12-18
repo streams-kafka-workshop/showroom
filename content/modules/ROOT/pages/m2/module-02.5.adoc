@@ -7,7 +7,7 @@ include::../style.adoc[]
 
 In this section, we will explore an e-commerce application to demonstrate real-time data streaming and processing use cases. The Globex web application used in this workshop is a demo app and as such does not pretend to be a real-life retail application, but it packs enough functionality to make it feel like a real retail web app.
 
-* From your browser, navigate to {openshift_cluster_console}/topology/ns/*globex-{user_name}*?view=graph[OpenShift Cluster Console, window="_console"]* Login with your username and password (`{user_name}`/`{password}`).
+* From your browser, navigate to link:{openshift_cluster_console}/topology/ns/*globex-{user_name}*?view=graph[OpenShift Cluster Console, window="_console"]. Login with your username and password (`{user_name}`/`{password}`).
 
 
 // * You should be redirected to a view which lists the different OpenShift _projects_ (also known as _namespaces_) you have access to.
@@ -48,7 +48,7 @@ The Globex web-app deployment consists of:
 | The PostgreSQL database used by the globex-store-app application* Stores the catalog, inventory, customer and order information.
 
 | activity-tracking 
-| This microservice has a REST endpoint for user activity events generated from the UI* These events are produced to a Kafka topic.
+| This microservice has a REST endpoint for user activity events generated from the UI. These events are produced to a Kafka topic.
 
 | recommendation-engine (We will explore this service in more detail in a later module.)
 | An example of an application which does real-time processing of an event stream* This application uses Kafka Streams, an event-streaming library, to process the stream of events produced by the activity tracking service to build a list of the most popular products on the web site* This list is exposed as a REST endpoint, and called by the front-end to display featured products.
@@ -71,7 +71,7 @@ image::m2/globex-view-catalog.png[]
 +
 NOTE: The product catalog might take a few seconds to load the first time.
 
-* To generate user activity events, click on the image:m2/globex-product-like.png[] symbol next to a product* You can repeat this for 3-4 products.
+* To generate user activity events, click on the image:m2/globex-product-like.png[] symbol next to a product. You can repeat this for 3-4 products.
 
 * Every _like_ action generates a user activity event that is captured by the _activity tracking_ service and sent to a Kafka topic. 
 

@@ -38,7 +38,7 @@ Main Menu:
 Enter your choice:
 ----
 
-* Choose the option 2 to run the consumer* Enter the option 2 and press enter.
+* Choose the option 2 to run the consumer. Enter the option 2 and press enter.
 
 * First, you should be prompted to enter the value for `auto.offset.reset`
 +
@@ -47,7 +47,7 @@ Enter your choice:
 Enter auto.offset.reset (earliest/latest, or press Enter for default)
 ----
 
-* Type `latest` and press enter* 
+* Type `latest` and press enter. 
 +
 NOTE: This property defines what the consumer should do when there is no initial offset or offset is out of range for a consumer or consumer group* *"earliest"* = start from the beginning of the topic (read all messages from the start) *"latest"* = start from the end (only read new messages sent after consumer starts)
 

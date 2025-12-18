@@ -127,7 +127,7 @@ image::m6/secure-acl-message.png[]
 +
 image:common/create-yaml.png[] icon. 
 
-*Click on the `Import YAML` option and paste the following YAML into the YAML editor.
+* Click on the `Import YAML` option and paste the following YAML into the YAML editor.
 +
 [source,yaml,role="execute",subs=attributes+]
 ----
@@ -180,7 +180,7 @@ spec:
 
 * Quit the producer if it is still running by hitting `ctrl+c` in the terminal.
 
-*Navigate to the *upper terminal* and run the following command. 
+* Navigate to the *upper terminal* and run the following command. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -227,7 +227,7 @@ pod "sinster-consumer" deleted
 
 
 
-
+* Hit `ctrl+c` to stop it.
 
 * Let's check if the consumer user is able to read the topic, which the ACL allows. Run the below command in the *upper terminal*.
 +
