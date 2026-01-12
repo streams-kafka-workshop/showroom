@@ -19,7 +19,7 @@ image::m4/login_credentials_page.png[]
 +
 image::m4/cool-stuff-store.png[]
 
-* Click on the item of your choice to open the product details page and then click on the *Add to Cart* button to add the item to your shopping cart. Feel free to browse and add multiple items to your cart oso that we can simulate a larger number of orders.
+* Click on the item of your choice to open the product details page and then click on the *Add to Cart* button to add the item to your shopping cart. Feel free to browse and add multiple items to your cart so that we can simulate a larger number of orders.
 +
 image::m4/add_to_cart.png[]
 

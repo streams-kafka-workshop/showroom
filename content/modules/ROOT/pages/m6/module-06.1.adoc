@@ -13,7 +13,7 @@ In all the previous modules, we used the listeners without authentication. Our K
 
 Let's have a quick look at the listeners in the Kafka cluster and learn about the purpose and configuration of the listeners in the Kafka cluster.
 
-* Login to the project namespace `kafka-{user_name}` using the following command in the upper terminal. 
+* Login to the project namespace `kafka-{user_name}` using the following command in the *upper terminal.* 
 +
 [source,bash,role="execute",subs=attributes+]
 ----
@@ -121,7 +121,7 @@ pod kafka-user1/topic-create terminated (Error)
 
 * This is because we are using the *secure 9095 listener without authentication.* 
 
-* We've already created a admin users on this cluster with all the privileges needed. We will use this user to create the topic using the secure listener with authentication. 
+* We've already created an admin user on this cluster with all the privileges needed. We will use this user to create the topic using the secure listener with authentication. 
 
 // Navigate to the link:{openshift_cluster_console}/k8s/ns/kafka-user1/secrets/admin[OpenShift console, window="_console"] to the see the secret and the credentials.
 

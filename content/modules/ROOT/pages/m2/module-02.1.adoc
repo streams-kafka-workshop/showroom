@@ -38,7 +38,7 @@ image::m2/devspaces-trust.png[]
 +
 image::m2/module-kafka-api-pom-xml.png[]
 
-* Look at the dependencies section of the pom.xml file (line 23-29). You will see that the project has a dependency on the Kafka client library. This library provides the necessary classes and methods to interact with a Kafka cluster.
+* Look at the dependencies section of the *pom.xml file (line 23-29).* You will see that the project has a dependency on the Kafka client library. This library provides the necessary classes and methods to interact with a Kafka cluster.
 +
 image::m2/module-kafka-api-dependencies.png[]
 

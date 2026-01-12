@@ -2,7 +2,7 @@
 include::../style.adoc[]
 
 == Access Control Lists (ACLs)
-Access Control Lists (ACLs) are used to fine-tune access to the Kafka clusters. They allow you to control what each identity can access. Access Control Lists (ACLs) are defined at a fine-grained level, for example, allowing a user to read from a topic but not write or delete it.
+*Access Control Lists (ACLs)* are used to fine-tune access to the Kafka clusters. They allow you to control what each identity can access. Access Control Lists (ACLs) are defined at a fine-grained level, for example, allowing a user to read from a topic but not write or delete it.
 
 The ACLs apply access rules to client applications. ACLs determine what an authenticated client can do once its identity has been verified. 
 
@@ -15,7 +15,11 @@ For example, a rule might be set so that user John can view the topic comments f
 
 
 === Creating ACLs
-In this section, we will setup ACLs for a producer and a consumer user respectively. We will setup the ACLS for the producer user such that they will be able to write to the topic `secure-demo-again` but not create or delete it. We will setup the ACLs for the consumer user such that they will be able to read from the topic `secure-demo` but not write to it.
+In this section, *we will setup ACLs for a producer and a consumer user respectively.* 
+
+We will setup the ACLS for the producer user such that they will be *able to write to the topic `secure-demo-again` but not create or delete it.* 
+
+We will setup the ACLs for the consumer user such that they will be *able to read from the topic `secure-demo` but not write to it.*
 
 * We can define the ACLs while creating the KafkaUser resource. Let's create the ACLs for the producer user first. Navigate to the link:{openshift_cluster_console}[OpenShift console, window="console"] and click on the *+* icon. 
 +

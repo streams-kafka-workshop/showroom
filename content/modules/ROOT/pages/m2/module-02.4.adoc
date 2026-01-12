@@ -95,7 +95,7 @@ You can also experiment with different values for `fetch.min.bytes` and `fetch.m
 
 * For the `fetch.max.wait.ms` prompt, enter `4000` and press enter.
 
-* Since the number of bytes would never exceed 1024 bytes in our example, the `fetch.min.bytes` will be ignored and the consumer will wait for at-least 4 seconds before fetching the messages* You should observe a delay of approximately 4-6 seconds before the messages are displayed in the terminal.
+* Since the number of bytes would never exceed 1024 bytes in our example, the `fetch.min.bytes` will be ignored and the consumer will wait for at-least 4 seconds before fetching the messages. You should observe a delay of approximately 4-6 seconds before the messages are displayed in the terminal.
 
 * For the *Enter number of messages* prompt. Enter the below value and press enter. You will observe the delay before the messages are displayed.
 +
@@ -109,7 +109,7 @@ You can also experiment with different values for `fetch.min.bytes` and `fetch.m
 
 
 === Summary
-This section hopefully helped you get a high level understanding of the consumer api and see a couple of consumer configurations in action* Feel free to play with the other options in the application and observe the consumer behavior.
+This section hopefully helped you get a high level understanding of the consumer api and see a couple of consumer configurations in action. Feel free to play with the other options in the application and observe the consumer behavior.
 
 === Up Next
 In the next section, we will look at a real world streaming application in action and understand how Quarkus makes it very easy to build streaming applications.

@@ -45,7 +45,7 @@ image::m4/loyalty-dashboard.png[]
 
 * As more orders are created in the Globex retail application, the more change events are produced to the Debezium topics, and the loyalty program dashboard updates the loyalty points in real-time.
 
-* Feel free to generate more orders hers in the Globex retail application using the link:https://order-simulator-globex-{user_name}.{openshift_cluster_subdomain}[Order Simulator, window="order-simulator"] as shown in the previous section, and see how the loyalty points are updated in real-time in the dashboard.
+* Feel free to generate more orders in the Globex retail application using the link:https://order-simulator-globex-{user_name}.{openshift_cluster_subdomain}[Order Simulator, window="order-simulator"] as shown in the previous section, and see how the loyalty points are updated in real-time in the dashboard.
 
 
 * The loyalty program application team can now build their own services and applications that leverage the change events produced by Debezium, without having to directly interact with the Globex retail application database. This decouples the loyalty program from the retail application, enabling more flexibility and scalability in building event-driven applications.

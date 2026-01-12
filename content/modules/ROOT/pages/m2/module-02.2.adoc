@@ -28,7 +28,7 @@ NOTE: Hit *allow* if the browser prompts for permission to paste into the termin
 oc project kafka-{user_name}
 ---- 
 
-* THe temrinal has multiple java versions installed. For the sake of consistency across the workshop make sure you are using java 17 by running the following command.
+* THe terminal has multiple java versions installed. For the sake of consistency across the workshop make sure you are using java 17 by running the following command.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -95,7 +95,7 @@ Error while fetching metadata with correlation id 57 : {tutorial-topic=UNKNOWN_T
 
 * Press *ctrl+c* to stop the producer.
 
-* In our cluster *auto.create.topics.enable* property is set to `false`. This is a Kafka broker configuration setting that controls whether new topics are created automatically when a producer or consumer attempts to access a non-existent one
+* In our cluster *auto.create.topics.enable* property is set to `false`. This is a Kafka broker configuration setting that *controls whether new topics are created automatically* when a producer or consumer attempts to access a non-existent one
 
 * This might be useful setting as it prevents typos in producer or consumer code from creating junk topics. 
 
@@ -125,9 +125,7 @@ oc run -n kafka-{user_name} topic-create --rm -it --restart=Never \
 
 
 
-* The next option is *linger.ms.* The default value for our application is 0, which means that the producer will not wait for any messages to accumulate before sending them. 
-
-* Enter `30000` and press enter. This will make the producer wait for 30 seconds until the batch is full before sending it. The producer will send the batch after 30 seconds, even if it is not full. Enter the below value and press enter.
+* The next option is *linger.ms.* The default value for our application is 0, which means that the producer will not wait for any messages to accumulate before sending them. Enter `30000` and press enter. This will make the producer wait for 30 seconds until the batch is full before sending it. The producer will send the batch after 30 seconds, even if it is not full. Enter the below value and press enter.
 +
 [source,bash,role="execute",subs=attributes+]
 ----

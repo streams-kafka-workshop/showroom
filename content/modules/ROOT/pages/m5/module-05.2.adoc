@@ -205,7 +205,7 @@ image::m5/error-compatibility.png[]
 
 * Close the error message dialog.
 
-* Click on the *Create Version* button again and paste the below schema, which is the same the one we provided earlier but provides a default value for the `phone` field in case it's missing. This time the compatibility rule should not trigger and new version of the schema should be created.
+* Click on the *Create Version* button again and replace the existing schema with the below schema, which is the same the one we provided earlier but provides a default value for the `phone` field in case it's missing. This time the compatibility rule should not trigger and new version of the schema should be created.
 +
 [source,avro,role="execute",subs=attributes+]
 ----
