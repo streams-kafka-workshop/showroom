@@ -4,7 +4,7 @@ include::../style.adoc[]
 
 == Kafka Basics - Partitions (how Kafka scales & orders)
 
-Storing the messages in a topic in a single node would limit the scalability of the system. Partitions are the solution for this. A topic is split into partitions, each an ordered, append-only log, that are distributed across brokers. This allows kafka to process a large number of messages in parallel and in a distributed manner. Partitions enable parallelism and throughput.
+Storing the messages in a topic in a single node would limit the scalability of the system. Partitions are the solution for this. A topic is split into partitions, each an ordered, append-only, log that are distributed across brokers. This allows kafka to process a large number of messages in parallel and in a distributed manner. Partitions enable parallelism and throughput.
 
 image::m1/topic-image.png[]
 
@@ -61,4 +61,4 @@ image::m1/leader-image-console.png[]
 image::m1/replica-image-console.png[]
 
 === Up Next
-This concludes are very high-level overview of how Kafka partitions work. In the next module we'll learn about kafka producers and consumers.
+This concludes a very high-level overview of how Kafka partitions work. In the next module, we'll learn about kafka producers and consumers.
