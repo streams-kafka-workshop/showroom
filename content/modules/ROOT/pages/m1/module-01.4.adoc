@@ -16,7 +16,7 @@ A Kafka Consumer reads messages from Kafka topics and hands them to your applica
 
 * A consumer can read data from any offset within a topic partition. In most cases, a consumer advances its offset linearly, but it could start at any offset and read messages in any order. 
 
-* The consumer will typically “commit” its offset back to the  Kafka cluster so the consumer can resume from where it left off (for example, in case it restarts.
+* The consumer will typically “commit” its offset back to the  Kafka cluster so the consumer can resume from where it left off (for example, in case it restarts).
 
 === Running a Consumer
 * In the *lower terminal*, login to the OpenShift cluster using the following command. use the image:common/clipboard.png[width=30px] icon to copy.
@@ -56,7 +56,7 @@ image::m1/console_demo-group.png[]
 +
 image::m1/console_consumer.png[]
 
-* Click on the any partition which has messages consumed(non zero values under *Committed* and *End Offset* column) to see the details.
+* Click on any partition which has messages consumed(non zero values under *Committed* and *End Offset* column) to see the details.
 +
 image::m1/console_consumed_partition.png[]
 
@@ -65,4 +65,4 @@ image::m1/console_consumed_partition.png[]
 image::m1/console_consumed_partition_messages.png[]
 
 === Up Next
-Now that we have looked at the basic producer and consumer, about how ordering of messages sent by the producer can be achieved using partitions and keys in the next section.
+Now that we have looked at the basics of producers and consumers, let's learn how ordering of messages can be achieved using partitions and keys in the next section.

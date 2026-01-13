@@ -4,7 +4,7 @@ include::../style.adoc[]
 
 == Kafka Basics - Topics
 
-Topics are the building blocks of Kafka. A topic is a logical collection of messages that you want to group together. It is a named, append-only stream of records (events/messages).
+Topics are the building blocks of Kafka. A topic is a logical collection of messages that you want to group together. It is a named, append-only, stream of records (events/messages).
 
 image::m1/topic-image.png[]
 
@@ -33,7 +33,7 @@ They decouple producers (writers) and consumers (readers). Many producers can wr
 
 === Creating a Topic
 
-* In the *upper terminal*, login to the OpenShift cluster using the following command. use the image:common/clipboard.png[width=30px] icon to copy.
+* In the *upper terminal*, log in the OpenShift cluster using the following command. use the image:common/clipboard.png[width=30px] icon to copy.
 +
 [source,sh,role="execute",subs=attributes+]
 ----

@@ -31,7 +31,7 @@ oc run -n kafka-{user_name} load-producer --rm -it --restart=Never \
     --property key.separator=:'
 ----
 
-* Now let's start three consumers in the same consumer group demo-cg in one by one using a simple bash script. As you proceed through the script and keep starting new consumers, you will see the rebalancing of partitions between the consumers. 
+* Now let's start three consumers in the same consumer group, *demo-cg*, one by one, using a simple bash script. As you proceed through the script and keep starting new consumers, you will see the rebalancing of partitions between the consumers. 
 
 * In the *lower terminal*, make sure you are on the `kafka-{user_name}` project.
 +
@@ -101,7 +101,7 @@ image::m1/lag-offset.png[]
 +
 image::m1/group-lag.png[]
 
-* If we stop all the consumers except the first one (cg-c1), all the partitions will be reassigned to cg-c1 automatically. Go ahead and stop the consumers cg-c2, cg-c3 and cg-c4 by pressing enter You will see rebalancing happening and all the partitions getting reassigned to cg-c1 automatically. *Do not hit enter stop the first consumer (cg-c1) yet as we will need it in the next section.*
+* If we stop all the consumers except the first one (cg-c1), all the partitions will be reassigned to cg-c1 automatically. Go ahead and stop the consumers cg-c2, cg-c3 and cg-c4 by pressing enter. You will see rebalancing happening and all the partitions getting reassigned to cg-c1 automatically. *Do not hit enter stop the first consumer (cg-c1) yet as we will need it in the next section.*
 +
 image::m1/demo-cd-c1-only.png[]
 
@@ -128,4 +128,4 @@ image::m1/demo-cd-c1-only.png[]
 * Hit enter in the *lower terminal* to stop all the remaining consumers.
 
 === Up Next
-In the next section we will learn about Topic Replication and Fault Tolerance
+In the next section we will learn about Topic Replication and Fault Tolerance.
