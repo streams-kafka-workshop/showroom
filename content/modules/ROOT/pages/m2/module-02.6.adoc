@@ -5,7 +5,7 @@ include::../style.adoc[]
 
 
 == Quarkus and Kafka
-Quarkus significantly simplifies interaction with Kafka compared to using the bare Apache Kafka Client in normal Java by leveraging the SmallRye Reactive Messaging framework based on the MicroProfile Reactive Messaging specification. This abstraction removes boilerplate code, manages low-level concerns like threading, serialization, and offset commits, and provides an annotation-driven, message-channel model.
+Quarkus significantly simplifies interaction with Kafka, when compared to using the bare Apache Kafka Client in Java, by leveraging the SmallRye Reactive Messaging framework based on the MicroProfile Reactive Messaging specification. This abstraction removes boilerplate code, manages low-level concerns like threading, serialization, and offset commits, and provides an annotation-driven, message-channel model.
 
 Let's look at how the activity tracking service uses Quarkus to produce and consume messages to and from Kafka topics.
 
@@ -23,27 +23,27 @@ Kafka Producer (Sending Messages)
 |===
 | Aspect | Normal Java(Kafka Client) | Quarkus(Reactive Messaging)
 | Setup
-| Manually configure ProducerConfig (bootstrap servers, serializers), create KafkaProducer instance.
-| Inject an Emitter and configure the channel in application.properties. Quarkus manages the Producer lifecycle.
+| Manually configure *ProducerConfig* (bootstrap servers, serializers), create *KafkaProducer* instance.
+| Inject an Emitter and configure the channel in *application.properties*. Quarkus manages the Producer lifecycle.
 
 | Sending
-| Create a ProducerRecord, call producer.send(), and handle the returned Future for asynchronous send results.
-| Call the Emitter.send() method with the message payload.
+| Create a *ProducerRecord*, call *producer.send()*, and handle the returned Future for asynchronous send results.
+| Call the *Emitter.send()* method with the message payload.
 |===
 
 Kafka Consumer (Receiving Messages)
 |===
 | Aspect | Normal Java(Kafka Client) | Quarkus(Reactive Messaging)
 | Setup
-| Manually configure ConsumerConfig, create KafkaConsumer instance, and subscribe to topics.
-| Define a simple method with the @Incoming annotation. Quarkus manages the Consumer lifecycle and subscription.
+| Manually configure *ConsumerConfig*, create *KafkaConsumer* instance, and subscribe to topics.
+| Define a simple method with the *@Incoming* annotation. Quarkus manages the Consumer lifecycle and subscription.
 
 | Consumption Loop
-| You must run a continuous polling loop in a separate thread and handle ConsumerRecords
+| You must run a continuous polling loop in a separate thread and handle *ConsumerRecords*
 | Quarkus runs the message processing automatically on a thread.
 
 | Committing Offsets
-| You must manually call consumer.commitSync() or consumer.commitAsync() after processing.
+| You must manually call *consumer.commitSync()* or *consumer.commitAsync()* after processing.
 | Automatic acknowledgment (offset commit) is managed by the commit strategies attribute (e.g., throttled).
 |===
 
@@ -54,9 +54,9 @@ Quarkus also provides tooling and features that enhance the development and oper
 
 * Shared Broker - Dev Services for Kafka implements a service discovery mechanism for your multiple Quarkus applications running in dev mode to share a single broker.
 
-* Health Checks - Quarkus provides several health checks for Kafka. These checks are used in combination with the quarkus-smallrye-health extension. Some of these checks include: Kafka Broker Readiness Check, Kafka Reactive Messaging Health Checks etc
+* Health Checks - Quarkus provides several health checks for Kafka. These checks are used in combination with the *quarkus-smallrye-health* extension. Some of these checks include: Kafka Broker Readiness Check, Kafka Reactive Messaging Health Checks etc.
 
-There are a lot more features and capabilities that makes Quarkus a great choice for Kafka development and testing. You can learn more about Quarkus at link:https://quarkus.io/guides/kafka[Quarkus Kafka Guide, window="_quarkus"]
+There are a lot more features and capabilities that makes Quarkus a great choice for Kafka development and testing. You can learn more about Quarkus at link:https://quarkus.io/guides/kafka[Quarkus Kafka Guide, window="_quarkus"].
 
 
 
