@@ -41,7 +41,7 @@ image::m5/artifact-coordinates.png[]
 
 [NOTE]
 ====
-The Artifact Id and topic name need not always be the same. In our case we are using the SimpleTopicIdStrategy so we used the same name. There are different strategies that you can use. You can learn more about them link:https://docs.redhat.com/en/documentation/red_hat_build_of_apicurio_registry/3.1/html/apicurio_registry_user_guide/using-kafka-client-serdes_registry#registry-serdes-concepts-strategy_registry[here].
+The Artifact Id and topic name don't need to be the same. In our case, we are using the SimpleTopicIdStrategy, so we used the same name. There are different strategies that you can use. You can learn more about them link:https://docs.redhat.com/en/documentation/red_hat_build_of_apicurio_registry/3.1/html/apicurio_registry_user_guide/using-kafka-client-serdes_registry#registry-serdes-concepts-strategy_registry[here].
 ====
 
 * All the fields in the next screen are optional. Leave them blank and click on Next.
@@ -86,4 +86,4 @@ image::m5/schema-created.png[]
 * Great job! You have successfully added a new schema to the Schema Registry. 
 
 === Up Next
-In the next section, we will see how to producer and consumer application use this schema to send and receive messages and make sure that the messages conform to the schema.
+In the next section, we will see how the producer and consumer application use this schema to send and receive messages and make sure that the messages conform to the schema.

@@ -4,7 +4,7 @@ include::../style.adoc[]
 
 == Globex Loyalty Program with Change Data Capture
 
-* To understand a sample application that uses Change Data Capture, we will create a loyalty program that tracks customer purchases and awards loyalty points. The loyalty program application will consume change events from the Debezium topics and update a loyalty points accordingly.
+* To understand a sample application that uses Change Data Capture, we will create a loyalty program that tracks customer purchases and awards loyalty points. The loyalty program application will consume change events from the Debezium topics and update loyalty points accordingly.
 
 * Navigate to the tab with the *Devspaces* IDE
 
@@ -26,7 +26,7 @@ kafka-kafka-bootstrap.kafka-{user_name}.svc.cluster.local:9092
 oc apply -f module-cdc/loyalty-deployment.yaml -n globex-{user_name}
 ----
 
-* This deploys a simple Quarkus application that consumes change events from the Debezium topics and updates a loyalty points accordingly. Check the deployment status and make sure the application is running.
+* This deploys a simple Quarkus application that consumes change events from the Debezium topics and updates loyalty points accordingly. Check the deployment status and make sure the application is running.
 +
 [source,bash,role=execute,subs="attributes"]
 ----
@@ -50,9 +50,9 @@ image::m4/loyalty-dashboard.png[]
 
 * The loyalty program application team can now build their own services and applications that leverage the change events produced by Debezium, without having to directly interact with the Globex retail application database. This decouples the loyalty program from the retail application, enabling more flexibility and scalability in building event-driven applications.
 
-* Another use case could be *build a real time order tracker* that could be displayed on screens in the warehouse showing incoming orders as they are created for the warehouse team to process them quickly. You can see a sample application link:https://cdc-dashboard-globex-{user_name}.{openshift_cluster_subdomain}/warehouse[here, window="warehouse"]
+* Another use case could be *build a real time order tracker* that could be displayed on screens in the warehouse showing incoming orders as they are created for the warehouse team to process them quickly. You can see a sample application link:https://cdc-dashboard-globex-{user_name}.{openshift_cluster_subdomain}/warehouse[here, window="warehouse"].
 
-* Feel free to explore the source code of the loyalty program application and the order tracker application link:https://github.com/streams-kafka-workshop/module-cdc[here, window="_github"]
+* Feel free to explore the source code of the loyalty program application and the order tracker application link:https://github.com/streams-kafka-workshop/module-cdc[here, window="_github"].
 
 This brings us to the end of this module on Change Data Capture with Debezium. In this module, we have seen how to deploy a Debezium connector to capture change events from a relational database and produce them to Kafka topics in real-time. We also saw how to build simple applications that consume these change events to build event-driven applications.
 

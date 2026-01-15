@@ -5,14 +5,15 @@ include::../style.adoc[]
 {m5}
 
 === What is a schema?
-A schema is a formal description of the structure of a data type. A schema can be used to validate data at runtime and to serialize and deserialize data that is being sent or received from a kafka topic.
+A schema is a formal description of the structure of a data type. A schema can be used to validate data at runtime and to serialize and deserialize data that is being sent or received from a Kafka topic.
 
 === Why use a schema?
 Using a schema provides several benefits:
-** Data validation: ensures that the data being sent or received conforms to the expected structure.    
-** Data serialization/deserialization: enables efficient serialization and deserialization of data, reducing the size of messages and improving performance.    
-** Schema evolution: allows for changes to the schema over time while maintaining compatibility with existing data.    
-** Interoperability: enables different systems to communicate with each other by using a common schema.
+
+* *Data validation:* ensures that the data being sent or received conforms to the expected structure.    
+* *Data serialization/deserialization:* enables efficient serialization and deserialization of data, reducing the size of messages and improving performance.    
+* *Schema evolution:* allows for changes to the schema over time while maintaining compatibility with existing data.    
+* *Interoperability:* enables different systems to communicate with each other by using a common schema.
 
 
 
@@ -24,7 +25,7 @@ Client applications such as producers and consumers can dynamically push or pull
 image::m5/schema-registry-diagram.png[]
 
 === Red Hat build of Apicurio Registry
-Red Hat offers a Red Hat build of Apicurio Registry, which is a schema registry on the Open source Apicurio Registry project. Client applications use the registry URL to fetch schemas for serialization/deserialization and runtime compatibility checks. A web console and optional validation/compatibility rules help manage and enforce schema evolution.
+Red Hat offers a Red Hat build of Apicurio Registry, which is a schema registry on the open-source Apicurio Registry project. Client applications use the registry URL to fetch schemas for serialization/deserialization and runtime compatibility checks. A web console and optional validation/compatibility rules help manage and enforce schema evolution.
 
 === Apicurio Registry Capabilities
 * Multiple payload formats for standard event schema and API specifications such as Apache Avro, JSON Schema, Google Protobuf, AsyncAPI, OpenAPI, and more.

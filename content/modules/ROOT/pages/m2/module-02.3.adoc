@@ -4,7 +4,7 @@ include::../style.adoc[]
 :cross: ×
 
 == Kafka Consumer API
-The Kafka consumer allows developers to write kafka consumers within their applications to read records from Kafka topics. The API provides various configuration options to control the behavior of the consumer, such as offset management, polling, and group coordination.
+The Kafka consumer API allows developers to write kafka consumers within their applications to read records from Kafka topics. The API provides various configuration options to control the behavior of the consumer, such as offset management, polling, and group coordination.
 
 We'll be looking at a simple Java application that uses the Kafka Consumer API to read messages from a Kafka topic. 
 
@@ -315,4 +315,4 @@ This demonstrates the minimal pattern every Kafka consumer follows:
 
 
 === Up Next
-Now that we have analyzed the Consumer APIs and the related code, let's put running our simple application to the see the consumer in action.
+Now that we have analyzed the Consumer APIs and the related code, let's run our simple application to the see the consumer in action.

@@ -39,16 +39,16 @@ The Globex web-app deployment consists of:
 |*Service* | *Description*
 
 | globex-web
-| The web front-end of the Globex web application* Running on Node.js with an Angular UI.
+| The web front-end of the *Globex web application*, running on Node.js with an Angular UI.
 
 | globex-store-app
-| The backend application of the Globex retail app* Written in Quarkus* Provides catalog, inventory, cart and order services* 
+| The backend application of the *Globex retail app*, written in Quarkus, provides catalog, inventory, cart and order services.
 
 | globex-db
-| The PostgreSQL database used by the globex-store-app application* Stores the catalog, inventory, customer and order information.
+| The PostgreSQL database used by the *globex-store-app application*, stores the catalog, inventory, customer and order information.
 
 | activity-tracking 
-| This microservice has a REST endpoint for user activity events generated from the UI. These events are produced to a Kafka topic.
+| This microservice has a REST endpoint for user activity events generated from the UI. These events are send to a Kafka topic.
 
 | recommendation-engine (We will explore this service in more detail in a later module.)
 | An example of an application which does real-time processing of an event stream* This application uses Kafka Streams, an event-streaming library, to process the stream of events produced by the activity tracking service to build a list of the most popular products on the web site* This list is exposed as a REST endpoint, and called by the front-end to display featured products.
@@ -87,14 +87,14 @@ image::m2/globex-tracking-topic-console.png[]
 +
 image::m2/amqstreams-globex-tracking.png[]
 
-* Click on any of the messages listed to see its contents* In this case, the body of each message consists of a JSON structure of a user activity event from the Globex web application.
+* Click on any of the messages listed to see its content. In this case, the body of each message consists of a JSON structure of a user activity event from the Globex web application.
 +
 image::m2/amqstreams-expand-message.png[]
 
-* The activity tracking service is the producer of these events. All the events such as likes are sent to the *globex.tracking* topic in real-time using the Kafka Producer API.
+* The activity tracking service is the producer of these events. All the events, such as likes, are sent to the *globex.tracking* topic in real-time using the Kafka Producer API.
 
 
-This is a simple real world practical example of a Kafka producer application that sends events to a Kafka topic. Both the activity tracking and recommendation engine services(which we will explore in the stream processing module) are implemented using Quarkus, a Java framework for building cloud-native applications,  which simplifies the interaction with Kafka as compared to using the Kafka Producer API directly.
+This is a simple real world practical example of a Kafka producer application that sends events to a Kafka topic. Both the activity tracking and recommendation engine services(which we will explore in the stream processing module) are implemented using Quarkus, a Java framework for building cloud-native applications,  which simplifies the interaction with Kafka, as compared to using the Kafka Producer API directly.
 
 === Up Next
 Let's briefly explore how Quarkus simplifies the interaction with Kafka. 

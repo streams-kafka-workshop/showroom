@@ -21,7 +21,7 @@ cd module-kafka-api/
 
 NOTE: Hit *allow* if the browser prompts for permission to paste into the terminal.
 
-* Login to the *kafka-{user_name}* project using the following command.
+* Log in to the *kafka-{user_name}* project using the following command.
 +
 [source,bash,role="execute",subs=attributes+]
 ----

@@ -18,4 +18,4 @@ image::m4/cdc-architecture.png[]
 
 
 === Activity Overview
-In this module, you will deploy a Debezium connector to capture changes from the Globex retail application database and publish them to Kafka topics. You will then verify that the change events are being published correctly.. You will also see how other applications can use the change events produced by Debezium to build event-driven applications. 
+In this module, you will deploy a Debezium connector to capture changes from the Globex retail application database and publish them to Kafka topics. You will then verify that the change events are being published correctly. You will also see how other applications can use the change events produced by Debezium to build event-driven applications. 

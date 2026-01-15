@@ -12,17 +12,17 @@ We'll be looking at a simple Java application that uses the Kafka Producer API t
 
 === A Simple Producer Application
 
-* Navigate to {openshift_cluster_console}/k8s/cluster/projects[OpenShift Cluster Console, window="_console"]. Login with your username and password (`{user_name}`/`{password}`).
+* Navigate to {openshift_cluster_console}/k8s/cluster/projects[OpenShift Cluster Console, window="_console"]. Log in with your username and password (`{user_name}`/`{password}`).
 
 * Open the Devspaces IDE from the top right corner of your OpenShift console.
 +
 image::m2/devspaces.png[]
 
-* Click on the login with OpenShift button.
+* Click on the log in with OpenShift button.
 +
 image::m2/login-openshift.png[]
 
-* Login using your credentials  - `{user_name}` and `{password}`
+* Log in using your credentials  - `{user_name}` and `{password}`
 
 * Click on *Allow Selected Permissions* button to proceed.
 

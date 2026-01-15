@@ -16,7 +16,7 @@ image::m3/amqstreams-globex-tracking-recommendation.png[]
 
 * The Globex web application uses the messages in this topic to display the list of featured products on the home page.
 
-* To verify this,go to the tab pointing to the link:{globex_web_url}[Globex web application, window="_globex"] from your browser. Navigate to the home page. You should see some items in the list of featured products, corresponding to the list of products you liked previously.
+* To verify this go to the tab pointing to the link:{globex_web_url}[Globex web application, window="_globex"] from your browser. Navigate to the home page. You should see some items in the list of featured products, corresponding to the list of products you liked previously.
 +
 image::m3/globex-home-page-featured.png[]
 

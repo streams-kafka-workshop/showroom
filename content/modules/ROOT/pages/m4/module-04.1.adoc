@@ -13,11 +13,11 @@ To deploy the connector, you are going to use OpenShift Dev Spaces. OpenShift De
 +
 image::m4/devspaces.png[]
 
-* Click on the login with OpenShift button.
+* Click on the "log in with OpenShift" button.
 +
 image::m4/login-openshift.png[]
 
-* Login using your credentials  - `{user_name}` and `{password}`.
+* Log in using your credentials  - `{user_name}` and `{password}`.
 
 
 * From the Devspaces dashboard, click on *open* button to launch your workspace.
@@ -39,7 +39,7 @@ image::m4/devspaces-workspace-debezium-connector.png[]
 ** *+database.*+*: the connection details for the database. Note that PostgreSQL is setup with a specific user (*debezium*) which has the required privileges to read from the transaction logs.
 ** *topic.prefix*: the prefix of the Kafka topics which will receive the Debezium change events. The full name of the topics is *<prefix>.<schema>.<table>*.
 ** *schema.include.list*: the schema's to include in the change data capture process.
-** *table.include.list*: the name of the tables to include. For our use case we are interested in the *customer*, *orders* and *line_item* tables.
+** *table.include.list*: the name of the tables to include. For our use case, we are interested in the *customer*, *orders* and *line_item* tables.
 
 * Before deploying the connector, you need to substitute the placeholder for the database hostname with the actual value. *On line 14, replace*
 +
@@ -56,7 +56,7 @@ globex-db.globex-{user_name}.svc.cluster.local
 +
 which is the internal DNS name of the Globex retail application database.
 
-* You can deploy the connector to the OpenShift cluster directly from Dev Spaces. * In the Devspaces IDE, open a new terminal by clicking on the menu on the top left corner. Then select *Terminal > New Terminal.* to launch a new terminal window.
+* You can deploy the connector to the OpenShift cluster directly from Dev Spaces. *In the Devspaces IDE*, open a new terminal by clicking on the menu on the top left corner. Then select *Terminal > New Terminal.* to launch a new terminal window.
 +
 image::m4/devspaces-terminal.png[]
 
@@ -64,7 +64,7 @@ image::m4/devspaces-terminal.png[]
 +
 image::m4/devspaces-menu-terminal.png[]
 
-* The OpenShift Dev Spaces environment has access to a plethora of command line tools, including *oc*, the OpenShift  command line interface. Through OpenShift Dev Spaces you are automatically logged in into the OpenShift cluster. You can verify this with the command *oc whoami*.
+* The OpenShift Dev Spaces environment has access to a plethora of command line tools, including *oc*, the OpenShift  command line interface. Through OpenShift Dev Spaces you are automatically logged in the OpenShift cluster. You can verify this with the command *oc whoami*.
 +
 [source,bash,role=execute,subs="attributes"]
 ----
@@ -79,7 +79,7 @@ oc whoami
 +
 [IMPORTANT]
 ====
-If the output of the `oc whoami` command does not correspond to your username ({user_name}), you need to logout and login again with the correct username.
+If the output of the `oc whoami` command does not correspond to your username ({user_name}), you need to log out and log in again with the correct username.
 
 [source,bash,role=execute,subs="attributes"]
 ----
@@ -114,7 +114,7 @@ image::common/console_anonymous.png[]
 
 * Navigate to *Topics* menu on the left hand side. 
 +
-Filter the topics by *Name*  by the term `globex.updates`. Intitially, you will only see one topic globex.updates.public.customer, that will receive the change events.
+Filter the topics by *Name*  by the term `globex.updates`. Intitially, you will only see one topic, `globex.updates.public.customer`, that will receive the change events.
 +
 image::m4/console-cdc-filter-topics.png[]
 
@@ -136,4 +136,4 @@ image::m4/amqconsole-debezium-topic-customers-200.png[]
 * The Globex application database does not contain any order information at the moment, so the *globex.updates.public.orders* and *globex.updates.public.line_item* topics are not yet created. You can verify this through the streams for Apache Kafka console. 
 
 === Up Next
-In the next section of the workshop, you will create some orders, and verify that the corresponding change events are picked up by Debezium anf published to the above mentioned two topics.  
+In the next section of the workshop, you will create some orders, and verify that the corresponding change events are picked up by Debezium and published to the above mentioned two topics.  

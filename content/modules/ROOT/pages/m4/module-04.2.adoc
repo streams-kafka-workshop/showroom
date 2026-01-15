@@ -11,7 +11,7 @@ include::../style.adoc[]
 +
 image::m4/globex-login.png[]
 
-* Login with any of the username listed here `asilva`/`cjones`/`asanders`/`pwong`/`mmiller``. The password is `openshift`.
+* Log in with any of the username listed here `asilva`/`cjones`/`asanders`/`pwong`/`mmiller``. The password is `openshift`.
 +
 image::m4/login_credentials_page.png[]
 
@@ -19,7 +19,7 @@ image::m4/login_credentials_page.png[]
 +
 image::m4/cool-stuff-store.png[]
 
-* Click on the item of your choice to open the product details page and then click on the *Add to Cart* button to add the item to your shopping cart. Feel free to browse and add multiple items to your cart so that we can simulate a larger number of orders.
+* Click on the item of your choice to open the product details page and then click on the *Add to Cart* button to add the item to your shopping cart. Feel free to browse and add multiple items to your cart, so that we can simulate a larger number of orders.
 +
 image::m4/add_to_cart.png[]
 
@@ -76,7 +76,7 @@ image::m4/openshift-route-order-simulator.png[]
 
 
 * This opens a Swagger UI page showing the REST API of the simulator. +
-Click on the *POST* link, and then on the *Try it out* link on the right.
+Click on the *POST* link, and then on the *Try it out* link, on the right.
 +
 image::m4/order-simulator-swagger-ui-post.png[]
 
