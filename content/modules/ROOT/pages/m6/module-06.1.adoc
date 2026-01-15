@@ -149,10 +149,10 @@ EOF
 * The topic `secure-demo` creation should now be successful. You can verify the same by navigating to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > topics. 
 
 
-* You should be able to see the topic `secure-demo`in the list. This is the topic we created using the secure 9095 listener with authentication.
+* You should be able to see the topic `secure-demo` in the list. This is the topic we created using the secure 9095 listener with authentication.
 
 === Up Next
-In the next section, we will learn about Access Control Lists (ACLs) which will allow us to control the access to topics, clusters, brokers, etc at a granular level. For example, we can allow a user to read from a topic but not write to it.
+In the next section, we will learn about Access Control Lists (ACLs), which will allow us to control the access to topics, clusters, brokers, etc at a granular level. For example, we can allow a user to read from a topic but not write to it.
 
 
 

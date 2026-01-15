@@ -303,6 +303,6 @@ image::m5/error-compatibility.png[]
 
 === Summary
 
-This brings us to the end of this module. In order to understand more about the different compatibility rules, you can refer to the link:https://docs.redhat.com/en/documentation/red_hat_build_of_apicurio_registry/3.1/html/apicurio_registry_user_guide/registry-rule-reference_registry#registry-rule-types_registry[documentation here].
+This brings us to the end of this module. In order to understand more about the different compatibility rules, you can refer to the link:https://docs.redhat.com/en/documentation/red_hat_build_of_apicurio_registry/3.1/html/apicurio_registry_user_guide/registry-rule-reference_registry#registry-rule-types_registry[documentation here, window="docs"].
 
 Schema registry is a powerful tool that allows you to manage the schemas for your data streaming application. It ensures that the schemas are compatible with each other and that the new schemas are compatible with the existing schemas and provides multiple compatibility rules to fit your needs. 
