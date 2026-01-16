@@ -21,17 +21,22 @@ Let's see how this works in practice
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-{user_name} load-producer --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc 'i=1; while true; do echo "k$((i%10)):msg-$i"; i=$((i+1)); sleep 0.3; done | \
-  /opt/kafka/bin/kafka-console-producer.sh \
-    --bootstrap-server kafka-kafka-bootstrap:9092 \
-    --topic demo \
-    --property parse.key=true \
-    --property key.separator=:'
+i=1; while true; do echo "k$((i%10)):msg-$i"; i=$((i+1)); sleep 0.3; done | \
+  kafka-console-producer.sh \
+  --bootstrap-server $BOOTSTRAP \
+  --topic demo \
+  --property parse.key=true \
+  --property key.separator=:
 ----
 
 * Now let's start three consumers in the same consumer group, *demo-cg*, one by one, using a simple bash script. As you proceed through the script and keep starting new consumers, you will see the rebalancing of partitions between the consumers. 
+
+* Exit the shell in the *lower terminal* if you are already inside the toolbox container.
++
+[source,bash,role="execute",subs=attributes+]
+----
+exit
+----
 
 * In the *lower terminal*, make sure you are on the `kafka-{user_name}` project.
 +

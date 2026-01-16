@@ -103,9 +103,8 @@ Let's now see this action.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-{user_name} topic-create --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9095 --create --topic secure-demo --partitions 3 --replication-factor 1'
+kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9095 \
+  --create --topic secure-demo --partitions 3 --replication-factor 1
 ----
 
 * Wait for a minute or so and observe the topic creation fails. You should see the following error message:
@@ -123,27 +122,25 @@ pod kafka-user1/topic-create terminated (Error)
 
 * We've already created an admin user on this cluster with all the privileges needed. We will use this user to create the topic using the secure listener with authentication. 
 
-// Navigate to the link:{openshift_cluster_console}/k8s/ns/kafka-user1/secrets/admin[OpenShift console, window="_console"] to the see the secret and the credentials.
-
-// * This the secret for the username `admin`. Click on reveal values to see the credentials.
-// +
-// image::m6/reveal.png[]
-
-* Now let's create the new topic again using the credentials from the secret. Observe that the credentials are now in the command line and the listener is 9095.
+* First, let's create a local config file with the necessary authentication details. Run the following command in the *upper terminal*.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-{user_name} topic-create --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc 'cat >/tmp/client.properties <<EOF
+cat > /tmp/client.properties <<EOF
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=SCRAM-SHA-512
 sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="admin" password="adminpassword";
 EOF
-/opt/kafka/bin/kafka-topics.sh \
-  --bootstrap-server kafka-kafka-bootstrap:9095 \
+----
+
+
+* Now let's create the new topic again using the correct credentials. Observe that the credentials are now passed in the form of the config file  and the we are using the secure 9095 listener with authentication.
++
+[source,sh,role="execute",subs=attributes+]
+----
+kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9095 \
   --command-config /tmp/client.properties \
-  --create --topic secure-demo --partitions 3 --replication-factor 1'
+  --create --topic secure-demo --partitions 3 --replication-factor 1
 ----
 
 * The topic `secure-demo` creation should now be successful. You can verify the same by navigating to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="console"] > topics. 

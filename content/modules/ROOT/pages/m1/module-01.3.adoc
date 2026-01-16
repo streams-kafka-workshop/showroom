@@ -17,9 +17,7 @@ A Kafka Producer is a client application responsible for writing data to a Kafka
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-{user_name} demo-producer --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-console-producer.sh --bootstrap-server kafka-kafka-bootstrap:9092 --topic demo'
+kafka-console-producer.sh --bootstrap-server $BOOTSTRAP --topic demo
 ----
 
 * Type the below messages as soon as the producer is ready in the *upper terminal*. The producer is ready when you see the `>` prompt. Each line you type is sent as a separate message to the Kafka topic `demo`. Type each word and hit enter.

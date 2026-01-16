@@ -70,21 +70,27 @@ spec:
 +
 image::m6/producer-user-yaml-create.png[]
 
-* Now, let's try to delete the topic using the producer user you just created. Navigate to the *upper terminal* and run the following command. Notice the username and credentials we are passing in the command.
+* Now, let's try to delete the topic using the producer user you just created. 
+
+* Navigate to the *upper terminal and first create a temporary config file with the producer credentials. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-{user_name} topic-delete-producer --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc 'cat >/tmp/client.properties <<EOF
+cat > /tmp/client.properties <<EOF
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=SCRAM-SHA-512
 sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="producer" password="producerpassword";
 EOF
-/opt/kafka/bin/kafka-topics.sh \
-  --bootstrap-server kafka-kafka-bootstrap:9095 \
+----
+
+
+* Navigate to the *upper terminal* and run the following command, to see if the producer user can delete the topic `secure-demo`.
++
+[source,sh,role="execute",subs=attributes+]
+----
+kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9095 \
   --command-config /tmp/client.properties \
-  --delete --topic secure-demo'
+  --delete --topic secure-demo
 ----
 
 * You should see an error message similar to the following:
@@ -94,21 +100,16 @@ EOF
 ERROR org.apache.kafka.common.errors.TopicAuthorizationException: Topic authorization failed.
 ----
 
-* The above error is expected and shows the ACL in action as the producer user only has permissions to write to the topic but not delete it. Let's try to write to topic. Run the below command in the *upper terminal* and write some messages to the topic.
+* The above error is expected and shows the ACL in action as the producer user only has permissions to write to the topic but not delete it. 
+
+* Now, Let's try to write to topic. Run the below command in the *upper terminal* and write some messages to the topic.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-{user_name} k-producer --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc 'cat >/tmp/client.properties <<EOF
-security.protocol=SASL_PLAINTEXT
-sasl.mechanism=SCRAM-SHA-512
-sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="producer" password="producerpassword";
-EOF
-/opt/kafka/bin/kafka-console-producer.sh \
+kafka-console-producer.sh \
   --bootstrap-server kafka-kafka-bootstrap:9095 \
   --producer.config /tmp/client.properties \
-  --topic secure-demo'
+  --topic secure-demo
 ----
 
 * Write some messages as shown below and hit `ctrl+c` to stop the producer.
@@ -139,6 +140,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: consumer-password
+  namespace: kafka-{user_name}
 type: Opaque
 stringData:
   password: "consumerpassword"
@@ -184,21 +186,25 @@ spec:
 
 * Quit the producer if it is still running by hitting `ctrl+c` in the terminal.
 
-* Navigate to the *upper terminal* and run the following command. 
+* Navigate to the *upper terminal* and first create a temporary config file with the consumer credentials. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-{user_name} sinster-consumer --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc 'cat >/tmp/client.properties <<EOF
+cat > /tmp/client.properties <<EOF
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=SCRAM-SHA-512
 sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="consumer" password="consumerpassword";
 EOF
-/opt/kafka/bin/kafka-console-producer.sh \
+----
+
+* In the *upper terminal* and run the following command to see if client with consumer credentials can write to the topic(which the ACL does not allow). 
++
+[source,sh,role="execute",subs=attributes+]
+----
+kafka-console-producer.sh \
   --bootstrap-server kafka-kafka-bootstrap:9095 \
   --producer.config /tmp/client.properties \
-  --topic secure-demo'
+  --topic secure-demo
 ----
 
 * Try to write a message to the topic. 
@@ -237,18 +243,11 @@ pod "sinster-consumer" deleted
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-{user_name} k-consumer --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc 'cat >/tmp/client.properties <<EOF
-security.protocol=SASL_PLAINTEXT
-sasl.mechanism=SCRAM-SHA-512
-sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="consumer" password="consumerpassword";
-EOF
-/opt/kafka/bin/kafka-console-consumer.sh \
+kafka-console-consumer.sh \
   --bootstrap-server kafka-kafka-bootstrap:9095 \
   --consumer.config /tmp/client.properties \
   --topic secure-demo \
-  --from-beginning'
+  --from-beginning
 ----
 
 * You should see all the messages written by the producer to the topic `secure-demo` indicating that the consumer user is able to read the topic and ACLs are implemented as expected.

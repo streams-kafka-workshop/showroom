@@ -26,18 +26,28 @@ A Kafka Consumer reads messages from Kafka topics and hands them to your applica
 {login_command}
 ----
 
+* Connect to the toolbox container you just created by running the following command in the *upper terminal*.
++
+[source,sh,role="execute",subs=attributes+]
+----
+oc rsh -n kafka-{user_name} kafka-toolbox
+----
+
 * Run the consumer in the *lower terminal*
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-{user_name} demo-consumer --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-kafka-bootstrap:9092 --topic demo --group demo-group --from-beginning --property print.key=true --property print.partition=true --property key.separator=" | "'
+kafka-console-consumer.sh --bootstrap-server $BOOTSTRAP --topic demo \
+  --group demo-group \
+  --from-beginning \
+  --property print.key=true \
+  --property print.partition=true \
+  --property key.separator=" | "
 ----
 
 
 
-* Observe that the messages that the producer had sent earlier appear in the consumer terminal, indicating that they are being consumed. 
+* Observe that the messages that the producer had sent earlier appear in the consumer terminal, indicating that they are being consumed. The null values indicate that no key was provided while sending the messages.
 
 
 * Type more messages in the producer terminal and observe them being consumed in the consumer terminal.

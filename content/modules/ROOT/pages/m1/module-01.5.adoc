@@ -5,20 +5,18 @@ include::../style.adoc[]
 == Kafka Basics - Partitioning and Keys
 As we learned earlier, With a key, the records/messages with the same key go to the same partition. Let's see this in action.
 
-* Stop the existing producer and consumer by typing (Ctrl+C). In the *upper terminal*, let's run a new producer that accepts key-value pairs.
+* Stop the existing producer and consumer by typing (Ctrl+C). 
 
-* Run a new producer that will send a bunch of messages with key-value pair. This will ensure messages with the same key go to the same topic partition.
+* Run a new producer that will send a bunch of messages with key-value pair in the *upper terminal*. This will ensure messages with the same key go to the same topic partition.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-oc run -n kafka-{user_name} load-producer --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc 'i=1; while true; do echo "k$((i%10)):msg-$i"; i=$((i+1)); sleep 0.3; done | \
-  /opt/kafka/bin/kafka-console-producer.sh \
-    --bootstrap-server kafka-kafka-bootstrap:9092 \
-    --topic demo \
-    --property parse.key=true \
-    --property key.separator=:'
+i=1; while true; do echo "k$((i%10)):msg-$i"; i=$((i+1)); sleep 0.3; done | \
+  kafka-console-producer.sh \
+  --bootstrap-server $BOOTSTRAP \
+  --topic demo \
+  --property parse.key=true \
+  --property key.separator=:
 ----
 
 * Wait for *10 seconds* after the producer starts to allow some messages to be produced and stop the producer (Ctrl+C).
