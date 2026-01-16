@@ -125,12 +125,14 @@ oc run -n kafka-{user_name} topic-create --rm -it --restart=Never \
 
 
 
-* The next option is *linger.ms.* The default value for our application is 0, which means that the producer will not wait for any messages to accumulate before sending them. Enter `30000` and press enter. This will make the producer wait for 30 seconds until the batch is full before sending it. The producer will send the batch after 30 seconds, even if it is not full. Enter the below value and press enter.
+* The next option is *linger.ms.* The default value for our application is 0, which means that the producer will not wait for any messages to accumulate before sending them. Enter `30000` and press enter. Enter the below value and press enter.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
 30000
 ----
+
+* This will make the producer wait for 30 seconds or until the batch is full before sending it. 
 
 * You should see that none of the messages are sent immediately. Only after 30 seconds the messages are sent to the topic.
 
@@ -174,9 +176,11 @@ Total batches across all partitions: 3
 
 * Accept the *default values* for batch size(16 KB) and linger.ms (0) seconds. Before you press enter, take a guess on what will happen and observe the output.
 
-* Now hit enter. You should observe that the messages are sent immediately without any wait. This is because the linger.ms has been set to 0 seconds. The producer will not wait for any messages to accumulate before sending them.
+* Now hit enter. You should observe that the messages *are sent immediately without any wait*. This is because the linger.ms has been set to 0 seconds. The producer will not wait for any messages to accumulate before sending them.
 
-* Hit enter and press `3` and press enter again to exit the application.
+* Hit enter and 
+
+* Type `3` and hit enter again to exit the application.
 
 === Summary
 This section hopefully helped you get a high level understanding of the producer api and see a couple of producer configurations in action. 

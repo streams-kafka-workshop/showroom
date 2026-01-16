@@ -5,7 +5,7 @@ include::../style.adoc[]
 
 
 == Quarkus and Kafka
-Quarkus significantly simplifies interaction with Kafka, when compared to using the bare Apache Kafka Client in Java, by leveraging the SmallRye Reactive Messaging framework based on the MicroProfile Reactive Messaging specification. This abstraction removes boilerplate code, manages low-level concerns like threading, serialization, and offset commits, and provides an annotation-driven, message-channel model.
+Quarkus significantly simplifies interaction with Kafka compared to using the bare Apache Kafka Client in plain Java by leveraging the SmallRye Reactive Messaging framework based on the MicroProfile Reactive Messaging specification. This abstraction removes boilerplate code, manages low-level concerns like threading, serialization, and offset commits, and provides an annotation-driven, message-channel model.
 
 Let's look at how the activity tracking service uses Quarkus to produce and consume messages to and from Kafka topics.
 
@@ -15,13 +15,13 @@ Let's look at how the activity tracking service uses Quarkus to produce and cons
 
 
 === Simplified Programming Model with Quarkus
-* In normal Java with the Kafka Client, you must manually set up the KafkaProducer or KafkaConsumer, handle configuration, manage threading for continuous polling, perform manual serialization/deserialization, and explicitly commit offsets.
+* In plain Java with the Kafka Client, you must manually set up the KafkaProducer or KafkaConsumer, handle configuration, manage threading for continuous polling, perform manual serialization/deserialization, and explicitly commit offsets.
 
 Quarkus abstracts this into a clean, annotation-based model using @Incoming and @Outgoing. You focus purely on the business logic of processing the message payload.
 
 Kafka Producer (Sending Messages)
 |===
-| Aspect | Normal Java(Kafka Client) | Quarkus(Reactive Messaging)
+| Aspect | Plain Java(Kafka Client) | Quarkus(Reactive Messaging)
 | Setup
 | Manually configure *ProducerConfig* (bootstrap servers, serializers), create *KafkaProducer* instance.
 | Inject an Emitter and configure the channel in *application.properties*. Quarkus manages the Producer lifecycle.
@@ -33,7 +33,7 @@ Kafka Producer (Sending Messages)
 
 Kafka Consumer (Receiving Messages)
 |===
-| Aspect | Normal Java(Kafka Client) | Quarkus(Reactive Messaging)
+| Aspect | Plain Java(Kafka Client) | Quarkus(Reactive Messaging)
 | Setup
 | Manually configure *ConsumerConfig*, create *KafkaConsumer* instance, and subscribe to topics.
 | Define a simple method with the *@Incoming* annotation. Quarkus manages the Consumer lifecycle and subscription.

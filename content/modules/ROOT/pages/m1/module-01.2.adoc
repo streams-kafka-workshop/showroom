@@ -8,27 +8,19 @@ Storing the messages in a topic in a single node would limit the scalability of 
 
 image::m1/topic-image.png[]
 
-=== Ordering rule
+=== Message Ordering
+* Messages sent to kafka can consist of only a value or a key-value pair. 
 
-* Strict order exists within a partition.
+* Though ordering of the messages is not guaranteed, across a topic, strict order can be achieved within a partition.
 
-* Global ordering is not guaranteed across a topic 
+* Sending related messages using the same key so they go to the same partition in a mandatory precondition to achieve strict ordering within a partition.
 
-* If you need ordering, use the same key to ensure all events for that key go to the same partition.
 
-=== Offsets
-
-Each record in a partition has a monotonically increasing offset (0, 1, 2…). Offsets are the consumer’s “cursor”.
-
-=== Lag
-
-The difference between the offset of the last message consumed and the offset of the last message in the partition. It basically represents the number of messages that have not been consumed yet in a partition.
-
-=== Replication & durability
+=== Replication & Fault Tolerance
 
 * Each partition has one leader and replicas (followers).
 
-* Replication factor (e.g., 3) determines durability and availability.
+* The leader handles all reads and writes for the partition.
 
 * Producers/consumers talk to the leader; followers keep up via replication.
 
@@ -36,11 +28,7 @@ image::m1/replication-broker.png[]
 
 
 
-=== Key-based routing
 
-* With a key, the records/messages with the same key go to the same partition.
-
-* With no key, producers distribute across partitions and order is not guaranteed.
 
 
 === Exercise

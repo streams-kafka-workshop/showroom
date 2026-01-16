@@ -3,7 +3,7 @@ include::../style.adoc[]
 
 
 == Kafka Basics - Partitioning and Keys
-As we learned earlier, With a key, the records/messages with the same key go to the same partition → per-key order. Let's see this in action.
+As we learned earlier, With a key, the records/messages with the same key go to the same partition. Let's see this in action.
 
 * Stop the existing producer and consumer by typing (Ctrl+C). In the *upper terminal*, let's run a new producer that accepts key-value pairs.
 
@@ -22,6 +22,7 @@ oc run -n kafka-{user_name} load-producer --rm -it --restart=Never \
 ----
 
 * Wait for *10 seconds* after the producer starts to allow some messages to be produced and stop the producer (Ctrl+C).
+
 * The messages produced will be in the format `key:value` such as `k1:msg-1`, `k2:msg-2` etc
 
 * Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="_amqstreams"] > topics > demo and verify the messages being produced to the topic `demo`. You should see messages with keys `k0` to `k9` being produced to the topic.

@@ -41,11 +41,6 @@ Enter your choice:
 * Choose the option 2 to run the consumer. Enter the option 2 and press enter.
 
 * First, you should be prompted to enter the value for `auto.offset.reset`
-+
-[source,bash]
-----
-Enter auto.offset.reset (earliest/latest, or press Enter for default)
-----
 
 * Type `latest` and press enter. 
 +
@@ -84,7 +79,7 @@ NOTE: This property defines what the consumer should do when there is no initial
 * You will observe that the consumer is now running and consumes all the messages that were just sent by the producer. The messages are displayed in the terminal.
 
 
-=== Experiment with fetch.min.bytes and fetch.max.wait.ms (option exercise)
+=== Optional exercise:Experiment with fetch.min.bytes and fetch.max.wait.ms 
 You can also experiment with different values for `fetch.min.bytes` and `fetch.max.wait.ms` to see how they affect the consumer behavior.
 
 * Hit enter and press `1` again to run the producer again. Accept all the default values and press enter. 

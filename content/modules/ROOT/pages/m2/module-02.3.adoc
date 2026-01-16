@@ -17,10 +17,10 @@ image::m2/module-kafka-api-consumer.png[]
 This section breaks down the code and explain hows a **Kafka consumer** is configured and how it works under the hood.
 
 In this example:
+
 * The consumer connects to a Kafka cluster using configuration from `AppConfig`
-* It reads messages with string keys and values
-* It automatically commits offsets to ensure reliability
-* TBD
+* It reads messages with string keys and values and changes its behavior based on configuration options provided as user inputs. 
+* It automatically commits offsets to ensure reliability and message delivery semantics
 * It safely closes when done
 
 === Consumer Configuration
