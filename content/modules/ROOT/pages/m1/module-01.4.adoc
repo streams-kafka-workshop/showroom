@@ -47,7 +47,7 @@ kafka-console-consumer.sh --bootstrap-server $BOOTSTRAP --topic demo \
 
 
 
-* Observe that the messages that the producer had sent earlier appear in the consumer terminal, indicating that they are being consumed. The null values indicate that no key was provided while sending the messages.
+* Observe that the messages that the producer had sent earlier appear in the consumer terminal, indicating that they are being consumed. The *null values* indicate that no key was provided while sending the messages.
 
 
 * Type more messages in the producer terminal and observe them being consumed in the consumer terminal.
@@ -73,6 +73,9 @@ image::m1/console_consumed_partition.png[]
 * You should be able to see the messages consumed by the consumer from that partition.
 +
 image::m1/console_consumed_partition_messages.png[]
+
+=== Clean up
+* Type *ctrl+c* in the *upper terminal* and *ctrl+c* in the *lower terminal* to stop the producer and consumer respectively.
 
 === Up Next
 Now that we have looked at the basics of producers and consumers, let's learn how ordering of messages can be achieved using partitions and keys in the next section.

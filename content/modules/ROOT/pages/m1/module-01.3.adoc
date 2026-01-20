@@ -29,6 +29,8 @@ kafka-console-producer.sh --bootstrap-server $BOOTSTRAP --topic demo
 ** `workshop`
 ** `enjoy!`
 
+* Keep the producer running to send more messages in the next section.
+
 // * Hit `Ctrl + C` followed by `Enter` in the *upper terminal* to stop the producer after sending the messages.
 
 * Navigate to the https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="_amqstreams"] *topics > demo* to see the messages you sent.

@@ -80,9 +80,9 @@ image::m1/demo-cg-c1-c2.png[]
 image::m1/demo-cg-c1-c2-c3.png[]
 
 
-* If you start a 4th consumer in the same group, it will sit idle (no partition assigned), which is expected. This is because, we have 3 partitions and 3 consumers. Since there are no more partitions left, the 4th consumer will not be assigned any partitions. Kafka ensures that each partition is consumed by only one member of a consumer group at any given time to avoid duplicate processing of messages. 
+* Go ahead and start the 4th consumer by pressing enter in the *lower terminal*. Do not press enter again to stop the other consumers yet.
 
-* Go ahead and start the 4th consumer by pressing enter in the *lower terminal*. You will see that the 4th consumer (cg-c4) is started but it is not assigned any partitions and remains idle as shown below. *Do not press enter again to stop the other consumers yet.*
+* You will see that the 4th consumer (cg-c4) is started but it is not assigned any partitions and remains idle as shown below. This is because, we have 3 partitions and 3 consumers. Since there are no more partitions left, the 4th consumer will not be assigned any partitions. Kafka ensures that each partition is consumed by only one member of a consumer group at any given time to avoid duplicate processing of messages. 
 +
 image::m1/demo-cg-c1-c2-c3-c4.png[]
 

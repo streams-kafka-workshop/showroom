@@ -5,9 +5,7 @@ include::../style.adoc[]
 == Kafka Basics - Partitioning and Keys
 As we learned earlier, With a key, the records/messages with the same key go to the same partition. Let's see this in action.
 
-* Stop the existing producer and consumer by typing (Ctrl+C). 
-
-* Run a new producer that will send a bunch of messages with key-value pair in the *upper terminal*. This will ensure messages with the same key go to the same topic partition.
+* In the *upper terminal* run a new producer that will send a bunch of messages with key-value pair . This will ensure messages with the same key go to the same topic partition.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
