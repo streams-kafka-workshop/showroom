@@ -53,18 +53,19 @@ While we recommend Kafka for many use cases, there are some cases where it may n
 * Huge binary blobs (store in object storage; send references via Kafka).
 
 === What is {streams}?
+Running Kafka on OpenShift without native support can be complex. While deploying Kafka directly with standard resources like StatefulSet and Service is possible, the process is often error-prone and time-consuming. This is especially true for operations like upgrades and configuration updates. {streams} dramatically reduces this complexity, providing the following advantages:
 
 *{streams}* is Kafka built for OpenShift/Kubernetes, using the Strimzi operators to make Kafka declarative and automated:
 
-* **CRDs & operators:** Define clusters, topics, and users in YAML; operators handle deployment, scaling, and upgrades.
+* **Native OpenShift integration**: {streams} transforms Kafka into an OpenShift-native application. It extends the Kubernetes API with Custom Resources (CRs) like Kafka, KafkaTopic, and KafkaUser. Custom resources offer a stable and highly configurable way to manage Kafka.
 
-* **Day-2 operations:** Rolling updates, self-healing, storage management, and policy alignment with OpenShift.
+* **Declarative cluster management:**  Manage the lifecycle of your Kafka resources declaratively. Declarative control allows you to manage resources like topics and users directly in YAML
 
-* **Security & observability:** TLS, SASL/OAuth/mTLS, RBAC integration, Prometheus/Grafana metrics.
+* **Support for upgrade, scaling, and recovery:** {streams} operators automate rolling upgrades and recovery of Kafka components, helping to reduce manual intervention and downtime
 
-* **Ecosystem components:** Brokers (modern KRaft), Kafka Connect, MirrorMaker 2, and bridges—ready for platform teams.
+* **Integrated support for data streaming pipelines:** When Streams for Apache Kafka is installed, you can deploy and manage Kafka clusters alongside supporting components such as Kafka Connect, MirrorMaker 2, and Kafka Bridge, all using OpenShift-native custom resources.
 
-* **Why it matters:** You get Kafka’s standard APIs with Kubernetes-native reliability, GitOps workflows, and platform governance—ideal for multi-team, multi-tenant environments.
+* **Integrated security:** Enables fine-grained access control through listener-level authentication, cluster-wide authorization, and network policies. Simplifies certificate management and manages secure client access through KafkaUser resources with ACLs, quotas, and handling of credentials.
 
 
 

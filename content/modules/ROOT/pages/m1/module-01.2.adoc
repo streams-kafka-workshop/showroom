@@ -35,7 +35,7 @@ image::m1/replication-broker.png[]
 
 * Click https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka/[here, window="_amqstreams"] to navigate to the {streams} console to view the topic you created.
 
-* Click on *Topics* in the left menu to see the list of topics. You should see the `demo` topic you created. Click on the `demo` topic and then navigate to the partitions tab. You should see the `demo` topic  has 3 partitions.
+* Click on *Topics* in the left menu to see the list of topics. You should see the `demo` topic you created. Click on the `demo` topic and then navigate to the *Partitions* tab. You should see the `demo` topic  has 3 partitions.
 +
 image::m1/partitions-image-console.png[]
 
