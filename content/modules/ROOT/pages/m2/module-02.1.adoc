@@ -63,6 +63,8 @@ In this example:
 
 The subsequent section has a reference that organizes producer configuration options by concern (batching, reliability, etc.). The **Used in example?** column shows whether the option appears in the sample code.
 
+NOTE: The rest of this section deals with explaining the various configuration options available for Kafka producers and some of their usages in the code. If you are already familiar with these options or want to directly jump to running the code, feel free to skip to this section and move on to the xref:module-02.2.adoc[next section] to run the producer application.
+
 === Basic Core Settings
 _Configure how the producer connects and communicates with the Kafka cluster._
 
@@ -241,7 +243,7 @@ The producer record is created with the topic name, key, and value.
 ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, value);
 ----
 
-=== Sending a Message (line 1)
+=== Sending a Message (line 107)
 
 The `send()` uses the record created in the previous step and handles publishing to Kafka cluster:
 [source,java]
@@ -249,7 +251,7 @@ The `send()` uses the record created in the previous step and handles publishing
 producer.send(record, (metadata, exception)
 ----
 
-=== Closing the Producer (line 38-39)
+=== Closing the Producer (line 141-148)
 
 Finally, the `close()` method ensures resources are released:
 

@@ -18,17 +18,19 @@ This section breaks down the code and explain hows a **Kafka consumer** is confi
 
 In this example:
 
-* The consumer connects to a Kafka cluster using configuration from `AppConfig`
+* The consumer connects to a Kafka cluster.
 * It reads messages with string keys and values and changes its behavior based on configuration options provided as user inputs. 
 * It automatically commits offsets to ensure reliability and message delivery semantics
 * It safely closes when done
 
 === Consumer Configuration
 
-* The configuration is defined using `Properties` and constants from `ConsumerConfig`. Look at lines 47-82 of the code.
+* The configuration is defined using `Consumer Properties` defined in the *lines 47-82* of the code.
 
 This reference organizes consumer configuration options by concern (offsets, coordination, polling, etc.).  
 The **Used in example?** column shows whether the option appears in the code.
+
+NOTE: The rest of this section deals with explaining the various configuration options available for Kafka consumers and some of their usages in the code. If you are already familiar with these options or want to directly jump to running the code,, feel free to skip to this section and move on to the xref:module-02.4.adoc[next section] to run the consumer application.
 
 === Basic Core Settings
 _Configure how the consumer discovers and communicates with the Kafka cluster._
@@ -114,17 +116,17 @@ _Control how offsets are stored, committed, and reset to ensure correct processi
 |===
 | Option | What it controls | Typical values | Notes | Used in example?
 
-| `enable.auto.commit`
-| Automatic offset commits
-| `true` / `false`
-| If true the consumer's offset will be periodically committed in the background.
-| {check} line 68
-
 | `auto.offset.reset`
 | Where to start if no committed offset exists for a consumer or consumer group
 | `earliest`, `latest`, `none`
 | `earliest` = start from beginning; `latest` = only new data.
 | {check} line 63
+
+| `enable.auto.commit`
+| Automatic offset commits
+| `true` / `false`
+| If true the consumer's offset will be periodically committed in the background.
+| {check} line 68
 |===
 
 [NOTE]
@@ -152,12 +154,6 @@ _Tune how much data each poll fetches and how often the app must process it._
 |===
 | Option | What it controls | Typical values | Notes | Used in example?
 
-| *Application poll interval* (not a config)
-| Loop cadence and responsiveness
-| `consumer.poll(Duration.ofMillis(...))`
-| Smaller duration → more responsive, more CPU wakeups.
-| {check} line 115
-
 | `fetch.min.bytes`
 | Minimum bytes the broker should return
 | int
@@ -169,6 +165,12 @@ _Tune how much data each poll fetches and how often the app must process it._
 | e.g., `500`
 | Broker will wait up to this long to accumulate bytes.
 | {check} line 82
+
+| `Application poll interval (not a config)`
+| Loop cadence and responsiveness
+| `consumer.poll(Duration.ofMillis(...))`
+| Smaller duration → more responsive, more CPU wakeups.
+| {check} line 115
 
 |===
 

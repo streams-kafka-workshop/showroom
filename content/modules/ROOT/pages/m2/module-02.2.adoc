@@ -28,7 +28,7 @@ NOTE: Hit *allow* if the browser prompts for permission to paste into the termin
 oc project kafka-{user_name}
 ---- 
 
-* THe terminal has multiple java versions installed. For the sake of consistency across the workshop make sure you are using java 17 by running the following command.
+* The terminal has multiple java versions installed. For the sake of consistency across the workshop make sure you are using java 17 by running the following command.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
