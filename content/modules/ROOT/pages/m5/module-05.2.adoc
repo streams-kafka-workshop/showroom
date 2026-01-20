@@ -5,7 +5,7 @@ include::../style.adoc[]
 
 In this section, we will create a producer and a consumer that will use the schema that we added to the Schema Registry in the previous section.
 
-* Navigate to the Devspaces IDE
+* Navigate to the link:https://devspaces.{openshift_cluster_subdomain}[Devspaces IDE, window="devspaces"]
 
 * Open the file *module-registry/src/main/java/com/example/Config.java* in the file explorer
 +

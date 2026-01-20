@@ -6,7 +6,7 @@ include::../style.adoc[]
 
 * To understand a sample application that uses Change Data Capture, we will create a loyalty program that tracks customer purchases and awards loyalty points. The loyalty program application will consume change events from the Debezium topics and update loyalty points accordingly.
 
-* Navigate to the tab with the *Devspaces* IDE
+* Navigate to the browser tab with the link:https://devspaces.{openshift_cluster_subdomain}[Devspaces IDE, window="devspaces"]Devspaces IDE opened from the previous section.
 
 * Select the *loyalty-deployment.yaml* file in the *kafka-workshop/module-cdc* folder
 
