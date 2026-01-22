@@ -54,6 +54,8 @@ oc run -n kafka-{user_name} kafka-toolbox \
   -- sleep infinity
 ----
 
+* Wait for a few seconds until the toolbox container is created.
+
 * Connect to the toolbox container you just created by running the following command in the *upper terminal*.
 +
 [source,sh,role="execute",subs=attributes+]
