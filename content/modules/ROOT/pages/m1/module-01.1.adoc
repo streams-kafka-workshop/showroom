@@ -49,7 +49,7 @@ They decouple producers (writers) and consumers (readers). Many producers can wr
 oc run -n kafka-{user_name} kafka-toolbox \
   --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 \
   --restart=Never \
-  --env="BOOTSTRAP=kafka-kafka-bootstrap:9092" \
+  --env="BOOTSTRAP=kafka-kafka-bootstrap.kafka-{user_name}.svc:9092" \
   --env="PATH=/opt/kafka/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
   -- sleep infinity
 ----
