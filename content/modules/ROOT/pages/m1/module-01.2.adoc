@@ -13,7 +13,7 @@ image::m1/topic-image.png[]
 
 * Though ordering of the messages is not guaranteed, across a topic, strict order can be achieved within a partition.
 
-* Sending related messages using the same key so they go to the same partition in a mandatory precondition to achieve strict ordering within a partition.
+* Sending related messages using the same key so they go to the same partition is a mandatory precondition to achieve strict ordering within a partition.
 
 
 === Replication & Fault Tolerance

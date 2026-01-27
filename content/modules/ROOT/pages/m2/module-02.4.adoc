@@ -101,7 +101,8 @@ You can also experiment with different values for `fetch.min.bytes` and `fetch.m
 
 
 
-
+=== Cleanup
+* Make sure exit the application by pressing *ctrl+c* in the terminal window.
 
 === Summary
 This section hopefully helped you get a high level understanding of the consumer api and see a couple of consumer configurations in action. Feel free to play with the other options in the application and observe the consumer behavior.
