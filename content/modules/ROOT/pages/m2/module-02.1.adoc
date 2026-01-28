@@ -53,7 +53,7 @@ image::m2/simple-kafka-producer-nav.png[]
 
 In this example:
 
-.  The producer connects to a Kafka cluster using configuration values from `KafkaConfig.java`. 
+.  The producer connects to a Kafka cluster using configuration values from `application.properties`. 
 .  It accepts some of the configuration parameters as user inputs and changes the message sending behavior accordingly.
 .  It sends messages with string keys and values
 .  It safely closes when done

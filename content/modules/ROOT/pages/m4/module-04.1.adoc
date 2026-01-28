@@ -60,9 +60,15 @@ which is the internal DNS name of the Globex retail application database.
 +
 image::m4/devspaces-terminal.png[]
 
-* This opens a terminal in the bottom half of the workspace.
+* This opens a terminal in the bottom half of the workspace. 
 +
 image::m4/devspaces-menu-terminal.png[]
+
+* Make sure your are on the kafka-workshop folder on the terminal. If you are on the module-kafka-api folder, run the following command to navigate to the kafka-workshop folder.
++[source,bash,role=execute,subs="attributes"]
+----
+cd ..
+----
 
 * The OpenShift Dev Spaces environment has access to a plethora of command line tools, including *oc*, the OpenShift  command line interface. Through OpenShift Dev Spaces you are automatically logged in the OpenShift cluster. You can verify this with the command *oc whoami*.
 +
