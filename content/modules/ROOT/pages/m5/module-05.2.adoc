@@ -7,9 +7,9 @@ In this section, we will create a producer and a consumer that will use the sche
 
 * Navigate to the link:https://devspaces.{openshift_cluster_subdomain}[Devspaces IDE, window="devspaces"]
 
-* Open the file *module-registry/src/main/java/com/example/Config.java* in the file explorer
+* Open the file *module-registry/src/main/resources/application.properties* in the file explorer
 +
-image::m5/config-java.png[]
+image::m5/registry-app-prop-placeholder.png[]
 
 * Replace the placeholder values with your registry API URL provided below
 +
@@ -26,9 +26,9 @@ kafka-kafka-bootstrap.kafka-{user_name}.svc.cluster.local:9092
 ----
 
 
-* The config file will look like the following. Observe that along with the registry API URL and bootstrap servers, we have also defined the group id, artifact id, version and topic name  information needed in this file.
+* The config file will look like the following. Observe that along with the registry API URL and bootstrap servers, we have also defined the group id, artifact id, version topic name and consumer group information needed in this file.
 +
-image::m5/config-java-variables.png[]
+image::m5/registry-app-prop.png[]
 
 * Start a new terminal by clicking on the menu on the top left corner. Then select *Terminal > New Terminal.* to launch a new terminal window.
 +
