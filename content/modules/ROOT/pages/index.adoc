@@ -55,7 +55,7 @@ While we recommend Kafka for many use cases, there are some cases where it may n
 === What is {streams}?
 Running Kafka on OpenShift without native support can be complex. While deploying Kafka directly with standard resources like StatefulSet and Service is possible, the process is often error-prone and time-consuming. This is especially true for operations like upgrades and configuration updates. {streams} dramatically reduces this complexity, providing the following advantages:
 
-*{streams}* is Kafka built for OpenShift/Kubernetes, using the Strimzi operators to make Kafka declarative and automated:
+*{streams}* is Kafka built for OpenShift/Kubernetes” : This product can also be deployed on RHEL or other systems that support JVM supported by us, even though Strimzi can’t. *{streams}* provides a the following advantages:
 
 * **Native OpenShift integration**: {streams} transforms Kafka into an OpenShift-native application. It extends the Kubernetes API with Custom Resources (CRs) like Kafka, KafkaTopic, and KafkaUser. Custom resources offer a stable and highly configurable way to manage Kafka.
 
