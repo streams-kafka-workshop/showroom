@@ -44,10 +44,9 @@ sdk install java 21.0.2-tem && sdk use java 21.0.2-tem
 ----
 
 * Click on the paste button if prompted.
-+
-image::m2/paste-devspaces.png[]
 
-* Your terminal output should confirm that you are indeed using java 17.
+
+* Your terminal output should confirm that you are using java 21.
 
 * In the file explorer on the left side, expand the `module-kafka-api` folder and then expand the `src/main/resources` folder. Click on the `application.properties` file to open it.
 
