@@ -60,8 +60,12 @@ NOTE: This property defines what the consumer should do when there is no initial
 * Observe that the consumer doesn't read any of the messages that the producer just sent. This is because we chose the `latest` value for `auto.offset.reset` and the consumer starts from the end of the topic and it will not consume any messages that are sent before the consumer starts. You can confirm the same the double checking in the streams console.
 
 * Navigate to the link:https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka/[streams console, window="_amqstreams"] > consumer groups and click on the *tutorial-consumer-group* 
++
+image::m2/console_tutorial-consumer-group.png[]
 
 * Observe that the overall lag for the consumer group is *zero even though the topic had some unread messages*. This is the because the consumer is reading from the end of the topic and the values of committed offset are set to the same value as end offset, which means the lag is zero.
++
+image::m2/console_consumer-lag-zero.png[]
 
 
 * Hit enter and press `1` again to run the producer again. Accept all the *default values and press enter*. Make sure that the messages are sent.

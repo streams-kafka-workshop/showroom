@@ -15,7 +15,13 @@ kafka-topics.sh --bootstrap-server $BOOTSTRAP \
   --create --topic schema-demo --partitions 3 --replication-factor 1
 ----
 
+NOTE: If you logged out of the toolbox use the following command to log back in: `oc rsh -n kafka-{user_name} kafka-toolbox`
+
 * Navigate to the {registry} UI by clicking the link: https://service-registry-ui-{user_name}.{openshift_cluster_subdomain}[Schema Registry, window="_schema-registry"].
+
+* Click on the `Explore` tab
++
+image::m5/explore-tab.png[]
 
 * You should see the explore page of the Schema Registry UI as shown in the image below.
 +

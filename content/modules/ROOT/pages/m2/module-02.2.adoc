@@ -91,7 +91,9 @@ Enter your choice:
 
 * Keep pressing *enter* to accept the default values, which should trigger the producer sending the messages.
 
-* You should see the following error message. Indicating that the topic `tutorial-topic` does not exist.
+* You should see an error being thrown continuously in the terminal output. Press *ctrl+c* to stop the producer after observing the error.
+
+* The error message should be similar to the following indicating that the topic `tutorial-topic` does not exist.
 +
 [source,bash]
 ----

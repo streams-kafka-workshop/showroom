@@ -65,34 +65,35 @@ image::m4/devspaces-terminal.png[]
 image::m4/devspaces-menu-terminal.png[]
 
 * Make sure your are on the kafka-workshop folder on the terminal. If you are on the module-kafka-api folder, run the following command to navigate to the kafka-workshop folder.
-+[source,bash,role=execute,subs="attributes"]
++
+[source,bash,role=execute,subs="attributes"]
 ----
 cd ..
 ----
 
-* The OpenShift Dev Spaces environment has access to a plethora of command line tools, including *oc*, the OpenShift  command line interface. Through OpenShift Dev Spaces you are automatically logged in the OpenShift cluster. You can verify this with the command *oc whoami*.
-+
-[source,bash,role=execute,subs="attributes"]
-----
-oc whoami
-----
-+
-.Output
-[source,textinfo,subs="attributes"]
-----
-{user_name}
-----
-+
-[IMPORTANT]
-====
-If the output of the `oc whoami` command does not correspond to your username ({user_name}), you need to log out and log in again with the correct username.
+// * The OpenShift Dev Spaces environment has access to a plethora of command line tools, including *oc*, the OpenShift  command line interface. Through OpenShift Dev Spaces you are automatically logged in the OpenShift cluster. You can verify this with the command *oc whoami*.
+// +
+// [source,bash,role=execute,subs="attributes"]
+// ----
+// oc whoami
+// ----
+// +
+// .Output
+// [source,textinfo,subs="attributes"]
+// ----
+// {user_name}
+// ----
+// +
+// [IMPORTANT]
+// ====
+// If the output of the `oc whoami` command does not correspond to your username ({user_name}), you need to log out and log in again with the correct username.
 
-[source,bash,role=execute,subs="attributes"]
-----
-oc logout
-oc login -u {user_name} -p {password} {openshift_api_internal}
-----
-====
+// [source,bash,role=execute,subs="attributes"]
+// ----
+// oc logout
+// oc login -u {user_name} -p {password} {openshift_api_internal}
+// ----
+// ====
 
 * Deploy the Debezium connector by copying the following command to the terminal:
 +

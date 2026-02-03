@@ -159,7 +159,7 @@ Caused by: java.lang.ClassCastException: value 12345 (a java.lang.Long) cannot b
 
 === Working with compatibility rules in Schema Registry
 
-* Navigate to link:https://service-registry-ui-{user_name}.{openshift_cluster_subdomain}/explore/my-group/schema-demo[service registry UI, window="_schema-registry"].
+* Navigate to link:https://service-registry-ui-{user_name}.{openshift_cluster_subdomain}/explore/my-group/schema-demo[service registry UI, window="_schema-registry"] > my-group > schema-demo
 
 * Navigate to the rules tab and click on the *Enable* button in the *Compatibility rule* row. 
 +
@@ -296,6 +296,8 @@ image::m5/error-compatibility.png[]
   Partition: 0
   Offset: 2
 ----
+
+* Press 'ctrl+c' to stop the consumer application.
 
 * The consumer retrieves the schema from the schema registry and is able to deserialize the messages successfully. That's the reason we are able to see the messages in the consumer output not directly from the link:https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="_amqstreams"].
 
