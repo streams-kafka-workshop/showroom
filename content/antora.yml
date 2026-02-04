@@ -1,5 +1,5 @@
 name: modules
-title: Safeguarding App Connectivity for the Hybrid Cloud
+title: The Kafka Workshop
 version: master
 nav:
   - modules/ROOT/nav.adoc
