@@ -7,6 +7,12 @@ In this section, we will create a producer and a consumer that will use the sche
 
 * Navigate to the link:https://devspaces.{openshift_cluster_subdomain}[Devspaces IDE, window="devspaces"]
 
+* Login with your credentials - `{user_name}` and `{password}` if needed.
+
+* From the Devspaces dashboard, click on *open* button to launch your workspace.
++
+image::m2/devspaces-launch.png[]
+
 * Open the file *module-registry/src/main/resources/application.properties* in the file explorer
 +
 image::m5/registry-app-prop-placeholder.png[]
@@ -52,9 +58,18 @@ cd module-registry
 +
 [source,sh,role="execute",subs=attributes+]
 ----
-sdk use java 21.0.2-tem
-java --version
+sdk install java 21.0.2-tem && sdk use java 21.0.2-tem
 ----
+
+* Create a topic with the name `schema-demo` using the following command. Recall that we used the same name as the artifact id while creating the schema in the previous section. 
++
+[source,bash,role="execute",subs=attributes+]
+----
+oc run -n kafka-{user_name} topic-create --rm --restart=Never --quiet --attach \
+--image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --create --topic schema-demo --partitions 3 --replication-factor 1'
+----
+
 
 * Run the following command to build the application and run the interactive application
 +
@@ -80,7 +95,7 @@ Select scenario (1-4):
 === Schema Retrieval
 * First let's retrieve the schema from the Schema Registry. Choose the option 2 by entering `2` and press enter.
 
-* You should see an output similar to the following, indicating that the schema was retrieved successfully from the Schema Registry.
+* You should see an output similar to the following, indicating that the schema was retrieved successfully from the Schema Registry.You should see the same schema that we added in the previous section.
 +
 image::m5/retrieve-schema-output.png[]
 
@@ -297,7 +312,7 @@ image::m5/error-compatibility.png[]
   Offset: 2
 ----
 
-* Press 'ctrl+c' to stop the consumer application.
+* Press *'ctrl+c'* to stop the consumer application.
 
 * The consumer retrieves the schema from the schema registry and is able to deserialize the messages successfully. That's the reason we are able to see the messages in the consumer output not directly from the link:https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka[streams console, window="_amqstreams"].
 

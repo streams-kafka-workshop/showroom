@@ -7,15 +7,15 @@ include::../style.adoc[]
 
 In this section, you will add a new schema to the Schema Registry and later the producer and consumers will use the schema to send and receive messages.
 
-* First let's create a topic that we can use for this section. Run the following command in the *upper terminal*.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-kafka-topics.sh --bootstrap-server $BOOTSTRAP \
-  --create --topic schema-demo --partitions 3 --replication-factor 1
-----
+// * First let's create a topic that we can use for this section. Run the following command in the *upper terminal*.
+// +
+// [source,sh,role="execute",subs=attributes+]
+// ----
+// kafka-topics.sh --bootstrap-server $BOOTSTRAP \
+//   --create --topic schema-demo --partitions 3 --replication-factor 1
+// ----
 
-NOTE: If you logged out of the toolbox use the following command to log back in: `oc rsh -n kafka-{user_name} kafka-toolbox`
+// NOTE: If you logged out of the toolbox use the following command to log back in: `oc rsh -n kafka-{user_name} kafka-toolbox`
 
 * Navigate to the {registry} UI by clicking the link: https://service-registry-ui-{user_name}.{openshift_cluster_subdomain}[Schema Registry, window="_schema-registry"].
 
@@ -40,13 +40,13 @@ image::m5/create-mygroup.png[]
 image::m5/create-artifact.png[]
 
 
-* Enter the same name as the topic name `schema-demo` in the Artifact Id and select Avro as the schema type. Click on Next.
+* Enter the `schema-demo` in the Artifact Id and select Avro as the schema type. Click on Next.
 +
 image::m5/artifact-coordinates.png[]
 
 [NOTE]
 ====
-The Artifact Id and topic name don't need to be the same. In our case, we are using the SimpleTopicIdStrategy, so we used the same name. There are different strategies that you can use. You can learn more about them link:https://docs.redhat.com/en/documentation/red_hat_build_of_apicurio_registry/3.1/html/apicurio_registry_user_guide/using-kafka-client-serdes_registry#registry-serdes-concepts-strategy_registry[here].
+We will also create a topic called `schema-demo` in the subsequent steps. However,The Artifact Id and topic name don't need to always be the same. In our case, we are using the SimpleTopicIdStrategy, so we used the same name. There are different strategies that you can use. You can learn more about them link:https://docs.redhat.com/en/documentation/red_hat_build_of_apicurio_registry/3.1/html/apicurio_registry_user_guide/using-kafka-client-serdes_registry#registry-serdes-concepts-strategy_registry[here].
 ====
 
 * All the fields in the next screen are optional. Leave them blank and click on Next.

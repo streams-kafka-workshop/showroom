@@ -113,9 +113,9 @@ Error while fetching metadata with correlation id 57 : {tutorial-topic=UNKNOWN_T
 +
 [source,bash,role="execute",subs=attributes+]
 ----
-oc run -n kafka-{user_name} topic-create --rm -it --restart=Never \
-  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
-  bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --create --topic tutorial-topic --partitions 3 --replication-factor 1'
+oc run -n kafka-{user_name} topic-create --rm --restart=Never --quiet --attach \
+--image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 -- \
+bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstrap:9092 --create --topic tutorial-topic --partitions 3 --replication-factor 1'
 ----
 
 * After the topic is created, run the interactive application again.

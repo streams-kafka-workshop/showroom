@@ -20,6 +20,28 @@ Let's have a quick look at the listeners in the Kafka cluster and learn about th
 oc project kafka-{user_name}
 ----
 
+
+[IMPORTANT]
+====
+If you seen an error message similar to the following:
+
+.Output
+[source,textinfo,subs="attributes"]
+----
+error: You are not a member of project "kafka-user1".
+You have one project on this server: showroom-mk2fc-1-user1
+----
+then run the following command to make sure you are logged in
+[source,bash,role="execute",subs=attributes]
+----
+{login_command}
+----
+and then re-run the `oc project kafka-{user_name}` command in the lower terminal.
+====
+
+
+
+
 * Run the below command to see the listeners in the Kafka cluster.
 +
 [source,bash,role="execute",subs=attributes+]
@@ -111,6 +133,19 @@ If not connected to the toolbox container, connect to it again using the followi
 ----
 oc rsh -n kafka-{user_name} kafka-toolbox
 ----
+
+If you have skipped module 1 and didn't create the toolbox container earlier, create it using the following command in the *upper terminal*.
+
+[source,sh,role="execute",subs=attributes]
+----
+oc run -n kafka-{user_name} kafka-toolbox \
+  --image=registry.redhat.io/amq-streams/kafka-40-rhel9:3.0.0 \
+  --restart=Never \
+  --env="BOOTSTRAP=kafka-kafka-bootstrap.kafka-{user_name}.svc:9092" \
+  --env="PATH=/opt/kafka/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
+  -- sleep infinity
+----
+
 ====
 
 
