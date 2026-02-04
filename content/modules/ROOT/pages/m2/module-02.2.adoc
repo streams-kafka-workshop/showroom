@@ -150,16 +150,16 @@ bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstra
 ----
 Waiting for Kafka to send messages (callbacks will fire when linger.ms expires)...
 
-✓ Message 2 sent: Queued at 27 ms, Sent at 10062 ms, Delay: 10035 ms (partition: 2, offset: 25)
-✓ Message 3 sent: Queued at 28 ms, Sent at 10063 ms, Delay: 10035 ms (partition: 2, offset: 26)
-✓ Message 5 sent: Queued at 28 ms, Sent at 10063 ms, Delay: 10035 ms (partition: 2, offset: 27)
-✓ Message 6 sent: Queued at 28 ms, Sent at 10063 ms, Delay: 10035 ms (partition: 2, offset: 28)
-✓ Message 10 sent: Queued at 29 ms, Sent at 10063 ms, Delay: 10034 ms (partition: 2, offset: 29)
-✓ Message 7 sent: Queued at 28 ms, Sent at 10064 ms, Delay: 10036 ms (partition: 1, offset: 10)
-✓ Message 8 sent: Queued at 28 ms, Sent at 10064 ms, Delay: 10036 ms (partition: 1, offset: 11)
-✓ Message 1 sent: Queued at 0 ms, Sent at 10082 ms, Delay: 10082 ms (partition: 0, offset: 15)
-✓ Message 4 sent: Queued at 28 ms, Sent at 10083 ms, Delay: 10055 ms (partition: 0, offset: 16)
-✓ Message 9 sent: Queued at 28 ms, Sent at 10083 ms, Delay: 10055 ms (partition: 0, offset: 17)
+✓ Message 1 sent: Queued at 0 ms, Sent at 30559 ms, Delay: 30559 ms (partition: 0, offset: 0)
+✓ Message 4 sent: Queued at 504 ms, Sent at 30559 ms, Delay: 30055 ms (partition: 0, offset: 1)
+✓ Message 9 sent: Queued at 504 ms, Sent at 30559 ms, Delay: 30055 ms (partition: 0, offset: 2)
+✓ Message 7 sent: Queued at 504 ms, Sent at 30585 ms, Delay: 30081 ms (partition: 1, offset: 0)
+✓ Message 8 sent: Queued at 504 ms, Sent at 30585 ms, Delay: 30081 ms (partition: 1, offset: 1)
+✓ Message 2 sent: Queued at 504 ms, Sent at 30596 ms, Delay: 30092 ms (partition: 2, offset: 0)
+✓ Message 3 sent: Queued at 504 ms, Sent at 30596 ms, Delay: 30092 ms (partition: 2, offset: 1)
+✓ Message 5 sent: Queued at 504 ms, Sent at 30596 ms, Delay: 30092 ms (partition: 2, offset: 2)
+✓ Message 6 sent: Queued at 504 ms, Sent at 30596 ms, Delay: 30092 ms (partition: 2, offset: 3)
+✓ Message 10 sent: Queued at 504 ms, Sent at 30596 ms, Delay: 30092 ms (partition: 2, offset: 4)
 
 === Batching Analysis ===
 Note: Batches are per partition - messages in different partitions cannot be in the same batch

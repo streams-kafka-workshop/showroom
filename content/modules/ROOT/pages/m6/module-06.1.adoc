@@ -134,7 +134,7 @@ If not connected to the toolbox container, connect to it again using the followi
 oc rsh -n kafka-{user_name} kafka-toolbox
 ----
 
-If you have skipped module 1 and didn't create the toolbox container earlier, create it using the following command in the *upper terminal*.
+If you have skipped module 1 and didn't create the toolbox container earlier, you might see an error message such as *Error from server (NotFound): pods "kafka-toolbox" not found* Create it using the following command in the *upper terminal*.
 
 [source,sh,role="execute",subs=attributes]
 ----
@@ -145,6 +145,9 @@ oc run -n kafka-{user_name} kafka-toolbox \
   --env="PATH=/opt/kafka/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
   -- sleep infinity
 ----
+
+then wait for a few seconds and then connect *`oc rsh -n kafka-{user_name} kafka-toolbox`*
+
 
 ====
 
