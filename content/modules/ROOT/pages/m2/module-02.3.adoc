@@ -30,7 +30,10 @@ In this example:
 This reference organizes consumer configuration options by concern (offsets, coordination, polling, etc.).  
 The **Used in example?** column shows whether the option appears in the code.
 
-NOTE: The rest of this section deals with explaining the various configuration options available for Kafka consumers and some of their usages in the code. If you are already familiar with these options or want to directly jump to running the code,, feel free to skip to this section and move on to the link:module-02.4.html[next section] to run the consumer application.
+[IMPORTANT]
+====
+The rest of this section deals with explaining the various configuration options available for Kafka consumers and some of their usages in the code. If you are already familiar with these options or want to directly jump to running the code, feel free to **skip to this section and move on to the link:module-02.4.html[next section]** to run the consumer application.
+====
 
 === Basic Core Settings
 _Configure how the consumer discovers and communicates with the Kafka cluster._
