@@ -21,7 +21,9 @@ We will setup the ACLS for the producer user such that they will be *able to wri
 
 We will setup the ACLs for the consumer user such that they will be *able to read from the topic `secure-demo` but not write to it.*
 
-* We can define the ACLs while creating the KafkaUser resource. Let's create the ACLs for the producer user first. Navigate to the link:{openshift_cluster_console}[OpenShift console, window="console"] and click on the *+* icon. 
+* We can define the ACLs while creating the KafkaUser resource. Let's create the ACLs for the producer user first. Navigate to the link:{openshift_cluster_console}[OpenShift console, window="console"] and log in with your username and password (`{user_name}`/`{password}`).
+
+Click on the *+* icon. 
 +
 image:common/create-yaml.png[]
 
