@@ -13,7 +13,7 @@ image::m1/topic-image.png[]
 
 * Though ordering of the messages is not guaranteed, across a topic, strict order can be achieved within a partition.
 
-* Sending related messages using the same key so they go to the same partition is a mandatory precondition to achieve strict ordering within a partition.
+* Ordering is guaranteed within a single partition. To ensure that related messages end up in the same partition (and are therefore ordered relative to each other), send them with the same key.
 
 
 === Replication & Fault Tolerance
@@ -49,4 +49,4 @@ image::m1/leader-image-console.png[]
 image::m1/replica-image-console.png[]
 
 === Up Next
-This concludes a very high-level overview of how Kafka partitions work. In the next module, we'll learn about kafka producers and consumers.
+This concludes a very high-level overview of how Kafka partitions work. In the next section, we'll learn about Kafka producers and consumers.

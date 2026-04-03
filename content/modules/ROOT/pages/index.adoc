@@ -53,9 +53,9 @@ While we recommend Kafka for many use cases, there are some cases where it may n
 * Huge binary blobs (store in object storage; send references via Kafka).
 
 === What is {streams}?
-Running Kafka on OpenShift without native support can be complex. While deploying Kafka directly with standard resources like StatefulSet and Service is possible, the process is often error-prone and time-consuming. This is especially true for operations like upgrades and configuration updates. {streams} dramatically reduces this complexity, providing the following advantages:
+Running Kafka on OpenShift without native support can be complex. While deploying Kafka directly with standard resources like StatefulSet and Service is possible, the process is often error-prone and time-consuming. This is especially true for operations like upgrades and configuration updates.
 
-*{streams}* is Kafka built for OpenShift/Kubernetes” : This product can also be deployed on RHEL or other systems that support JVM supported by us, even though Strimzi can’t. *{streams}* provides a the following advantages:
+*{streams}* is Kafka built for OpenShift/Kubernetes. The Kafka distribution included in {streams} can also be deployed on RHEL or other JVM-supported systems, while the Strimzi-based operator component is designed specifically for Kubernetes/OpenShift. *{streams}* provides the following advantages:
 
 * **Native OpenShift integration**: {streams} transforms Kafka into an OpenShift-native application. It extends the Kubernetes API with Custom Resources (CRs) like Kafka, KafkaTopic, and KafkaUser. Custom resources offer a stable and highly configurable way to manage Kafka.
 
@@ -63,7 +63,7 @@ Running Kafka on OpenShift without native support can be complex. While deployin
 
 * **Support for upgrade, scaling, and recovery:** {streams} operators automate rolling upgrades and recovery of Kafka components, helping to reduce manual intervention and downtime
 
-* **Integrated support for data streaming pipelines:** When Streams for Apache Kafka is installed, you can deploy and manage Kafka clusters alongside supporting components such as Kafka Connect, MirrorMaker 2, and Kafka Bridge, all using OpenShift-native custom resources.
+* **Integrated support for data streaming pipelines:** When {streams} is installed, you can deploy and manage Kafka clusters alongside supporting components such as Kafka Connect, MirrorMaker 2, and Kafka Bridge, all using OpenShift-native custom resources.
 
 * **Integrated security:** Enables fine-grained access control through listener-level authentication, cluster-wide authorization, and network policies. Simplifies certificate management and manages secure client access through KafkaUser resources with ACLs, quotas, and handling of credentials.
 

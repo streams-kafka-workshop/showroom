@@ -111,7 +111,7 @@ image::m5/retrieve-schema-output.png[]
 --- Enter your JSON message (single-line or multi-line, press Enter on empty line when done): ---
 ----
 
-* Paste this message into the terminal and *press enter twice*. This json is valid and confirms to the schema defined in the schema registry, which means this must be accepted and sent to the topic `schema-demo`.
+* Paste this message into the terminal and *press enter twice*. This json is valid and conforms to the schema defined in the schema registry, which means this must be accepted and sent to the topic `schema-demo`.
 +
 [source,json,role="execute",subs=attributes+]
 ----
@@ -132,7 +132,7 @@ image::m5/retrieve-schema-output.png[]
 ----
 ✓ Message sent successfully!
    Validation: ✓ Automatic (by Apicurio Registry)
-   Schema source: Registry (artifact 'demo' in group 'my-group')
+   Schema source: Registry (artifact 'schema-demo' in group 'my-group')
    Record sent: {"customer_id": "CUST-001", "first_name": "John", "last_name": "Doe", "email": "john.doe@example.com", "age": 30, "is_active": true, "signup_date": 1699123456789}
 ----
 
@@ -148,7 +148,7 @@ image::m5/retrieve-schema-output.png[]
 --- Enter your JSON message (single-line or multi-line, press Enter on empty line when done): ---
 ----
 
-* Paste this message into the terminal and *press enter twice*. This json is invalid because our schema  indicates the type of `customer_id` to be `string` and this provides a integer value. This message should not be accepted.
+* Paste this message into the terminal and *press enter twice*. This json is invalid because our schema  indicates the type of `customer_id` to be `string` and this provides an integer value. This message should not be accepted.
 +
 [source,json,role="execute",subs=attributes+]
 ----
@@ -189,7 +189,7 @@ image::m5/backward.png[]
 +
 image::m5/create-version.png[] 
 
-* We are going to paste a new version of the schema that introduces a new field called `phone number` in the existing schema and makes it a required field. This breaks backward compatibility and should trigger the compatibility rule in the registry. Let's see that in action.
+* We are going to paste a new version of the schema that introduces a new field called `phone` in the existing schema and makes it a required field. This breaks backward compatibility and should trigger the compatibility rule in the registry. Let's see that in action.
 
 * Copy and paste the below schema into the editor.
 +
@@ -212,7 +212,7 @@ image::m5/create-version.png[]
   }
 ----
 
-* You should see an an error message similar to the following.
+* You should see an error message similar to the following.
 +
 image::m5/error-compatibility.png[]
 

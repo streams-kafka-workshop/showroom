@@ -10,7 +10,7 @@ A Kafka cluster is the whole distributed system that stores and moves your event
 
 Controllers (KRaft): keep the cluster’s metadata (what topics/partitions exist, which broker leads which partition, etc.) and run leader elections.
 
-Brokers: store data and serve client traffic .
+Brokers: manage the storage of data and serve client traffic .
 
 === Why clusters matter:
 
@@ -20,7 +20,7 @@ Brokers: store data and serve client traffic .
 
 * Central bootstrap: clients connect to a single “bootstrap” address (e.g., my-kafka-kafka-bootstrap:9092) and discover the rest.
 
-* In OpenShift/AMQ Streams with KRaft + Node Pools:
+* In OpenShift/{streams} with KRaft + Node Pools:
 
 ** The Kafka CR defines cluster-wide settings (Kafka version, listeners, configs).
 
@@ -65,7 +65,7 @@ image::m1/bootstrap_server_details.png[]
 +
 NOTE: The external bootstrap server section should be empty as we currently have not enabled access to the Kafka cluster from outside the OpenShift cluster.
 
-This concludes a very high-level overview of how Kafka clusters and brokers work. In the next module we'll learn about Kafka topics and create a topic.
+This concludes a very high-level overview of how Kafka clusters and brokers work. In the next section we'll learn about Kafka topics and create a topic.
 
 
 

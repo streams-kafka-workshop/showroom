@@ -122,7 +122,7 @@ Let's briefly decipher what this means:
 
 ** Safe for trusted internal apps when you only need data confidentiality.
 
-* *Port 9095 – SASL/SCRAM Secure Listener:Secure, authenticated client access.*
+* *Port 9095 – SASL/SCRAM Listener: Authenticated client access.*
 
 ** Requires username/password via SASL SCRAM-SHA-512 (auth: scram-sha-512).
 
@@ -134,7 +134,7 @@ Let's briefly decipher what this means:
 
 
 === Security in action
-Let's now see this action.
+Let's now see this in action.
 
 * Make sure you are still connected to the Kafka toolbox container we created in the previous modules.
 +
@@ -153,7 +153,7 @@ oc rsh -n kafka-{user_name} kafka-toolbox
 
 
 
-* In the **upper terminal**, create a new topic `secure-demo` using the secure 9095 listener, without authentication. The same command we successfully used in the previous modules, and let's see what happens.
+* In the **upper terminal**, create a new topic `secure-demo` using the secure 9095 listener, without authentication. A similar command to the one we used in the previous modules but targeting the authenticated 9095 listener instead of 9092. Let's see what happens.
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -188,7 +188,7 @@ EOF
 ----
 
 
-* Now let's create the new topic again using the correct credentials. Observe that the credentials are now passed in the form of the config file  and the we are using the secure 9095 listener with authentication.
+* Now let's create the new topic again using the correct credentials. Observe that the credentials are now passed in the form of the config file  and we are using the secure 9095 listener with authentication.
 +
 [source,sh,role="execute",subs=attributes+]
 ----

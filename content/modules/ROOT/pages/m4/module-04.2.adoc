@@ -11,11 +11,11 @@ include::../style.adoc[]
 +
 image::m4/globex-login.png[]
 
-* Log in with any of the username listed here `asilva`/`cjones`/`asanders`/`pwong`/`mmiller``. The password is `openshift`.
+* Log in with any of the username listed here `asilva`/`cjones`/`asanders`/`pwong`/`mmiller`. The password is `openshift`.
 +
 image::m4/login_credentials_page.png[]
 
-* Once logged in, click on the *Cool Stuff Store* link on the tob bar to navigate to the store.
+* Once logged in, click on the *Cool Stuff Store* link on the top bar to navigate to the store.
 +
 image::m4/cool-stuff-store.png[]
 
@@ -62,7 +62,7 @@ image::m4/amqconsole-debezium-topic-line-items.png[]
 
 * If you want to simulate a larger number of orders, you can use the _Order simulator_ application deployed in the _globex-{user_name}_ namespace on OpenShift.
 
-* In the browser window, open the tab pointing to the OpenShift console. If you don't have a tab open to the console, click navigate to {openshift_cluster_console}/topology/ns/globex-{user_name}?view=graph[OpenShift console, window="_console"]. If needed login with your username and password (`{user_name}`/`{password}``).
+* In the browser window, open the tab pointing to the OpenShift console. If you don't have a tab open to the console, navigate to {openshift_cluster_console}/topology/ns/globex-{user_name}?view=graph[OpenShift console, window="_console"]. If needed login with your username and password (`{user_name}`/`{password}`).
 
 
 // * Switch to the *globex-{user_name}* namespace by selecting the namespace from the namespace selection drop-down menu in the top left.

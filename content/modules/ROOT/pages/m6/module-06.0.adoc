@@ -18,6 +18,9 @@ Authorization decides which actions a specific user or client can perform on the
 * *Encryption – Protecting data in transit.*
 {streams} supports Transport Layer Security (TLS), a protocol for encrypted communication. Communication is always encrypted between Streams for Apache Kafka components. To set up TLS-encrypted communication between Kafka and clients, we can configure listeners in the Kafka custom resource.
 
+* *Auditing – Tracking who did what and when.*
+Auditing provides visibility into cluster activity by logging client operations such as topic creation, message production, and ACL changes. This is essential for compliance, incident investigation, and operational monitoring.
+
 
 === Activity Overview
 In this module, you will learn about some of the most common Kafka security features, including authentication, authorization and encryption. We will also learn how to apply these features to your Kafka clusters.

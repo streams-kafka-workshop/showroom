@@ -10,11 +10,11 @@ We'll be looking at a simple Java application that uses the Kafka Consumer API t
 
 === A Simple Consumer Application
 
-. Let's us now look at the consumer code. In the `module-kafka-api` folder, click on the *src/main/java/com/kafka/tutorial/SimpleKafkaConsumer.java* file in the file explorer to open it.
+. Let us now look at the consumer code. In the `module-kafka-api` folder, click on the *src/main/java/com/kafka/tutorial/SimpleKafkaConsumer.java* file in the file explorer to open it.
 +
 image::m2/module-kafka-api-consumer.png[]
 
-This section breaks down the code and explain hows a **Kafka consumer** is configured and how it works under the hood.
+This section breaks down the code and explains how a **Kafka consumer** is configured and how it works under the hood.
 
 In this example:
 
@@ -99,7 +99,7 @@ _Control how instances coordinate, balance partitions, and scale._
 
 | `partition.assignment.strategy`
 | How partitions are assigned
-| `range`, `roundrobin`, , `sticky`, `cooperative-sticky`
+| `range`, `roundrobin`, `sticky`, `cooperative-sticky`
 | Implementing the `org.apache.kafka.clients.consumer.ConsumerPartitionAssignor` interface allows you to plug in a custom assignment strategy..
 | {cross}
 

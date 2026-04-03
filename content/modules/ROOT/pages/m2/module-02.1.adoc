@@ -45,7 +45,7 @@ image::m2/module-kafka-api-dependencies.png[]
 
 === Understanding the Kafka Producer API (Java)
 
-This section breaks down the code and explain hows a **Kafka Producer** is configured and how it works under the hood.
+This section breaks down the code and explains how a **Kafka Producer** is configured and how it works under the hood.
 
 * Let us now look at the producer code. In the `module-kafka-api` folder, click on the *src/main/java/com/kafka/tutorial/SimpleKafkaProducer.java* file in the file explorer to open it.
 +

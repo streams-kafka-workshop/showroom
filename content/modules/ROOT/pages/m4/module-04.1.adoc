@@ -34,11 +34,11 @@ image::m4/devspaces-trust.png[]
 image::m4/devspaces-workspace-debezium-connector.png[]
 
 * The *debezium-connector.yaml* file describes the Debezium Connector. It contains all the details the connector needs to know in order to start capturing changes in the target database tables. Some important configuration details:
-** *class*: the Debezium connector implementation class. We're using PostgreSQL as source database, so the approriate connector is *io.debezium.connector.postgresql.PostgresConnector*.
+** *class*: the Debezium connector implementation class. We're using PostgreSQL as source database, so the appropriate connector is *io.debezium.connector.postgresql.PostgresConnector*.
 ** *plugin.name*: The Debezium connector supports different mechanisms to read from the PostgreSQL transaction logs.  *pgoutput* is the standard logical decoding output plug-in since PostgreSQL 10.
 ** *+database.*+*: the connection details for the database. Note that PostgreSQL is setup with a specific user (*debezium*) which has the required privileges to read from the transaction logs.
 ** *topic.prefix*: the prefix of the Kafka topics which will receive the Debezium change events. The full name of the topics is *<prefix>.<schema>.<table>*.
-** *schema.include.list*: the schema's to include in the change data capture process.
+** *schema.include.list*: the schemas to include in the change data capture process.
 ** *table.include.list*: the name of the tables to include. For our use case, we are interested in the *customer*, *orders* and *line_item* tables.
 
 * Before deploying the connector, you need to substitute the placeholder for the database hostname with the actual value. *On line 14, replace*
@@ -64,7 +64,7 @@ image::m4/devspaces-terminal.png[]
 +
 image::m4/devspaces-menu-terminal.png[]
 
-* Make sure your are on the kafka-workshop folder on the terminal. If you are on the module-kafka-api folder, run the following command to navigate to the kafka-workshop folder.
+* Make sure you are on the kafka-workshop folder on the terminal. If you are on the module-kafka-api folder, run the following command to navigate to the kafka-workshop folder.
 +
 [source,bash,role=execute,subs="attributes"]
 ----
@@ -121,7 +121,7 @@ image::common/console_anonymous.png[]
 
 * Navigate to *Topics* menu on the left hand side. 
 +
-Filter the topics by *Name*  by the term `globex.updates`. Intitially, you will only see one topic, `globex.updates.public.customer`, that will receive the change events.
+Filter the topics by *Name*  by the term `globex.updates`. Initially, you will only see one topic, `globex.updates.public.customer`, that will receive the change events.
 +
 image::m4/console-cdc-filter-topics.png[]
 

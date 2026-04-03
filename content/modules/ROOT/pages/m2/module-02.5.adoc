@@ -48,10 +48,10 @@ The Globex web-app deployment consists of:
 | The PostgreSQL database used by the *globex-store-app application*, stores the catalog, inventory, customer and order information.
 
 | activity-tracking 
-| This microservice has a REST endpoint for user activity events generated from the UI. These events are send to a Kafka topic.
+| This microservice has a REST endpoint for user activity events generated from the UI. These events are sent to a Kafka topic.
 
 | recommendation-engine (We will explore this service in more detail in a later module.)
-| An example of an application which does real-time processing of an event stream* This application uses Kafka Streams, an event-streaming library, to process the stream of events produced by the activity tracking service to build a list of the most popular products on the web site* This list is exposed as a REST endpoint, and called by the front-end to display featured products.
+| An example of an application which does real-time processing of an event stream. This application uses Kafka Streams, a stream processing library, to process the stream of events produced by the activity tracking service to build a list of the most popular products on the web site. This list is exposed as a REST endpoint, and called by the front-end to display featured products.
 
 |===
 

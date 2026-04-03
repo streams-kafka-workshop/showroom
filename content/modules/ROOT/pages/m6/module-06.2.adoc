@@ -17,7 +17,7 @@ For example, a rule might be set so that user John can view the topic comments f
 === Creating ACLs
 In this section, *we will setup ACLs for a producer and a consumer user respectively.* 
 
-We will setup the ACLS for the producer user such that they will be *able to write to the topic `secure-demo-again` but not create or delete it.* 
+We will setup the ACLS for the producer user such that they will be *able to write to the topic `secure-demo` but not create or delete it.* 
 
 We will setup the ACLs for the consumer user such that they will be *able to read from the topic `secure-demo` but not write to it.*
 
@@ -68,13 +68,13 @@ spec:
         host: "*"
 ----
 
-* The above customer resource creates a KafkaUser with username `producer` and the password is stored in a secret named `producer-password`. Under the authorization section, we define an ACL for the topic `secure-demo`. This user will be able to write to the topic `secure-demo-again` but not create or delete it. Go ahead and click the create button now
+* The above custom resource creates a KafkaUser with username `producer` and the password is stored in a secret named `producer-password`. Under the authorization section, we define an ACL for the topic `secure-demo`. This user will be able to write to the topic `secure-demo` but not create or delete it. Go ahead and click the create button now
 +
 image::m6/producer-user-yaml-create.png[]
 
 * Now, let's try to delete the topic using the producer user you just created. 
 
-* Navigate to the *upper terminal and first create a temporary config file with the producer credentials. 
+* Navigate to the *upper terminal* and first create a temporary config file with the producer credentials. 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -199,7 +199,7 @@ sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule require
 EOF
 ----
 
-* In the *upper terminal* and run the following command to see if client with consumer credentials can write to the topic(which the ACL does not allow). 
+* In the *upper terminal*, run the following command to see if client with consumer credentials can write to the topic(which the ACL does not allow). 
 +
 [source,sh,role="execute",subs=attributes+]
 ----
@@ -257,8 +257,8 @@ kafka-console-consumer.sh \
 * Press `ctrl+c` to stop the consumer.
 
 === Conclusion
-What we have seen so far is a simple example of ACLs. Enterprises can synchronize users and groups from their existing IDMs with *Red Hat Single Sign-On* technologies to implement fine-grained access control. The policies and ACL rules can be configured for the users or groups in Red Hat Single Sign-On which the kafka admins can use to secure the Kafka clusters using ACLs. 
+What we have seen so far is a simple example of ACLs. Enterprises can synchronize users and groups from their existing IDMs with *Red Hat build of Keycloak* technologies to implement fine-grained access control. The policies and ACL rules can be configured for the users or groups in Red Hat build of Keycloak which the kafka admins can use to secure the Kafka clusters using ACLs. 
 
-Streams for Apache Kafka supports the use of *OAuth 2.0* token-based authorization through Red Hat Single Sign-On Authorization Services, which allows you to manage security policies and permissions centrally.
+Streams for Apache Kafka supports the use of *OAuth 2.0* token-based authorization through Red Hat build of Keycloak Authorization Services, which allows you to manage security policies and permissions centrally.
 
 If you are interested in learning more about this topic, this link:https://developers.redhat.com/articles/2022/05/04/use-red-hats-sso-manage-kafka-broker-authorization#[blog post,window="reference"] is a good starting point.

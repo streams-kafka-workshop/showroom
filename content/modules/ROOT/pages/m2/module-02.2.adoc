@@ -57,7 +57,7 @@ sdk install java 21.0.2-tem && sdk use java 21.0.2-tem
 kafka-kafka-bootstrap.kafka-{user_name}.svc.cluster.local:9092
 ----
 
-* Double check again to make sure that the bootstrap servers value and has your corresponding username
+* Double check again to make sure that the bootstrap servers value has your corresponding username
 +
 image::m2/app-properties-bootstrap.png[]
 
@@ -125,7 +125,7 @@ bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstra
 ./run.sh
 ----
 
-* Run the producer by by entering `1` and press enter .
+* Run the producer by entering `1` and press enter .
 
 * The producer is configured to automatically send *10 messages* with keys and values. Each message is approximately *30 bytes*. 
 
@@ -133,7 +133,7 @@ bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstra
 
 
 
-* The next option is *linger.ms.* The default value for our application is 0, which means that the producer will not wait for any messages to accumulate before sending them. Enter `30000` and press enter. Enter the below value and press enter.
+* The next option is *linger.ms.* The default value for our application is 0, which means that the producer will not wait for any messages to accumulate before sending them. Enter the below value and press enter.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
@@ -186,7 +186,7 @@ Total batches across all partitions: 3
 
 * Now hit enter. You should observe that the messages *are sent immediately without any wait*. This is because the linger.ms has been set to 0 seconds. The producer will not wait for any messages to accumulate before sending them.
 
-* Hit enter and 
+* Hit enter to go back to the main menu.
 
 * Type `3` and hit enter again to exit the application.
 
