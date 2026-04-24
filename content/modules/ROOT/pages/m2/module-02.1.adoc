@@ -59,7 +59,7 @@ In this example:
 .  It safely closes when done
 
 === Producer Configuration
-* The configuration is defined using `Properties` and constants from `ProducerConfig`. Look at lines 43-67 of the `SimpleKafkaProducer.java` file.
+// * The configuration is defined using `Properties` and constants from `ProducerConfig`. Look at lines 43-67 of the `SimpleKafkaProducer.java` file.
 
 The subsequent section has a reference that organizes producer configuration options by concern (batching, reliability, etc.). The **Used in example?** column shows whether the option appears in the sample code.
 
@@ -238,7 +238,7 @@ After all the options are defined, Then the producer is created using those prop
 
 [source,java]
 ----
-this.producer = new KafkaProducer<>(props);
+new KafkaProducer<>(props);
 ----
 
 

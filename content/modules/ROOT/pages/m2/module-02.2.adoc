@@ -6,7 +6,7 @@ include::../style.adoc[]
 
 == Running a Simple Producer Application
 
-Let's run the simple streaming application that we analyzed in the previous sections.
+Let's run the simple streaming application.
 
 * In the Devspaces IDE, open a new terminal by clicking on the menu on the top left corner. Then select *Terminal > New Terminal.* to launch a new terminal window.
 +
@@ -21,27 +21,7 @@ cd module-kafka-api/
 
 NOTE: Hit *allow* if the browser prompts for permission to paste into the terminal.
 
-// * Log in to the *kafka-{user_name}* project using the following command.
-// +
-// [source,bash,role="execute",subs=attributes+]
-// ----
-// oc project kafka-{user_name}
----- 
 
-// * The terminal has multiple java versions installed. For the sake of consistency across the workshop make sure you are using java 17 by running the following command.
-// +
-// [source,sh,role="execute",subs=attributes+]
-// ----
-// sdk use java 17.0.3-tem
-// java --version
-// ----
-
-// *  For the sake of consistency across the workshop make sure you are using java 21 by running the following command.
-// +
-// [source,sh,role="execute",subs=attributes+]
-// ----
-// sdk install java 21.0.2-tem && sdk use java 21.0.2-tem
-// ----
 
 * Click on the paste button if prompted.
 
