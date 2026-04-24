@@ -5,59 +5,53 @@ include::../style.adoc[]
 
 
 == Running a Simple Consumer Application
-Let's run the simple streaming application that we analyzed in the previous sections to see the consumer in action .
+Now Let's see the consumer in action .
 
-* Go back to Devspaces IDE and clear the terminal window by typing `clear` and pressing enter.
-+
-[source,bash,role="execute",subs=attributes+]
-----
-clear
-----
+// * Go back to Devspaces IDE and clear the terminal window by typing `clear` and pressing enter.
+// +
+// [source,bash,role="execute",subs=attributes+]
+// ----
+// clear
+// ----
 
-* Run the interactive application in the terminal.
-+
-[source,bash,role="execute",subs=attributes+]
-----
-./run.sh
-----
+// * Run the interactive application in the terminal.
+// +
+// [source,bash,role="execute",subs=attributes+]
+// ----
+// ./run.sh
+// ----
 
-* It should build the application in a few seconds and display a menu of options.
-+
+// * It should build the application in a few seconds and display a menu of options.
+// +
 
-[source,bash]
-----
-========================================
-   Kafka Java Tutorial Application
-========================================
+// [source,bash]
+// ----
+// ========================================
+//    Kafka Java Tutorial Application
+// ========================================
 
-Main Menu:
-1. Run Producer
-2. Run Consumer
-3. Exit
+// Main Menu:
+// 1. Run Producer
+// 2. Run Consumer
+// 3. Exit
 
-Enter your choice:
-----
+// Enter your choice:
+// ----
 
-* Choose the option 2 to run the consumer. Enter the option 2 and press enter.
+* Go back to the https://kafka-dashboard-devspaces-{user_name}.{openshift_cluster_subdomain}[interactive application, window="_application"]
 
-* First, you should be prompted to enter the value for `auto.offset.reset`
 
-* Type `latest` and press enter. 
+* Change the auto.offset.reset value to `latest` and press enter. 
 +
 NOTE: This property defines what the consumer should do when there is no initial offset or offset is out of range for a consumer or consumer group* *"earliest"* = start from the beginning of the topic (read all messages from the start) *"latest"* = start from the end (only read new messages sent after consumer starts)
 
-* The next prompt asks for `fetch.min.bytes`. Press enter to use the default value.
-
-* The next prompt asks for `fetch.max.wait.ms`. Press enter to use the default value.
-
-* The next prompt asks for `Enter number of messages`. Enter the below value and press enter.
+* Leave the rest of the values as default and hit the *Run Consumer* button to run the consumer application. This will start the consumer application and it will try to consume messages from the `tutorial-topic` topic in your Kafka cluster as configured in the `application.properties` file.
 +
-[source,bash,role="execute",subs=attributes+]
-----
-30
-----
+image::m2/consumer-interactive-app.png[]
 
 * Observe that the consumer doesn't read any of the messages that the producer just sent. This is because we chose the `latest` value for `auto.offset.reset` and the consumer starts from the end of the topic and it will not consume any messages that are sent before the consumer starts. You can confirm the same the double checking in the streams console.
+
+* Click on the *Stop Consumer* button to stop the consumer application.
 
 * Navigate to the link:https://amq-streams-console-{user_name}.{openshift_cluster_subdomain}/kafka/[streams console, window="_amqstreams"] > consumer groups and click on the *tutorial-consumer-group* 
 +
@@ -68,45 +62,57 @@ image::m2/console_tutorial-consumer-group.png[]
 image::m2/console_consumer-lag-zero.png[]
 
 
-* Hit enter and press `1` again to run the producer again. Accept all the *default values and press enter*. Make sure that the messages are sent.
+// * Hit enter and press `1` again to run the producer again. Accept all the *default values and press enter*. Make sure that the messages are sent.
 
-* Now hit enter and press `2` again to run the consumer again. This time let's choose the *default values* for `auto.offset.reset`, `fetch.min.bytes`, `fetch.max.wait.ms` by pressing enter for the prompts.
+// * Now hit enter and press `2` again to run the consumer again. This time let's choose the *default values* for `auto.offset.reset`, `fetch.min.bytes`, `fetch.max.wait.ms` by pressing enter for the prompts.
 
-* For the 'Enter number of messages' prompt. Enter the below value and press enter.
+// * For the 'Enter number of messages' prompt. Enter the below value and press enter.
+// +
+// [source,bash,role="execute",subs=attributes+]
+// ----
+// 30    
+// ----
+
+* Click on the *Run Producer* button again to to send more messages. 
+
+* Once the producer is done sending the messages, move to the consumer application section and change the *auto.offset.reset* value to `earliest`.
 +
-[source,bash,role="execute",subs=attributes+]
-----
-30    
-----
+image::m2/consumer-auto-offset-reset.png[]
 
+* Click on the *Run Consumer* button again to run the consumer application.
 
-* You will observe that the consumer is now running and consumes all the messages that were just sent by the producer. The messages are displayed in the terminal.
+* This time, you should see all the consumer records being displayed indicating that the consumer is able to read all the messages from the topic. This is because we chose the `earliest` value for `auto.offset.reset` and the consumer starts from the beginning of the topic and it will consume all messages that are sent before the consumer starts.
+
+* Stop the consumer application by clicking on the *Stop Consumer* button.
 
 
 === Optional exercise:Experiment with fetch.min.bytes and fetch.max.wait.ms 
 You can also experiment with different values for `fetch.min.bytes` and `fetch.max.wait.ms` to see how they affect the consumer behavior.
 
-* Hit enter and press `1` again to run the producer again. Accept all the default values and press enter. 
+* Run the producer again by clicking on the *Run Producer* button and send some messages to the topic.
 
-* Now hit enter and press `2` and hit enter again to run the consumer again.
-
-* This time, for the `fetch.min.bytes` prompt, enter `1024` and press enter.
-
-* For the `fetch.max.wait.ms` prompt, enter `4000` and press enter.
-
-* Since the number of bytes would never exceed 1024 bytes in our example, the `fetch.min.bytes` will be ignored and the consumer will wait for at-least 4 seconds before fetching the messages. You should observe a delay of approximately 4-6 seconds before the messages are displayed in the terminal.
-
-* For the *Enter number of messages* prompt. Enter the below value and press enter. You will observe the delay before the messages are displayed.
+* On the consumer application, change the `fetch.min.bytes` to the below value 
 +
 [source,bash,role="execute",subs=attributes+]
 ----
-30
+1024
 ----
 
+* Change the `fetch.max.wait.ms` value to the below value.
++
+[source,bash,role="execute",subs=attributes+]
+----
+4000
+----
 
+* Click on the *Run Consumer* button again to run the consumer application.
+
+* Since the number of bytes sent by the producer is less than the `fetch.min.bytes` value, the consumer will wait for the `fetch.max.wait.ms` time to elapse before it fetches the messages from the topic. You should see that the consumer waits for around 4 seconds before it fetches the messages from the topic.
+
+* Stop the consumer application by clicking on the *Stop Consumer* button.
 
 === Cleanup
-* Make sure exit the application by pressing *ctrl+c* in the terminal window.
+* Make sure exit the application by pressing *ctrl+c* in the devspaces terminal window.
 
 === Summary
 This section hopefully helped you get a high level understanding of the consumer api and see a couple of consumer configurations in action. Feel free to play with the other options in the application and observe the consumer behavior.

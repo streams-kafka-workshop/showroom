@@ -38,7 +38,7 @@ image::m2/devspaces-trust.png[]
 +
 image::m2/module-kafka-api-pom-xml.png[]
 
-* Look at the dependencies section of the *pom.xml file (line 23-29).* You will see that the project has a dependency on the Kafka client library. This library provides the necessary classes and methods to interact with a Kafka cluster.
+* Look at the dependencies section of the *pom.xml file (line 50-55).* You will see that the project has a dependency on the Kafka client library. This library provides the necessary classes and methods to interact with a Kafka cluster.
 +
 image::m2/module-kafka-api-dependencies.png[]
 
@@ -47,9 +47,9 @@ image::m2/module-kafka-api-dependencies.png[]
 
 This section breaks down the code and explains how a **Kafka Producer** is configured and how it works under the hood.
 
-* Let us now look at the producer code. In the `module-kafka-api` folder, click on the *src/main/java/com/kafka/tutorial/SimpleKafkaProducer.java* file in the file explorer to open it.
+* Let us now look at the producer code. In the `module-kafka-api` folder, click on the *src/main/java/com/kafka/tutorial/service/ProducerService.java* file in the file explorer to open it.
 +
-image::m2/simple-kafka-producer-nav.png[]
+image::m2/producer-service-nav.png[]
 
 In this example:
 
@@ -81,7 +81,7 @@ _Configure how the producer connects and communicates with the Kafka cluster._
 | How the client finds the kafka cluster
 | `HOST:PORT` (comma-separated)
 | Seed brokers for metadata; must be reachable from client network.
-| {check} line 44
+| {check} line 39
 
 | `client.id`
 | Logical app identifier
@@ -101,13 +101,13 @@ _Define how message keys and values are converted to bytes before transmission._
 | How keys are converted to bytes
 | `StringSerializer`, `ByteArraySerializer`, etc
 | Must match the producer’s key type (and consumer deserializer).
-| {check} line 48
+| {check} line 40
 
 | `value.serializer`
 | How values are converted to bytes
 | `StringSerializer`, `ByteArraySerializer`, Avro/JSON/Protobuf
 | Option to implement custom serialization to handle complex types.
-| {check} line 49
+| {check} line 41
 |===
 
 === Reliability & Delivery Guarantees
@@ -120,7 +120,7 @@ _Control how strictly the producer ensures message delivery and avoids duplicate
 | Durability of writes
 | `0`, `1`, `all`
 | `all` - message written to leader and all replicas before ack. Strongest guarantee. `1` - leader ack only. `0` - no ack, fire-and-forget.
-| {check} line 55
+| {check} line 42
 
 | `enable.idempotence`
 | Duplicate prevention on retries
@@ -168,13 +168,13 @@ _Improve efficiency and throughput by controlling batching, compression, and buf
 | Delaying the producer sending to give more time for batching
 | `0`–`50+`
 | Higher = better batching/throughput, higher latency. `0` = send ASAP.
-| {check} line 67
+| {check} line 44
 
 | `batch.size`
 | Max bytes per batch
 | e.g., `16384` (16 KiB), `32768`, `65536`
 | Larger batches improve compression and throughput at cost of memory.
-| {check} line 61
+| {check} line 43
 
 |===
 
@@ -233,7 +233,7 @@ _Define how long the producer waits and how it behaves during temporary failures
 =====
 ====
 
-=== Producer Creation (line 76)
+=== Producer Creation (line 51)
 After all the options are defined, Then the producer is created using those properties.:
 
 [source,java]
@@ -242,14 +242,14 @@ this.producer = new KafkaProducer<>(props);
 ----
 
 
-=== Building a Message/Record (line 103)
+=== Building a Message/Record (line 60)
 The producer record is created with the topic name, key, and value.
 [source,java]
 ----
 ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, value);
 ----
 
-=== Sending a Message (line 107)
+=== Sending a Message (line 62)
 
 The `send()` uses the record created in the previous step and handles publishing to Kafka cluster:
 [source,java]
@@ -257,26 +257,26 @@ The `send()` uses the record created in the previous step and handles publishing
 producer.send(record, (metadata, exception)
 ----
 
-=== Closing the Producer (line 141-148)
+// === Closing the Producer (line 141-148)
 
-Finally, the `close()` method ensures resources are released:
+// Finally, the `close()` method ensures resources are released:
 
-[source,java]
-----
-public void close() {
-        if (producer != null) {
-            producer.close();
-            System.out.println("Producer closed successfully.");
-        }
-    }
-}
-----
+// [source,java]
+// ----
+// public void close() {
+//         if (producer != null) {
+//             producer.close();
+//             System.out.println("Producer closed successfully.");
+//         }
+//     }
+// }
+// ----
 
-Closing ensures:
+// Closing ensures:
 
-* All buffered records are flushed.
-* Pending sends are completed.
-* Network resources are released.
+// * All buffered records are flushed.
+// * Pending sends are completed.
+// * Network resources are released.
 
 
 == How This Producer Works (Recap)
@@ -286,7 +286,7 @@ Closing ensures:
 . Key (if present) determines partition.
 . Records accumulate; `linger.ms=0` → send immediately (minimal batching).
 . Sender thread transmits; `acks=all` ensures strong delivery.
-. `close()` flushes and cleans up.
+. The producer closes and flushes and cleans up.
 
 === Summary
 

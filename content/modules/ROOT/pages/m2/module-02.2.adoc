@@ -21,11 +21,11 @@ cd module-kafka-api/
 
 NOTE: Hit *allow* if the browser prompts for permission to paste into the terminal.
 
-* Log in to the *kafka-{user_name}* project using the following command.
-+
-[source,bash,role="execute",subs=attributes+]
-----
-oc project kafka-{user_name}
+// * Log in to the *kafka-{user_name}* project using the following command.
+// +
+// [source,bash,role="execute",subs=attributes+]
+// ----
+// oc project kafka-{user_name}
 ---- 
 
 // * The terminal has multiple java versions installed. For the sake of consistency across the workshop make sure you are using java 17 by running the following command.
@@ -36,12 +36,12 @@ oc project kafka-{user_name}
 // java --version
 // ----
 
-*  For the sake of consistency across the workshop make sure you are using java 21 by running the following command.
-+
-[source,sh,role="execute",subs=attributes+]
-----
-sdk install java 21.0.2-tem && sdk use java 21.0.2-tem
-----
+// *  For the sake of consistency across the workshop make sure you are using java 21 by running the following command.
+// +
+// [source,sh,role="execute",subs=attributes+]
+// ----
+// sdk install java 21.0.2-tem && sdk use java 21.0.2-tem
+// ----
 
 * Click on the paste button if prompted.
 
@@ -50,7 +50,7 @@ sdk install java 21.0.2-tem && sdk use java 21.0.2-tem
 
 * In the file explorer on the left side, expand the `module-kafka-api` folder and then expand the `src/main/resources` folder. Click on the `application.properties` file to open it.
 
-* Replace the bootstrap servers placeholder value(line 6) with the following value.
+* Replace the bootstrap servers placeholder value(line 13) with the following value.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
@@ -59,39 +59,29 @@ kafka-kafka-bootstrap.kafka-{user_name}.svc.cluster.local:9092
 
 * Double check again to make sure that the bootstrap servers value has your corresponding username
 +
-image::m2/app-properties-bootstrap.png[]
+image::m2/app-properties-bootstrap_servers.png[]
 
 
 
 
-* Now let's run the producer application. Run the following command. This should start building the application and running the interactive application when it's done.
+* Now let's run the producer application. Run the following command. This should start building the application and running the interactive application when it's done. This might take a couple of minutes to run the first time as it needs to build the application and download the dependencies. Subsequent runs should be faster.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
 ./run.sh
 ----
 
-* You should see a prompt similar to the following.
+* After the application is done building and running, open the interactive application by clicking https://kafka-dashboard-devspaces-{user_name}.{openshift_cluster_subdomain}[here, window="_application"]
+
+* You should see the following application that allows we just built.
 +
-[source,bash]
-----
-========================================
-   Kafka Java Tutorial Application
-========================================
+image::m2/producer-interactive-app.png[]
 
-Main Menu:
-1. Run Producer
-2. Run Consumer
-3. Exit
+* Click on the *Run Producer* button to run the producer application. This will send messages to the `tutorial-topic` topic in your Kafka cluster as configured in the `application.properties` file.
 
-Enter your choice: 
-----
+// * Keep pressing *enter* to accept the default values, which should trigger the producer sending the messages.
 
-* Choose the *option* 1 by entering `1` and press enter.
-
-* Keep pressing *enter* to accept the default values, which should trigger the producer sending the messages.
-
-* You should see an error being thrown continuously in the terminal output. Press *ctrl+c* to stop the producer after observing the error.
+* Go back to the devspaces terminal. You should see an error being thrown continuously in the terminal output. Press *ctrl+c* to stop the producer after observing the error.
 
 * The error message should be similar to the following indicating that the topic `tutorial-topic` does not exist.
 +
@@ -101,7 +91,7 @@ Error while fetching metadata with correlation id 57 : {tutorial-topic=UNKNOWN_T
 [kafka-producer-network-thread | producer-1] WARN org.apache.kafka.clients.NetworkClient - [Producer clientId=producer-1] Error while fetching metadata with correlation id 58 : {tutorial-topic=UNKNOWN_TOPIC_OR_PARTITION}
 ----
 
-* Press *ctrl+c* to stop the producer.
+* Press *ctrl+c* twice to stop the application.
 
 * In our cluster *auto.create.topics.enable* property is set to `false`. This is a Kafka broker configuration setting that *controls whether new topics are created automatically* when a producer or consumer attempts to access a non-existent one
 
@@ -109,7 +99,7 @@ Error while fetching metadata with correlation id 57 : {tutorial-topic=UNKNOWN_T
 
 * Type `clear` and press enter to clear the terminal output on the devspaces terminal.
 
-* Now let's create the topic. Run the following command.
+* Now let's create the topic. Run the following command in the devspaces terminal.
 +
 [source,bash,role="execute",subs=attributes+]
 ----
@@ -125,11 +115,11 @@ bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstra
 ./run.sh
 ----
 
-* Run the producer by entering `1` and press enter .
+* After the application is done building and running, open the interactive application by clicking https://kafka-dashboard-devspaces-{user_name}.{openshift_cluster_subdomain}[here, window="_application"]
 
-* The producer is configured to automatically send *10 messages* with keys and values. Each message is approximately *30 bytes*. 
+* The producer is configured to automatically send *10 messages* with keys and values. Each message is approximately *30-50 bytes*. 
 
-* First you should be prompted to enter the *batch size.* The default value for our application is set to *16384 bytes*. Press enter to accept the default value.
+* The default value batch.size for our application is set to *16384 bytes*. Leave it as is. 
 
 
 
@@ -137,58 +127,26 @@ bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstra
 +
 [source,bash,role="execute",subs=attributes+]
 ----
-30000
+10000
 ----
-
-* This will make the producer wait for 30 seconds or until the batch is full before sending it. 
-
-* You should see that none of the messages are sent immediately. Only after 30 seconds the messages are sent to the topic.
-
-* Wait for the 30 seconds and then you will see that the messages will be sent after the 30 seconds have elapsed.
 +
-[source,bash]
-----
-Waiting for Kafka to send messages (callbacks will fire when linger.ms expires)...
+image::m2/producer-linger_ms.png[]
 
-✓ Message 1 sent: Queued at 0 ms, Sent at 30559 ms, Delay: 30559 ms (partition: 0, offset: 0)
-✓ Message 4 sent: Queued at 504 ms, Sent at 30559 ms, Delay: 30055 ms (partition: 0, offset: 1)
-✓ Message 9 sent: Queued at 504 ms, Sent at 30559 ms, Delay: 30055 ms (partition: 0, offset: 2)
-✓ Message 7 sent: Queued at 504 ms, Sent at 30585 ms, Delay: 30081 ms (partition: 1, offset: 0)
-✓ Message 8 sent: Queued at 504 ms, Sent at 30585 ms, Delay: 30081 ms (partition: 1, offset: 1)
-✓ Message 2 sent: Queued at 504 ms, Sent at 30596 ms, Delay: 30092 ms (partition: 2, offset: 0)
-✓ Message 3 sent: Queued at 504 ms, Sent at 30596 ms, Delay: 30092 ms (partition: 2, offset: 1)
-✓ Message 5 sent: Queued at 504 ms, Sent at 30596 ms, Delay: 30092 ms (partition: 2, offset: 2)
-✓ Message 6 sent: Queued at 504 ms, Sent at 30596 ms, Delay: 30092 ms (partition: 2, offset: 3)
-✓ Message 10 sent: Queued at 504 ms, Sent at 30596 ms, Delay: 30092 ms (partition: 2, offset: 4)
+* This will make the producer wait for 10 seconds or until the batch is full before sending it. 
 
-=== Batching Analysis ===
-Note: Batches are per partition - messages in different partitions cannot be in the same batch
+* You should see that none of the messages are sent immediately. Only after 10 seconds the messages are sent to the topic.
 
-Partition 0:
-  Batch 1: 3 message(s)
+* Wait for the 10 seconds and then you will see that the messages will be sent after the 10 seconds have elapsed.
++
+image::m2/producer-messages-sent.png[]
 
-Partition 1:
-  Batch 1: 2 message(s)
+* Observe that the producer has waited for linger.ms to elapse before sending the batch. 
 
-Partition 2:
-  Batch 1: 5 message(s)
+* Run the producer application again, but this time set the linger.ms to 0 to see the difference in behavior.
++
+image::m2/producer-linger_ms_zero.png[]
 
-Total batches across all partitions: 3
-----
-
-* Since we have a huge batch size compared to the messages that are being sent, the producer will wait for linger.ms to elapse before sending the batch. 
-
-* Next, press *enter* to go back to the main menu
-
-* Press `1` and hit *enter* again to run the producer again.
-
-* Accept the *default values* for batch size(16 KB) and linger.ms (0) seconds. Before you press enter, take a guess on what will happen and observe the output.
-
-* Now hit enter. You should observe that the messages *are sent immediately without any wait*. This is because the linger.ms has been set to 0 seconds. The producer will not wait for any messages to accumulate before sending them.
-
-* Hit enter to go back to the main menu.
-
-* Type `3` and hit enter again to exit the application.
+* This time the producer should send the messages immediately without waiting for linger.ms to elapse. 
 
 === Summary
 This section hopefully helped you get a high level understanding of the producer api and see a couple of producer configurations in action. 
