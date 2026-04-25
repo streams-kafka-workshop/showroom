@@ -23,10 +23,7 @@ NOTE: Hit *allow* if the browser prompts for permission to paste into the termin
 
 
 
-* Click on the paste button if prompted.
 
-
-* Your terminal output should confirm that you are using java 21.
 
 * In the file explorer on the left side, expand the `module-kafka-api` folder and then expand the `src/main/resources` folder. Click on the `application.properties` file to open it.
 
@@ -103,7 +100,7 @@ bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstra
 
 
 
-* The next option is *linger.ms.* The default value for our application is 0, which means that the producer will not wait for any messages to accumulate before sending them. Enter the below value and press enter.
+* The next option is *linger.ms.* The default value for our application is 0. Change it the below value
 +
 [source,bash,role="execute",subs=attributes+]
 ----
@@ -111,22 +108,22 @@ bash -lc '/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-kafka-bootstra
 ----
 +
 image::m2/producer-linger_ms.png[]
++
+This will make the producer wait for 10 seconds or until the batch is full before sending it. 
 
-* This will make the producer wait for 10 seconds or until the batch is full before sending it. 
+* Run the producer application again with by clicking the *Run Producer* button in the interactive application.
 
-* You should see that none of the messages are sent immediately. Only after 10 seconds the messages are sent to the topic.
-
-* Wait for the 10 seconds and then you will see that the messages will be sent after the 10 seconds have elapsed.
+* You should see that none of the messages are sent immediately. Only after 10 seconds the messages are sent to the topic. Wait for the 10 seconds and then you will see that the messages will be sent after the 10 seconds have elapsed.
 +
 image::m2/producer-messages-sent.png[]
 
 * Observe that the producer has waited for linger.ms to elapse before sending the batch. 
 
-* Run the producer application again, but this time set the linger.ms to 0 to see the difference in behavior.
+* Run the producer application again, but this time set the *linger.ms to 0* to see the difference in behavior.
 +
 image::m2/producer-linger_ms_zero.png[]
 
-* This time the producer should send the messages immediately without waiting for linger.ms to elapse. 
+* This time the producer should send the messages immediately as linger.ms is set to 0. 
 
 === Summary
 This section hopefully helped you get a high level understanding of the producer api and see a couple of producer configurations in action. 

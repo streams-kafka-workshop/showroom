@@ -25,10 +25,9 @@ In this example:
 
 === Consumer Configuration
 
-* The configuration is defined using `Consumer Properties` defined in the code.
 
 This reference organizes consumer configuration options by concern (offsets, coordination, polling, etc.).  
-The **Used in example?** column shows whether the option appears in the code.
+The **Used in example?** column shows whether the option appears in the code. The values for the the options are provided via the application.properties or environment variable and can be changed by the user when running the application.
 
 [IMPORTANT]
 ====
@@ -267,7 +266,6 @@ _Add traceability and hooks for monitoring and custom logic._
 === Consumer Creation (line 74)
 
 This part of the code initializes a consumer with the provided configuration, establishing connections to the brokers and the group coordinator.
-+
 [source,java]
 ----
 this.consumer = new KafkaConsumer<>(props);
