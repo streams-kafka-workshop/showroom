@@ -48,7 +48,9 @@ image::m2/app-properties-bootstrap_servers.png[]
 ./run.sh
 ----
 
-* After the application is done building and running, open the interactive application by clicking https://kafka-dashboard-devspaces-{user_name}.{openshift_cluster_subdomain}[here, window="_application"]
+* After the application is done building and running and see the test paused screen as shown below, open the interactive application by clicking https://kafka-dashboard-devspaces-{user_name}.{openshift_cluster_subdomain}[here, window="_application"]
++
+image::m2/tests-passed.png[]
 
 * You should see the following application that allows we just built.
 +
