@@ -42,11 +42,10 @@
 ** xref:m6/module-06.2.adoc[Authorization, ACLs]
 ** xref:m6/finish.adoc[Finish]
 
-// * xref:m7/module-07.0.adoc[Module 7 - Security and Encryption ]
-// ** xref:m7/module-07.0.adoc[Introduction]
-// ** xref:m7/module-07.1.adoc[Configuring Authorized Access to Kafka]
-// ** xref:m7/module-07.2.adoc[Configuring user security mechanisms ]
-// ** xref:m7/finish.adoc[Finish]
+* xref:m7/module-07.0.adoc[Module 7 - Record Encryption with Kafka Proxy]
+** xref:m7/module-07.1.adoc[Exploring the Encryption Setup]
+** xref:m7/module-07.2.adoc[Record Encryption in Action]
+** xref:m7/finish.adoc[Finish]
 
 // * xref:m8/module-08.0.adoc[Module 8 - Kafka and AI ]
 // ** xref:m8/module-08.0.adoc[Introduction]
