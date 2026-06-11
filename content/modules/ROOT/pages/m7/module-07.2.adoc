@@ -142,12 +142,7 @@ kafka-console-consumer.sh \
   --from-beginning
 ----
 
-This time, you should see *garbled, unreadable binary data* instead of your JSON messages. The output will look something like:
-
-[source]
-----
-kroxylicious.io/envelope/v2 ▒▒▒▒▒▒▒▒▒ (binary gibberish)
-----
+This time, you should see *garbled, unreadable binary data* instead of your JSON messages. 
 
 // image::m7/placeholder-consumer-direct-encrypted.png[]
 
@@ -164,7 +159,7 @@ You can also see this in the {streams} console UI.
 * Navigate to *Topics* > `customer-payments` > *Messages*.
 
 * Notice that the message values appear as encrypted binary — the console reads directly from the brokers, so it sees the same ciphertext you saw in the terminal.
-
++
 image::m7/console-encrypted-messages.png[]
 
 Whether you use a CLI consumer or the web console, without the proxy the records are unreadable.
